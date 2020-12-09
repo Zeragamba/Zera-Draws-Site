@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "image-loader": "^0.0.1",
+    "node-sass": "^4.0.0",
     "style-loader": "^2.0.0"
   }
 }

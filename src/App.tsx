@@ -1,28 +1,19 @@
 import React from "react";
+import {Header} from "./layout/header";
+import {Main} from "./layout/main";
 
-import {DeviantArtTile, KoFiTile, RedditTile, TwitterTile} from "./tile";
+import {Sidebar} from "./layout/sidebar";
 
-import styles from "./app.module.css";
+import styles from "./app.module.scss";
 
-const App = () => {
-    return (
-        <div className={styles.app}>
-            <header className={styles.header}>
-                <h1>Zeragamba</h1>
-            </header>
-
-            <div className={styles.sideBar}>
-                <DeviantArtTile />
-                <TwitterTile />
-                <KoFiTile />
-                <RedditTile />
-            </div>
-
-            <main className={styles.main}>
-
-            </main>
-        </div>
-    );
+export const App = () => {
+  return (
+    <div className={styles.app}>
+      <Header />
+      <Sidebar />
+      <Main />
+    </div>
+  );
 }
 
 export default App

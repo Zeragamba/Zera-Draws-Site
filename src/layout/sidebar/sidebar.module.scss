@@ -1,0 +1,16 @@
+@import "./../../breakpoints";
+
+.sidebar {
+  grid-area: sidebar;
+  position: relative;
+}
+
+.socialNav {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  @media only screen and (max-width: $bp-mobile) {
+    position: relative;
+  }
+}

@@ -1,11 +1,11 @@
 import React from "react";
 
-import deviantArtLogo from "./images/deviant-art.png";
-import redditLogo from "./images/reddit-logo.png";
-import twitterLogo from "./images/twitter-logo.png";
-import koFiLogo from "./images/ko-fi-logo.png";
+import deviantArtLogo from "./deviant-art.png";
+import redditLogo from "./reddit-logo.png";
+import twitterLogo from "./twitter-logo.png";
+import koFiLogo from "./ko-fi-logo.png";
 
-import styles from "./tile.module.css"
+import styles from "./tile.module.scss"
 
 interface TitleProps {
     name: string,
@@ -19,8 +19,11 @@ export const Tile = ({name, image, link}: TitleProps) => {
     }
 
     return (
-        <div className={styles.tile} onClick={onClick} role="button">
-            <img className={styles.tileImage} src={image} alt={name} />
+        <div className={styles.wrapper} onClick={onClick} role="button">
+            <div className={styles.contents}>
+                <img className={styles.logo} src={image} alt={name} />
+                <span className={styles.label}>{name}</span>
+            </div>
         </div>
     )
 }
