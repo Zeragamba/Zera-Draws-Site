@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import {DeviantArtTile, KoFiTile, RedditTile, TwitterTile} from "./tile";
+
+import styles from "./app.module.css";
+
+const App = () => {
+    return (
+        <div className={styles.app}>
+            <header className={styles.header}>
+                <h1>Zeragamba</h1>
+            </header>
+
+            <div className={styles.sideBar}>
+                <DeviantArtTile />
+                <TwitterTile />
+                <KoFiTile />
+                <RedditTile />
+            </div>
+
+            <main className={styles.main}>
+
+            </main>
+        </div>
+    );
 }
 
-export default App;
+export default App

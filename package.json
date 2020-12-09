@@ -39,5 +39,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "image-loader": "^0.0.1",
+    "style-loader": "^2.0.0"
   }
 }
