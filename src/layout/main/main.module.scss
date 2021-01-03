@@ -1,7 +1,12 @@
+@import "../../common/breakpoints";
 @import "../../common/variables";
 
 .main {
   display: flex;
   flex-direction: column;
   gap: $padding-md;
+
+  @media only screen and (max-width: $bp-mobile) {
+    gap: $padding-lg;
+  }
 }
