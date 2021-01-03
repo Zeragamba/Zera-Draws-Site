@@ -1,0 +1,24 @@
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 200px;
+  grid-gap: 4px;
+}
+
+.galleryTitle {
+  color: whitesmoke;
+  font-size: 2rem;
+}
+
+.tileWrapper {
+  display: inline-block;
+
+  overflow: hidden;
+  background: gray;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
