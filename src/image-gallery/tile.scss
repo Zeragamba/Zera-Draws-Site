@@ -1,3 +1,4 @@
+@import "../common/breakpoints";
 @import "../common/variables";
 
 .galleryTile {
@@ -7,20 +8,31 @@
   justify-content: center;
   align-items: center;
 
-  height: 250px;
-  max-width: 400px;
+  @media only screen and (max-width: $bp-mobile) {
+    align-items: center;
+    max-height: 100vh;
 
-  flex-shrink: 1;
+    .image {
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+
+  @media only screen and (min-width: $bp-mobile) {
+    height: 250px;
+    max-width: 400px;
+
+    .image {
+      object-fit: cover;
+      height: 100%;
+    }
+  }
 
   overflow: hidden;
   background: gray;
 
   border-radius: 5px;
   box-shadow: 5px 5px 5px hsl(0, 0%, 10%);
-
-  .image {
-    height: 100%;
-  }
 
   .date,
   .title {
