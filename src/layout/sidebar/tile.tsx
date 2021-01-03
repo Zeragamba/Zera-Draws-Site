@@ -1,9 +1,9 @@
 import React from "react";
 
-import deviantArtLogo from "./deviant-art.png";
-import redditLogo from "./reddit-logo.png";
-import twitterLogo from "./twitter-logo.png";
-import koFiLogo from "./ko-fi-logo.png";
+import deviantArtLogo from "./logos/deviant-art.png";
+import redditLogo from "./logos/reddit-logo.png";
+import twitterLogo from "./logos/twitter-logo.png";
+import koFiLogo from "./logos/ko-fi-logo.png";
 
 import styles from "./tile.module.scss"
 

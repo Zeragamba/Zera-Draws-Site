@@ -1,16 +1,15 @@
 import React from "react";
 
-import {DeviantArtTile, KoFiTile, RedditTile, TwitterTile} from "./tile";
-
 import styles from './sidebar.module.scss';
 
+import {DeviantArtTile, KoFiTile, TwitterTile} from "./tile";
+
 export const Sidebar = () => (
-    <div className={styles.sidebar}>
-      <nav className={styles.socialNav}>
-          <DeviantArtTile />
-          <TwitterTile />
-          <RedditTile />
-          <KoFiTile />
-      </nav>
-    </div>
+  <div className={styles.sidebar}>
+    <nav className={styles.socialNav}>
+      <DeviantArtTile />
+      <TwitterTile />
+      <KoFiTile />
+    </nav>
+  </div>
 )
