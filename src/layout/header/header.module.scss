@@ -1,8 +1,20 @@
+@import "../../common/mixins";
+
 .header {
+  @include glass;
+
+  position: relative;
   grid-area: header;
+  text-align: center;
+
+  padding: 16px;
   width: 100%;
+}
 
-  padding-left: 16px;
+.headerText {
+  font-size: 64px;
+}
 
-  background: hsl(0, 0%, 40%);
+.subtitle {
+  font-size: 18px;
 }

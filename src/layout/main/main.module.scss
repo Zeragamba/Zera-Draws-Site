@@ -1,5 +1,7 @@
-@import "./../../breakpoints";
+@import "../../common/variables";
 
 .main {
-  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: $padding-md;
 }

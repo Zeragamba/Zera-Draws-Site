@@ -1,29 +1,26 @@
 import React from "react";
-
-import {Image} from "../../image-gallery/image";
-import {Gallery} from "../../image-gallery/gallery";
+import {Gallery_2020_08} from "../../image-gallery/galleries/2020-08";
+import {Gallery_2020_09} from "../../image-gallery/galleries/2020-09";
+import {Gallery_2020_10} from "../../image-gallery/galleries/2020-10";
+import {Gallery_2020_11} from "../../image-gallery/galleries/2020-11";
+import {Gallery_2020_12} from "../../image-gallery/galleries/2020-12";
+import {FeaturedGallery} from "../../image-gallery/galleries/featured";
 
 import styles from "./main.module.scss";
 
-const images: Image[] = [
-  {
-    id: 1,
-    src: "/images/1-wide.png",
-    title: "Sunset Palmer",
-    isWide: true,
-    date: "2020-12-30"
-  },
-  {
-    id: 2,
-    src: "/images/2-tall.png",
-    title: "Xmas Roshia",
-    isWide: false,
-    date: "2020-12-25"
-  },
+const galleries = [
+  Gallery_2020_12,
+  Gallery_2020_11,
+  Gallery_2020_10,
+  Gallery_2020_09,
+  Gallery_2020_08,
 ]
 
 export const Main = () => (
   <main className={styles.main}>
-    <Gallery title="December 2020" images={images} />
+    <FeaturedGallery />
+    {galleries.map((Gallery, index) => (
+      <Gallery key={index} />
+    ))}
   </main>
 )
