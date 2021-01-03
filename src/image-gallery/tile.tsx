@@ -1,7 +1,8 @@
 import React from 'react';
 
 import {Image} from "./image";
-import styles from './tile.module.scss';
+
+import "./tile.scss";
 
 interface Props {
   image: Image;
@@ -9,8 +10,10 @@ interface Props {
 
 export function Tile({image}: Props) {
   return (
-    <div className={styles.tileWrapper}>
-      <img className={styles.image} src={image.src} title={image.title} alt={image.title} />
+    <div className={"galleryTile"}>
+      <div className={"date"}>{image.date}</div>
+      <img className={"image"} src={image.src} alt={image.title} />
+      <div className={"title"}>{image.title}</div>
     </div>
   )
 }
