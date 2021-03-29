@@ -26,15 +26,8 @@
       <excludeFolder url="file://$MODULE_DIR$/public/system" />
       <excludeFolder url="file://$MODULE_DIR$/components" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Remote: ruby-3.0.0-p0" jdkType="RUBY_SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="bootsnap (v1.3.2, Remote: ruby-2.6.0-p0 (2)) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="bundler (v1.17.2, Remote: ruby-2.6.0-p0 (2)) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="globalid (v0.4.2, Remote: ruby-2.6.0-p0 (2)) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="mail (v2.7.1, Remote: ruby-2.6.0-p0 (2)) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="pg (v1.1.4, Remote: ruby-2.6.0-p0 (2)) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="rack-test (v1.1.0, Remote: ruby-2.6.0-p0 (2)) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="rails-dom-testing (v2.0.3, Remote: ruby-2.6.0-p0 (2)) [gem]" level="application" />
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />
