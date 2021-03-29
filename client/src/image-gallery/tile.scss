@@ -1,0 +1,56 @@
+@import "../common/breakpoints";
+@import "../common/variables";
+
+.galleryTile {
+  position: relative;
+  display: inline-flex;
+
+  justify-content: center;
+  align-items: center;
+
+  @media only screen and (max-width: $bp-mobile) {
+    align-items: center;
+    max-height: 80vh;
+
+    .image {
+      object-fit: scale-down;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  @media only screen and (min-width: $bp-mobile) {
+    height: 250px;
+    max-width: 400px;
+
+    .image {
+      object-fit: cover;
+      height: 100%;
+    }
+  }
+
+  overflow: hidden;
+  background: gray;
+
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px hsl(0, 0%, 10%);
+
+  .date,
+  .title {
+    position: absolute;
+    padding: $padding-sm;
+    width: 100%;
+    background: hsla(0, 100%, 100%, 0.75);
+    transition: top 250ms ease, bottom 250ms ease;
+  }
+
+  .date { top: -100%; }
+
+  .title { bottom: -100%; }
+
+  &:hover {
+    .date {top: 0;}
+
+    .title {bottom: 0;}
+  }
+}

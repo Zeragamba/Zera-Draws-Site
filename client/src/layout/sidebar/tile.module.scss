@@ -1,0 +1,57 @@
+@import "../../common/breakpoints";
+
+$logo-size: 48px;
+
+.wrapper {
+  display: block;
+
+  @media only screen and (min-width: $bp-mobile) {
+    position: relative;
+    width: $logo-size;
+    transition-property: width;
+    transition-duration: 250ms;
+    overflow: hidden;
+    z-index: 0;
+
+    &:hover {width: 250px}
+  }
+}
+
+.contents {
+  display: grid;
+  grid-template-columns: $logo-size 1fr;
+  grid-template-rows: $logo-size;
+  grid-template-areas: "logo label";
+  width: 100%;
+  background: hsla(20, 100%, 70%, 0%);
+  cursor: pointer;
+  transition: background-color 250ms;
+
+  &:hover {
+    background: hsla(20, 100%, 70%, 100%);
+  }
+
+  &:active { background: hsla(20, 100%, 60%, 100%); }
+}
+
+.logo {
+  grid-area: logo;
+  height: 100%;
+  padding: 8px;
+  justify-self: center;
+  align-self: center;
+}
+
+.label {
+  grid-area: label;
+  align-self: center;
+
+  @media only screen and (max-width: $bp-mobile) {
+    justify-self: left;
+  }
+
+  @media only screen and (min-width: $bp-mobile) {
+    justify-self: center;
+  }
+}
+

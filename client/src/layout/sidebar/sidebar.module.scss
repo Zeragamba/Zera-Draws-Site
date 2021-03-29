@@ -1,0 +1,22 @@
+@import "../../common/breakpoints";
+@import "../../common/mixins";
+@import "../../common/variables";
+
+.sidebar {
+  grid-area: sidebar;
+  position: relative;
+  z-index: 100;
+}
+
+.socialNav {
+  @include glass;
+
+  position: sticky;
+  top: $padding-md;
+  left: 0;
+
+  @media only screen and (max-width: $bp-mobile) {
+    position: relative;
+    top: 0;
+  }
+}

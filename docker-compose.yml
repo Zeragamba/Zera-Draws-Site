@@ -2,8 +2,8 @@ services:
   router:
     build: ./router
     ports:
-      - 3000:80
-      - 3001:443
+      - 80:80
+      - 443:443
   server:
     build: ./server
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
