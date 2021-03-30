@@ -82,5 +82,5 @@
       <textMaps />
     </LinkMapSettings>
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Remote: ruby-2.6.0-p0 (2)" project-jdk-type="RUBY_SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Remote: ruby-3.0.0-p0" project-jdk-type="RUBY_SDK" />
 </project>
