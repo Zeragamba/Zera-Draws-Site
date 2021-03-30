@@ -1,7 +1,28 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+Picture.create([
+  { date: "2020-08-08", order: 0, title: "Ensign Twilight", filename: "2020-08-08-01.png", mime_type: "image/png" },
+  { date: "2020-08-08", order: 1, title: "Ensign Twilight (Coloured)", filename: "2020-08-08-02.png", mime_type: "image/png" },
+  { date: "2020-08-21", order: 0, title: "Ready to Fight", filename: "2020-08-21-01.png", mime_type: "image/png" },
+  { date: "2020-08-22", order: 0, title: "Ensign Sunset", filename: "2020-08-22-01.png", mime_type: "image/png" },
+  { date: "2020-09-05", order: 0, title: "Roshia Ref", filename: "2020-09-05-01.png", mime_type: "image/png" },
+  { date: "2020-11-26", order: 0, title: "Ensign Applejack", filename: "2020-09-26-01.png", mime_type: "image/png" },
+  { date: "2020-10-01", order: 0, title: "Inktober 2020 | Fish", filename: "2020-10-01-01.jpg", mime_type: "image/png" },
+  { date: "2020-10-02", order: 0, title: "Inktober 2020 | Wisp", filename: "2020-10-02-01.jpg", mime_type: "image/png" },
+  { date: "2020-10-03", order: 0, title: "Inktober 2020 | Bulky", filename: "2020-10-03-01.jpg", mime_type: "image/png" },
+  { date: "2020-10-04", order: 0, title: "Inktober 2020 | Radio", filename: "2020-10-04-01.jpg", mime_type: "image/png" },
+  { date: "2020-10-05", order: 0, title: "Inktober 2020 | Blade", filename: "2020-10-05-01.jpg", mime_type: "image/png" },
+  { date: "2020-10-06", order: 0, title: "Inktober 2020 | Rodent", filename: "2020-10-06-01.jpg", mime_type: "image/png" },
+  { date: "2020-10-07", order: 0, title: "Inktober 2020 | Fancy", filename: "2020-10-07-01.jpg", mime_type: "image/png" },
+  { date: "2020-10-18", order: 0, title: "Roshia Ref v2", filename: "2020-10-18-01.png", mime_type: "image/png" },
+  { date: "2020-10-20", order: 0, title: "Ensign Rarity", filename: "2020-10-20-01.png", mime_type: "image/png" },
+  { date: "2020-11-18", order: 0, title: "Yang Xiao Long", filename: "2020-11-18-01.png", mime_type: "image/png" },
+  { date: "2020-12-07", order: 0, title: "Ah Hem...", filename: "2020-12-07-01.png", mime_type: "image/png" },
+  { date: "2020-12-19", order: 0, title: "Thank You AnimalGlitch", filename: "2020-12-19-01.png", mime_type: "image/png" },
+  { date: "2020-12-21", order: 0, title: "Thank You JustinWolfe", filename: "2020-12-21-01.png", mime_type: "image/png" },
+  { date: "2020-12-22", order: 0, title: "Thank You AnimeClaro", filename: "2020-12-22-01.png", mime_type: "image/png" },
+  { date: "2020-12-25", order: 0, title: "Xmas Roshia", filename: "2020-12-25-01.png", mime_type: "image/png" },
+  { date: "2020-12-25", order: 1, title: "Xmas Sunset", filename: "2020-12-25-02.png", mime_type: "image/png" },
+  { date: "2020-12-26", order: 0, title: "2020 Review", filename: "2020-12-26-01.png", mime_type: "image/png" },
+  { date: "2020-12-28", order: 0, title: "Psycho Crusher Cinder Fall | Nemsislivezx", filename: "2020-12-28-01.png", mime_type: "image/png" },
+  { date: "2020-12-30", order: 0, title: "Sunset Palmer | Malcontent", filename: "2020-12-30-01.png", mime_type: "image/png" },
+  { date: "2020-12-31", order: 0, title: "Happy New Year!", filename: "2020-12-31-01.png", mime_type: "image/png" },
+])
