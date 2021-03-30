@@ -1,9 +1,14 @@
+version: "3.9"
 services:
   router:
     build: ./router
     ports:
       - 80:80
       - 443:443
+    depends_on:
+      - client
+      - server
+
   server:
     build: ./server
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -11,7 +16,7 @@ services:
       - ./server:/zera-draws
     depends_on:
       - db
-      - router
+
   client:
     build: ./client
     command: bash -c "yarn start"
@@ -19,11 +24,13 @@ services:
       CHOKIDAR_USEPOLLING: "true"
     depends_on:
       - server
-      - router
     volumes:
       - ./client:/usr/src/app
+
   db:
     image: postgres
+    ports:
+      - 5432:5432
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
