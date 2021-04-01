@@ -13,6 +13,7 @@ class PictureController < ApplicationController
       t.json { render json: picture }
       t.any do
         image = open("#{Rails.root}/storage/pictures/#{picture.filename}", "rb") { |f| f.read }
+        expires_in 1.year, public: true
         send_data image, filename: "#{picture.title}", type: picture.mime_type, disposition: 'inline'
       end
     end
