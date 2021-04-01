@@ -1,16 +1,17 @@
 import React from 'react';
 
-import {Image} from "./image";
-import styles from './gallery.module.scss';
+import {Picture} from "../ServerApi/pictures";
 import {Tile} from "./tile";
+
+import styles from './gallery.module.scss';
 
 interface Props {
   title?: string;
   reverse?: boolean;
-  images: Image[];
+  images: Picture[];
 }
 
-function sortById (a:Image, b:Image):number {
+function sortById(a: Picture, b: Picture): number {
   if (a.id >= b.id) return 1;
   if (a.id <= b.id) return -1;
   return 0;

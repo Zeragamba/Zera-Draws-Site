@@ -1,11 +1,11 @@
 import React from 'react';
 
-import {Image} from "./image";
+import {Picture} from "../ServerApi/pictures";
 
 import "./tile.scss";
 
 interface Props {
-  image: Image;
+  image: Picture;
 }
 
 export function Tile({image}: Props) {
