@@ -1,9 +1,8 @@
 class PictureController < ApplicationController
   def index
-    render json: Picture
-      .all
-      .map(&:as_json)
-      .each { |picture| picture["img"] = "/api/picture/#{picture["id"]}" }
+    pictures = Picture
+    pictures = Picture.none if params[:tag]
+    render json: { size: pictures.count, pictures: pictures.all }
   end
 
   def view
