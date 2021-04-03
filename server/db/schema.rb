@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_200549) do
 
   create_table "pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.date "date"
-    t.integer "order"
+    t.integer "order", default: 0
     t.string "title"
     t.string "filename"
     t.string "mime_type"
