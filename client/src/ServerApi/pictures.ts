@@ -1,19 +1,8 @@
 import {AxiosResponse} from "axios";
 
 import request from "./request";
-
-const Pictures = {
-  all() {
-    return request("GET", "/pictures")
-      .then((res: PicturesIndexResponse) => res.data.pictures);
-  },
-  tag(tag: string) {
-    return request("GET", "/pictures", {tag})
-      .then((res: PicturesIndexResponse) => res.data.pictures);
-  },
-};
-
-export default Pictures;
+import {useCallback} from "react";
+import useServerApi from "./useServerApi";
 
 export interface Picture {
   id: string;
@@ -29,3 +18,20 @@ export interface PicturesIndexResponse extends AxiosResponse {
     pictures: Picture[];
   }
 }
+
+const Pictures = {
+  useAll() {
+    return useServerApi(useCallback(() => {
+      return request("GET", "/pictures")
+        .then((res: PicturesIndexResponse) => res.data.pictures);
+    }, []));
+  },
+  useTag(tag: string) {
+    return useServerApi(useCallback(() => {
+      return request("GET", "/pictures", {tag})
+        .then((res: PicturesIndexResponse) => res.data.pictures);
+    }, [tag]));
+  },
+};
+
+export default Pictures;
