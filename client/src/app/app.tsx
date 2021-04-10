@@ -1,9 +1,9 @@
-import React from "react";
+import React, {FC} from "react";
 import {Layout} from "../layout/layout";
 
 import styles from "./app.module.scss";
 
-export const App = () => {
+export const App: FC = () => {
   return (
     <div className={styles.app}>
       <Layout />

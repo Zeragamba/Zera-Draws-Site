@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "./header.module.scss";
+import React, {FC} from 'react';
+import styles from './header.module.scss';
 
-export const Header = () => (
+export const Header: FC = () => (
   <header className={styles.header}>
     <div className={styles.headerText}>Zeragamba</div>
     <div className={styles.subtitle}>Learning to art</div>

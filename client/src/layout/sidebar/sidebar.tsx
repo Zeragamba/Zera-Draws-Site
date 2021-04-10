@@ -1,10 +1,10 @@
-import React from "react";
+import React, {FC} from 'react';
 
 import styles from './sidebar.module.scss';
 
-import {DeviantArtTile, KoFiTile, TwitterTile} from "./tile";
+import {DeviantArtTile, KoFiTile, TwitterTile} from './tile';
 
-export const Sidebar = () => (
+export const Sidebar: FC = () => (
   <div className={styles.sidebar}>
     <nav className={styles.socialNav}>
       <DeviantArtTile />
@@ -12,4 +12,4 @@ export const Sidebar = () => (
       <KoFiTile />
     </nav>
   </div>
-)
+);

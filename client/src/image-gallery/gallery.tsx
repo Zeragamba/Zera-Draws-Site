@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {FC} from 'react';
 
-import {Picture} from "../ServerApi/pictures";
-import {Tile} from "./tile";
+import {Picture} from '../ServerApi/pictures';
+import {Tile} from './tile';
 
 import styles from './gallery.module.scss';
 
-interface Props {
+interface GalleryProps {
   title?: string;
   reverse?: boolean;
   images: Picture[];
@@ -17,15 +17,19 @@ function sortById(a: Picture, b: Picture): number {
   return 0;
 }
 
-export function Gallery(props: Props) {
-  let images = props.images.sort(sortById);
-  if (props.reverse) images = images.reverse();
+export const Gallery: FC<GalleryProps> = ({
+  images,
+  reverse,
+  title,
+}) => {
+  images = images.sort(sortById);
+  if (reverse) images = images.reverse();
 
   return (
     <div className={styles.gallery}>
       {
-        props.title
-          ? (<div className={styles.galleryTitle}>{props.title}</div>)
+        title
+          ? (<div className={styles.galleryTitle}>{title}</div>)
           : null
       }
       <div className={styles.galleryGrid}>
@@ -34,5 +38,5 @@ export function Gallery(props: Props) {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};

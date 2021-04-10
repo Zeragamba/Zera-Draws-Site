@@ -1,10 +1,10 @@
-import React from "react";
-import {AllPicturesGallery} from "../../image-gallery/galleries/all-pictures";
+import React, {FC} from 'react';
+import {AllPicturesGallery} from '../../image-gallery/galleries/all-pictures-gallery';
 
-import styles from "./main.module.scss";
+import styles from './main.module.scss';
 
-export const Main = () => (
+export const Main: FC = () => (
   <main className={styles.main}>
     <AllPicturesGallery />
   </main>
-)
+);
