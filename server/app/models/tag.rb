@@ -2,10 +2,10 @@ class Tag < ApplicationRecord
   has_and_belongs_to_many :pictures
   validates_uniqueness_of :name
 
-  before_create :generate_slug
+  before_save :update_slug
 
   def self.find_or_create(tag_name)
-    slug = self.slug_for_name(tag_name)
+    slug = Slug.to_slug(tag_name)
 
     tag = Tag.find_by(slug: slug)
     tag ||= Tag.create(slug: slug, name: tag_name)
@@ -13,11 +13,7 @@ class Tag < ApplicationRecord
     return tag
   end
 
-  def self.slug_for_name(name)
-    return name.downcase.gsub(/[^\w\/]+/, "-")
-  end
-
-  def generate_slug
-    self.slug = self.class.slug_for_name(self.name)
+  def update_slug
+    self.slug = Slug.to_slug(self.name)
   end
 end

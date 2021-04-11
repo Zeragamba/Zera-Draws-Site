@@ -38,6 +38,7 @@ module ZeraDraws
     config.api_only = true
 
     config.hosts << "server"
+    config.hosts << "localhost"
 
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid

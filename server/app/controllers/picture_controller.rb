@@ -4,10 +4,17 @@ class PictureController < ApplicationController
     @api_url = "http://localhost:3001"
 
     if params[:tag]
-      @pictures = @pictures.includes(:tags).where(:tags => { slug: Tag.slug_for_name(params[:tag]) })
+      @pictures = @pictures.includes(:tags).where(:tags => { slug: Slug.to_slug(params[:tag]) })
     end
 
     render formats: :json
+  end
+
+  def recent
+    @pictures = Picture.order(:date, :order).limit(10)
+    @api_url = "http://localhost:3001"
+
+    render :index, formats: :json
   end
 
   def view
