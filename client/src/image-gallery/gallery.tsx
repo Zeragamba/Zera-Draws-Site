@@ -8,22 +8,17 @@ import styles from './gallery.module.scss';
 interface GalleryProps {
   title?: string;
   reverse?: boolean;
-  images: Picture[];
-}
-
-function sortById(a: Picture, b: Picture): number {
-  if (a.id >= b.id) return 1;
-  if (a.id <= b.id) return -1;
-  return 0;
+  pictures: Picture[];
 }
 
 export const Gallery: FC<GalleryProps> = ({
-  images,
-  reverse,
-  title,
-}) => {
-  images = images.sort(sortById);
-  if (reverse) images = images.reverse();
+                                            pictures,
+                                            reverse = false,
+                                            title,
+                                          }) => {
+  if (reverse) {
+    pictures = pictures.reverse()
+  }
 
   return (
     <div className={styles.gallery}>
@@ -33,8 +28,8 @@ export const Gallery: FC<GalleryProps> = ({
           : null
       }
       <div className={styles.galleryGrid}>
-        {images.map((image) => (
-          <GalleryTile key={image.id} picture={image} />
+        {pictures.map((image) => (
+          <GalleryTile key={image.id} picture={image}/>
         ))}
       </div>
     </div>

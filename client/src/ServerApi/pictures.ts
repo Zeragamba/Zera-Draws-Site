@@ -26,9 +26,15 @@ const Pictures = {
         .then((res: PicturesIndexResponse) => res.data.pictures);
     }, []));
   },
+  useRecent() {
+    return useServerApi(useCallback(() => {
+      return request("GET", "/pictures/recent")
+        .then((res: PicturesIndexResponse) => res.data.pictures);
+    }, []));
+  },
   useTag(tag: string) {
     return useServerApi(useCallback(() => {
-      return request("GET", "/pictures", {tag})
+      return request("GET", "/pictures", {params: {tag}})
         .then((res: PicturesIndexResponse) => res.data.pictures);
     }, [tag]));
   },

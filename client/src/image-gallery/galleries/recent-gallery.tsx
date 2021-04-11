@@ -3,12 +3,12 @@ import React, {FC} from 'react';
 import {Gallery} from '../gallery';
 import {Pictures} from "../../ServerApi";
 
-export const AllPicturesGallery: FC = () => {
-  const {data, LoadingGate} = Pictures.useAll();
+export const RecentGallery: FC = () => {
+  const {data, LoadingGate} = Pictures.useTag("Featured");
 
   return (
     <LoadingGate>
-      <Gallery title="Gallery" pictures={data} reverse={true}/>
+      <Gallery title="Recent" pictures={data}/>
     </LoadingGate>
   );
 };
