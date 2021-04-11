@@ -48,7 +48,7 @@ function useServerApi(apiCallback) {
     if (state.fetching) {
       return <div>Loading...</div>;
     } else if (state.error) {
-      return <div>ERROR: {state.error}</div>;
+      return <div>ERROR: {state.error.toString()}</div>;
     } else {
       return children;
     }
