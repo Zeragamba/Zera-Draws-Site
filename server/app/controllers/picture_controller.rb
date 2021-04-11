@@ -1,19 +1,25 @@
 class PictureController < ApplicationController
   def index
-    pictures = Picture
-    pictures = Picture.none if params[:tag]
-    render json: { size: pictures.count, pictures: pictures.all }
+    @pictures = Picture.order(:date, :order)
+    @api_url = "http://localhost:3001"
+
+    if params[:tag]
+      @pictures = @pictures.includes(:tags).where(:tags => { slug: Tag.slug_for_name(params[:tag]) })
+    end
+
+    render formats: :json
   end
 
   def view
-    picture = Picture.find(params[:id])
+    @picture = Picture.find(params[:id])
+    @api_url = "http://localhost:3001"
 
     respond_to do |t|
-      t.json { render json: picture }
+      t.json {}
       t.any do
-        image = open("#{Rails.root}/storage/pictures/#{picture.filename}", "rb") { |f| f.read }
+        image = open("#{Rails.root}/storage/pictures/#{@picture.filename}", "rb") { |f| f.read }
         expires_in 1.year, public: true
-        send_data image, filename: "#{picture.title}", type: picture.mime_type, disposition: 'inline'
+        send_data image, filename: "#{@picture.title}", type: @picture.mime_type, disposition: 'inline'
       end
     end
   end

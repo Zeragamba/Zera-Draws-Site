@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_29_200549) do
+ActiveRecord::Schema.define(version: 2021_04_10_200526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -22,6 +22,22 @@ ActiveRecord::Schema.define(version: 2021_03_29_200549) do
     t.string "title"
     t.string "filename"
     t.string "mime_type"
+  end
+
+  create_table "pictures_tags", id: false, force: :cascade do |t|
+    t.uuid "tag_id"
+    t.uuid "picture_id"
+    t.index ["picture_id"], name: "index_pictures_tags_on_picture_id"
+    t.index ["tag_id"], name: "index_pictures_tags_on_tag_id"
+  end
+
+  create_table "tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+    t.index ["slug"], name: "index_tags_on_slug", unique: true
   end
 
 end
