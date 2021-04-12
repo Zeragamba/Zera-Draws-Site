@@ -4,6 +4,14 @@ class Picture < ApplicationRecord
 
   before_save :update_slug
 
+  def filename
+    return self.slug + self.ext
+  end
+
+  def mime_type
+    return Mime::Type.lookup_by_extension(self.ext.downcase.sub(/^\./, ''))
+  end
+
   def update_slug
     self.slug = Slug.to_slug(self.title)
   end

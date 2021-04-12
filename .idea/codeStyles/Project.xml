@@ -11,6 +11,9 @@
     <MarkdownNavigatorCodeStyleSettings>
       <option name="RIGHT_MARGIN" value="72" />
     </MarkdownNavigatorCodeStyleSettings>
+    <Ruby>
+      <option name="CHAIN_CALLS_ALIGNMENT" value="0" />
+    </Ruby>
     <codeStyleSettings language="JavaScript">
       <option name="RIGHT_MARGIN" value="80" />
       <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
@@ -32,6 +35,12 @@
         <option name="INDENT_SIZE" value="2" />
         <option name="CONTINUATION_INDENT_SIZE" value="2" />
         <option name="TAB_SIZE" value="2" />
+      </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="ruby">
+      <option name="ALIGN_MULTILINE_PARAMETERS" value="false" />
+      <indentOptions>
+        <option name="USE_RELATIVE_INDENTS" value="false" />
       </indentOptions>
     </codeStyleSettings>
   </code_scheme>
