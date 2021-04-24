@@ -4,7 +4,7 @@ import {Gallery} from '../gallery';
 import {Pictures} from "../../ServerApi";
 
 export const RecentGallery: FC = () => {
-  const {data, LoadingGate} = Pictures.useTag("Featured");
+  const {data, LoadingGate} = Pictures.useRecent();
 
   return (
     <LoadingGate>

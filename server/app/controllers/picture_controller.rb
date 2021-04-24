@@ -11,7 +11,7 @@ class PictureController < ApplicationController
   end
 
   def recent
-    @pictures = Picture.order(:date, :order).limit(10)
+    @pictures = Picture.order(date: :desc, order: :asc).limit(5)
     @api_url = "http://localhost:3001"
 
     render :index, formats: :json
