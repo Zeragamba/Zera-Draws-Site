@@ -1,6 +1,7 @@
 @import "../../common/breakpoints";
 
 $logo-size: 48px;
+$label-width: 200px;
 
 .wrapper {
   display: block;
@@ -13,25 +14,25 @@ $logo-size: 48px;
     overflow: hidden;
     z-index: 0;
 
-    &:hover {width: 250px}
+    &:hover {width: $logo-size + $label-width}
   }
 }
 
 .contents {
   display: grid;
-  grid-template-columns: $logo-size 1fr;
+  grid-template-columns: $logo-size $label-width;
   grid-template-rows: $logo-size;
   grid-template-areas: "logo label";
-  width: 100%;
+  width: $logo-size + $label-width;
   background: hsla(20, 100%, 70%, 0%);
   cursor: pointer;
   transition: background-color 250ms;
 
   &:hover {
-    background: hsla(20, 100%, 70%, 100%);
+    background: hsla(10, 100%, 70%, 100%);
   }
 
-  &:active { background: hsla(20, 100%, 60%, 100%); }
+  &:active { background: hsla(10, 100%, 60%, 100%); }
 }
 
 .logo {

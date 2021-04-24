@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 
 import {Picture} from '../ServerApi/pictures';
 
-import './tile.scss';
+import './gallery-tile.scss';
 import {API_URL} from "../ServerApi/request";
 
 interface TileProps {

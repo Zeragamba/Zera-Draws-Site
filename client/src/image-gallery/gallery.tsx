@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 
 import {Picture} from '../ServerApi/pictures';
-import {GalleryTile} from './galleryTile';
+import {GalleryTile} from './gallery-tile';
 
 import styles from './gallery.module.scss';
 
