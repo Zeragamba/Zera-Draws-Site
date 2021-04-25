@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
 import deviantArtLogo from './logos/deviant-art.png';
 import redditLogo from './logos/reddit-logo.png';

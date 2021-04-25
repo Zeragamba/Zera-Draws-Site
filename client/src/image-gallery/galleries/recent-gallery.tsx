@@ -1,14 +1,14 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
-import {Gallery} from '../gallery';
-import {Pictures} from "../../ServerApi";
+import { Gallery } from '../gallery';
+import { Pictures } from '../../server-api';
 
 export const RecentGallery: FC = () => {
-  const {data, LoadingGate} = Pictures.useRecent();
+  const { data = [], LoadingGate } = Pictures.useRecent();
 
   return (
     <LoadingGate>
-      <Gallery title="Recent" pictures={data}/>
+      <Gallery title="Recent" pictures={data} />
     </LoadingGate>
   );
 };

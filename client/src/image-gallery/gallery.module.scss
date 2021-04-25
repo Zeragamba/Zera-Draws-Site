@@ -1,5 +1,4 @@
-@import "../common/mixins";
-@import "../common/variables";
+@import "../common";
 
 .gallery {
   @include glass;
@@ -9,8 +8,8 @@
 
 .galleryGrid {
   display: flex;
-  justify-content: flex-start;
   flex-wrap: wrap;
+  justify-content: flex-start;
   gap: $padding-md;
 }
 

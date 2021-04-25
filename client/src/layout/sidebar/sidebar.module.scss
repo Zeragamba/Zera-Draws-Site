@@ -1,11 +1,9 @@
-@import "../../common/breakpoints";
-@import "../../common/mixins";
-@import "../../common/variables";
+@import "../../common";
 
 .sidebar {
-  grid-area: sidebar;
   position: relative;
   z-index: 100;
+  grid-area: sidebar;
 }
 
 .socialNav {

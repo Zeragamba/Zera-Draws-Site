@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
-import {Picture} from '../ServerApi/pictures';
-import {GalleryTile} from './gallery-tile';
+import { Picture } from '../server-api/pictures';
+import { GalleryTile } from './gallery-tile';
 
 import styles from './gallery.module.scss';
 
@@ -12,12 +12,12 @@ interface GalleryProps {
 }
 
 export const Gallery: FC<GalleryProps> = ({
-                                            pictures,
-                                            reverse = false,
-                                            title,
-                                          }) => {
+  pictures,
+  reverse = false,
+  title,
+}) => {
   if (reverse) {
-    pictures = pictures.reverse()
+    pictures = pictures.reverse();
   }
 
   return (
@@ -29,7 +29,7 @@ export const Gallery: FC<GalleryProps> = ({
       }
       <div className={styles.galleryGrid}>
         {pictures.map((image) => (
-          <GalleryTile key={image.id} picture={image}/>
+          <GalleryTile key={image.id} picture={image} />
         ))}
       </div>
     </div>

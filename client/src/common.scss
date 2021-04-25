@@ -1,3 +1,10 @@
+$bp-mobile: 800px;
+
+$padding-lg: 32px;
+$padding-md: 16px;
+$padding-sm: 8px;
+$padding-xs: 4px;
+
 @mixin glass {
   color: hsl(0, 0%, 80%);
   background-repeat: no-repeat;

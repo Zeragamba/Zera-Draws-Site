@@ -1,6 +1,6 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
-import {Picture} from '../ServerApi/pictures';
+import { Picture } from '../server-api/pictures';
 
 import './gallery-tile.scss';
 
@@ -8,7 +8,7 @@ interface TileProps {
   picture: Picture;
 }
 
-export const GalleryTile: FC<TileProps> = ({picture}) => {
+export const GalleryTile: FC<TileProps> = ({ picture }) => {
   return (
     <div className={'galleryTile'}>
       <div className={'date'}>{picture.date}</div>
