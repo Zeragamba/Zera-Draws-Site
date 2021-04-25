@@ -1,4 +1,4 @@
-SEED_DATA_DIR = File.join(Rails.root, 'data', 'seed_images')
+SEED_DATA_DIR = DATA_DIR.join('seed_images')
 
 PictureManager.import(date: "2020-08-08", order: 0, title: "Ensign Twilight", filename: File.join(SEED_DATA_DIR, "2020-08-08-01.png"))
   .add_tags("MLP/Twilight")

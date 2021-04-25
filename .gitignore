@@ -1,4 +1,4 @@
-/tmp
+/data
 
-/ssl
-!/ssl/.keep
+/data/ssl
+!/data/ssl/.keep

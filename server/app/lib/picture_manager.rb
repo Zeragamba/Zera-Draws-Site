@@ -1,5 +1,6 @@
 class PictureManager
-  STORAGE_DIR = File.join(Rails.root, 'storage', 'pictures')
+  STORAGE_DIR = DATA_DIR.join('images')
+  IMAGES_URL = "http://localhost:3002"
 
   def self.import(date: Date.today, order: 0, title:, filename:)
     id = SecureRandom.uuid

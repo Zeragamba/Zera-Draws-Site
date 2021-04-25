@@ -6,8 +6,12 @@
     "@types/classnames": "^2.2.11",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
+    "eslint": "^7.25.0",
+    "eslint-plugin-react": "^7.23.2",
     "image-loader": "^0.0.1",
     "node-sass": "^4.0.0",
     "react": "^17.0.2",
@@ -21,19 +25,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "linebreak-style": [
-        "error",
-        "unix"
-      ]
-    }
+    "eject": "react-scripts eject",
+    "lint": "eslint src"
   },
   "browserslist": {
     "production": [

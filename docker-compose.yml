@@ -5,6 +5,12 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - ./data/db:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
+  image-server:
+    image: halverneus/static-file-server
+    ports:
+      - 3002:8080
+    volumes:
+      - ./data/images:/web

@@ -12,6 +12,10 @@ class Picture < ApplicationRecord
     return Mime::Type.lookup_by_extension(self.ext.downcase.sub(/^\./, ''))
   end
 
+  def src(size: :full)
+    return [PictureManager::IMAGES_URL, self.id, size.to_s + self.ext].join('/')
+  end
+
   def update_slug
     self.slug = Slug.to_slug(self.title)
   end
