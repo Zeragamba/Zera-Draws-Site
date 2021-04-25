@@ -9,7 +9,6 @@ import styles from './main.module.scss';
 export const Main: FC = () => (
   <main className={styles.main}>
     <FeaturedGallery />
-    <RecentGallery />
     <AllPicturesGallery />
   </main>
 );

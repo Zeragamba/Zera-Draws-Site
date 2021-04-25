@@ -8,7 +8,7 @@ export const AllPicturesGallery: FC = () => {
 
   return (
     <LoadingGate>
-      <Gallery title="Gallery" pictures={data} reverse={true} />
+      <Gallery pictures={data} reverse={true} />
     </LoadingGate>
   );
 };
