@@ -9,7 +9,9 @@ export interface Picture {
   date: string;
   order: number;
   title: string;
-  src: string;
+  srcs: {
+    [size: string]: string
+  };
   height: number;
   width: number;
 }

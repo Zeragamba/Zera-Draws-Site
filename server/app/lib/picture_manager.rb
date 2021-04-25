@@ -2,16 +2,19 @@ class PictureManager
   STORAGE_DIR = DATA_DIR.join('images')
   IMAGES_URL = "http://localhost:3002"
 
+  SIZES = { # ImageMagick geometry sizes: https://www.imagemagick.org/script/command-line-processing.php#geometry
+    "high": "3000x3000",
+    "gallery": "x250",
+  }
+
   def self.import(date: Date.today, order: 0, title:, filename:)
     id = SecureRandom.uuid
     ext = File.extname(filename)
 
-    src_filename = filename
-    dest_filename = File.join(STORAGE_DIR, id, "full#{ext}")
-    FileUtils.makedirs(File.dirname(dest_filename))
-    FileUtils.copy(src_filename, dest_filename)
-    width, height = FastImage.size(dest_filename)
-    type = FastImage.type(dest_filename)
+    self.export_sizes(filename, id, ext)
+
+    width, height = FastImage.size(filename)
+    type = FastImage.type(filename)
 
     return Picture.create(
       id: id,
@@ -28,5 +31,17 @@ class PictureManager
   def self.read(picture, size: :full)
     filename = File.join(picture.id, size.to_s + picture.ext)
     return open(File.join(STORAGE_DIR, filename), "rb") { |f| f.read }
+  end
+
+  def self.export_sizes(src_filename, id, ext)
+    dest_folder = STORAGE_DIR.join(id)
+    FileUtils.makedirs(dest_folder)
+    FileUtils.copy(src_filename, dest_folder.join("full#{ext}"))
+
+    SIZES.each do |name, dimensions|
+      image = MiniMagick::Image.open(src_filename)
+      image.resize(dimensions)
+      image.write(dest_folder.join("#{name}#{ext}"))
+    end
   end
 end

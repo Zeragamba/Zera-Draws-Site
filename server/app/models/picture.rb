@@ -12,8 +12,15 @@ class Picture < ApplicationRecord
     return Mime::Type.lookup_by_extension(self.ext.downcase.sub(/^\./, ''))
   end
 
-  def src(size: :full)
-    return [PictureManager::IMAGES_URL, self.id, size.to_s + self.ext].join('/')
+  def srcs
+    srcs = {
+      full: [PictureManager::IMAGES_URL, self.id, "full#{self.ext}"].join('/')
+    }
+    PictureManager::SIZES.keys.map do |size|
+      srcs[size] = [PictureManager::IMAGES_URL, self.id, size.to_s + self.ext].join('/')
+    end
+
+    return srcs
   end
 
   def update_slug
