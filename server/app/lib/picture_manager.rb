@@ -11,6 +11,7 @@ class PictureManager
     FileUtils.makedirs(File.dirname(dest_filename))
     FileUtils.copy(src_filename, dest_filename)
     width, height = FastImage.size(dest_filename)
+    type = FastImage.type(dest_filename)
 
     return Picture.create(
       id: id,
@@ -19,6 +20,7 @@ class PictureManager
       height: height,
       date: date,
       order: order,
+      mime_type: "image/#{type}",
       ext: ext
     )
   end

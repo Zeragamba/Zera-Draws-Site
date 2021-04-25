@@ -17,12 +17,13 @@ ActiveRecord::Schema.define(version: 2021_04_11_235008) do
   enable_extension "plpgsql"
 
   create_table "pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.date "date"
-    t.integer "order", default: 0
-    t.string "title"
+    t.date "date", null: false
+    t.integer "order", default: 0, null: false
+    t.string "title", null: false
     t.integer "height", null: false
     t.integer "width", null: false
-    t.string "slug"
+    t.string "slug", null: false
+    t.string "mime_type", null: false
     t.string "ext", null: false
     t.index ["slug"], name: "index_pictures_on_slug", unique: true
   end
