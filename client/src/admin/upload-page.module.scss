@@ -1,0 +1,6 @@
+@import "src/common";
+
+.page {
+  @include glass;
+  padding: $padding-md;
+}

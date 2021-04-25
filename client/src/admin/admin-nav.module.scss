@@ -1,0 +1,21 @@
+@import "src/common";
+
+.page {
+  @include glass;
+}
+
+.navItem {
+  padding: $padding-md;
+  transition: background-color 250ms;
+  cursor: pointer;
+
+  &:hover {
+    color: $colour-dark;
+    background-color: $colour-primary-light;
+  }
+
+  &Active {
+    color: $colour-dark;
+    background-color: $colour-primary;
+  }
+}

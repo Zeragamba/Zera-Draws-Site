@@ -5,7 +5,7 @@ import redditLogo from './logos/reddit-logo.png';
 import twitterLogo from './logos/twitter-logo.png';
 import koFiLogo from './logos/ko-fi-logo.png';
 
-import styles from './tile.module.scss';
+import styles from './sidebar-item.module.scss';
 
 interface TitleProps {
   name: string,
@@ -13,7 +13,7 @@ interface TitleProps {
   link: string,
 }
 
-export const Tile: FC<TitleProps> = ({
+export const SidebarItem: FC<TitleProps> = ({
   name,
   image,
   link,
@@ -33,7 +33,7 @@ export const Tile: FC<TitleProps> = ({
 };
 
 export const DeviantArtTile: FC = () => (
-  <Tile
+  <SidebarItem
     image={deviantArtLogo}
     name={'DeviantArt'}
     link={'https://www.deviantart.com/zeragamba'}
@@ -41,7 +41,7 @@ export const DeviantArtTile: FC = () => (
 );
 
 export const TwitterTile: FC = () => (
-  <Tile
+  <SidebarItem
     image={twitterLogo}
     name={'Twitter'}
     link={'https://www.twitter.com/zeragamba'}
@@ -49,11 +49,11 @@ export const TwitterTile: FC = () => (
 );
 
 export const KoFiTile: FC = () => (
-  <Tile image={koFiLogo} name={'Ko-fi'} link={'https://ko-fi.com/zeragamba'} />
+  <SidebarItem image={koFiLogo} name={'Ko-fi'} link={'https://ko-fi.com/zeragamba'} />
 );
 
 export const RedditTile: FC = () => (
-  <Tile
+  <SidebarItem
     image={redditLogo}
     name={'Reddit'}
     link={'https://www.reddit.com/user/Zeragamba'}

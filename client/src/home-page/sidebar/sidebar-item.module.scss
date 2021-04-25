@@ -23,16 +23,16 @@ $label-width: 200px;
   width: $logo-size + $label-width;
   cursor: pointer;
   transition: background-color 250ms;
-  background: hsla(20, 100%, 70%, 0%);
+  background: change-color($colour-primary-light, $alpha: 0);
   grid-template-columns: $logo-size $label-width;
   grid-template-rows: $logo-size;
   grid-template-areas: "logo label";
 
   &:hover {
-    background: hsla(10, 100%, 70%, 100%);
+    background: change-color($colour-primary-light, $alpha: 1);
   }
 
-  &:active { background: hsla(10, 100%, 60%, 100%); }
+  &:active { background: change-color($colour-primary, $alpha: 1); }
 }
 
 .logo {
@@ -46,6 +46,7 @@ $label-width: 200px;
 .label {
   align-self: center;
   grid-area: label;
+  color: $colour-dark;
 
   @media only screen and (max-width: $bp-mobile) {
     justify-self: left;

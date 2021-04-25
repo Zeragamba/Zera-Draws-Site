@@ -5,6 +5,14 @@ $padding-md: 16px;
 $padding-sm: 8px;
 $padding-xs: 4px;
 
+$colour-primary: hsl(10, 100%, 70%);
+$colour-primary-light: lighten($colour-primary, 20%);
+$colour-primary-dark: darken($colour-primary, 10%);
+
+$colour-dark: #000000;
+$colour-grey: #000000;
+$colour-light: #000000;
+
 @mixin glass {
   color: hsl(0, 0%, 80%);
   background-repeat: no-repeat;
