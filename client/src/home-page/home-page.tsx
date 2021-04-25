@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 
-import { Header } from './header';
+import { Header } from '../ui/header';
 import { Main } from './main';
 import { Sidebar } from './sidebar';
 
-import styles from './layout.module.scss';
+import styles from './home-page.module.scss';
 
-export const Layout: FC = () => (
+export const HomePage: FC = () => (
   <div className={styles.layout}>
     <Header />
     <Sidebar />

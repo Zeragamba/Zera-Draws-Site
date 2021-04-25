@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { Gallery } from '../gallery';
-import { Pictures } from '../../server-api';
+import { Pictures } from '../../../server-api';
 
 export const AllPicturesGallery: FC = () => {
   const { data = [], LoadingGate } = Pictures.useAll();

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Picture } from '../server-api/pictures';
+import { Picture } from '../../server-api/pictures';
 
 import './gallery-tile.scss';
 

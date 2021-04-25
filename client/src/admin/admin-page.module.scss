@@ -1,0 +1,18 @@
+@import "src/common";
+
+.adminLayout {
+  display: grid;
+  padding: $padding-lg;
+  gap: $padding-md;
+
+  grid-template-columns: 100%;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+          "header"
+          "main";
+}
+
+.adminMain {
+  @include glass;
+  padding: $padding-md;
+}
