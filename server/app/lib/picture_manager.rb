@@ -10,8 +10,17 @@ class PictureManager
     dest_filename = File.join(STORAGE_DIR, id, "full#{ext}")
     FileUtils.makedirs(File.dirname(dest_filename))
     FileUtils.copy(src_filename, dest_filename)
+    width, height = FastImage.size(dest_filename)
 
-    return Picture.create(id: id, title: title, date: date, order: order, ext: ext)
+    return Picture.create(
+      id: id,
+      title: title,
+      width: width,
+      height: height,
+      date: date,
+      order: order,
+      ext: ext
+    )
   end
 
   def self.read(picture, size: :full)

@@ -98,6 +98,7 @@
     <orderEntry type="library" scope="PROVIDED" name="debase-ruby_core_source (v0.10.12, Remote: ruby-3.0.1-p64) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="diff-lcs (v1.4.4, Remote: ruby-3.0.1-p64) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="erubi (v1.10.0, Remote: ruby-3.0.1-p64) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="fastimage (v2.2.3, Remote: ruby-3.0.1-p64) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.15.0, Remote: ruby-3.0.1-p64) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v0.4.2, Remote: ruby-3.0.1-p64) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v1.8.9, Remote: ruby-3.0.1-p64) [gem]" level="application" />

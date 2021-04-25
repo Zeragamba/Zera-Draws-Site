@@ -10,6 +10,8 @@ export interface Picture {
   order: number;
   title: string;
   src: string;
+  height: number;
+  width: number;
 }
 
 export interface PicturesIndexResponse extends AxiosResponse {

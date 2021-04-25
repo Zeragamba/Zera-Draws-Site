@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2021_04_11_235008) do
     t.date "date"
     t.integer "order", default: 0
     t.string "title"
+    t.integer "height", null: false
+    t.integer "width", null: false
     t.string "slug"
     t.string "ext", null: false
     t.index ["slug"], name: "index_pictures_on_slug", unique: true

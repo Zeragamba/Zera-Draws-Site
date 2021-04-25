@@ -9,7 +9,10 @@
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/data" />
+      <excludeFolder url="file://$MODULE_DIR$/data/seed_images" />
     </content>
+    <content url="file://$MODULE_DIR$/data/seed_images" />
     <orderEntry type="jdk" jdkName="Remote: ruby-3.0.1-p64" jdkType="RUBY_SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="rbs (v1.0.4, Remote: ruby-3.0.1-p64) [gem]" level="application" />

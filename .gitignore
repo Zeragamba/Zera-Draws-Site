@@ -1,4 +1,5 @@
 /data
+!/data/seed_images
 
 /data/ssl
 !/data/ssl/.keep
