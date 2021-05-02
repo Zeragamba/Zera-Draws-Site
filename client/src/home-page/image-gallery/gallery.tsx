@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 
 import { GalleryItem } from './gallery-item';
 import { Glass } from '../../ui/glass';
+import { useResize } from '../../lib/hooks';
 import { Picture } from '../../lib/server-api';
 
 import styles from './gallery.module.scss';
@@ -17,6 +18,9 @@ export const Gallery: FC<GalleryProps> = ({
   reverse = false,
   title,
 }) => {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const { height: gridHeight, width: gridWidth } = useResize(gridRef);
+
   if (reverse) {
     pictures = pictures.reverse();
   }
@@ -28,7 +32,8 @@ export const Gallery: FC<GalleryProps> = ({
           ? (<div className={styles.galleryTitle}>{title}</div>)
           : null
       }
-      <div className={styles.galleryGrid}>
+      <div>{gridHeight}px x {gridWidth}px</div>
+      <div className={styles.galleryGrid} ref={gridRef}>
         {pictures.map((image) => (
           <GalleryItem key={image.id} picture={image} />
         ))}
@@ -36,3 +41,4 @@ export const Gallery: FC<GalleryProps> = ({
     </Glass>
   );
 };
+
