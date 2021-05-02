@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { Picture } from '../../server-api/pictures';
-import { GalleryTile } from './gallery-tile';
+import { GalleryItem } from './gallery-item';
 import { Glass } from '../../ui/glass';
 
 import styles from './gallery.module.scss';
@@ -30,7 +30,7 @@ export const Gallery: FC<GalleryProps> = ({
       }
       <div className={styles.galleryGrid}>
         {pictures.map((image) => (
-          <GalleryTile key={image.id} picture={image} />
+          <GalleryItem key={image.id} picture={image} />
         ))}
       </div>
     </Glass>

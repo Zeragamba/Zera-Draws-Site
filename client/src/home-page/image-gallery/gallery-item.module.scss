@@ -1,6 +1,6 @@
 @import "src/common";
 
-.galleryTile {
+.item {
   position: relative;
   display: inline-flex;
 
@@ -24,6 +24,7 @@
       object-fit: scale-down;
     }
   }
+
   @media only screen and (min-width: $bp-mobile) {
     max-width: 400px;
     height: 250px;
@@ -34,23 +35,23 @@
     }
   }
 
-  .date,
-  .title {
-    position: absolute;
-    width: 100%;
-    padding: $padding-sm;
-    transition: top 250ms ease, bottom 250ms ease;
-    color: hsl(0, 0%, 10%);
-    background: hsla(0, 100%, 100%, 0.75);
+  &:hover .metadata {
+    &.metadataTop {top: 0;}
+
+    &.metadataBottom {bottom: 0;}
   }
+}
 
-  .date { top: -100%; }
 
-  .title { bottom: -100%; }
+.metadata {
+  position: absolute;
+  width: 100%;
+  padding: $padding-sm;
+  transition: top 250ms ease, bottom 250ms ease;
+  color: hsl(0, 0%, 10%);
+  background: hsla(0, 100%, 100%, 0.75);
 
-  &:hover {
-    .date {top: 0;}
+  &.metadataTop { top: -100%; }
 
-    .title {bottom: 0;}
-  }
+  &.metadataBottom { bottom: -100%; }
 }
