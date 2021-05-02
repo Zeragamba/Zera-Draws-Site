@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 
-import { Picture } from '../../server-api/pictures';
 import { GalleryItem } from './gallery-item';
 import { Glass } from '../../ui/glass';
+import { Picture } from '../../lib/server-api';
 
 import styles from './gallery.module.scss';
 

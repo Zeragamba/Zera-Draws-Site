@@ -1,20 +1,9 @@
+import { useCallback } from 'react';
 import { AxiosResponse } from 'axios';
 
-import request from './request';
-import { useCallback } from 'react';
-import useServerApi, { UseServerApiReturn } from './use-server-api';
-
-export interface Picture {
-  id: string;
-  date: string;
-  order: number;
-  title: string;
-  srcs: {
-    [size: string]: string
-  };
-  height: number;
-  width: number;
-}
+import request from '../request';
+import { UseApiState, useServerApi } from './use-server-api';
+import { Picture } from '../models';
 
 export interface PicturesIndexResponse extends AxiosResponse {
   data: {
@@ -23,20 +12,20 @@ export interface PicturesIndexResponse extends AxiosResponse {
   }
 }
 
-const Pictures = {
-  useAll(): UseServerApiReturn<Picture[]> {
+export const Pictures = {
+  useAll(): UseApiState<Picture[]> {
     return useServerApi<Picture[]>(useCallback(() => {
       return request('GET', '/pictures')
         .then((res: PicturesIndexResponse) => res.data.pictures);
     }, []));
   },
-  useRecent(): UseServerApiReturn<Picture[]> {
+  useRecent(): UseApiState<Picture[]> {
     return useServerApi<Picture[]>(useCallback(() => {
       return request('GET', '/pictures/recent')
         .then((res: PicturesIndexResponse) => res.data.pictures);
     }, []));
   },
-  useTag(tag: string): UseServerApiReturn<Picture[]> {
+  useTag(tag: string): UseApiState<Picture[]> {
     return useServerApi<Picture[]>(useCallback(() => {
       return request('GET', '/pictures', { params: { tag } })
         .then((res: PicturesIndexResponse) => res.data.pictures);

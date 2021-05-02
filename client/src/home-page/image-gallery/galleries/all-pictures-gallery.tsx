@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
 
 import { Gallery } from '../gallery';
-import { Pictures } from '../../../server-api';
+import { Pictures } from '../../../lib/server-api/hooks';
+import { LoadingGate } from '../../../ui/loading-gate';
 
 export const AllPicturesGallery: FC = () => {
-  const { data = [], LoadingGate } = Pictures.useAll();
+  const { fetching, error, data = [] } = Pictures.useAll();
 
   return (
-    <LoadingGate>
+    <LoadingGate loading={fetching} error={error}>
       <Gallery pictures={data} reverse={true} />
     </LoadingGate>
   );

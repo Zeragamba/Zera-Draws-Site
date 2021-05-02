@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Picture } from '../../server-api/pictures';
+import { Picture } from '../../lib/server-api';
 
 import styles from './gallery-item.module.scss';
 import classnames from 'classnames';

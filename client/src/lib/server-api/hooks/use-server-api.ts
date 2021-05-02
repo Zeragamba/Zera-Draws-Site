@@ -1,6 +1,6 @@
-import React, { Dispatch, FC, useEffect, useReducer } from 'react';
+import { Dispatch, useEffect, useReducer } from 'react';
 
-interface State<D> {
+export interface UseApiState<D> {
   fetching: boolean;
   data?: D;
   error?: Error;
@@ -19,7 +19,7 @@ enum ApiActionTypes {
   FAILURE = 'FAILURE',
 }
 
-function apiReducer<D>(state: State<D>, action: ApiAction<D>): State<D> {
+function apiReducer<D>(state: UseApiState<D>, action: ApiAction<D>): UseApiState<D> {
   switch (action.type) {
     case  ApiActionTypes.FETCH:
       return {
@@ -52,28 +52,10 @@ export function fetch<D>(dispatch: Dispatch<ApiAction<D>>, promise: Promise<D>):
     .catch((error) => dispatch({ type: ApiActionTypes.FAILURE, error }));
 }
 
-export interface UseServerApiReturn<D> extends State<D> {
-  LoadingGate: FC;
-}
-
-function useServerApi<D>(apiCallback: () => Promise<D>): UseServerApiReturn<D> {
-  const [state, dispatch] = useReducer(apiReducer, { fetching: false } as State<D>);
-
+export function useServerApi<D>(apiCallback: () => Promise<D>): UseApiState<D> {
+  const [state, dispatch] = useReducer(apiReducer, { fetching: false } as UseApiState<D>);
   useEffect(() => fetch(dispatch, apiCallback()), [dispatch, apiCallback]);
-
-  const LoadingGate: FC = ({
-    children,
-  }) => {
-    if (state.fetching) {
-      return <div>Loading...</div>;
-    } else if (state.error) {
-      return <div>ERROR: {state.error.toString()}</div>;
-    } else {
-      return <>{children}</>;
-    }
-  };
-
-  return { ...state, LoadingGate } as UseServerApiReturn<D>;
+  return state as UseApiState<D>;
 }
 
 export default useServerApi;

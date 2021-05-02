@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
 
 import { Gallery } from '../gallery';
-import { Pictures } from '../../../server-api';
+import { Pictures } from '../../../lib/server-api/hooks';
+import { LoadingGate } from '../../../ui/loading-gate';
 
 export const FeaturedGallery: FC = () => {
-  const { data = [], LoadingGate } = Pictures.useTag('Featured');
+  const { fetching, error, data = [] } = Pictures.useTag('Featured');
 
   return (
-    <LoadingGate>
+    <LoadingGate loading={fetching} error={error}>
       <Gallery title="Featured" pictures={data} />
     </LoadingGate>
   );
