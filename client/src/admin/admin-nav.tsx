@@ -3,15 +3,16 @@ import { useHistory, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
 
 import { Routes } from '../routes';
+import { Glass } from '../ui/glass';
 
 import styles from './admin-nav.module.scss';
 
 export const AdminNav: FC = () => {
   return (
-    <div className={styles.page}>
+    <Glass style={{ padding: 0 }}>
       <NavItem exact to={Routes.Home} label="< Back" />
       <NavItem to={Routes.Upload} label="Upload" />
-    </div>
+    </Glass>
   );
 };
 

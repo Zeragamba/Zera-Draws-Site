@@ -10,7 +10,9 @@ import { Sidebar } from './sidebar';
 export const HomePage: FC = () => (
   <div className={styles.layout}>
     <Header />
-    <Sidebar />
+    <div className={styles.sidebar}>
+      <Sidebar />
+    </div>
     <div className={styles.main}>
       <FeaturedGallery />
       <AllPicturesGallery />

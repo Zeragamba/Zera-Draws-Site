@@ -9,15 +9,6 @@ $colour-primary: hsl(10, 100%, 70%);
 $colour-primary-light: lighten($colour-primary, 20%);
 $colour-primary-dark: darken($colour-primary, 10%);
 
-$colour-dark: #000000;
-$colour-grey: #000000;
-$colour-light: #000000;
-
-@mixin glass {
-  color: hsl(0, 0%, 80%);
-  background-repeat: no-repeat;
-  background-position: -120px -120px, 0 0;
-  background-color: hsl(0, 0%, 33%);
-
-  box-shadow: 5px 10px 10px hsl(0, 0%, 10%);
-}
+$colour-dark: hsl(0, 0%, 10%);
+$colour-grey: hsl(0, 0%, 40%);
+$colour-light: hsl(0, 0%, 95%);

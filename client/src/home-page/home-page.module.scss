@@ -24,6 +24,12 @@
   }
 }
 
+.sidebar {
+  position: relative;
+  z-index: 100;
+  grid-area: sidebar;
+}
+
 .main {
   display: flex;
   flex-direction: column;

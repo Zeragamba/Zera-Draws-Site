@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 
 import { Picture } from '../../server-api/pictures';
 import { GalleryTile } from './gallery-tile';
+import { Glass } from '../../ui/glass';
 
 import styles from './gallery.module.scss';
 
@@ -21,7 +22,7 @@ export const Gallery: FC<GalleryProps> = ({
   }
 
   return (
-    <div className={styles.gallery}>
+    <Glass>
       {
         title
           ? (<div className={styles.galleryTitle}>{title}</div>)
@@ -32,6 +33,6 @@ export const Gallery: FC<GalleryProps> = ({
           <GalleryTile key={image.id} picture={image} />
         ))}
       </div>
-    </div>
+    </Glass>
   );
 };

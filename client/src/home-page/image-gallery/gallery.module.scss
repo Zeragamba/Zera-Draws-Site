@@ -1,11 +1,5 @@
 @import "src/common";
 
-.gallery {
-  @include glass;
-
-  padding: $padding-md;
-}
-
 .galleryGrid {
   display: flex;
   flex-wrap: wrap;

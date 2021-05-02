@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 
-import styles from "./upload-page.module.scss";
+import { Glass } from '../ui/glass';
 
 export const UploadPage: FC = () => {
   return (
-    <div className={styles.page}>
-      Add Picture
-    </div>
+    <Glass>
+      Upload Picture
+    </Glass>
   );
 };

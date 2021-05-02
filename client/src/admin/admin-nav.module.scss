@@ -1,13 +1,13 @@
 @import "src/common";
 
-.page {
-  @include glass;
+.adminNav {
+  padding: 0;
 }
 
 .navItem {
   padding: $padding-md;
-  transition: background-color 250ms;
   cursor: pointer;
+  transition: background-color 250ms;
 
   &:hover {
     color: $colour-dark;
