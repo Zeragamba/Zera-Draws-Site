@@ -1,6 +1,6 @@
 import React, { FC, useRef } from 'react';
+import classnames from 'classnames';
 
-import { GalleryItem } from './gallery-item';
 import { Glass } from '../../ui/glass';
 import { useResize } from '../../lib/hooks';
 import { Picture } from '../../lib/server-api';
@@ -29,16 +29,62 @@ export const Gallery: FC<GalleryProps> = ({
     <Glass>
       {
         title
-          ? (<div className={styles.galleryTitle}>{title}</div>)
+          ? (<div className={styles.title}>{title}</div>)
           : null
       }
-      <div>{gridHeight}px x {gridWidth}px</div>
-      <div className={styles.galleryGrid} ref={gridRef}>
-        {pictures.map((image) => (
-          <GalleryItem key={image.id} picture={image} />
+      <div className={styles.row} ref={gridRef}>
+        {curatePictures(pictures, 200).map((picture) => (
+          <GalleryItem key={pictures.map((picture) => picture.id).join(':')} picture={picture} />
         ))}
       </div>
     </Glass>
   );
 };
 
+interface GalleryRowProps {
+  pictures: CuratedPicture[];
+}
+
+interface CuratedPicture extends Picture {
+  galleryHeight: number;
+  galleryWidth: number;
+}
+
+const GalleryRow: FC<GalleryRowProps> = ({
+  pictures,
+}) => (
+  <div className={styles.row}>
+    {pictures.map((image) => (
+      <GalleryItem key={image.id} picture={image} />
+    ))}
+  </div>
+);
+
+interface GalleryItemProps {
+  picture: CuratedPicture;
+}
+
+const GalleryItem: FC<GalleryItemProps> = ({ picture }) => {
+  return (
+    <div className={styles.item} style={{ height: picture.galleryHeight, width: picture.galleryWidth }}>
+      <div className={classnames(styles.metadata, styles.metadataTop)}>{picture.date}</div>
+      <img className={styles.image} src={picture.srcs.gallery} alt={picture.title} />
+      <div className={classnames(styles.metadata, styles.metadataBottom)}>{picture.title}</div>
+    </div>
+  );
+};
+
+function curatePictures(pictures: Picture[], rowHeight: number): CuratedPicture[] {
+  const curatedPictures: CuratedPicture[] = [];
+
+  pictures.forEach((picture) => {
+    const curatedPicture: CuratedPicture = { ...picture, galleryWidth: 0, galleryHeight: 0};
+    curatedPictures.push(curatedPicture);
+
+    const ratio = picture.width / picture.height;
+    curatedPicture.galleryHeight = rowHeight;
+    curatedPicture.galleryWidth = ratio * rowHeight;
+  });
+
+  return curatedPictures;
+}

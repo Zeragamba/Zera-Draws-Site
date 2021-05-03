@@ -9,7 +9,7 @@ export const AllPicturesGallery: FC = () => {
 
   return (
     <LoadingGate loading={fetching} error={error}>
-      <Gallery pictures={data} reverse={true} />
+      <Gallery title="Gallery" pictures={data} reverse={true} />
     </LoadingGate>
   );
 };

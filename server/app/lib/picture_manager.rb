@@ -4,7 +4,8 @@ class PictureManager
 
   SIZES = { # ImageMagick geometry sizes: https://www.imagemagick.org/script/command-line-processing.php#geometry
     "high": "3000x3000",
-    "gallery": "x250",
+    "low": "1000x1000",
+    "gallery": "500x500",
   }
 
   def self.import(date: Date.today, order: 0, title:, filename:)
@@ -39,6 +40,7 @@ class PictureManager
     FileUtils.copy(src_filename, dest_folder.join("full#{ext}"))
 
     SIZES.each do |name, dimensions|
+      Rails.logger.info "resizing #{src_filename} to #{dimensions}"
       image = MiniMagick::Image.open(src_filename)
       image.resize(dimensions)
       image.write(dest_folder.join("#{name}#{ext}"))
