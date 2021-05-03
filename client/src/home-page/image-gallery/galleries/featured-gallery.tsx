@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Gallery } from '../gallery';
+import { Gallery, GallerySizes } from '../gallery';
 import { Pictures } from '../../../lib/server-api/hooks';
 import { LoadingGate } from '../../../ui/loading-gate';
 
@@ -9,7 +9,7 @@ export const FeaturedGallery: FC = () => {
 
   return (
     <LoadingGate loading={fetching} error={error}>
-      <Gallery title="Featured" pictures={data} />
+      <Gallery title="Featured" pictures={data} gallerySize={GallerySizes.LARGE} />
     </LoadingGate>
   );
 };

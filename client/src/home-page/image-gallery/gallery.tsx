@@ -6,16 +6,24 @@ import { Picture } from '../../lib/server-api';
 
 import styles from './gallery.module.scss';
 
+export enum GallerySizes {
+  SMALL= 250,
+  MEDIUM = 300,
+  LARGE= 400
+}
+
 interface GalleryProps {
   title?: string;
   reverse?: boolean;
   pictures: Picture[];
+  gallerySize: GallerySizes;
 }
 
 export const Gallery: FC<GalleryProps> = ({
   pictures,
   reverse = false,
   title,
+  gallerySize,
 }) => {
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +39,7 @@ export const Gallery: FC<GalleryProps> = ({
           : null
       }
       <div className={styles.row} ref={gridRef}>
-        {curatePictures(pictures, 200).map((picture) => (
+        {curatePictures(pictures, gallerySize).map((picture) => (
           <GalleryItem key={pictures.map((picture) => picture.id).join(':')} picture={picture} />
         ))}
       </div>
@@ -39,24 +47,10 @@ export const Gallery: FC<GalleryProps> = ({
   );
 };
 
-interface GalleryRowProps {
-  pictures: CuratedPicture[];
-}
-
 interface CuratedPicture extends Picture {
   galleryHeight: number;
   galleryWidth: number;
 }
-
-const GalleryRow: FC<GalleryRowProps> = ({
-  pictures,
-}) => (
-  <div className={styles.row}>
-    {pictures.map((image) => (
-      <GalleryItem key={image.id} picture={image} />
-    ))}
-  </div>
-);
 
 interface GalleryItemProps {
   picture: CuratedPicture;
@@ -66,7 +60,7 @@ const GalleryItem: FC<GalleryItemProps> = ({ picture }) => {
   return (
     <div className={styles.item} style={{ height: picture.galleryHeight, width: picture.galleryWidth }}>
       <div className={classnames(styles.metadata, styles.metadataTop)}>{picture.date}</div>
-      <img className={styles.image} src={picture.srcs.gallery} alt={picture.title} />
+      <img className={styles.image} src={picture.srcs.low} alt={picture.title} />
       <div className={classnames(styles.metadata, styles.metadataBottom)}>{picture.title}</div>
     </div>
   );
