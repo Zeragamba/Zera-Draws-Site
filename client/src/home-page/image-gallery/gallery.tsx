@@ -2,7 +2,6 @@ import React, { FC, useRef } from 'react';
 import classnames from 'classnames';
 
 import { Glass } from '../../ui/glass';
-import { useResize } from '../../lib/hooks';
 import { Picture } from '../../lib/server-api';
 
 import styles from './gallery.module.scss';
@@ -19,7 +18,6 @@ export const Gallery: FC<GalleryProps> = ({
   title,
 }) => {
   const gridRef = useRef<HTMLDivElement>(null);
-  const { height: gridHeight, width: gridWidth } = useResize(gridRef);
 
   if (reverse) {
     pictures = pictures.reverse();
