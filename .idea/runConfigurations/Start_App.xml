@@ -1,8 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Start App" type="CompoundRunConfigurationType">
-    <toRun name="Start Client" type="js.build_tools.npm" />
-    <toRun name="Compose Up" type="docker-deploy" />
-    <toRun name="Server" type="RailsRunConfigurationType" />
-    <method v="2" />
-  </configuration>
-</component>
