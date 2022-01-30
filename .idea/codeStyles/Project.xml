@@ -1,18 +1,18 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
-    <DB2CodeStyleSettings version="5">
+    <DB2CodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </DB2CodeStyleSettings>
-    <DerbyCodeStyleSettings version="5">
+    <DerbyCodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </DerbyCodeStyleSettings>
-    <H2CodeStyleSettings version="5">
+    <H2CodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </H2CodeStyleSettings>
-    <H2CodeStyleSettings version="5">
+    <H2CodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </H2CodeStyleSettings>
-    <HSQLCodeStyleSettings version="5">
+    <HSQLCodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </HSQLCodeStyleSettings>
     <HTMLCodeStyleSettings>
@@ -30,19 +30,19 @@
       <option name="SPACES_WITHIN_OBJECT_LITERAL_BRACES" value="true" />
       <option name="SPACES_WITHIN_IMPORTS" value="true" />
     </JSCodeStyleSettings>
-    <MSSQLCodeStyleSettings version="5">
+    <MSSQLCodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </MSSQLCodeStyleSettings>
     <MarkdownNavigatorCodeStyleSettings>
       <option name="RIGHT_MARGIN" value="72" />
     </MarkdownNavigatorCodeStyleSettings>
-    <MySQLCodeStyleSettings version="5">
+    <MySQLCodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </MySQLCodeStyleSettings>
-    <OracleCodeStyleSettings version="5">
+    <OracleCodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </OracleCodeStyleSettings>
-    <PostgresCodeStyleSettings version="5">
+    <PostgresCodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </PostgresCodeStyleSettings>
     <Ruby>
@@ -52,7 +52,7 @@
       <option name="INDENT_WHEN_CASES" value="true" />
       <option name="CHAIN_CALLS_ALIGNMENT" value="0" />
     </Ruby>
-    <SQLiteCodeStyleSettings version="5">
+    <SQLiteCodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </SQLiteCodeStyleSettings>
     <ScssCodeStyleSettings>
@@ -61,7 +61,7 @@
       <option name="KEEP_SINGLE_LINE_BLOCKS" value="true" />
       <option name="ENFORCE_QUOTES_ON_FORMAT" value="true" />
     </ScssCodeStyleSettings>
-    <SqlCodeStyleSettings version="5">
+    <SqlCodeStyleSettings version="6">
       <option name="KEYWORD_CASE" value="2" />
       <option name="TYPE_CASE" value="3" />
       <option name="CUSTOM_TYPE_CASE" value="3" />
@@ -83,7 +83,7 @@
       <option name="IMP_DECLARE_ALIGN_EQ" value="false" />
       <option name="EXPR_BINARY_OP_ALIGN" value="false" />
     </SqlCodeStyleSettings>
-    <SybaseCodeStyleSettings version="5">
+    <SybaseCodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
     </SybaseCodeStyleSettings>
     <TypeScriptCodeStyleSettings version="0">

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import classnames from 'classnames';
 
 import { Routes } from '../routes';
@@ -23,9 +23,7 @@ interface NavItemProps {
 }
 
 const NavItem: FC<NavItemProps> = ({ to, exact, label }) => {
-  const history = useHistory(
-
-  );
+  const navigate = useNavigate();
   const location = useLocation();
 
   const activePath = location.pathname;
@@ -34,7 +32,7 @@ const NavItem: FC<NavItemProps> = ({ to, exact, label }) => {
   return (
     <div
       className={classnames(styles.navItem, { [styles.navItemActive]: linkActive })}
-      onClick={() => history.push(to)}
+      onClick={() => navigate(to)}
     >{label}</div>
   );
 };

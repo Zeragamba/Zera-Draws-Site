@@ -4,6 +4,8 @@ import deviantArtLogo from './logos/deviant-art.png';
 import redditLogo from './logos/reddit-logo.png';
 import twitterLogo from './logos/twitter-logo.png';
 import koFiLogo from './logos/ko-fi-logo.png';
+import patreonLogo from './logos/patreon-logo.png';
+import discordLogo from './logos/discord-logo.png';
 
 import styles from './sidebar-item.module.scss';
 
@@ -51,6 +53,15 @@ export const TwitterTile: FC = () => (
 export const KoFiTile: FC = () => (
   <SidebarItem image={koFiLogo} name={'Ko-fi'} link={'https://ko-fi.com/zeragamba'} />
 );
+
+export const PatreonTile: FC = () => (
+  <SidebarItem image={patreonLogo} name={'Patreon'} link={'https://patreon.com/zeragamba'} />
+);
+
+export const DiscordTile: FC = () => (
+  <SidebarItem image={discordLogo} name={'Discord'} link={'https://discord.gg/h6A69hZ8Gh'} />
+);
+
 
 export const RedditTile: FC = () => (
   <SidebarItem

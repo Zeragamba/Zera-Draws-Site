@@ -40,7 +40,7 @@ export const Gallery: FC<GalleryProps> = ({
       }
       <div className={styles.row} ref={gridRef}>
         {curatePictures(pictures, gallerySize).map((picture) => (
-          <GalleryItem key={pictures.map((picture) => picture.id).join(':')} picture={picture} />
+          <GalleryItem key={picture.id} picture={picture} />
         ))}
       </div>
     </Glass>
