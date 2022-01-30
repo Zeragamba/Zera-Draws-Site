@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { AllPicturesGallery } from './image-gallery/galleries/all-pictures-gallery';
 import { FeaturedGallery } from './image-gallery/galleries/featured-gallery';

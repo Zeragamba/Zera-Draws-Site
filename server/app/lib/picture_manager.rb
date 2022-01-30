@@ -1,6 +1,6 @@
 class PictureManager
   STORAGE_DIR = DATA_DIR.join('images')
-  IMAGES_URL = "http://localhost:3002"
+  IMAGES_URL = ENV.fetch("IMG_SERVER_URL")
 
   SIZES = { # ImageMagick geometry sizes: https://www.imagemagick.org/script/command-line-processing.php#geometry
     "high": "3000x3000",

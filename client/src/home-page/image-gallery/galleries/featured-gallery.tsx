@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { Gallery, GallerySizes } from '../gallery';
 import { Pictures } from '../../../lib/server-api/hooks';
@@ -9,7 +9,7 @@ export const FeaturedGallery: FC = () => {
 
   return (
     <LoadingGate loading={fetching} error={error}>
-      <Gallery title="Featured" pictures={data} gallerySize={GallerySizes.LARGE} />
+      <Gallery pictures={data} gallerySize={GallerySizes.LARGE} />
     </LoadingGate>
   );
 };

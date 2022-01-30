@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import deviantArtLogo from './logos/deviant-art.png';
 import redditLogo from './logos/reddit-logo.png';
@@ -35,19 +35,11 @@ export const SidebarItem: FC<TitleProps> = ({
 };
 
 export const DeviantArtTile: FC = () => (
-  <SidebarItem
-    image={deviantArtLogo}
-    name={'DeviantArt'}
-    link={'https://www.deviantart.com/zeragamba'}
-  />
+  <SidebarItem image={deviantArtLogo} name={'DeviantArt'} link={'https://www.deviantart.com/zeragamba'} />
 );
 
 export const TwitterTile: FC = () => (
-  <SidebarItem
-    image={twitterLogo}
-    name={'Twitter'}
-    link={'https://www.twitter.com/zeragamba'}
-  />
+  <SidebarItem image={twitterLogo} name={'Twitter'} link={'https://www.twitter.com/ZeragambaDraws'} />
 );
 
 export const KoFiTile: FC = () => (
@@ -62,11 +54,6 @@ export const DiscordTile: FC = () => (
   <SidebarItem image={discordLogo} name={'Discord'} link={'https://discord.gg/h6A69hZ8Gh'} />
 );
 
-
 export const RedditTile: FC = () => (
-  <SidebarItem
-    image={redditLogo}
-    name={'Reddit'}
-    link={'https://www.reddit.com/user/Zeragamba'}
-  />
+  <SidebarItem image={redditLogo} name={'Reddit'} link={'https://www.reddit.com/user/Zeragamba'} />
 );

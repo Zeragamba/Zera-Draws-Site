@@ -1,1 +1,3 @@
-json.partial! 'picture', locals: { picture: @picture }
+json.partial! 'picture', locals: {
+  picture: @picture
+}

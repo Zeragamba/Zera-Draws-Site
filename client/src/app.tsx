@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { AdminPage } from './admin/admin-page';
@@ -10,7 +10,7 @@ import styles from './app.module.scss';
 export const App: FC = () => {
   return (
     <BrowserRouter>
-      <div className={styles.app}>
+      <div id="app-root" className={styles.app}>
         <Routes>
           <Route path="/" element={<HomePage />} />
 
@@ -21,6 +21,8 @@ export const App: FC = () => {
 
         </Routes>
       </div>
+
+      <div id="modal-root" />
     </BrowserRouter>
   );
 };

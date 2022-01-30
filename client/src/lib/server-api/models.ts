@@ -8,4 +8,5 @@ export interface Picture {
   };
   height: number;
   width: number;
+  tags?: string[];
 }

@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import classnames from 'classnames';
 
 import styles from './glass.module.scss';
@@ -13,4 +13,3 @@ export const Glass: FC<GlassProps> = ({
     {children}
   </div>
 );
-

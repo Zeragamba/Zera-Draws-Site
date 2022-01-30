@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { Gallery, GallerySizes } from '../gallery';
 import { Pictures } from '../../../lib/server-api/hooks';

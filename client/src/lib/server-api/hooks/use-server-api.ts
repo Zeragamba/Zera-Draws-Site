@@ -58,4 +58,15 @@ export function useServerApi<D>(apiCallback: () => Promise<D>): UseApiState<D> {
   return state as UseApiState<D>;
 }
 
+export function useApi<D>(apiCallback: () => Promise<D> | undefined, deps: unknown[] = []): UseApiState<D> {
+  const [state, dispatch] = useReducer(apiReducer, { fetching: false } as UseApiState<D>);
+  useEffect(() => {
+    const promise = apiCallback();
+    if (!promise) return
+    fetch(dispatch, promise)
+  }, [dispatch, ...deps]);
+
+  return state as UseApiState<D>;
+}
+
 export default useServerApi;
