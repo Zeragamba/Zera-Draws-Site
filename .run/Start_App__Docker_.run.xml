@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Start App [Docker]" type="CompoundRunConfigurationType">
+    <toRun name="docker-compose up" type="docker-deploy" />
+    <toRun name="Yarn start" type="js.build_tools.npm" />
+    <method v="2" />
+  </configuration>
+</component>

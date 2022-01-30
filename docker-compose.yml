@@ -1,16 +1,36 @@
 version: "3.9"
 services:
+  server:
+    build: ./server
+    command: bin/rails s -p 3000 -b 0.0.0.0
+    volumes:
+      - ./server:/shadowsin
+    ports:
+      - "${SERVER_PORT}:3000"
+      # Debug Ports:
+      - "1234:1234"
+      - "26162:26162"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db #Override .env and use the docker network
+      DB_PORT: 5432
+      DB_USER: "${DB_USER}"
+      DB_PASS: "${DB_PASS}"
+
   db:
     image: postgres
     ports:
-      - 5432:5432
+      - "${DB_PORT}:5432"
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./db/data:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASS}"
+
   image-server:
     image: halverneus/static-file-server
     ports:
-      - 3002:8080
+      - ${IMG_SERVER_PORT}:8080
     volumes:
       - ./data/images:/web
