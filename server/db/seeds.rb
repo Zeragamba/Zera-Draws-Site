@@ -1,3 +1,5 @@
+User.create(username: "Zeragamba", email: "zera@zeragamba.ca", password: ENV.fetch("ADMIN_PASS"))
+
 SEED_DATA_DIR = DATA_DIR.join('seed_images')
 
 puts "Importing 2020-08-08-01.png"
