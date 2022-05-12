@@ -8,9 +8,8 @@ import styles from './gallery.module.scss';
 import { ViewDialog } from '../../pictures/ViewDialog';
 
 export enum GallerySizes {
-  SMALL = 250,
-  MEDIUM = 300,
-  LARGE = 400
+  SMALL = 200,
+  LARGE = 250
 }
 
 interface GalleryProps {
@@ -62,7 +61,7 @@ const GalleryItem: FC<GalleryItemProps> = ({ picture }) => {
   return (
     <div className={styles.item} style={{ height: picture.galleryHeight, width: picture.galleryWidth }}>
       <div className={classnames(styles.metadata, styles.metadataTop)}>{picture.date}</div>
-      <img className={styles.image} src={picture.srcs.low} alt={picture.title} onClick={handleClick} />
+      <img className={styles.image} src={picture.srcs.gallery} alt={picture.title} onClick={handleClick} />
       <div className={classnames(styles.metadata, styles.metadataBottom)}>{picture.title}</div>
 
       <ViewDialog open={dialogOpen} onClose={() => setDialogOpen(false)} pictureId={picture.id} />
