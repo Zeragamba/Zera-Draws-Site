@@ -8,10 +8,9 @@ import styles from './sidebar.module.scss';
 export const Sidebar: FC = () => (
   <Glass className={styles.socialNav}>
     <nav>
-      <DeviantArtTile />
       <TwitterTile />
       <DiscordTile />
-      <PatreonTile />
+      <DeviantArtTile />
       <KoFiTile />
       <RedditTile />
     </nav>
