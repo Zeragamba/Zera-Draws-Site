@@ -2,11 +2,18 @@ class PictureManager
   STORAGE_DIR = DATA_DIR.join('images')
   IMAGES_URL = ENV.fetch("IMG_SERVER_URL")
 
-  SIZES = { # ImageMagick geometry sizes: https://www.imagemagick.org/script/command-line-processing.php#geometry
-    "high": "3000x3000",
-    "low": "1000x1000",
-    "gallery": "500x500",
+  SIZES = {
+    high: 3000,
+    low: 1000,
+    gallery: 500,
   }
+
+  ##
+  # @param picture [Picture]
+  # @param size [string]
+  def self.url_for(picture, size:)
+    return [IMAGES_URL, picture.id, size.to_s + picture.ext].join('/')
+  end
 
   def self.import(date: Date.today, order: 0, title:, filename:)
     id = SecureRandom.uuid
@@ -39,7 +46,8 @@ class PictureManager
     FileUtils.makedirs(dest_folder)
     FileUtils.copy(src_filename, dest_folder.join("full#{ext}"))
 
-    SIZES.each do |name, dimensions|
+    SIZES.each do |name, size|
+      dimensions = "#{size}x#{size}>"
       Rails.logger.info "resizing #{src_filename} to #{dimensions}"
       image = MiniMagick::Image.open(src_filename)
       image.resize(dimensions)

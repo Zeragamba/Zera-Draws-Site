@@ -14,10 +14,11 @@ class Picture < ApplicationRecord
 
   def srcs
     srcs = {
-      full: [PictureManager::IMAGES_URL, self.id, "full#{self.ext}"].join('/')
+      full: PictureManager.url_for(self, size: 'full')
     }
+
     PictureManager::SIZES.keys.map do |size|
-      srcs[size] = [PictureManager::IMAGES_URL, self.id, size.to_s + self.ext].join('/')
+      srcs[size] = PictureManager.url_for(self, size: size)
     end
 
     return srcs

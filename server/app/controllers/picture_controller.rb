@@ -9,6 +9,15 @@ class PictureController < ApplicationController
     render formats: :json
   end
 
+  def upload
+    title = params[:title]
+    image = params[:image]
+
+    @picture = PictureManager.import(title: title, filename: image.tempfile.path)
+
+    render :view, formats: :json
+  end
+
   def recent
     @pictures = Picture.order(date: :desc, order: :asc).limit(5)
     render :index, formats: :json
