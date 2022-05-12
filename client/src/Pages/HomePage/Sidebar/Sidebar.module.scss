@@ -1,0 +1,13 @@
+@import "../../../common";
+
+.socialNav {
+  position: sticky;
+  top: $padding-md;
+  left: 0;
+  padding: 0;
+
+  @media only screen and (max-width: $bp-mobile) {
+    position: relative;
+    top: 0;
+  }
+}

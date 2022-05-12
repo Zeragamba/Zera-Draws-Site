@@ -1,0 +1,15 @@
+@import "../../common";
+
+.glass {
+  color: $colour-light;
+  background-image: linear-gradient(
+      135deg,
+      change-color($colour-grey, $alpha: 0.2) 0%,
+      change-color($colour-light, $alpha: 0.3) 75%,
+      change-color($colour-grey, $alpha: 0.2) 100%
+  );
+  background-attachment: fixed;
+  box-shadow: 5px 10px 10px $colour-dark;
+
+  backdrop-filter: blur(4px);
+}
