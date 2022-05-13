@@ -2,6 +2,9 @@ class Picture < ApplicationRecord
   has_and_belongs_to_many :tags
   eager_load :tags
 
+  validates_uniqueness_of :slug
+  validates_uniqueness_of :title
+
   before_save :update_slug
 
   def filename

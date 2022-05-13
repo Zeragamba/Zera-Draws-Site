@@ -15,6 +15,8 @@ class PictureManager
     return [IMAGES_URL, picture.id, size.to_s + picture.ext].join('/')
   end
 
+  ##
+  # @return [Picture]
   def self.import(date: Date.today, order: 0, title:, filename:)
     id = SecureRandom.uuid
     ext = File.extname(filename)

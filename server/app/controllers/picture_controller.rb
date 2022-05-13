@@ -18,6 +18,9 @@ class PictureController < ApplicationController
     image = params[:image]
 
     @picture = PictureManager.import(title: title, filename: image.tempfile.path)
+    if @picture.errors.any?
+      return render json: { error: @picture.errors.full_messages.join('. ') }, status: 400
+    end
 
     render :view, formats: :json
   end
