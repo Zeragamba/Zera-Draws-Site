@@ -1,28 +1,22 @@
 import { FC } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 
-import { AdminLayout, UploadPage } from './Pages/Admin'
-import { HomePage } from './Pages/HomePage'
+import { AppRouter } from './AppRouter'
+import { UserProvider } from './User/UserContext'
 
 import styles from './App.module.scss'
 
 export const App: FC = () => {
   return (
-    <BrowserRouter>
-      <div id="app-root" className={styles.app}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
+    <UserProvider>
+      <BrowserRouter>
+        <div id="app-root" className={styles.app}>
+          <AppRouter />
+        </div>
 
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="upload" element={<UploadPage />} />
-            <Route path="" element={<Navigate to={'/admin/upload'} />} />
-          </Route>
-
-        </Routes>
-      </div>
-
-      <div id="modal-root" />
-    </BrowserRouter>
+        <div id="modal-root" />
+      </BrowserRouter>
+    </UserProvider>
   )
 }
 
