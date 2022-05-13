@@ -1,6 +1,9 @@
-User.create(username: "Zeragamba", email: "zera@zeragamba.ca", password: ENV.fetch("ADMIN_PASS"))
+execute "CREATE UNIQUE INDEX IF NOT EXISTS index_users_email ON users USING btree (lower(email));"
+execute "CREATE UNIQUE INDEX IF NOT EXISTS index_users_username ON users USING btree (lower(username));"
 
 SEED_DATA_DIR = DATA_DIR.join('seed_images')
+
+User.create(username: "Zeragamba", email: "zera@zeragamba.ca", password: ENV.fetch("ADMIN_PASS"), admin: true)
 
 puts "Importing 2020-08-08-01.png"
 PictureManager.import(date: "2020-08-08", order: 0, title: "Ensign Twilight", filename: File.join(SEED_DATA_DIR, "2020-08-08-01.png"))

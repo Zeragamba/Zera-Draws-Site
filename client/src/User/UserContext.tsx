@@ -1,24 +1,18 @@
 import { createContext, FC, ReactNode, useContext, useEffect, useState } from 'react'
 
+import { ServerApi } from '../Lib/ServerApi'
 import { noOp, Setter } from '../Lib/util'
-
-type User = {
-  loggedIn: boolean
-  admin: boolean
-}
-
-const defaultUser: User = {
-  loggedIn: false,
-  admin: false,
-}
+import { User, UserApi } from './UserApi'
 
 type UserState = {
-  user: User
-  setUser: Setter<User>
+  user: User | null
+  fetching: boolean
+  setUser: Setter<UserState['user']>
 }
 
 const UserContext = createContext<UserState>({
-  user: defaultUser,
+  user: null,
+  fetching: false,
   setUser: noOp,
 })
 
@@ -29,22 +23,46 @@ interface UserProviderProps {
 export const UserProvider: FC<UserProviderProps> = ({
   children,
 }) => {
-  const [currentUser, setCurrentUser] = useState(defaultUser)
+  const [currentUser, setCurrentUser] = useState<UserState['user']>(null)
+  const [fetching, setFetching] = useState<boolean>(false)
 
   useEffect(() => {
-    const sessionUser = JSON.parse(sessionStorage.getItem('currentUser') || 'null')
-    if (!sessionUser) return
-    setCurrentUser(sessionUser)
+    if (!ServerApi.getToken()) return
+    setFetching(true)
+
+    UserApi.getCurrent()
+      .then(user => setCurrentUser(user))
+      .catch(noOp)
+      .then(() => setFetching(false))
   }, [])
 
-  const state: UserState = { user: currentUser, setUser: setCurrentUser }
+  const state: UserState = { user: currentUser, setUser: setCurrentUser, fetching }
   return (<UserContext.Provider value={state}>{children}</UserContext.Provider>)
 }
 
-export const useCurrentUser = (): User => {
-  return useContext(UserContext).user
+export type CurrentUserHook = [
+  user: UserState['user'],
+  fetching: boolean
+]
+
+export const useCurrentUser = (): CurrentUserHook => {
+  const { user, fetching } = useContext(UserContext)
+  return [user, fetching]
 }
 
-export const useLogin = (): Setter<User> => {
-  return useContext(UserContext).setUser
+type LoginHook = (username: string, password: string) => Promise<void>
+
+export const useLogin = (): LoginHook => {
+  const { setUser } = useContext(UserContext)
+
+  return (username: string, password: string) => {
+    return UserApi.login(username, password)
+      .then(user => setUser(user))
+  }
+}
+
+type LogoutHook = () => void
+export const useLogout = (): LogoutHook => {
+  const { setUser } = useContext(UserContext)
+  return () => setUser(null)
 }

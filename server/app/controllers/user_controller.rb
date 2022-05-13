@@ -1,5 +1,6 @@
 class UserController < ApplicationController
   include Authentication
+  before_action :authenticate, :only => :view_current
 
   def login
     token = login_user(params[:username], params[:password])
@@ -7,7 +8,6 @@ class UserController < ApplicationController
   end
 
   def view_current
-    authenticate
-    render json: { user: Current.user }
+    render json: Current.user
   end
 end

@@ -7,7 +7,7 @@ import { HomePage } from './Pages/HomePage'
 import { useCurrentUser } from './User/UserContext'
 
 export const AppRouter: FC = () => {
-  const currentUser = useCurrentUser()
+  const [currentUser] = useCurrentUser()
 
   return (
     <Routes>
@@ -16,7 +16,7 @@ export const AppRouter: FC = () => {
       <Route path="/admin" element={<AdminLayout />}>
         <Route path="" element={<Navigate to={'./upload'} />} />
 
-        {currentUser.loggedIn && currentUser.admin ? (
+        {currentUser && currentUser.admin ? (
           <>
             <Route path="upload" element={<UploadPage />} />
             <Route path="*" element={<Navigate to={'./upload'} />} />

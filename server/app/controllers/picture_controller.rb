@@ -1,4 +1,8 @@
 class PictureController < ApplicationController
+  include Authentication
+
+  before_action :authenticate_admin, :only => :upload
+
   def index
     @pictures = Picture.order(date: :desc, order: :asc).includes(:tags)
 
