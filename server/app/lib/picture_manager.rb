@@ -16,26 +16,36 @@ class PictureManager
   end
 
   ##
-  # @return [Picture]
-  def self.import(date: Date.today, order: 0, title:, filename:)
-    id = SecureRandom.uuid
-    ext = File.extname(filename)
-
-    self.export_sizes(filename, id, ext)
-
-    width, height = FastImage.size(filename)
-    type = FastImage.type(filename)
-
-    return Picture.create(
-      id: id,
+  # @return picture [Picture]
+  def self.import(title:, date:, order: 0, filename:)
+    picture = Picture.create!(
       title: title,
-      width: width,
-      height: height,
       date: date,
       order: order,
-      mime_type: "image/#{type}",
-      ext: ext
     )
+
+    self.attach(picture, filename)
+
+    return picture
+  end
+
+  ##
+  # @param picture [Picture]
+  # @param filename [String]
+  def self.attach(picture, filename)
+    ext = File.extname(filename)
+    self.export_sizes(filename, picture.id, ext)
+
+    width, height = FastImage.size(filename)
+    picture.height = height
+    picture.width = width
+
+    type = FastImage.type(filename)
+    picture.mime_type = "image/#{type}"
+
+    picture.ext = ext
+    picture.released = true
+    picture.save!
   end
 
   def self.read(picture, size: :full)

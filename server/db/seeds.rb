@@ -1,5 +1,6 @@
-execute "CREATE UNIQUE INDEX IF NOT EXISTS index_users_email ON users USING btree (lower(email));"
-execute "CREATE UNIQUE INDEX IF NOT EXISTS index_users_username ON users USING btree (lower(username));"
+connection = ActiveRecord::Base.connection
+connection.execute("CREATE UNIQUE INDEX IF NOT EXISTS index_users_email ON users USING btree (lower(email));")
+connection.execute "CREATE UNIQUE INDEX IF NOT EXISTS index_users_username ON users USING btree (lower(username));"
 
 SEED_DATA_DIR = DATA_DIR.join('seed_images')
 

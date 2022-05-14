@@ -3,9 +3,14 @@ class Picture < ApplicationRecord
   eager_load :tags
 
   validates_uniqueness_of :slug
-  validates_uniqueness_of :title
 
-  before_save :update_slug
+  scope :released, -> { where(:released => true) }
+
+  before_validation :update_slug
+
+  def attach(filename)
+    PictureManager.attach(self, filename)
+  end
 
   def filename
     return self.slug + self.ext
@@ -28,7 +33,7 @@ class Picture < ApplicationRecord
   end
 
   def update_slug
-    self.slug = Slug.to_slug(self.title)
+    self.slug = Slug.to_slug(self.slug || "#{self.date}-#{self.title}")
   end
 
   def add_tags(*tag_names)

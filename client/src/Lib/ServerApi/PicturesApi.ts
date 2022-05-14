@@ -16,9 +16,12 @@ export interface PictureResponse extends AxiosResponse {
   data: Picture
 }
 
-interface PostPictureParams {
+export interface PostPictureParams {
   image: File
   title: string
+  slug: string
+  date: string
+  description: string
 }
 
 export const PicturesApi = {

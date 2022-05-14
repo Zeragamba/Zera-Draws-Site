@@ -4,7 +4,9 @@ class PictureController < ApplicationController
   before_action :authenticate_admin, :only => :upload
 
   def index
-    @pictures = Picture.order(date: :desc, order: :asc).includes(:tags)
+    @pictures = Picture.released
+      .order(date: :desc, order: :asc)
+      .includes(:tags)
 
     if params[:tag]
       @pictures = @pictures.where(:tags => { slug: Slug.to_slug(params[:tag]) })
@@ -14,24 +16,31 @@ class PictureController < ApplicationController
   end
 
   def upload
-    title = params[:title]
     image = params[:image]
+    @picture = Picture.create(picture_params)
 
-    @picture = PictureManager.import(title: title, filename: image.tempfile.path)
     if @picture.errors.any?
       return render json: { error: @picture.errors.full_messages.join('. ') }, status: 400
     end
+
+    @picture.attach(image.tempfile.path)
 
     render :view, formats: :json
   end
 
   def recent
-    @pictures = Picture.order(date: :desc, order: :asc).limit(5)
+    @pictures = Picture.released
+      .order(date: :desc, order: :asc)
+      .limit(5)
     render :index, formats: :json
   end
 
   def view
     @picture = Picture.find(params[:id])
     render formats: :json
+  end
+
+  def picture_params
+    params.permit(:title, :date, :slug, :description)
   end
 end

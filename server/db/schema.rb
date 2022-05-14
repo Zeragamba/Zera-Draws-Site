@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_13_001450) do
+ActiveRecord::Schema.define(version: 2022_05_14_193634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -20,11 +20,13 @@ ActiveRecord::Schema.define(version: 2022_05_13_001450) do
     t.date "date", null: false
     t.integer "order", default: 0, null: false
     t.string "title", null: false
-    t.integer "height", null: false
-    t.integer "width", null: false
+    t.integer "height"
+    t.integer "width"
     t.string "slug", null: false
-    t.string "mime_type", null: false
-    t.string "ext", null: false
+    t.string "mime_type"
+    t.string "ext"
+    t.text "description"
+    t.boolean "released", default: false, null: false
     t.index ["slug"], name: "index_pictures_on_slug", unique: true
   end
 
