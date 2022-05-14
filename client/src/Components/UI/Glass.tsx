@@ -9,7 +9,7 @@ export const Glass: FC<GlassProps> = ({
   className,
   ...divProps
 }) => (
-  <div className={classnames(styles.glass, className)}{...divProps}>
+  <div className={classnames(styles.glass, className)} {...divProps}>
     {children}
   </div>
 )

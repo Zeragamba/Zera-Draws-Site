@@ -1,6 +1,6 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Component, MouseEventHandler } from 'react'
+import { Component, MouseEventHandler, ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 
 import styles from './Overlay.module.scss'
@@ -13,8 +13,8 @@ interface ModelProps {
 }
 
 export class Overlay extends Component<ModelProps> {
-  el: Element;
-  modalRoot: HTMLElement | null;
+  el: Element
+  modalRoot: HTMLElement | null
 
   constructor(props: ModelProps) {
     super(props)
@@ -22,7 +22,7 @@ export class Overlay extends Component<ModelProps> {
     this.modalRoot = document.getElementById('modal-root')
   }
 
-  render() {
+  render(): ReactNode {
     if (!this.props.open) return null
     if (!this.modalRoot) return null
 
