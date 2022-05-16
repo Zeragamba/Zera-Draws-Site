@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Glass } from '../../../Components/UI/Glass'
+import { Glass } from '../../../UI/Glass'
 import { DeviantArtTile, DiscordTile, KoFiTile, RedditTile, TwitterTile } from './SidebarItem'
 
 import styles from './Sidebar.module.scss'

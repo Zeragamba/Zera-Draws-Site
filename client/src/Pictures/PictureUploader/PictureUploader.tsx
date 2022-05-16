@@ -2,20 +2,21 @@ import { faCheck, faTriangleExclamation, faUpload } from '@fortawesome/free-soli
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 
-import { isServerApiError, PicturesApi, PostPictureParams } from '../../../Lib/ServerApi'
+import { isServerApiError, PicturesApi, PostPictureParams } from '../../Lib/ServerApi'
+import { noOp } from '../../Lib/util'
 import { PictureForm, TextFields, usePictureFormState } from '../PictureForm'
 
 type NetworkState = 'idle' | 'uploading' | 'uploaded' | 'error'
 
 export const PictureUploader: FC = () => {
-  const [networkState, setNetworkState] = useState<NetworkState>('idle')
-  const [error, setError] = useState<string>()
-  const [form, dispatch] = usePictureFormState()
+  const [ networkState, setNetworkState ] = useState<NetworkState>('idle')
+  const [ error, setError ] = useState<string>()
+  const [ form, dispatch ] = usePictureFormState()
 
   const image = form.image
   const imageSrc = useMemo(
     () => image ? URL.createObjectURL(image) : undefined,
-    [image],
+    [ image ],
   )
 
   const handleFilePicked = (event: ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +75,10 @@ export const PictureUploader: FC = () => {
         date={form.date}
         slug={form.slug}
         description={form.description}
+        tags={[]}
+
         onFieldChange={handleFormChange}
+        onTagsChange={noOp}
       />
 
       <div>

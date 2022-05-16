@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { PicturesApi } from '../../../Lib/ServerApi'
-import { LoadingGate } from '../../UI/LoadingGate'
+import { LoadingGate } from '../../../UI/LoadingGate'
 import { Gallery, GallerySizes } from '../gallery'
 
 export const FeaturedGallery: FC = () => {

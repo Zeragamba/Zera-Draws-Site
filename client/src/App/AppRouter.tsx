@@ -1,13 +1,13 @@
 import { FC } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { AdminLayout, UploadPage } from './Pages/Admin'
-import { LoginPage } from './Pages/Admin/LoginPage/LoginPage'
-import { HomePage } from './Pages/HomePage'
-import { useCurrentUser } from './User/UserContext'
+import { AdminLayout, UploadPage } from '../Pages/Admin'
+import { LoginPage } from '../Pages/Admin/LoginPage/LoginPage'
+import { HomePage } from '../Pages/HomePage'
+import { useCurrentUser } from '../User/UserState/Hooks'
 
 export const AppRouter: FC = () => {
-  const [currentUser] = useCurrentUser()
+  const [ currentUser ] = useCurrentUser()
 
   return (
     <Routes>

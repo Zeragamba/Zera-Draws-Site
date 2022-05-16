@@ -60,6 +60,7 @@ export function useServerApi<D>(apiCallback: () => Promise<D>): UseApiState<D> {
 
 export function useApi<D>(apiCallback: () => Promise<D> | undefined, deps: unknown[] = []): UseApiState<D> {
   const [state, dispatch] = useReducer(apiReducer, { fetching: false } as UseApiState<D>)
+
   useEffect(() => {
     const promise = apiCallback()
     if (!promise) return

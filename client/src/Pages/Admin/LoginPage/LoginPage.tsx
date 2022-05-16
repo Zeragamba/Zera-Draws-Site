@@ -1,13 +1,13 @@
 import { FC, ReactNode } from 'react'
 
-import { Glass } from '../../../Components/UI/Glass'
-import { useCurrentUser, useLogout } from '../../../User/UserContext'
+import { Glass } from '../../../UI/Glass'
+import { useCurrentUser, useLogout } from '../../../User/UserState/Hooks'
 import { LoginForm } from './LoginForm'
 
 
 export const LoginPage: FC = () => {
   const logout = useLogout()
-  const [currentUser, fetchingUser] = useCurrentUser()
+  const [ currentUser, fetchingUser ] = useCurrentUser()
 
   const Wrapper: FC<{ children: ReactNode }> = ({ children }) => {
     return (

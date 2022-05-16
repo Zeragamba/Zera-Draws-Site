@@ -2,8 +2,8 @@ import classnames from 'classnames'
 import { FC, useState } from 'react'
 
 import { Picture } from '../../Lib/ServerApi'
-import { ViewDialog } from '../Pictures/ViewDialog'
-import { Glass } from '../UI/Glass'
+import { Glass } from '../../UI/Glass'
+import { ViewDialog } from '../ViewDialog'
 
 import styles from './gallery.module.scss'
 

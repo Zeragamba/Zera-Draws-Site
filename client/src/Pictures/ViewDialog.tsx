@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Picture , PicturesApi , useApi } from '../../Lib/ServerApi'
+import { Picture , PicturesApi , useApi } from '../Lib/ServerApi'
 import { Glass } from '../UI/Glass'
 import { Overlay } from '../UI/Overlay'
 

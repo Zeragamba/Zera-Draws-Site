@@ -1,14 +1,14 @@
 import { FC } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
+import { AppProvider } from './AppProvider'
 import { AppRouter } from './AppRouter'
-import { UserProvider } from './User/UserContext'
 
 import styles from './App.module.scss'
 
 export const App: FC = () => {
   return (
-    <UserProvider>
+    <AppProvider>
       <BrowserRouter>
         <div id="app-root" className={styles.app}>
           <AppRouter />
@@ -16,7 +16,7 @@ export const App: FC = () => {
 
         <div id="modal-root" />
       </BrowserRouter>
-    </UserProvider>
+    </AppProvider>
   )
 }
 

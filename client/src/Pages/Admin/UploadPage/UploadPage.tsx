@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { PictureUploader } from '../../../Components/Pictures/PictureUploader/PictureUploader'
-import { Glass } from '../../../Components/UI/Glass'
+import { PictureUploader } from '../../../Pictures/PictureUploader/PictureUploader'
+import { Glass } from '../../../UI/Glass'
 
 export const UploadPage: FC = () => {
   return (
