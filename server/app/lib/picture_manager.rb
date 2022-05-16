@@ -15,6 +15,10 @@ class PictureManager
     return [IMAGES_URL, picture.id, size.to_s + picture.ext].join('/')
   end
 
+  def self.path_for(picture, size: :full)
+    return File.join(STORAGE_DIR, picture.id, size.to_s + picture.ext)
+  end
+
   ##
   # @return picture [Picture]
   def self.import(title:, date:, order: 0, filename:)
@@ -33,37 +37,45 @@ class PictureManager
   # @param picture [Picture]
   # @param filename [String]
   def self.attach(picture, filename)
-    ext = File.extname(filename)
-    self.export_sizes(filename, picture.id, ext)
+    Picture.transaction do
+      ext = File.extname(filename)
 
-    width, height = FastImage.size(filename)
-    picture.height = height
-    picture.width = width
+      width, height = FastImage.size(filename)
+      picture.height = height
+      picture.width = width
 
-    type = FastImage.type(filename)
-    picture.mime_type = "image/#{type}"
+      type = FastImage.type(filename)
+      picture.mime_type = "image/#{type}"
 
-    picture.ext = ext
-    picture.released = true
-    picture.save!
+      picture.ext = ext
+      picture.released = true
+
+      self.export_sizes(picture, filename)
+      picture.save!
+    end
   end
 
   def self.read(picture, size: :full)
-    filename = File.join(picture.id, size.to_s + picture.ext)
-    return open(File.join(STORAGE_DIR, filename), "rb") { |f| f.read }
+    return open(self.path_for(picture, size: size), "rb") { |f| f.read }
   end
 
-  def self.export_sizes(src_filename, id, ext)
-    dest_folder = STORAGE_DIR.join(id)
-    FileUtils.makedirs(dest_folder)
-    FileUtils.copy(src_filename, dest_folder.join("full#{ext}"))
+  def self.export_sizes(picture, src_filename)
+    dest_filename = self.path_for(picture, size: :full)
+    FileUtils.makedirs(File.dirname(dest_filename))
+    FileUtils.copy(src_filename, dest_filename)
 
     SIZES.each do |name, size|
-      dimensions = "#{size}x#{size}>"
-      Rails.logger.info "resizing #{src_filename} to #{dimensions}"
-      image = MiniMagick::Image.open(src_filename)
-      image.resize(dimensions)
-      image.write(dest_folder.join("#{name}#{ext}"))
+      self.resize(
+        src: src_filename,
+        dest: self.path_for(picture, size: name),
+        size: size
+      )
     end
+  end
+
+  def self.resize(src:, dest:, size:)
+    image = MiniMagick::Image.open(src)
+    image.resize "#{size}x#{size}>"
+    image.write(dest)
   end
 end
