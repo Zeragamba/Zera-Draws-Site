@@ -1,14 +1,12 @@
-import { createContext, FC, ReactNode, useContext, useEffect, useReducer } from 'react'
+import { FC, ReactNode, useEffect } from 'react'
+import { Provider } from 'react-redux'
 
 import { ServerApi } from '../Lib/ServerApi'
 import { TagsApi } from '../Tags/TagsApi'
 import { tagsFetchComplete, tagsFetchStart } from '../Tags/TagsState/Actions'
 import { UserApi } from '../User/UserApi'
 import { userFetchComplete, userFetchStart } from '../User/UserState/Actions'
-import { AppDispatch, appReducer, AppState, defaultAppState } from './AppState'
-
-
-const AppContext = createContext(defaultAppState)
+import { appStore } from './AppState'
 
 interface AppProviderProps {
   children: ReactNode
@@ -17,7 +15,7 @@ interface AppProviderProps {
 export const AppProvider: FC<AppProviderProps> = ({
   children,
 }) => {
-  const [ appState, dispatch ] = useReducer(appReducer, defaultAppState)
+  const dispatch = appStore.dispatch
 
   useEffect(() => {
     if (!ServerApi.getToken()) return
@@ -35,9 +33,6 @@ export const AppProvider: FC<AppProviderProps> = ({
   }, [])
 
   return (
-    <AppContext.Provider value={{ ...appState, dispatch }}> {children}</AppContext.Provider>
+    <Provider store={appStore}>{children}</Provider>
   )
 }
-
-export const useAppState = (): AppState => useContext(AppContext)
-export const useAppDispatch = (): AppDispatch => useContext(AppContext).dispatch

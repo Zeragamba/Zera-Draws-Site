@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 
 interface LoadingGateProps {
   loading: boolean
   error?: Error | string
+  children: ReactNode
 }
 
 export const LoadingGate: FC<LoadingGateProps> = ({

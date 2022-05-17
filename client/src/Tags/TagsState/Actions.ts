@@ -1,32 +1,13 @@
-import { AppReducer } from '../../App/AppState'
-import { TagsState } from './TagsState'
+import { createAction } from '@reduxjs/toolkit'
 
-enum Actions {
-  FETCH_START = 'TAGS.FETCH.START',
-  FETCH_COMPLETE = 'TAGS.FETCH.COMPLETE',
-}
+import { Tag } from '../TagsApi'
 
-export type TagsAction =
-  | FetchStart
-  | FetchComplete
+export const tagsFetchStart = createAction('TAG.FETCH.START')
 
-type FetchStart = { type: Actions.FETCH_START }
-export function tagsFetchStart(): FetchStart {
-  return { type: Actions.FETCH_START }
-}
+export const tagsFetchComplete = createAction('TAG.FETCH.COMPLETE', (tags: Tag[]) => {
+  return { payload: tags }
+})
 
-type FetchComplete = { type: Actions.FETCH_COMPLETE; tags: TagsState['tags'] }
-export function tagsFetchComplete(tags: TagsState['tags']): FetchComplete {
-  return { type: Actions.FETCH_COMPLETE, tags }
-}
-
-export const tagsReducer: AppReducer<TagsState> = (state, action) => {
-  switch (action.type) {
-    case Actions.FETCH_START:
-      return { ...state, fetching: true }
-    case Actions.FETCH_COMPLETE:
-      return { tags: action.tags, fetching: false }
-    default:
-      return state
-  }
-}
+export const setTags = createAction('TAG.SET', (tags: Tag[]) => {
+  return { payload: tags }
+})

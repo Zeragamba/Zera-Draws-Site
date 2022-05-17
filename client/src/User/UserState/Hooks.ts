@@ -1,17 +1,11 @@
-import { useAppDispatch, useAppState } from '../../App/AppProvider'
+import { useAppDispatch, useAppSelector } from '../../App/AppState'
 import { UserApi } from '../UserApi'
 import { setUser } from './Actions'
 import { UserState } from './UserState'
 
-const useUserState = (): UserState => {
-  const { user } = useAppState()
-  return user
-}
-
-
 export type CurrentUserHook = [ user: UserState['user'], fetching: boolean ]
 export const useCurrentUser = (): CurrentUserHook => {
-  const { user, fetching } = useUserState()
+  const { user, fetching } = useAppSelector(state => state.user)
   return [ user, fetching ]
 }
 
@@ -20,8 +14,8 @@ type LoginHook = (username: string, password: string) => Promise<void>
 export const useLogin = (): LoginHook => {
   const dispatch = useAppDispatch()
 
-  return (username: string, password: string) => {
-    return UserApi.login(username, password)
+  return async (username: string, password: string) => {
+    await UserApi.login(username, password)
       .then(user => dispatch(setUser(user)))
   }
 }

@@ -8,6 +8,7 @@ import styles from './Overlay.module.scss'
 interface ModelProps {
   open?: boolean
   title?: string
+  children: ReactNode
 
   onClose(): void
 }

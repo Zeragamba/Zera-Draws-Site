@@ -1,33 +1,19 @@
-import { noOp } from '../Lib/util'
-import { TagsAction, tagsReducer } from '../Tags/TagsState/Actions'
-import { defaultTagsState, TagsState } from '../Tags/TagsState/TagsState'
-import { UserAction, userReducer } from '../User/UserState/Actions'
-import { defaultUserState, UserState } from '../User/UserState/UserState'
+import { configureStore } from '@reduxjs/toolkit'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-export type AppDispatch = (action: AppAction) => void
+import { tagsReducer } from '../Tags/TagsState/TagsState'
+import { userReducer } from '../User/UserState/UserState'
 
-export type AppState = {
-  dispatch: AppDispatch
-  user: UserState
-  tags: TagsState
-}
 
-export type AppReducer<State> = (state: State, action: AppAction) => State
+export const appStore = configureStore({
+  reducer: {
+    user: userReducer,
+    tags: tagsReducer,
+  },
+})
 
-export const defaultAppState: AppState = {
-  dispatch: noOp,
-  user: defaultUserState,
-  tags: defaultTagsState,
-}
+export type AppState = ReturnType<typeof appStore.getState>
+export type AppDispatch = typeof appStore.dispatch
 
-export type AppAction =
-  | UserAction
-  | TagsAction
-
-export const appReducer: AppReducer<AppState> = (state, action) => {
-  return {
-    ...state,
-    user: userReducer(state.user, action),
-    tags: tagsReducer(state.tags, action),
-  }
-}
+export const useAppDispatch = (): AppDispatch => useDispatch()
+export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector
