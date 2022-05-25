@@ -1,7 +1,8 @@
 import { ChangeEvent, FC, FormEvent, useState } from 'react'
 
 import { isServerApiError } from '../../../Lib/ServerApi'
-import { useLogin } from '../../../User/UserState/Hooks'
+import { login } from '../../../Store/Actions/UserActions'
+import { useAppDispatch } from '../../../Store/AppState'
 
 type LoginFormState = {
   username: string
@@ -10,8 +11,8 @@ type LoginFormState = {
 }
 
 export const LoginForm: FC = () => {
-  const login = useLogin()
-  const [form, setForm] = useState<LoginFormState>({ username: '', password: '', error: null })
+  const dispatch = useAppDispatch()
+  const [ form, setForm ] = useState<LoginFormState>({ username: '', password: '', error: null })
 
   const handleChange = (field: keyof LoginFormState) => {
     return (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,14 +22,16 @@ export const LoginForm: FC = () => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
+    dispatch(login(form.username, form.password))
+      .catch(error => {
+        if (isServerApiError(error)) {
+          error = error.response.data.error
+        } else {
+          error = error.toString()
+        }
 
-    login(form.username, form.password).catch(error => {
-      if (isServerApiError(error)) {
-        setForm({ ...form, error: error.response.data.error })
-      } else {
-        throw error
-      }
-    })
+        setForm({ ...form, error })
+      })
   }
 
   return <form onSubmit={handleSubmit}>

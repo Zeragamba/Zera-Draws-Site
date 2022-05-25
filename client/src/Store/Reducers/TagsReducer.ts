@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { Tag } from '../TagsApi'
-import { setTags, tagsFetchComplete, tagsFetchStart } from './Actions'
+import { Tag } from '../../Tags/TagsApi'
+import { setTags, tagsFetchComplete, tagsFetchStart } from '../Actions/TagActions'
 
 export type TagsState = {
   tags: Tag[]
@@ -13,14 +13,13 @@ const initialState: TagsState = {
   fetching: false,
 }
 
-export const tagsReducer = createReducer(initialState, (builder) => {
+export const TagsReducer = createReducer(initialState, (builder) => {
   builder.addCase(tagsFetchStart, (state) => {
     state.fetching = true
   })
 
-  builder.addCase(tagsFetchComplete, (state, action) => {
+  builder.addCase(tagsFetchComplete, (state) => {
     state.fetching = false
-    state.tags = action.payload
   })
 
   builder.addCase(setTags, (state, action) => {

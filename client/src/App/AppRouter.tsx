@@ -4,10 +4,11 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { AdminLayout, UploadPage } from '../Pages/Admin'
 import { LoginPage } from '../Pages/Admin/LoginPage/LoginPage'
 import { HomePage } from '../Pages/HomePage'
-import { useCurrentUser } from '../User/UserState/Hooks'
+import { useAppSelector } from '../Store/AppState'
+import { selectCurrentUser } from '../Store/Reducers/UserReducer'
 
 export const AppRouter: FC = () => {
-  const [ currentUser ] = useCurrentUser()
+  const currentUser = useAppSelector(state => selectCurrentUser(state))
 
   return (
     <Routes>
