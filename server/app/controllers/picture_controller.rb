@@ -4,9 +4,7 @@ class PictureController < ApplicationController
   before_action :authenticate_admin, :only => :upload
 
   def index
-    @pictures = Picture.released
-      .order(date: :desc, order: :asc)
-      .includes(:tags)
+    @pictures = Picture.released.includes(:tags)
 
     if params[:tag]
       @pictures = @pictures.where(:tags => { slug: Slug.to_slug(params[:tag]) })
@@ -29,9 +27,7 @@ class PictureController < ApplicationController
   end
 
   def recent
-    @pictures = Picture.released
-      .order(date: :desc, order: :asc)
-      .limit(5)
+    @pictures = Picture.released.includes(:tags).limit(5)
     render :index, formats: :json
   end
 
