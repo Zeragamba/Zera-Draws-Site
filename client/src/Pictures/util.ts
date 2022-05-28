@@ -19,7 +19,6 @@ export const parseFilename = (filename: string): FilenameMeta => {
     throw Error('Unable to parse filename') // This should not happen...
   }
 
-  console.log(filenameMatch.groups)
   let { title, date } = filenameMatch.groups
 
   if (title.match(/^\d{4}-\d{2}-\d{2}$/)) {

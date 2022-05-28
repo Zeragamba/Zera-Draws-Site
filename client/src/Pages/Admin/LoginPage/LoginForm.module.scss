@@ -1,0 +1,16 @@
+.LoginForm {
+  max-width: 250px;
+  margin: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ErrorMessage {
+  text-align: center;
+}
+
+.FormItem {
+  width: 100%;
+}

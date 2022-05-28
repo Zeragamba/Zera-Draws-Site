@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { logout } from '../../../Store/Actions/UserActions'
+import { userLoggedOut } from '../../../Store/Actions/UserActions'
 import { useAppDispatch, useAppSelector } from '../../../Store/AppState'
 import { Glass } from '../../../UI/Glass'
 import { LoginForm } from './LoginForm'
@@ -8,10 +8,10 @@ import { LoginForm } from './LoginForm'
 
 export const LoginPage: FC = () => {
   const dispatch = useAppDispatch()
-  const { currentUser, fetching } = useAppSelector(state => state.user)
+  const currentUser = useAppSelector(state => state.currentUser)
 
   const onLogout = () => {
-    dispatch(logout())
+    dispatch(userLoggedOut())
   }
 
   const Wrapper: FC<{ children: ReactNode }> = ({ children }) => {
@@ -31,17 +31,7 @@ export const LoginPage: FC = () => {
     )
   }
 
-  if (fetching) {
-    return (
-      <Wrapper>
-        Loading...
-      </Wrapper>
-    )
-  }
-
   return (
-    <Wrapper>
-      <LoginForm />
-    </Wrapper>
+    <LoginForm />
   )
 }

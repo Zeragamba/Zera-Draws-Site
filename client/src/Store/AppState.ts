@@ -2,13 +2,13 @@ import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import { applicationStart } from './AppActions'
+import { CurrentUserReducer } from './Reducers/CurrentUserReducer'
 import { TagsReducer } from './Reducers/TagsReducer'
-import { UserReducer } from './Reducers/UserReducer'
 
 
 export const appStore = configureStore({
   reducer: {
-    user: UserReducer,
+    currentUser: CurrentUserReducer,
     tags: TagsReducer,
   },
 })

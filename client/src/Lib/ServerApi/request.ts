@@ -4,8 +4,6 @@ import { isServerApiError, ServerApi } from './index'
 
 export const API_URL = process.env.REACT_APP_SERVER_URL
 
-console.log(API_URL)
-
 async function request<Res extends AxiosResponse>(method: Method, path: string, config: AxiosRequestConfig = {}): Promise<Res> {
   config = {
     ...config,
