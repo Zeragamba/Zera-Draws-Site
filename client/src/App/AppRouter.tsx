@@ -5,7 +5,7 @@ import { AdminLayout, UploadPage } from '../Pages/Admin'
 import { LoginPage } from '../Pages/Admin/LoginPage/LoginPage'
 import { HomePage } from '../Pages/HomePage'
 import { useAppSelector } from '../Store/AppState'
-import { selectCurrentUser } from '../Store/Reducers/UserReducer'
+import { selectCurrentUser } from '../Store/Reducers/CurrentUserReducer'
 
 export const AppRouter: FC = () => {
   const currentUser = useAppSelector(state => selectCurrentUser(state))

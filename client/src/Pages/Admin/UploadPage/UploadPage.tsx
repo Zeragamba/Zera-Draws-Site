@@ -1,13 +1,28 @@
-import { FC } from 'react'
+import { Stack } from '@mui/material'
+import { FC, useState } from 'react'
 
-import { PictureUploader } from '../../../Pictures/PictureUploader/PictureUploader'
+import { ImagePicker } from '../../../Pictures/ImagePicker/ImagePicker'
+import { ImageUploadForm } from '../../../Pictures/PictureUploader/ImageUploadForm'
 import { Glass } from '../../../UI/Glass'
 
+export type FileMap = Record<File['name'], File>
+
 export const UploadPage: FC = () => {
+  const [ files, setFiles ] = useState<FileMap>({})
+
+  const onFilesPicked = (files: File[]) => {
+    const newFiles: FileMap = {}
+    files.forEach(file => newFiles[file.name] = file)
+    setFiles((files) => ({ ...files, ...newFiles }))
+  }
+
   return (
     <Glass style={{ padding: 16 }}>
-      <h1>Upload Picture</h1>
-      <PictureUploader />
+      <Stack gap={2}>
+        <h1>Upload Picture</h1>
+        <ImagePicker onFilesPicked={onFilesPicked} />
+        {Object.values(files).map(file => <ImageUploadForm key={file.name} image={file} />)}
+      </Stack>
     </Glass>
   )
 }

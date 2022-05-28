@@ -4,7 +4,7 @@ import { Tag } from '../../Tags/TagsApi'
 
 export const tagsFetchStart = createAction('TAG.FETCH.START')
 export const tagsFetchComplete = createAction('TAG.FETCH.COMPLETE')
-export const tagsFetchError = createAction('TAG.FETCH.ERROR', (error: unknown) => {
+export const tagsFetchError = createAction('TAG.FETCH.ERROR', (error: string) => {
   return { payload: { error } }
 })
 

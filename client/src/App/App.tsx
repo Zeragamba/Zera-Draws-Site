@@ -1,3 +1,4 @@
+import { createTheme, ThemeProvider } from '@mui/material'
 import { FC } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
@@ -7,17 +8,25 @@ import { AppRouter } from './AppRouter'
 
 import styles from './App.module.scss'
 
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+})
+
 export const App: FC = () => {
   return (
-    <Provider store={appStore}>
-      <BrowserRouter>
-        <div id="app-root" className={styles.app}>
-          <AppRouter />
-        </div>
+    <ThemeProvider theme={darkTheme}>
+      <Provider store={appStore}>
+        <BrowserRouter>
+          <div id="app-root" className={styles.app}>
+            <AppRouter />
+          </div>
 
-        <div id="modal-root" />
-      </BrowserRouter>
-    </Provider>
+          <div id="modal-root" />
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   )
 }
 

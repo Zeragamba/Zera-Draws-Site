@@ -6,6 +6,7 @@ export interface Picture {
   srcs: {
     [size: string]: string
   }
+  orientation: 'portrait' | 'landscape'
   height: number
   width: number
   tags?: string[]
