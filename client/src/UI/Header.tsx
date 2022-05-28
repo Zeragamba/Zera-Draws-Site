@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Glass } from '../Glass'
+import { Glass } from './Glass'
 
 import styles from './Header.module.scss'
 

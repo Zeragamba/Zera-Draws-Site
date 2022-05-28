@@ -1,11 +1,12 @@
 import { FC } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { AdminLayout, UploadPage } from '../Pages/Admin'
+import { UploadPage } from '../Pages/Admin'
 import { LoginPage } from '../Pages/Admin/LoginPage/LoginPage'
 import { HomePage } from '../Pages/HomePage'
 import { useAppSelector } from '../Store/AppState'
 import { selectCurrentUser } from '../Store/Reducers/CurrentUserReducer'
+import { AdminLayout } from '../UI/Layout/AdminLayout'
 
 export const AppRouter: FC = () => {
   const currentUser = useAppSelector(state => selectCurrentUser(state))
@@ -13,19 +14,17 @@ export const AppRouter: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
 
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route path="" element={<Navigate to={'./upload'} />} />
+      {currentUser && currentUser.admin && (
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="" element={<Navigate to={'./upload'} />} />
+          <Route path="upload" element={<UploadPage />} />
+          <Route path="*" element={<Navigate to={'./upload'} />} />
+        </Route>
+      )}
 
-        {currentUser && currentUser.admin ? (
-          <>
-            <Route path="upload" element={<UploadPage />} />
-            <Route path="*" element={<Navigate to={'./upload'} />} />
-          </>
-        ) : (
-          <Route path="*" element={<LoginPage />} />
-        )}
-      </Route>
+      <Route path="*" element={<Navigate to={'/'} />} />
     </Routes>
   )
 }
