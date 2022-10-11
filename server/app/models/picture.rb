@@ -4,7 +4,7 @@ class Picture < ApplicationRecord
 
   validates_uniqueness_of :slug
 
-  default_scope -> { order(date: :asc, order: :asc) }
+  default_scope -> { order(date: :desc, order: :asc) }
   scope :released, -> { where(:released => true) }
 
   before_validation :update_slug

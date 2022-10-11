@@ -27,7 +27,8 @@ class PictureController < ApplicationController
   end
 
   def recent
-    @pictures = Picture.released.includes(:tags).limit(5)
+    limit = params[:limit] || 5
+    @pictures = Picture.released.includes(:tags).limit(limit)
     render :index, formats: :json
   end
 

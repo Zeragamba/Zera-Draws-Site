@@ -4,8 +4,15 @@ import { PicturesApi } from '../../../Lib/ServerApi'
 import { LoadingGate } from '../../../UI/LoadingGate'
 import { Gallery, GallerySizes } from '../gallery'
 
-export const RecentGallery: FC = () => {
-  const { fetching, error, data = [] } = PicturesApi.useRecent()
+
+interface RecentGalleryProps {
+  numImages?: number
+}
+
+export const RecentGallery: FC<RecentGalleryProps> = ({
+  numImages = 5,
+}) => {
+  const { fetching, error, data = [] } = PicturesApi.useRecent({ numImages })
 
   return (
     <LoadingGate loading={fetching} error={error}>

@@ -16,6 +16,10 @@ export interface PictureResponse extends AxiosResponse {
   data: Picture
 }
 
+export interface GetRecentParams {
+  numImages?: number
+}
+
 export interface PostPictureParams {
   image: File
   title: string
@@ -37,10 +41,14 @@ export const PicturesApi = {
       .then((res: PictureResponse) => res.data)
   },
 
-  useRecent(): UseApiState<Picture[]> {
+  useRecent(params: GetRecentParams): UseApiState<Picture[]> {
+    const { numImages = 5 } = params
     return useServerApi<Picture[]>(useCallback(() => {
-      return request('GET', '/pictures/recent')
-        .then((res: PicturesIndexResponse) => res.data.pictures)
+      return request('GET', '/pictures/recent', {
+        params: {
+          limit: numImages,
+        },
+      }).then((res: PicturesIndexResponse) => res.data.pictures)
     }, []))
   },
 
@@ -48,13 +56,13 @@ export const PicturesApi = {
     return useServerApi<Picture[]>(useCallback(() => {
       return request('GET', '/pictures', { params: { tag } })
         .then((res: PicturesIndexResponse) => res.data.pictures)
-    }, [tag]))
+    }, [ tag ]))
   },
 
   postImage(params: PostPictureParams): Promise<Picture> {
     const data = new FormData()
 
-    Object.entries(params).forEach(([key, value]) => {
+    Object.entries(params).forEach(([ key, value ]) => {
       data.set(key, value)
     })
 
