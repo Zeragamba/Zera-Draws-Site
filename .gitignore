@@ -3,3 +3,5 @@
 
 /data/ssl
 !/data/ssl/.keep
+
+.idea/**/*.iml
