@@ -9,7 +9,7 @@ export const FeaturedGallery: FC = () => {
 
   return (
     <LoadingGate loading={fetching} error={error}>
-      <Gallery pictures={data} gallerySize={GallerySizes.LARGE} />
+      <Gallery title="Featured" pictures={data} gallerySize={GallerySizes.LARGE} />
     </LoadingGate>
   )
 }

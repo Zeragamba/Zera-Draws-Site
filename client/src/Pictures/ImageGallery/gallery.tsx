@@ -9,8 +9,8 @@ import styles from './gallery.module.scss'
 
 
 export enum GallerySizes {
-  SMALL = 200,
-  LARGE = 250
+  SMALL = 250,
+  LARGE = 300
 }
 
 interface GalleryProps {

@@ -9,7 +9,7 @@ export const AllPicturesGallery: FC = () => {
 
   return (
     <LoadingGate loading={fetching} error={error}>
-      <Gallery title="Gallery" pictures={data} reverse={true} gallerySize={GallerySizes.SMALL}/>
+      <Gallery title="All" pictures={data} gallerySize={GallerySizes.SMALL}/>
     </LoadingGate>
   )
 }
