@@ -2,7 +2,7 @@ import { Button, Stack } from '@mui/material'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { userLoggedOut } from '../Store/Actions/UserActions'
+import { logout } from '../Store/Actions/UserActions'
 import { useAppDispatch, useAppSelector } from '../Store/AppState'
 import { selectCurrentUser } from '../Store/Reducers/CurrentUserReducer'
 import { Glass } from './Glass'
@@ -26,7 +26,7 @@ export const AppNavBar: FC = () => {
           ) : (
             <>
               {currentUser.username}
-              <Button onClick={() => dispatch(userLoggedOut())}>Logout</Button>
+              <Button onClick={() => dispatch(logout())}>Logout</Button>
             </>
           )}
 

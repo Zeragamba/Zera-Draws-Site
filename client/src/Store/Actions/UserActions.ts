@@ -14,4 +14,4 @@ export const userLoggedIn = createAction('user/loggedIn', (user: User | null) =>
   return { payload: { user } }
 })
 
-export const userLoggedOut = createAction('user/loggedOut')
+export const logout = createAction('user/loggedOut')
