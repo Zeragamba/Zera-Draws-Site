@@ -4,40 +4,54 @@ class PictureController < ApplicationController
   before_action :authenticate_admin, :only => :upload
 
   def index
-    @pictures = Picture.released.includes(:tags)
+    num_per_page = 25
+    page = params[:page]&.to_i || 0
+
+    pictures = Picture.released.includes(:tags)
 
     if params[:tag]
-      @pictures = @pictures.where(:tags => { slug: Slug.to_slug(params[:tag]) })
+      pictures = pictures.where(:tags => { slug: Slug.to_slug(params[:tag]) })
     end
 
-    render formats: :json
+    render json: PictureView.render_list(pictures, num_per_page: num_per_page, page: page)
+  end
+
+  def view_gallery
+    num_per_page = 25
+    page = params[:page]&.to_i || 0
+
+    gallery = Gallery.find(params[:id_or_slug])
+
+    render json: PictureView.render_list(gallery.pictures, num_per_page: num_per_page, page: page)
   end
 
   def upload
     image = params[:image]
-    @picture = Picture.create(picture_params)
+    picture = Picture.create(picture_params)
 
-    if @picture.errors.any?
-      return render json: { error: @picture.errors.full_messages.join('. ') }, status: 400
+    if picture.errors.any?
+      messages = picture.errors.full_messages
+      return render_error(message: messages.join('. '), status: 400)
     end
 
-    @picture.attach(image.tempfile.path)
+    picture.attach(image.tempfile.path)
 
-    render :view, formats: :json
+    render json: PictureView.render(picture)
   end
 
   def recent
-    limit = params[:limit] || 5
-    @pictures = Picture.released.includes(:tags).limit(limit)
-    render :index, formats: :json
+    limit = params['numImages'] || 5
+    pictures = Picture.released.includes(:tags).limit(limit)
+
+    render json: PictureView.render_list(pictures)
   end
 
   def view
-    @picture = Picture.find(params[:id])
-    render formats: :json
+    picture = Picture.find(params[:id_or_slug])
+    render json: PictureView.render(picture)
   end
 
   def picture_params
-    params.permit(:title, :date, :slug, :description)
+    params.require(:picture).permit(:title, :date, :slug, :description)
   end
 end

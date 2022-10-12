@@ -1,7 +1,8 @@
 import { createAction, createReducer, Dispatch } from '@reduxjs/toolkit'
+import { format as formatDate } from 'date-fns'
 import { useReducer } from 'react'
 
-import { parseFilename } from '../util'
+import { formatSlug, parseFilename } from '../util'
 
 export type ImageFormState =
   { image: File | undefined }
@@ -23,7 +24,7 @@ type FormField = {
 const defaultState: ImageFormState = {
   image: undefined,
   title: { value: '', dirty: false, error: undefined },
-  date: { value: '', dirty: false, error: undefined },
+  date: { value: formatDate(new Date(), 'yyyy-MM-dd'), dirty: false, error: undefined },
   slug: { value: '', dirty: false, error: undefined },
   description: { value: '', dirty: false, error: undefined },
 }
@@ -61,8 +62,7 @@ const imageFormReducer = createReducer(defaultState, ({ addCase }) => {
       const dateField = state.date
 
       if (!slugField.dirty) {
-        const titleSlug = titleField.value.toLowerCase().replace(/\W+/g, '-')
-        slugField.value = `${dateField.value}-${titleSlug}`
+        slugField.value = formatSlug(`${dateField.value}-${titleField.value}`)
       }
     }
 

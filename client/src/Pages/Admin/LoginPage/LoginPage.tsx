@@ -1,18 +1,20 @@
 import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { useAppSelector } from '../../../Store/AppState'
+import { useCurrentUser } from '../../../Lib/ServerApi/EndPoints/User/GetCurrentUser'
 import { AppNavBar } from '../../../UI/AppNavBar'
 import { LoginForm } from './LoginForm'
 
 
 export const LoginPage: FC = () => {
-  const currentUser = useAppSelector(state => state.currentUser)
+  const userQuery = useCurrentUser()
 
-  if (currentUser) {
-    return (
-      <Navigate to={'/'} />
-    )
+  if (userQuery.isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (userQuery.data) {
+    return <Navigate to={'/'} />
   }
 
   return (

@@ -1,9 +1,11 @@
-export const buildSlug = (date: string, title: string): string => {
-  title = title
-    .toLowerCase()
-    .replace(/\W+/g, '-')
+import { format as formatDate } from 'date-fns'
 
-  return `${date}-${title}`
+
+export function formatSlug(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/\W+/g, ' ')
+    .replace(/\s+/g, '-')
 }
 
 type FilenameMeta = {
@@ -20,6 +22,7 @@ export const parseFilename = (filename: string): FilenameMeta => {
   }
 
   let { title, date } = filenameMatch.groups
+  date ||= formatDate(new Date(), 'yyyy-MM-dd')
 
   if (title.match(/^\d{4}-\d{2}-\d{2}$/)) {
     date = title

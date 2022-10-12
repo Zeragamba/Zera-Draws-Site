@@ -3,11 +3,11 @@ class UserController < ApplicationController
   before_action :authenticate, :only => :view_current
 
   def login
-    token = login_user(params[:username], params[:password])
-    render json: { token: token }
+    auth_token = login_user(params[:username], params[:password])
+    render json: UserView.render(Current.user, auth_token: auth_token)
   end
 
   def view_current
-    render json: Current.user
+    render json: UserView.render(Current.user)
   end
 end

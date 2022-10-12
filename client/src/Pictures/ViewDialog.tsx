@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Picture, PicturesApi, useApi } from '../Lib/ServerApi'
+import { usePicture } from '../Lib/ServerApi'
 import { Glass } from '../UI/Glass'
 import { Overlay } from '../UI/Overlay'
 
@@ -19,35 +19,22 @@ export const ViewDialog: FC<ViewDialogProps> = ({
   pictureId,
   onClose,
 }) => {
-  const { fetching, error, data: picture } = useApi<Picture>(
-    () => {
-      if (!open || !pictureId) return
-      return PicturesApi.fetchPicture(pictureId)
-    }, [ open, pictureId ],
-  )
+  const pictureQuery = usePicture({ pictureId })
 
   return (
     <Overlay open={open} onClose={onClose}>
-      {fetching ? (
-        <div>Loading...</div>
-      ) : (
+      {pictureQuery.isLoading && <div>Loading...</div>})
+      {pictureQuery.isError && <div>Error Loading Picture :(</div>}(
+      {pictureQuery.data && (
         <>
-          {error && (
-            <div>{error.message}</div>
-          )}
-
-          {picture && (
-            <>
-              <Glass className={styles.imgWrapper}>
-                <img className={styles.img} src={picture.srcs.high} />
-              </Glass>
-              <Glass className={styles.descWrapper}>
-                <div className={styles.title}>{picture.title}</div>
-                <div className={styles.date}>{picture.date}</div>
-                <div className={styles.tags}>{picture.tags?.join(', ')}</div>
-              </Glass>
-            </>
-          )}
+          <Glass className={styles.imgWrapper}>
+            <img className={styles.img} src={pictureQuery.data.srcs.high} />
+          </Glass>
+          <Glass className={styles.descWrapper}>
+            <div className={styles.title}>{pictureQuery.data.title}</div>
+            <div className={styles.date}>{pictureQuery.data.date}</div>
+            <div className={styles.tags}>{pictureQuery.data.tags?.join(', ')}</div>
+          </Glass>
         </>
       )}
     </Overlay>

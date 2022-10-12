@@ -1,15 +1,18 @@
 import { FC } from 'react'
 
-import { PicturesApi } from '../../../Lib/ServerApi'
-import { LoadingGate } from '../../../UI/LoadingGate'
-import { Gallery, GallerySizes } from '../gallery'
+import { useGalleryPictures } from '../../../Lib/ServerApi'
+import { Glass } from '../../../UI/Glass'
+import { Gallery, GallerySizes } from '../Gallery'
 
 export const FeaturedGallery: FC = () => {
-  const { fetching, error, data = [] } = PicturesApi.useTag('Featured')
+  const picturesQuery = useGalleryPictures({ gallery: 'featured' })
 
-  return (
-    <LoadingGate loading={fetching} error={error}>
-      <Gallery title="Featured" pictures={data} gallerySize={GallerySizes.LARGE} />
-    </LoadingGate>
-  )
+  if (picturesQuery.isError) {
+    return <Glass>Error loading gallery. :(</Glass>
+  } else if (picturesQuery.data) {
+    const pictures = picturesQuery.data.pages.flat()
+    return <Gallery title="Featured" pictures={pictures} gallerySize={GallerySizes.LARGE} />
+  } else {
+    return <Glass>Loading...</Glass>
+  }
 }

@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, FormGroup, Paper, Stack } from '@mui/material'
 import { ChangeEvent, FC, useEffect, useMemo, useRef, useState } from 'react'
 
-import { isServerApiError, PicturesApi, PostPictureParams } from '../../Lib/ServerApi'
+import { EditablePicture, useCreatePicture } from '../../Lib/ServerApi'
+import { isServerApiError } from '../../Lib/ServerApi/ServerClient'
 import { fieldChanged, imageChanged, ImageForm, TextFields, useImageFormState } from '../ImageForm'
 
 type NetworkState = 'idle' | 'uploading' | 'uploaded' | 'error'
@@ -18,6 +19,7 @@ export const ImageUploadForm: FC<PictureUploadFormProps> = ({
   const [ networkState, setNetworkState ] = useState<NetworkState>('idle')
   const [ error, setError ] = useState<string>()
   const [ form, dispatch ] = useImageFormState()
+  const createPictureQuery = useCreatePicture()
 
   const fileSelectRef = useRef<HTMLInputElement>(null)
 
@@ -59,15 +61,16 @@ export const ImageUploadForm: FC<PictureUploadFormProps> = ({
     setNetworkState('uploading')
     setError(undefined)
 
-    const payload: PostPictureParams = {
-      image: form.image,
+    const picture: EditablePicture = {
       title: form.title.value,
       date: form.date.value,
       slug: form.slug.value,
       description: form.description.value,
     }
 
-    PicturesApi.postImage(payload)
+    const image = form.image
+
+    createPictureQuery.mutateAsync({ picture, image })
       .then(() => setNetworkState('uploaded'))
       .catch((error) => {
         if (isServerApiError(error)) {

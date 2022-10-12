@@ -2,9 +2,8 @@ import { Button, TextField } from '@mui/material'
 import classNames from 'classnames'
 import { ChangeEvent, FC, FormEvent, useState } from 'react'
 
-import { isServerApiError } from '../../../Lib/ServerApi'
-import { login } from '../../../Store/Actions/UserActions'
-import { useAppDispatch } from '../../../Store/AppState'
+import { useLogin } from '../../../Lib/ServerApi/EndPoints/User/Login'
+import { isServerApiError } from '../../../Lib/ServerApi/ServerClient'
 import { Glass } from '../../../UI/Glass'
 
 import styles from './LoginForm.module.scss'
@@ -16,7 +15,7 @@ type LoginFormState = {
 }
 
 export const LoginForm: FC = () => {
-  const dispatch = useAppDispatch()
+  const loginQuery = useLogin()
   const [ form, setForm ] = useState<LoginFormState>({ username: '', password: '', error: null })
 
   const handleChange = (field: keyof LoginFormState) => {
@@ -27,17 +26,17 @@ export const LoginForm: FC = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
+    const { username, password } = form
+    loginQuery.mutate({ username, password })
+  }
 
-    dispatch(login(form.username, form.password))
-      .catch(error => {
-        if (isServerApiError(error)) {
-          error = error.response.data.error
-        } else {
-          error = error.toString()
-        }
-
-        setForm({ ...form, error })
-      })
+  let error: string | null = null
+  if (loginQuery.error) {
+    if (isServerApiError(loginQuery.error)) {
+      const serverError = loginQuery.error
+      error = serverError.response.data.error
+    }
+    error = loginQuery.error.toString()
   }
 
   return (
@@ -62,9 +61,9 @@ export const LoginForm: FC = () => {
           className={styles.FormItem}
         />
 
-        {form.error && (
+        {error && (
           <div className={classNames(styles.FormItem, styles.ErrorMessage)}>
-            {form.error}
+            {error}
           </div>
         )}
 

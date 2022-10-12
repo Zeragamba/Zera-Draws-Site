@@ -20,7 +20,7 @@ export const HomePage: FC = () => (
     </div>
     <div className={styles.main}>
       <FeaturedGallery />
-      <RecentGallery numImages={10}/>
+      <RecentGallery numImages={10} />
       <AllPicturesGallery />
     </div>
   </div>

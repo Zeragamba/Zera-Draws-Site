@@ -29,7 +29,7 @@ export const ImageForm: FC<ImageFormProps> = ({
       <FormGroup>
         <TextField
           label="Date"
-          type="date"
+          type="string"
           variant="standard"
           value={state.date.value}
           onChange={(event) => onFieldChange('date', event.target.value)}

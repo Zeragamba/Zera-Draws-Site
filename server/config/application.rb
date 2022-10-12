@@ -43,6 +43,9 @@ module ZeraDraws
     config.hosts << "server"
     config.hosts << "localhost"
 
+    config.autoload_paths << 'app/views'
+    config.autoload_paths << 'app/lib'
+
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
     end

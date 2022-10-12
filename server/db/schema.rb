@@ -10,11 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_14_193634) do
+ActiveRecord::Schema.define(version: 2022_10_11_182022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "galleries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.integer "order", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_galleries_on_name"
+    t.index ["order"], name: "index_galleries_on_order"
+    t.index ["slug"], name: "index_galleries_on_slug"
+  end
+
+  create_table "galleries_pictures", id: false, force: :cascade do |t|
+    t.uuid "gallery_id", null: false
+    t.uuid "picture_id", null: false
+  end
 
   create_table "pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.date "date", null: false

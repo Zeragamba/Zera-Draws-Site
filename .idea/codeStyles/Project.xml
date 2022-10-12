@@ -98,7 +98,6 @@
       <option name="ENFORCE_TRAILING_COMMA" value="WhenMultiline" />
       <option name="SPACES_WITHIN_OBJECT_LITERAL_BRACES" value="true" />
       <option name="SPACES_WITHIN_IMPORTS" value="true" />
-      <option name="ALIGN_UNION_TYPES" value="true" />
       <option name="BLANK_LINES_AROUND_FUNCTION" value="0" />
     </TypeScriptCodeStyleSettings>
     <codeStyleSettings language="CSS">

@@ -1,9 +1,8 @@
 import { createTheme, ThemeProvider } from '@mui/material'
 import { FC } from 'react'
-import { Provider } from 'react-redux'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter } from 'react-router-dom'
 
-import { appStore } from '../Store/AppState'
 import { AppRouter } from './AppRouter'
 
 import styles from './App.module.scss'
@@ -14,10 +13,12 @@ const darkTheme = createTheme({
   },
 })
 
+const queryClient = new QueryClient()
+
 export const App: FC = () => {
   return (
     <ThemeProvider theme={darkTheme}>
-      <Provider store={appStore}>
+      <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <div id="app-root" className={styles.app}>
             <AppRouter />
@@ -25,7 +26,7 @@ export const App: FC = () => {
 
           <div id="modal-root" />
         </BrowserRouter>
-      </Provider>
+      </QueryClientProvider>
     </ThemeProvider>
   )
 }
