@@ -1,13 +1,10 @@
 class AuthToken
-  TOKEN_SECRET = ENV.fetch("TOKEN_SECRET")
-  TOKEN_ALGO = 'HS512'
-
   def self.encode(user)
-    return JWT.encode({ usr: user.id }, TOKEN_SECRET, TOKEN_ALGO)
+    return JWT.encode({ usr: user.id }, AUTH_TOKEN_SECRET, AUTH_TOKEN_ALGO)
   end
 
   def self.decode(token)
-    payload, _ = JWT.decode(token, TOKEN_SECRET, true, { algorithm: TOKEN_ALGO })
+    payload, _ = JWT.decode(token, AUTH_TOKEN_SECRET, true, { algorithm: AUTH_TOKEN_ALGO })
     return payload
   end
 end

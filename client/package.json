@@ -34,10 +34,9 @@
   },
   "scripts": {
     "start": "dotenv -e ../.env react-scripts start",
-    "build": "react-scripts build",
+    "build": "dotenv -e ../.env react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint src"
+    "lint": "dotenv -e ../.env eslint src"
   },
   "browserslist": {
     "production": [

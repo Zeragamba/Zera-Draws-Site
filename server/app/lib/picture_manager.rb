@@ -1,7 +1,4 @@
 class PictureManager
-  STORAGE_DIR = DATA_DIR.join('images')
-  IMAGES_URL = ENV.fetch("IMG_SERVER_URL")
-
   SIZES = {
     high: 3000,
     low: 1000,
@@ -16,7 +13,7 @@ class PictureManager
   end
 
   def self.path_for(picture, size: :full)
-    return File.join(STORAGE_DIR, picture.id, size.to_s + picture.ext)
+    return File.join(IMAGES_DIR, picture.id, size.to_s + picture.ext)
   end
 
   ##

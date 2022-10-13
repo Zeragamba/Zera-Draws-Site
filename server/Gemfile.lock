@@ -71,9 +71,6 @@ GEM
     byebug (11.1.3)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
-    debase (0.2.5.beta2)
-      debase-ruby_core_source (>= 0.10.12)
-    debase-ruby_core_source (0.10.17)
     diff-lcs (1.5.0)
     digest (3.1.0)
     dotenv (2.8.1)
@@ -201,8 +198,6 @@ GEM
       rubocop (>= 1.33.0, < 2.0)
     rubocop-rspec (2.13.2)
       rubocop (~> 1.33)
-    ruby-debug-ide (0.7.3)
-      rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
     spring (4.1.0)
     sprockets (4.1.1)
@@ -230,7 +225,6 @@ DEPENDENCIES
   bcrypt
   bootsnap (>= 1.4.4)
   byebug
-  debase
   dotenv-rails
   fastimage
   jbuilder (~> 2.7)
@@ -246,7 +240,6 @@ DEPENDENCIES
   rspec-rails (~> 5.0.0)
   rubocop-rails
   rubocop-rspec
-  ruby-debug-ide
   spring
   tzinfo-data
 

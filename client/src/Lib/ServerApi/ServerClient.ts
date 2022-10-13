@@ -1,9 +1,9 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse, Method } from 'axios'
 
-export const API_URL = process.env.REACT_APP_SERVER_URL
+import { Config } from '../../Config'
 
 const axiosClient = axios.create({
-  baseURL: API_URL,
+  baseURL: Config.SERVER_URL,
 })
 
 export interface ErrorResponse extends AxiosResponse {

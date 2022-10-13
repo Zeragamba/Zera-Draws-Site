@@ -2,7 +2,7 @@ connection = ActiveRecord::Base.connection
 connection.execute("CREATE UNIQUE INDEX IF NOT EXISTS index_users_email ON users USING btree (lower(email));")
 connection.execute "CREATE UNIQUE INDEX IF NOT EXISTS index_users_username ON users USING btree (lower(username));"
 
-SEED_DATA_DIR = DATA_DIR.join('seed_images')
+SEED_DATA_DIR = Rails.root.join('data/seed_images')
 
 User.create(username: "Zeragamba", email: "zera@zeragamba.ca", password: ENV.fetch("ADMIN_PASS"), admin: true)
 

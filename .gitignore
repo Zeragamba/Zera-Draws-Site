@@ -1,7 +1,8 @@
-/data
-!/data/seed_images
+/.idea/**/*.iml
 
-/data/ssl
-!/data/ssl/.keep
+/.volumes
+/.certs
 
-.idea/**/*.iml
+!/.volumes/router
+
+!/**/.keep
