@@ -1,20 +1,18 @@
 Rails.application.routes.draw do
   get '/' => 'home#index'
 
-  post '/login' => 'user#login'
-  get '/user/me' => 'user#view_current'
+  post '/login' => 'users#login'
+  get '/user/me' => 'users#view_current'
 
-  get '/pictures' => 'picture#index'
-  get '/pictures/recent' => 'picture#recent'
-  get '/pictures/:id_or_slug' => 'picture#view'
-  post '/pictures' => 'picture#upload'
+  get '/posts' => 'posts#index'
+  get '/posts/recent' => 'posts#recent'
+  get '/posts/:id_or_slug' => 'posts#view'
+  post '/posts' => 'posts#upload'
 
-  get '/galleries' => 'gallery#list'
-  post '/gallery' => 'gallery#create'
-  get '/gallery/all' => 'picture#index'
-  get '/gallery/recent' => 'picture#recent'
-  get '/gallery/:id_or_slug' => 'gallery#view'
-  get '/gallery/:id_or_slug/pictures' => 'picture#view_gallery'
-  patch '/gallery/:id_or_slug' => 'gallery#update'
-  delete '/gallery/:id_or_slug' => 'gallery#destroy'
+  get '/galleries' => 'galleries#list'
+  post '/gallery' => 'galleries#create'
+  get '/gallery/:id_or_slug' => 'galleries#view'
+  get '/gallery/:id_or_slug/posts' => 'posts#view_gallery'
+  patch '/gallery/:id_or_slug' => 'galleries#update'
+  delete '/gallery/:id_or_slug' => 'galleries#destroy'
 end

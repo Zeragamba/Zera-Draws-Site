@@ -1,9 +1,9 @@
 import { Stack } from '@mui/material'
 import { FC, useState } from 'react'
 
-import { ImagePicker } from '../../../Pictures/ImagePicker/ImagePicker'
-import { ImageUploadForm } from '../../../Pictures/PictureUploader/ImageUploadForm'
-import { Glass } from '../../../UI/Glass'
+import { ImagePicker } from '../../../Components/Images/ImagePicker'
+import { ImageUploadForm } from '../../../Components/Images/ImageUploadForm'
+import { Glass } from '../../../Components/UI/Glass'
 
 export type FileMap = Record<File['name'], File>
 
@@ -19,7 +19,7 @@ export const UploadPage: FC = () => {
   return (
     <Glass style={{ padding: 16 }}>
       <Stack gap={2}>
-        <h1>Upload Picture</h1>
+        <h1>Upload Post</h1>
         <ImagePicker onFilesPicked={onFilesPicked} />
         {Object.values(files).map(file => <ImageUploadForm key={file.name} image={file} />)}
       </Stack>

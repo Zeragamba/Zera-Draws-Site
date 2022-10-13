@@ -7,7 +7,7 @@ class GalleryView < ApplicationView
       order: gallery.order,
       created_at: gallery.created_at,
       updated_at: gallery.updated_at,
-      pictures: gallery.pictures.map { |picture| PictureView.format(picture) },
+      pictures: gallery.posts.map { |picture| PostView.format(picture) },
     }
   end
 

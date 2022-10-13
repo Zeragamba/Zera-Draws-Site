@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_11_182022) do
+ActiveRecord::Schema.define(version: 2022_10_13_173754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -27,30 +27,37 @@ ActiveRecord::Schema.define(version: 2022_10_11_182022) do
     t.index ["slug"], name: "index_galleries_on_slug"
   end
 
-  create_table "galleries_pictures", id: false, force: :cascade do |t|
+  create_table "galleries_posts", id: false, force: :cascade do |t|
     t.uuid "gallery_id", null: false
-    t.uuid "picture_id", null: false
+    t.uuid "post_id", null: false
   end
 
-  create_table "pictures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "post_id"
+    t.string "filename", null: false
+    t.integer "height"
+    t.integer "width"
+    t.string "mime_type"
+    t.string "ext"
+    t.integer "order", default: 0, null: false
+    t.index ["post_id"], name: "index_images_on_post_id"
+  end
+
+  create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.date "date", null: false
     t.integer "order", default: 0, null: false
     t.string "title", null: false
-    t.integer "height"
-    t.integer "width"
     t.string "slug", null: false
-    t.string "mime_type"
-    t.string "ext"
     t.text "description"
     t.boolean "released", default: false, null: false
-    t.index ["slug"], name: "index_pictures_on_slug", unique: true
+    t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
-  create_table "pictures_tags", id: false, force: :cascade do |t|
+  create_table "posts_tags", id: false, force: :cascade do |t|
     t.uuid "tag_id"
-    t.uuid "picture_id"
-    t.index ["picture_id"], name: "index_pictures_tags_on_picture_id"
-    t.index ["tag_id"], name: "index_pictures_tags_on_tag_id"
+    t.uuid "post_id"
+    t.index ["post_id"], name: "index_posts_tags_on_post_id"
+    t.index ["tag_id"], name: "index_posts_tags_on_tag_id"
   end
 
   create_table "tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

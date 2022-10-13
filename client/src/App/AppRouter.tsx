@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
+import { AdminLayout } from '../Components/UI/Layout/AdminLayout'
 import { useCurrentUser } from '../Lib/ServerApi/EndPoints/User/GetCurrentUser'
 import { UploadPage } from '../Pages/Admin'
 import { LoginPage } from '../Pages/Admin/LoginPage/LoginPage'
 import { HomePage } from '../Pages/HomePage'
-import { AdminLayout } from '../UI/Layout/AdminLayout'
 
 export const AppRouter: FC = () => {
   const userQuery = useCurrentUser()

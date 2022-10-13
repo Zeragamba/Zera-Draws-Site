@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
+import { AppNavBar } from '../../../Components/UI/AppNavBar'
 import { useCurrentUser } from '../../../Lib/ServerApi/EndPoints/User/GetCurrentUser'
-import { AppNavBar } from '../../../UI/AppNavBar'
 import { LoginForm } from './LoginForm'
 
 

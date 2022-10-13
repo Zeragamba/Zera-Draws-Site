@@ -2,7 +2,7 @@ import classnames from 'classnames'
 import { FC } from 'react'
 import { matchPath, useLocation, useNavigate } from 'react-router-dom'
 
-import { Glass } from '../../UI/Glass'
+import { Glass } from '../../Components/UI/Glass'
 
 import styles from './AdminNav.module.scss'
 

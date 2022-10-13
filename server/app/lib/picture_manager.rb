@@ -6,7 +6,7 @@ class PictureManager
   }
 
   ##
-  # @param picture [Picture]
+  # @param picture [Post]
   # @param size [string]
   def self.url_for(picture, size:)
     return [IMAGES_URL, picture.id, size.to_s + picture.ext].join('/')
@@ -17,9 +17,9 @@ class PictureManager
   end
 
   ##
-  # @return picture [Picture]
+  # @return picture [Post]
   def self.import(title:, date:, order: 0, filename:)
-    picture = Picture.create!(
+    picture = Post.create!(
       title: title,
       date: date,
       order: order,
@@ -31,10 +31,10 @@ class PictureManager
   end
 
   ##
-  # @param picture [Picture]
+  # @param picture [Post]
   # @param filename [String]
   def self.attach(picture, filename)
-    Picture.transaction do
+    Post.transaction do
       ext = File.extname(filename)
 
       width, height = FastImage.size(filename)

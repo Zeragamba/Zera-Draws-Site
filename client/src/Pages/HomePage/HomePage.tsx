@@ -1,10 +1,10 @@
 import { FC } from 'react'
 
-import { AllPicturesGallery } from '../../Pictures/ImageGallery/galleries/AllPicturesGallery'
-import { FeaturedGallery } from '../../Pictures/ImageGallery/galleries/FeaturedGallery'
-import { RecentGallery } from '../../Pictures/ImageGallery/galleries/RecentGallery'
-import { AppNavBar } from '../../UI/AppNavBar'
-import { Header } from '../../UI/Header'
+import { AllPostsGallery } from '../../Components/Gallery/AllPicturesGallery'
+import { FeaturedGallery } from '../../Components/Gallery/FeaturedGallery'
+import { RecentGallery } from '../../Components/Gallery/RecentGallery'
+import { AppNavBar } from '../../Components/UI/AppNavBar'
+import { Header } from '../../Components/UI/Header'
 import { Sidebar } from './Sidebar'
 
 import styles from './HomePage.module.scss'
@@ -19,9 +19,9 @@ export const HomePage: FC = () => (
       <AppNavBar />
     </div>
     <div className={styles.main}>
-      <FeaturedGallery />
-      <RecentGallery numImages={10} />
-      <AllPicturesGallery />
+      {/*<FeaturedGallery />*/}
+      {/*<RecentGallery numImages={10} />*/}
+      <AllPostsGallery />
     </div>
   </div>
 )
