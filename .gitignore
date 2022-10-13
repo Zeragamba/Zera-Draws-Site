@@ -2,6 +2,7 @@
 
 /.volumes
 /.certs
+/.env
 
 !/.volumes/router
 

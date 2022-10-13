@@ -3,18 +3,18 @@ version: "3.9"
 services:
   nginx:
     image: nginx:stable
-    ports:
-      - 8080:443
     depends_on:
       - server
+      - client
     volumes:
       - ./.volumes/router/conf.d:/etc/nginx/conf.d
       - ./.volumes/router/ssl:/opt/ssl
       - ./.volumes/images:/opt/images
       - ./client/build:/opt/client
+    ports:
+      - "${NGINX_PORT}:443"
 
   server:
-    image: ruby:3.1.2
     build: ./server
     working_dir: /opt/server
     command: bin/rails s -p 3000 -b 0.0.0.0
@@ -24,19 +24,27 @@ services:
     depends_on:
       - db
     environment:
-      SERVER_URL: "${SERVER_URL}"
-      DB_HOST: db #Override .env and use the docker network
+      RAILS_ENV: production
+      SERVER_URL: "https://${HOSTNAME}:${NGINX_PORT}/api"
+      DB_HOST: db
       DB_PORT: 5432
       DB_USER: "${DB_USER}"
       DB_PASS: "${DB_PASS}"
-      IMG_SERVER_URL: "${IMG_SERVER_URL}"
+      IMAGES_URL: "https://${HOSTNAME}:${NGINX_PORT}/images"
       TOKEN_SECRET: "${TOKEN_SECRET}"
       IMAGES_DIR: "/opt/images"
 
+  client:
+    build: ./client
+    working_dir: /opt/client
+    volumes:
+      - ./client:/opt/client
+    environment:
+      REACT_APP_SERVER_URL: "https://${HOSTNAME}:${NGINX_PORT}/api"
+    command: yarn build
+
   db:
     image: postgres
-    ports:
-      - "${DB_PORT}:5432"
     volumes:
       - ./.volumes/db:/var/lib/postgresql/data
     environment:

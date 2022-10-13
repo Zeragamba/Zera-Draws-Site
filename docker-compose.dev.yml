@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  server:
+    environment:
+      RAILS_ENV: development
+
+  client:
+    volumes:
+      - ./.volumes/router/ssl:/opt/ssl
+    environment:
+      HTTPS: true
+      SSL_CRT_FILE: /opt/ssl/current.crt
+      SSL_KEY_FILE: /opt/ssl/current.key
+    command: yarn start
+    ports:
+      - "${CLIENT_PORT}:3000"
+
+  db:
+    ports:
+      - "${DB_PORT}:5432"
