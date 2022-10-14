@@ -13,7 +13,7 @@ interface ModelProps {
   onClose(): void
 }
 
-export class Overlay extends Component<ModelProps> {
+export class Dialog extends Component<ModelProps> {
   el: Element
   modalRoot: HTMLElement | null
 

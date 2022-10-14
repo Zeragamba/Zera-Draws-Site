@@ -10,7 +10,7 @@ interface ViewPostProps {
   postId: string
 }
 
-export const ViewPost: FC<ViewPostProps> = ({
+export const EditPost: FC<ViewPostProps> = ({
   postId,
 }) => {
   const { data: post, error, isLoading, isError } = usePost({ postId })

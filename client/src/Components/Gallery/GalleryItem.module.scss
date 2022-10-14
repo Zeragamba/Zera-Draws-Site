@@ -1,0 +1,60 @@
+@import "../../common";
+
+.row {
+  display: flex;
+  align-content: stretch;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  &::after { // Right align last row of content
+    flex: auto;
+    flex-grow: 100;
+    content: "";
+  }
+}
+
+.item {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+
+  background: gray;
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    padding: 0;
+    transition: padding 200ms;
+  }
+
+  &:hover {
+    .image {
+      padding: 4px;
+    }
+
+    .metadata {
+      &.metadataTop {top: 0;}
+      &.metadataBottom {bottom: 0;}
+    }
+  }
+}
+
+
+.metadata {
+  position: absolute;
+  width: 100%;
+  padding: $padding-sm;
+  transition: top 250ms ease, bottom 250ms ease;
+  color: hsl(0, 0%, 10%);
+  background: hsla(0, 100%, 100%, 0.75);
+
+  &.metadataTop { top: -100%; }
+
+  &.metadataBottom { bottom: -100%; }
+}

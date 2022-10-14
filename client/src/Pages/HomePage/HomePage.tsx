@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import { AllPostsGallery } from '../../Components/Gallery/AllPicturesGallery'
-import { FeaturedGallery } from '../../Components/Gallery/FeaturedGallery'
-import { RecentGallery } from '../../Components/Gallery/RecentGallery'
+import { AllPostsGallery } from '../../Components/Gallery/Galleries/AllPostsGallery'
+import { FeaturedGallery } from '../../Components/Gallery/Galleries/FeaturedGallery'
+import { RecentPostsGallery } from '../../Components/Gallery/Galleries/RecentPostsGallery'
 import { AppNavBar } from '../../Components/UI/AppNavBar'
 import { Header } from '../../Components/UI/Header'
 import { Sidebar } from './Sidebar'

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Overlay } from '../UI/Overlay'
+import { Dialog } from '../UI/Dialog'
 import { ViewPost } from './ViewPost'
 
 
@@ -17,8 +17,8 @@ export const ViewPostDialog: FC<ViewDialogProps> = ({
   onClose,
 }) => {
   return (
-    <Overlay open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose}>
       <ViewPost postId={postId} />
-    </Overlay>
+    </Dialog>
   )
 }
