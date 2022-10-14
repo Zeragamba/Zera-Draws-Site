@@ -1,8 +1,10 @@
 import classnames from 'classnames'
 import { FC, useRef } from 'react'
 
+import { useInViewport } from '../../Lib/InViewport'
 import { Image } from '../../Lib/ServerApi'
-import { noOp, useInViewport } from '../../Lib/util'
+import { noOp } from '../../Lib/util'
+import { Spinner } from '../UI/Spinner'
 import { useGalleryContext } from './GalleryContext'
 
 import styles from './GalleryItem.module.scss'
@@ -22,10 +24,10 @@ export const GalleryItem: FC<GalleryItemProps> = ({
   date,
   onClick = noOp,
 }) => {
-  const { rowHeight } = useGalleryContext()
+  const { rowHeight, galleryInView } = useGalleryContext()
 
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const inViewport = useInViewport(wrapperRef, { partial: true, expand: 500, interval: 100 })
+  const inViewport = useInViewport(wrapperRef, { enabled: galleryInView, expand: 500 })
 
   const ratio = image.width / image.height
 
@@ -39,6 +41,7 @@ export const GalleryItem: FC<GalleryItemProps> = ({
       {date && <div className={classnames(styles.metadata, styles.metadataTop)}>{date}</div>}
       {inViewport && <img className={styles.image} src={image.srcs.gallery || image.srcs.full} alt={title} />}
       <div className={classnames(styles.metadata, styles.metadataBottom)}>{title}</div>
+      <Spinner className={styles.spinner}/>
     </div>
   )
 }

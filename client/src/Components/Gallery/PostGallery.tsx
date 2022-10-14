@@ -20,7 +20,13 @@ export const PostGallery: FC<PostGalleryProps> = ({
     <>
       <Gallery {...galleryConfig}>
         {posts.map(post => (
-          <GalleryItem key={post.id} image={post.images[0]} title={post.title} onClick={() => setActivePost(post.id)} />
+          <GalleryItem
+            key={post.id}
+            image={post.images[0]}
+            date={post.date}
+            title={post.title}
+            onClick={() => setActivePost(post.id)}
+          />
         ))}
       </Gallery>
       {activePost && <ViewPostDialog postId={activePost} onClose={() => setActivePost(null)} open />}
