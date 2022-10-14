@@ -5,46 +5,80 @@ export const noOp = (): void => {
   /* noop */
 }
 
-export function isInViewport(element: HTMLElement): boolean {
-  const rect = element.getBoundingClientRect()
+type InViewportOptions = Partial<{
+  parent: HTMLElement
+  partial: boolean
+  expand: number
+}>
 
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  )
+export function isInViewport(element: HTMLElement, {
+  parent,
+  partial = false,
+  expand = 0,
+}: InViewportOptions = {}): boolean {
+  parent ||= document.documentElement
+
+  const targetBox = element.getBoundingClientRect()
+  const parentBox = parent.getBoundingClientRect()
+
+  if (partial) {
+    return !(
+      targetBox.top > parentBox.bottom + expand
+      || targetBox.bottom < parentBox.top - expand
+      || targetBox.left > parentBox.right + expand
+      || targetBox.right < parentBox.left - expand
+    )
+  } else {
+    return (
+      targetBox.top <= parentBox.bottom + expand
+      && targetBox.bottom >= parentBox.top - expand
+      && targetBox.left <= parentBox.right + expand
+      && targetBox.right >= parentBox.left - expand
+    )
+  }
 }
 
-export function useInViewport(markerRef: RefObject<HTMLElement | null>): boolean {
+type InViewportHookOptions = InViewportOptions & Partial<{
+  interval: number
+}>
+
+export function useInViewport(markerRef: RefObject<HTMLElement | null>, options: InViewportHookOptions = {}): boolean {
+  const {
+    interval = 1000,
+    ...inViewportOptions
+  } = options
+
   const [ inViewport, setInViewport ] = useState<boolean>(false)
 
   useEffect(() => {
     const onScroll = () => {
       if (!markerRef.current) return
       const marker = markerRef.current
-      setInViewport(isInViewport(marker))
+      setInViewport(isInViewport(marker, inViewportOptions))
     }
 
-    const intervalId = setInterval(onScroll, 1000)
+    const intervalId = setInterval(onScroll, interval)
 
     return () => {
       clearInterval(intervalId)
     }
-  }, [ markerRef, inViewport ])
+  }, [ markerRef, interval, inViewportOptions ])
 
   return inViewport
 }
+
 export function formatSlug(str: string): string {
   return str
     .toLowerCase()
     .replace(/\W+/g, ' ')
     .replace(/\s+/g, '-')
 }
+
 type FilenameMeta = {
   date: string
   title: string
 }
+
 export const parseFilename = (filename: string): FilenameMeta => {
   const filenameMatch = filename
     .match(/^((?<date>\d{4}-\d{2}-\d{2}) - )?(?<title>.+?)(?<ext>\..+)?$/)

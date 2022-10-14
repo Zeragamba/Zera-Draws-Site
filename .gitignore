@@ -1,9 +1,9 @@
 /.idea/**/*.iml
 
-/.volumes
-/.certs
-/.env
+/.volumes/db
+/.volumes/images
+/.volumes/router/ssl
 
-!/.volumes/router
+/.env
 
 !/**/.keep
