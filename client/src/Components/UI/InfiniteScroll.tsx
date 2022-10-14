@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useRef } from 'react'
+import { FC, ReactNode, useEffect } from 'react'
 
 import { useInViewport } from '../../Lib/InViewport'
 
@@ -15,8 +15,7 @@ export const InfiniteScroll: FC<InfiniteGalleryProps> = ({
   fetchingNextPage,
   children,
 }) => {
-  const markerRef = useRef<HTMLDivElement>(null)
-  const endInView = useInViewport(markerRef)
+  const [ markerRef, endInView ] = useInViewport()
 
   useEffect(() => {
     if (!hasNextPage || !endInView) return

@@ -1,21 +1,14 @@
-import { createContext, FC, ReactNode, useContext, useRef } from 'react'
-
-import { useInViewport } from '../../Lib/InViewport'
+import { createContext, FC, ReactNode, useContext } from 'react'
 
 export type GalleryConfig = {
   rowHeight: number
 }
 
-interface GalleryContextState extends GalleryConfig {
-  galleryInView: boolean
-}
-
-const GalleryContext = createContext<GalleryContextState>({
-  galleryInView: true,
+const GalleryContext = createContext<GalleryConfig>({
   rowHeight: 250,
 })
 
-export const useGalleryContext = (): GalleryContextState => {
+export const useGalleryContext = (): GalleryConfig => {
   return useContext(GalleryContext)
 }
 
@@ -25,14 +18,9 @@ interface GalleryContextProviderProps {
 }
 
 export const GalleryContextProvider: FC<GalleryContextProviderProps> = ({ config, children }) => {
-  const galleryRef = useRef<HTMLDivElement>(null)
-  const galleryInView = useInViewport(galleryRef)
-
   return (
-    <GalleryContext.Provider value={{ ...config, galleryInView }}>
-      <div ref={galleryRef}>
-        {children}
-      </div>
+    <GalleryContext.Provider value={config}>
+      {children}
     </GalleryContext.Provider>
   )
 }
