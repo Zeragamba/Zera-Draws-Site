@@ -1,28 +1,49 @@
+.section {
+  padding: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .imgWrapper {
   display: flex;
   justify-content: center;
+  align-content: center;
   width: 100%;
+  max-height: 750px;
 
-  .img {
+  img {
+    object-fit: contain;
     max-width: 100%;
-    max-height: 750px;
+    max-height: 100%;
   }
 }
 
-.descWrapper {
-  margin-top: 8px;
-  padding: 8px;
+.nav {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
 
-  .title {
-    font-size: 20px;
+  a {
+    cursor: pointer;
   }
+}
 
-  .date {
-    font-size: 14px;
-  }
+.title {
+  font-size: 20px;
+}
 
-  .tags {
-    font-size: 14px;
-  }
+.date {
+  font-size: 14px;
+}
+
+.description {
+  padding: 8px;
+  background: grey;
+
+}
+
+.tags {
+  font-size: 14px;
 }

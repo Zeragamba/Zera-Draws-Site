@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from 'react-query'
+import { useQuery, useQueryClient, UseQueryResult } from 'react-query'
 
 import { Post } from '../../Models'
 import { ServerClient } from '../../ServerClient'
@@ -15,8 +15,15 @@ export const getRecentPosts = ({ numImages }: Params): Promise<Post[]> => {
 }
 
 export const useRecentPosts = (params: Params): UseQueryResult<Post[]> => {
+  const queryClient = useQueryClient()
+
   return useQuery({
     queryKey: QueryKeys.posts.getRecent(),
     queryFn: () => getRecentPosts(params),
+    onSuccess: (recentPosts) => {
+      recentPosts.forEach(post => {
+        queryClient.setQueryData(QueryKeys.posts.getPost(post.id), post)
+      })
+    },
   })
 }

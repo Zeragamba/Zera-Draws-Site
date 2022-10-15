@@ -8,4 +8,8 @@ class ApplicationController < ActionController::API
   def render_error(message:, status: 500)
     render json: { error: message }, status: status
   end
+
+  def render_not_found(message: "Not Found")
+    render_error(message: message, status: 404)
+  end
 end

@@ -1,19 +1,29 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { isError } from 'react-query'
 
-import { usePost } from '../../Lib/ServerApi'
+import { Post, usePost } from '../../Lib/ServerApi'
+import { useHistory } from '../../Pages/AppRouter'
 import { Glass } from '../UI/Glass'
+import { NextPostBtn } from './NextPostBtn'
+import { PrevPostBtn } from './PrevPostBtn'
 
 import styles from './ViewPost.module.scss'
 
 interface ViewPostProps {
-  postId: string
+  postId: Post['id']
 }
 
 export const ViewPost: FC<ViewPostProps> = ({
   postId,
 }) => {
-  const { data: post, error, isLoading, isError } = usePost({ postId })
+  const history = useHistory()
+  const [ currentPostId, setCurrentPostId ] = useState<Post['id']>(postId)
+  const { data: post, error, isLoading, isError } = usePost({ postId: currentPostId })
+
+  const onChangePost = (post: Post) => {
+    setCurrentPostId(post.id)
+    history.replace(`/post/${post.slug}`)
+  }
 
   if (isLoading) {
     return <Glass>Loading...</Glass>
@@ -27,15 +37,40 @@ export const ViewPost: FC<ViewPostProps> = ({
     .map(tag => tag.name)
     .sort((a, b) => a.localeCompare(b))
 
+  const description = post.description || ''
+
   return (
     <>
       <Glass className={styles.imgWrapper}>
-        <img className={styles.img} src={post.images[0].srcs.high} />
+        <img src={post.images[0].srcs.high} />
       </Glass>
-      <Glass className={styles.descWrapper}>
-        <div className={styles.title}>{post.title}</div>
-        <div className={styles.date}>{post.date}</div>
-        <div className={styles.tags}>{tags.join(', ')}</div>
+      <Glass className={styles.section}>
+        <div>
+          <div className={styles.title}>{post.title}</div>
+          <div className={styles.date}>{post.date}</div>
+        </div>
+
+        <div className={styles.nav}>
+          <div>
+            <NextPostBtn
+              onClick={onChangePost}
+              currentPostId={currentPostId}
+              preloadSize={'high'}
+              hotkey={'ArrowLeft'}
+            />
+          </div>
+          <div>
+            <PrevPostBtn
+              onClick={onChangePost}
+              currentPostId={currentPostId}
+              preloadSize={'high'}
+              hotkey={'ArrowRight'}
+            />
+          </div>
+        </div>
+
+        {tags.length > 0 && <div className={styles.tags}>{tags.join(', ')}</div>}
+        {description.trim() !== '' && <div className={styles.description}>{post.description}</div>}
       </Glass>
     </>
   )

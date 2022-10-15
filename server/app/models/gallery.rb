@@ -1,7 +1,7 @@
 class Gallery < ApplicationRecord
   include WithSlug
 
-  has_and_belongs_to_many :posts
+  has_many :gallery_posts
 
   def build_slug
     self.name

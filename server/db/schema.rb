@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_13_173754) do
+ActiveRecord::Schema.define(version: 2022_10_15_161214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -27,9 +27,10 @@ ActiveRecord::Schema.define(version: 2022_10_13_173754) do
     t.index ["slug"], name: "index_galleries_on_slug"
   end
 
-  create_table "galleries_posts", id: false, force: :cascade do |t|
+  create_table "gallery_posts", id: false, force: :cascade do |t|
     t.uuid "gallery_id", null: false
     t.uuid "post_id", null: false
+    t.integer "order", null: false
   end
 
   create_table "images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

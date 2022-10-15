@@ -6,3 +6,5 @@ const requireEnv = (name: string, value: string | undefined): string => {
 export const Config = {
   SERVER_URL: requireEnv('REACT_APP_SERVER_URL', process.env.REACT_APP_SERVER_URL),
 }
+
+console.log(Config)

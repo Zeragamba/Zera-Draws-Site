@@ -1,6 +1,8 @@
 class PostView < ApplicationView
   # @param post [Post]
   def self.format(post)
+    return GalleryPost.render(post) if post.is_a? GalleryPost
+
     return {
       id: post.id,
       date: post.date,

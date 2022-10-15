@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import { FC, MouseEventHandler } from 'react'
+import { FC, ImgHTMLAttributes, MouseEventHandler, ReactEventHandler, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useInViewport } from '../../Lib/InViewport'

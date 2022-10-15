@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get '/posts' => 'posts#index'
   get '/posts/recent' => 'posts#recent'
   get '/posts/:id_or_slug' => 'posts#view'
+  get '/posts/:id_or_slug/next' => 'posts#next'
+  get '/posts/:id_or_slug/prev' => 'posts#prev'
   post '/posts' => 'posts#upload'
 
   get '/galleries' => 'galleries#list'
