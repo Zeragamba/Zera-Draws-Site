@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { AppNavBar } from '../../../Components/UI/AppNavBar'
-import { useCurrentUser } from '../../../Lib/ServerApi/EndPoints/User/GetCurrentUser'
-import { LoginForm } from './LoginForm'
+import { LoginForm } from '../Components/Login/LoginForm'
+import { PublicLayout } from '../Layouts'
+import { useCurrentUser } from '../Lib/ServerApi'
 
 
 export const LoginPage: FC = () => {
@@ -18,9 +18,8 @@ export const LoginPage: FC = () => {
   }
 
   return (
-    <>
-      <AppNavBar />
+    <PublicLayout>
       <LoginForm />
-    </>
+    </PublicLayout>
   )
 }

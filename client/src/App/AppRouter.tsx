@@ -1,26 +1,21 @@
 import { FC } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { AdminLayout } from '../Components/UI/Layout/AdminLayout'
-import { useCurrentUser } from '../Lib/ServerApi/EndPoints/User/GetCurrentUser'
-import { UploadPage } from '../Pages/Admin'
-import { LoginPage } from '../Pages/Admin/LoginPage/LoginPage'
-import { HomePage } from '../Pages/HomePage'
+import { useCurrentUser } from '../Lib/ServerApi'
+import { HomePage, LoginPage, NewPostPage } from '../Pages'
 
 export const AppRouter: FC = () => {
   const userQuery = useCurrentUser()
+
+  const isAdmin = userQuery.data && userQuery.data.admin
 
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
 
-      {userQuery.data && userQuery.data.admin && (
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route path="" element={<Navigate to={'./upload'} />} />
-          <Route path="upload" element={<UploadPage />} />
-          <Route path="*" element={<Navigate to={'./upload'} />} />
-        </Route>
+      {isAdmin && (
+        <Route path="/post/new" element={<NewPostPage />} />
       )}
 
       <Route path="*" element={<Navigate to={'/'} />} />

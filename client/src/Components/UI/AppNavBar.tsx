@@ -32,7 +32,7 @@ export const AppNavBar: FC = () => {
           )}
 
           {isAdmin && (
-            <Button onClick={() => navigate('/admin/upload')}>Upload</Button>
+            <Button onClick={() => navigate('/post/new')}>Create Post</Button>
           )}
         </Stack>
       </Stack>
