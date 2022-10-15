@@ -1,8 +1,5 @@
 /* DEVELOPER */
-Stephen A. Wilson
-stephen-356@hotmail.com
-
-Twitter: @Zeragamba
-Location: Kitchener, Ontario, Canada
+Twitter: @ZeragambaDraws
+Developed with WebStorm, React, Rails, and love
 
 /* SITE */
