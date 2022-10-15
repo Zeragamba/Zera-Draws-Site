@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import { AllPostsGallery } from '../../Components/Gallery/Galleries/AllPostsGallery'
 import { FeaturedGallery } from '../../Components/Gallery/Galleries/FeaturedGallery'
-import { RecentPostsGallery } from '../../Components/Gallery/Galleries/RecentPostsGallery'
 import { AppNavBar } from '../../Components/UI/AppNavBar'
 import { Header } from '../../Components/UI/Header'
 import { Sidebar } from './Sidebar'
@@ -19,8 +18,7 @@ export const HomePage: FC = () => (
       <AppNavBar />
     </div>
     <div className={styles.main}>
-      {/*<FeaturedGallery />*/}
-      {/*<RecentGallery numImages={10} />*/}
+      <FeaturedGallery />
       <AllPostsGallery />
     </div>
   </div>
