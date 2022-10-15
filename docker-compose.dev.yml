@@ -7,7 +7,7 @@ services:
 
   client:
     volumes:
-      - ./.volumes/router/ssl:/opt/ssl
+      - ./.volumes/ssl:/opt/ssl
     environment:
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt

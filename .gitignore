@@ -2,7 +2,7 @@
 
 /.volumes/db
 /.volumes/images
-/.volumes/router/ssl
+/.volumes/ssl
 
 /.env
 
