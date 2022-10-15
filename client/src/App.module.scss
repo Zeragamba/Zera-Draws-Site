@@ -1,10 +1,10 @@
-@import "../common";
+@import "common";
 
 .app {
   overflow: auto;
   width: 100vw;
   height: 100vh;
-  background: url("../Assets/Img/Background.png");
+  background: url("Assets/Img/Background.png");
 
   @media only screen and (max-width: $bp-mobile) {
     padding: $padding-sm;

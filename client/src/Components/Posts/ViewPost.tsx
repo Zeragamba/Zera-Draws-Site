@@ -23,6 +23,10 @@ export const ViewPost: FC<ViewPostProps> = ({
     return <Glass>Unable to load post</Glass>
   }
 
+  const tags = post.tags
+    .map(tag => tag.name)
+    .sort((a, b) => a.localeCompare(b))
+
   return (
     <>
       <Glass className={styles.imgWrapper}>
@@ -31,7 +35,7 @@ export const ViewPost: FC<ViewPostProps> = ({
       <Glass className={styles.descWrapper}>
         <div className={styles.title}>{post.title}</div>
         <div className={styles.date}>{post.date}</div>
-        <div className={styles.tags}>{post.tags?.join(', ')}</div>
+        <div className={styles.tags}>{tags.join(', ')}</div>
       </Glass>
     </>
   )

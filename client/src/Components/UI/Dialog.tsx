@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Component, MouseEventHandler, ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 
-import styles from './Overlay.module.scss'
+import { DialogLayout } from '../../Layouts/DialogLayout'
+
+import styles from './Dialog.module.scss'
 
 interface ModelProps {
   open?: boolean
@@ -36,12 +38,12 @@ export class Dialog extends Component<ModelProps> {
 
     const wrapper = (
       <div className={styles.curtain} onClick={onOverlayClick}>
-        <div className={styles.wrapper}>
+        <DialogLayout className={styles.body}>
           <div className={styles.closeBtn} onClick={this.props.onClose}>
             <FontAwesomeIcon icon={faTimes} />
           </div>
           {this.props.children}
-        </div>
+        </DialogLayout>
       </div>
     )
 

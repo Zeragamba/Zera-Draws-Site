@@ -1,6 +1,8 @@
 import { FC, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import { Post } from '../../Lib/ServerApi'
+import { useHistory } from '../../Pages/AppRouter'
 import { ViewPostDialog } from '../Posts/ViewPostDialog'
 import { Gallery } from './Gallery'
 import { GalleryItem } from './GalleryItem'
@@ -14,7 +16,19 @@ export const PostGallery: FC<PostGalleryProps> = ({
   posts,
   ...galleryConfig
 }) => {
+  const { pathname } = useLocation()
+  const history = useHistory()
   const [ activePost, setActivePost ] = useState<Post['id'] | null>(null)
+
+  const onPostClick = (post: Post) => {
+    setActivePost(post.id)
+    history.replace(`/post/${post.slug}`)
+  }
+
+  const onDialogClose = () => {
+    setActivePost(null)
+    history.replace(pathname)
+  }
 
   return (
     <>
@@ -25,11 +39,11 @@ export const PostGallery: FC<PostGalleryProps> = ({
             image={post.images[0]}
             date={post.date}
             title={post.title}
-            onClick={() => setActivePost(post.id)}
+            onClick={() => onPostClick(post)}
           />
         ))}
       </Gallery>
-      {activePost && <ViewPostDialog postId={activePost} onClose={() => setActivePost(null)} open />}
+      {activePost && <ViewPostDialog postId={activePost} onClose={onDialogClose} open />}
     </>
   )
 }

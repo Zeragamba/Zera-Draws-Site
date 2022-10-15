@@ -1,4 +1,5 @@
 import { Image } from './Image'
+import { Tag } from './Tag'
 
 export interface Post {
   id: string
@@ -7,7 +8,7 @@ export interface Post {
   title: string
   slug: string
   description: string
-  tags: string[]
+  tags: Tag[]
   images: Image[]
 }
 

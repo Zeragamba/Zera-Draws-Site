@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react'
 
-export type LayoutProps = {
+export interface LayoutProps {
+  className?: string
   children?: ReactNode
 }
 

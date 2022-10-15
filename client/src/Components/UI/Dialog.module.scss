@@ -1,0 +1,48 @@
+@import "../../common";
+
+.curtain {
+  position: fixed;
+
+  z-index: 100;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  overflow-y: auto;
+  align-items: flex-start;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: hsla(0, 0, 0, 0.4);
+}
+
+.body {
+  position: relative;
+
+  width: 100%;
+  max-width: 1000px;
+
+  margin: $padding-md auto;
+}
+
+.closeBtn {
+  font-size: 20px;
+
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  right: 0;
+
+  display: grid;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  color: $colour-light;
+  background: grey;
+
+  &:hover { color: $colour-primary }
+}

@@ -1,9 +1,8 @@
 import { createTheme, ThemeProvider } from '@mui/material'
 import { FC } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { BrowserRouter } from 'react-router-dom'
 
-import { AppRouter } from './AppRouter'
+import { AppRouter } from './Pages/AppRouter'
 
 import styles from './App.module.scss'
 
@@ -19,13 +18,11 @@ export const App: FC = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <div id="app-root" className={styles.app}>
-            <AppRouter />
-          </div>
+        <div id="app-root" className={styles.app}>
+          <AppRouter />
+        </div>
 
-          <div id="modal-root" />
-        </BrowserRouter>
+        <div id="modal-root" />
       </QueryClientProvider>
     </ThemeProvider>
   )
