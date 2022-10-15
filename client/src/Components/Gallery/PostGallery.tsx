@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, MouseEvent, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { Post } from '../../Lib/ServerApi'
@@ -20,9 +20,12 @@ export const PostGallery: FC<PostGalleryProps> = ({
   const history = useHistory()
   const [ activePost, setActivePost ] = useState<Post['id'] | null>(null)
 
-  const onPostClick = (post: Post) => {
+  const getPostPath = (post: Post) => `/post/${post.slug}`
+
+  const onPostClick = (event: MouseEvent, post: Post) => {
+    event.preventDefault()
     setActivePost(post.id)
-    history.replace(`/post/${post.slug}`)
+    history.replace(getPostPath(post))
   }
 
   const onDialogClose = () => {
@@ -39,7 +42,8 @@ export const PostGallery: FC<PostGalleryProps> = ({
             image={post.images[0]}
             date={post.date}
             title={post.title}
-            onClick={() => onPostClick(post)}
+            linkTo={getPostPath(post)}
+            onClick={(event) => onPostClick(event, post)}
           />
         ))}
       </Gallery>
