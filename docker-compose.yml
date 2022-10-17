@@ -7,7 +7,7 @@ services:
       - server
       - client
     volumes:
-      - ./.volumes/router/conf.d:/etc/nginx/conf.d
+      - ./.volumes/router/conf.d:/etc/nginxconf.d
       - ./.volumes/ssl:/opt/ssl
       - ./.volumes/images:/opt/images
       - ./client/build:/opt/client
@@ -16,7 +16,6 @@ services:
 
   server:
     build: ./server
-    working_dir: /opt/server
     command: bin/rails s -p 3000 -b 0.0.0.0
     volumes:
       - ./server:/opt/server

@@ -11,4 +11,6 @@ RUN bundle install
 
 COPY . .
 
+ENTRYPOINT ["./entrypoint.sh"]
+
 CMD ["rails", "s"]
