@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import { FC, ImgHTMLAttributes, MouseEventHandler, ReactEventHandler, useEffect, useState } from 'react'
+import { FC, MouseEventHandler } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useInViewport } from '../../Lib/InViewport'
@@ -28,6 +28,8 @@ export const GalleryItem: FC<GalleryItemProps> = ({
   const { rowHeight } = useGalleryContext()
   const [ wrapperRef, inViewport ] = useInViewport()
 
+  const a4Ratio = Math.sqrt(2)
+
   const ratio = image.width / image.height
 
   const imgEle = (
@@ -37,7 +39,7 @@ export const GalleryItem: FC<GalleryItemProps> = ({
   return (
     <div
       className={classnames(styles.item, onClick)}
-      style={{ height: rowHeight, width: ratio * rowHeight }}
+      style={{ height: rowHeight, width: (a4Ratio / 2) * rowHeight }}
       ref={wrapperRef}
     >
       {date && <div className={classnames(styles.metadata, styles.metadataTop)}>{date}</div>}
