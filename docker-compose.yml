@@ -44,7 +44,7 @@ services:
     command: yarn build
 
   db:
-    image: postgres
+    image: postgres:15
     volumes:
       - ./.volumes/db:/var/lib/postgresql/data
     environment:
