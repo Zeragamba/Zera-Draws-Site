@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 
 import { AppNavBar } from '../Components/UI/AppNavBar'
 import { Header } from '../Components/UI/Header'
-import { Sidebar } from '../Components/UI/Sidebar'
+import { SocialsNav } from '../Components/UI/Sidebar'
 import { Layout } from './Layout'
 
 import styles from './PublicLayout.module.scss'
@@ -12,8 +12,8 @@ export const PublicLayout: Layout = ({ children }) => {
   return (
     <div className={styles.layout}>
       <Header />
-      <div className={styles.sidebar}>
-        <Sidebar />
+      <div className={styles.socials}>
+        <SocialsNav />
       </div>
       <div className={styles.navbar}>
         <AppNavBar />

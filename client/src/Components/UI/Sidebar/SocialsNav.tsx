@@ -3,10 +3,10 @@ import { FC } from 'react'
 import { Glass } from '../Glass'
 import { DeviantArtTile, DiscordTile, KoFiTile, RedditTile, TwitterTile } from './SidebarItem'
 
-import styles from './Sidebar.module.scss'
+import styles from './SocialsNav.module.scss'
 
-export const Sidebar: FC = () => (
-  <Glass className={styles.socialNav}>
+export const SocialsNav: FC = () => (
+  <Glass className={styles.socialsNav}>
     <nav>
       <TwitterTile />
       <DiscordTile />
