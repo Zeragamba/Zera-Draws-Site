@@ -3,6 +3,7 @@ import { isError } from 'react-query'
 
 import { Post, usePost } from '../../Lib/ServerApi'
 import { useHistory } from '../../Pages/AppRouter'
+import { AsyncImg } from '../UI/AsyncImg'
 import { Glass } from '../UI/Glass'
 import { NextPostBtn } from './NextPostBtn'
 import { PrevPostBtn } from './PrevPostBtn'
@@ -33,6 +34,8 @@ export const ViewPost: FC<ViewPostProps> = ({
     return <Glass>Unable to load post</Glass>
   }
 
+  const primaryImage = post.images[0]
+
   const tags = post.tags
     .map(tag => tag.name)
     .sort((a, b) => a.localeCompare(b))
@@ -41,9 +44,10 @@ export const ViewPost: FC<ViewPostProps> = ({
 
   return (
     <>
-      <Glass className={styles.imgWrapper}>
-        <img src={post.images[0].srcs.high} />
+      <Glass className={styles.imgWrapper} padding={0}>
+        <AsyncImg src={primaryImage.srcs.high} />
       </Glass>
+
       <Glass className={styles.section}>
         <div>
           <div className={styles.title}>{post.title}</div>
