@@ -28,6 +28,7 @@ export const EditPost: FC<ViewPostProps> = ({
       <Glass className={styles.imgWrapper}>
         <img className={styles.img} src={post.images[0].srcs.high} />
       </Glass>
+
       <Glass className={styles.descWrapper}>
         <div className={styles.title}>{post.title}</div>
         <div className={styles.date}>{post.date}</div>

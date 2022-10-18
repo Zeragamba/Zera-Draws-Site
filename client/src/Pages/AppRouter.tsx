@@ -1,34 +1,58 @@
-import { createBrowserHistory } from 'history'
+import { createBrowserHistory, History } from 'history'
 import { FC } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { useCurrentUser } from '../Lib/ServerApi'
-import { ViewPostPage } from './Posts/ViewPostPage'
-
-import { HomePage, LoginPage, NewPostPage } from './index'
+import { AuthorizingPage } from './AuthenticatingPage'
+import { HomePage } from './HomePage'
+import { LoginPage } from './LoginPage'
+import { EditPostPage, NewPostPage, ViewPostPage } from './Posts'
 
 export const AppRouter: FC = () => {
   const userQuery = useCurrentUser()
 
-  const isAdmin = userQuery.data && userQuery.data.admin
+  const isAdmin = !!(userQuery.data && userQuery.data.admin)
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/post/:postId" element={<ViewPostPage />} />
-
-        {isAdmin && (
-          <Route path="/post/new" element={<NewPostPage />} />
-        )}
-
-        <Route path="*" element={<Navigate to={'/'} />} />
+        {publicRoutes()}
+        {adminRoutes(isAdmin)}
+        {fallbackRoute(userQuery.isLoading)}
       </Routes>
     </BrowserRouter>
   )
 }
 
-export const useHistory = () => {
+const publicRoutes = () => {
+  return (
+    <>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/post/:postId" element={<ViewPostPage />} />
+    </>
+  )
+}
+
+const adminRoutes = (isAdmin: boolean) => {
+  if (!isAdmin) return null
+
+  return (
+    <>
+      <Route path="/post/new" element={<NewPostPage />} />
+      <Route path="/post/:postId/edit" element={<EditPostPage />} />
+    </>
+  )
+}
+
+const fallbackRoute = (userLoading: boolean) => {
+  const page = userLoading ? <AuthorizingPage /> : <Navigate to={'/'} />
+
+  return (
+    <Route path="*" element={page} />
+  )
+}
+
+export const useHistory = (): History => {
   return createBrowserHistory()
 }
