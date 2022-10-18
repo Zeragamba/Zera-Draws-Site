@@ -2,11 +2,11 @@
 
 .layout {
   display: grid;
-  grid-gap: $padding-md;
 
   @media only screen and (max-width: $bp-mobile) {
+    gap: $padding-md;
     grid-template-columns: 100%;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto auto auto 1fr;
     grid-template-areas:
             "header"
             "socials"
@@ -15,8 +15,9 @@
   }
 
   @media only screen and (min-width: $bp-mobile) {
+    grid-gap: $padding-sm;
     grid-template-columns: 48px 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto 1fr;
     grid-template-areas:
             "header  header"
             "socials navbar"
@@ -37,9 +38,9 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: $padding-md;
+  gap: $padding-sm;
 
   @media only screen and (max-width: $bp-mobile) {
-    gap: $padding-lg;
+    gap: $padding-md;
   }
 }

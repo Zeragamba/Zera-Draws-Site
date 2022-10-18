@@ -31,18 +31,29 @@
 
   position: absolute;
   z-index: 100;
-  top: 0;
-  right: 0;
+  top: $padding-1;
+  right: $padding-1;
 
   display: grid;
   align-items: center;
   justify-content: center;
 
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
 
   color: $colour-light;
-  background: grey;
+  background: change-color($colour-grey, $alpha: 1);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  transition: background-color 250ms, color 250ms;
 
-  &:hover { color: $colour-primary }
+  &:hover {
+    color: $colour-primary;
+    background: change-color($colour-dark, $alpha: 0.5);
+  }
+
+  &:active {
+    color: $colour-primary;
+    background: change-color($colour-dark, $alpha: 1);
+  }
 }

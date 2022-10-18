@@ -6,7 +6,7 @@ import { DeviantArtTile, DiscordTile, KoFiTile, RedditTile, TwitterTile } from '
 import styles from './SocialsNav.module.scss'
 
 export const SocialsNav: FC = () => (
-  <Glass className={styles.socialsNav}>
+  <Glass className={styles.socialsNav} padding={0}>
     <nav>
       <TwitterTile />
       <DiscordTile />

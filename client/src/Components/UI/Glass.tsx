@@ -1,15 +1,17 @@
+import { Box, BoxProps } from '@mui/material'
 import classnames from 'classnames'
-import { FC, HTMLAttributes } from 'react'
+import { FC } from 'react'
 
 import styles from './Glass.module.scss'
 
-type GlassProps = HTMLAttributes<HTMLDivElement>;
+type GlassProps = BoxProps
+
 export const Glass: FC<GlassProps> = ({
   children,
   className,
-  ...divProps
+  ...boxProps
 }) => (
-  <div className={classnames(styles.glass, className)} {...divProps}>
+  <Box className={classnames(styles.glass, className)} padding={1} {...boxProps}>
     {children}
-  </div>
+  </Box>
 )
