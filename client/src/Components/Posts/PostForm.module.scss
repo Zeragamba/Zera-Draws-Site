@@ -1,0 +1,36 @@
+@import "../../common";
+
+.PostForm {
+  display: grid;
+  gap: $padding-1;
+  grid-template-areas:
+    "images images"
+    "left   right";
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 2fr 1fr;
+}
+
+.LeftColumn,
+.RightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: $padding-1;
+}
+
+.LeftColumn {
+  grid-area: left;
+}
+
+.RightColumn {
+  grid-area: right;
+}
+
+.PostActions {
+
+}
+
+.PublishBtn {
+  display: inline-flex;
+  padding: $padding-1 $padding-2;
+  gap: $padding-1;
+}

@@ -67,11 +67,15 @@ export const ImageUploadForm: FC<PostUploadFormProps> = ({
       date: form.date.value,
       slug: form.slug.value,
       description: form.description.value,
+      released: false,
     }
 
     const image = form.image
+    const images = [
+      { filename: image.name, file: image },
+    ]
 
-    createPostQuery.mutateAsync({ post, image })
+    createPostQuery.mutateAsync({ post, images })
       .then(() => setNetworkState('uploaded'))
       .catch((error) => {
         if (isServerApiError(error)) {

@@ -16,4 +16,4 @@ type ImageSizes =
 type EditableFields =
   | 'filename'
 
-export type EditableImage = Pick<Image, EditableFields>
+export type EditableImage = Pick<Image, EditableFields> & { file: File }

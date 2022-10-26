@@ -10,6 +10,7 @@ export interface Post {
   description: string
   tags: Tag[]
   images: Image[]
+  released: boolean
 }
 
 type EditableFields =
@@ -17,5 +18,6 @@ type EditableFields =
   | 'date'
   | 'slug'
   | 'description'
+  | 'released'
 
 export type EditablePost = Pick<Post, EditableFields>

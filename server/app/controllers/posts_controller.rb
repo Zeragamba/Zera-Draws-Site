@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   include Authentication
 
-  before_action :authenticate_admin, :only => :upload
+  before_action :authenticate_admin, :only => [:upload, :update]
 
   def index
     num_per_page = 25
@@ -81,7 +81,7 @@ class PostsController < ApplicationController
 
   def upload
     image = params[:image]
-    post = Post.create(picture_params)
+    post = Post.create(post_params)
 
     if post.errors.any?
       messages = post.errors.full_messages
@@ -96,7 +96,6 @@ class PostsController < ApplicationController
   def recent
     limit = params['numImages'] || 5
     posts = Post.latest.released.limit(limit)
-
     render json: PostView.render_list(posts)
   end
 
@@ -105,7 +104,13 @@ class PostsController < ApplicationController
     render json: PostView.render(post)
   end
 
-  def picture_params
-    params.require(:picture).permit(:title, :date, :slug, :description)
+  def update
+    post = Post.find(params[:id_or_slug])
+    post.update!(post_params)
+    render json: PostView.render(post)
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :order, :date, :slug, :description, :released)
   end
 end

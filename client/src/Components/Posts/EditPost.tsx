@@ -3,8 +3,7 @@ import { isError } from 'react-query'
 
 import { usePost } from '../../Lib/ServerApi'
 import { Glass } from '../UI/Glass'
-
-import styles from './ViewPost.module.scss'
+import { EditPostForm } from './EditPostForm'
 
 interface ViewPostProps {
   postId: string
@@ -24,17 +23,7 @@ export const EditPost: FC<ViewPostProps> = ({
   }
 
   return (
-    <>
-      <Glass className={styles.imgWrapper}>
-        <img className={styles.img} src={post.images[0].srcs.high} />
-      </Glass>
-
-      <Glass className={styles.descWrapper}>
-        <div className={styles.title}>{post.title}</div>
-        <div className={styles.date}>{post.date}</div>
-        <div className={styles.tags}>{post.tags?.join(', ')}</div>
-      </Glass>
-    </>
+    <EditPostForm post={post} />
   )
 
 }
