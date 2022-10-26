@@ -7,7 +7,7 @@ services:
       - server
       - client
     volumes:
-      - ./.volumes/router/conf.d:/etc/nginxconf.d
+      - ./.volumes/router/conf.d:/etc/nginx/conf.d
       - ./.volumes/ssl:/opt/ssl
       - ./.volumes/images:/opt/images
       - ./client/build:/opt/client
