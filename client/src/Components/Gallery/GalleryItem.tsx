@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { useInViewport } from '../../Lib/InViewport'
 import { Image } from '../../Lib/ServerApi'
 import { AsyncImg } from '../UI/AsyncImg'
-import { Spinner } from '../UI/Spinner'
 import { useGalleryContext } from './GalleryContext'
 
 import styles from './GalleryItem.module.scss'
@@ -32,12 +31,16 @@ export const GalleryItem: FC<GalleryItemProps> = ({
   const a4Ratio = Math.sqrt(2)
 
   const imgEle = (
-    <>{inViewport && <AsyncImg className={styles.imgElement} src={image.srcs.gallery || image.srcs.full} alt={title} />}</>
+    <>
+      {inViewport && (
+        <AsyncImg className={styles.imgElement} src={image.srcs.gallery || image.srcs.full} alt={title} />
+      )}
+    </>
   )
 
   return (
     <div
-      className={classnames(styles.item, onClick)}
+      className={classnames(styles.item, onClick && styles.hasOnClick)}
       style={{ height: rowHeight, width: (a4Ratio / 2) * rowHeight }}
       ref={wrapperRef}
     >
