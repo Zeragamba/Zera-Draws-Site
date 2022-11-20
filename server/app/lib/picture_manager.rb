@@ -31,24 +31,23 @@ class PictureManager
   end
 
   ##
-  # @param picture [Post]
+  # @param image [Image]
   # @param filename [String]
-  def self.attach(picture, filename)
+  def self.attach(image, filename)
     Post.transaction do
       ext = File.extname(filename)
 
       width, height = FastImage.size(filename)
-      picture.height = height
-      picture.width = width
+      image.height = height
+      image.width = width
 
       type = FastImage.type(filename)
-      picture.mime_type = "image/#{type}"
+      image.mime_type = "image/#{type}"
 
-      picture.ext = ext
-      picture.released = true
+      image.ext = ext
 
-      self.export_sizes(picture, filename)
-      picture.save!
+      self.export_sizes(image, filename)
+      image.save!
     end
   end
 
@@ -56,23 +55,28 @@ class PictureManager
     return open(self.path_for(picture, size: size), "rb") { |f| f.read }
   end
 
-  def self.export_sizes(picture, src_filename)
-    dest_filename = self.path_for(picture, size: :full)
+  # @param image [Image]
+  # @param src_filename [string]
+  def self.export_sizes(image, src_filename)
+    dest_filename = self.path_for(image, size: :full)
     FileUtils.makedirs(File.dirname(dest_filename))
     FileUtils.copy(src_filename, dest_filename)
 
     SIZES.each do |name, size|
       self.resize(
         src: src_filename,
-        dest: self.path_for(picture, size: name),
+        dest: self.path_for(image, size: name),
         size: size
       )
     end
   end
 
+  # @param src [string] Source file to load
+  # @param dest [string] Location to save resized image
+  # @param size [number] new size to save
   def self.resize(src:, dest:, size:)
-    image = MiniMagick::Image.open(src)
-    image.resize "#{size}x#{size}>"
-    image.write(dest)
+    magick_img = MiniMagick::Image.open(src)
+    magick_img.resize "#{size}x#{size}>"
+    magick_img.write(dest)
   end
 end

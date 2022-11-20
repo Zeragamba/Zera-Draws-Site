@@ -80,17 +80,22 @@ class PostsController < ApplicationController
   end
 
   def upload
-    image = params[:image]
-    post = Post.create(post_params)
+    Post.transaction do
+      images = params[:images]
+      post = Post.create!(post_params)
 
-    if post.errors.any?
-      messages = post.errors.full_messages
-      return render_error(message: messages.join('. '), status: 400)
+      if images.empty?
+        return render_error(message: "At least one image is required", status: 400)
+      end
+
+      images.each do |image|
+        image = Image.create!(filename: image.filename)
+        image.attach(image.file)
+        post.images << image
+      end
+
+      render json: PostView.render(post)
     end
-
-    post.attach(image.tempfile.path)
-
-    render json: PostView.render(post)
   end
 
   def recent
@@ -105,12 +110,64 @@ class PostsController < ApplicationController
   end
 
   def update
-    post = Post.find(params[:id_or_slug])
-    post.update!(post_params)
-    render json: PostView.render(post)
+    Post.transaction do
+      post = Post.find(params[:id_or_slug])
+
+      if params[:post]
+        post.update!(post_params)
+      end
+
+      images = params[:images] || Hash.new
+      images.each_value do |image_data|
+        tmp_file = image_data["file"].tempfile if image_data["file"]
+
+        case image_data["action"]
+          when 'add'
+            image = Image.create!(
+              filename: image_data["filename"],
+              order: post.images.size,
+              post: post,
+            )
+            image.attach(tmp_file.path)
+          when 'edit'
+            image = Image.find(image_data["id"])
+
+            if image_data["order"]
+              image.order = image_data["order"]
+            end
+
+            if image_data["filename"]
+              image.filename = image_data["filename"]
+            end
+
+            if image_data["file"]
+              image.destroy!
+
+              new_image = Image.create!(
+                filename: image["filename"],
+                order: image["order"],
+                post: post,
+              )
+              new_image.attach(tmp_file.path)
+
+              image = new_image
+            end
+
+            image.save!
+          when 'remove'
+            image = Image.find(image_data["id"])
+            image.destroy!
+          else
+            raise Error("Unknown image action #{image_data["action"]}")
+        end
+      end
+
+      render json: PostView.render(post)
+    end
   end
 
   def post_params
-    params.require(:post).permit(:title, :order, :date, :slug, :description, :released)
+    params.require(:post)
+      .permit(:title, :order, :date, :slug, :description, :released)
   end
 end

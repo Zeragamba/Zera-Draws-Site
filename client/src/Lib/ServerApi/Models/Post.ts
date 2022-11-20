@@ -13,11 +13,12 @@ export interface Post {
   released: boolean
 }
 
-type EditableFields =
-  | 'title'
-  | 'date'
-  | 'slug'
-  | 'description'
-  | 'released'
+export enum EditablePostFields {
+  title = 'title',
+  date = 'date',
+  slug = 'slug',
+  description = 'description',
+  released = 'released',
+}
 
-export type EditablePost = Pick<Post, EditableFields>
+export type EditablePost = Pick<Post, EditablePostFields>

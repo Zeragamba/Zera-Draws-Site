@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, UseQueryResult } from 'react-query'
+import { useQuery, useQueryClient, UseQueryOptions, UseQueryResult } from 'react-query'
 
 import { Post } from '../../Models'
 import { ServerClient } from '../../ServerClient'

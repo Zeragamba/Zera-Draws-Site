@@ -3,6 +3,7 @@ class Image < ApplicationRecord
 
   default_scope -> { order(:order).order(:filename) }
 
+  # @param filename [string]
   def attach(filename)
     PictureManager.attach(self, filename)
   end

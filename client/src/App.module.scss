@@ -14,3 +14,7 @@
     padding: $padding-lg;
   }
 }
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}

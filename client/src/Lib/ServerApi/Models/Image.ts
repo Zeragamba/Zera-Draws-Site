@@ -2,11 +2,13 @@ export interface Image {
   id: string
   order: number
   filename: string
-  srcs: ImageSizes
   height: number
   width: number
   mime_type: string
   ext: string
+
+  srcs: ImageSizes
+  file?: File
 }
 
 type ImageSizes =
@@ -16,4 +18,4 @@ type ImageSizes =
 type EditableFields =
   | 'filename'
 
-export type EditableImage = Pick<Image, EditableFields> & { file: File }
+export type EditableImage = Pick<Image, EditableFields> & { file?: File }

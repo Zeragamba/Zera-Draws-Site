@@ -1,22 +1,32 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 
-import { Post } from '../../Lib/ServerApi'
+import { EditableImage, Image, Post } from '../../Lib/ServerApi'
 import { Glass } from '../UI/Glass'
-import { PublishToggle } from './PublishToggle'
+import { EditPostImages } from './EditPostImages'
 
 import styles from './PostForm.module.scss'
 
 interface PostFormProps {
   post: Post
+  actions: ReactNode
+  onImageRemove: (image: Image) => void
+  onImageEdit: (image: Image, changes: Partial<EditableImage>) => void
+  onImageAdd: (image: Required<EditableImage>) => void
+  onEdit: (post: Partial<Post>) => void
 }
 
-export const EditPostForm: FC<PostFormProps> = ({
+export const PostForm: FC<PostFormProps> = ({
   post,
+  actions,
+  onImageRemove,
+  onImageEdit,
+  onImageAdd,
+  onEdit,
 }) => {
   return (
     <div className={styles.PostForm}>
       <div className={styles.LeftColumn}>
-        <Glass>Images</Glass>
+        <EditPostImages images={post.images} onRemove={onImageRemove} onEdit={onImageEdit} onAdd={onImageAdd} />
         <Glass>
           <div>{post.title}</div>
           <div>{post.date}</div>
@@ -24,7 +34,7 @@ export const EditPostForm: FC<PostFormProps> = ({
         </Glass>
       </div>
       <div className={styles.RightColumn}>
-        <PublishToggle postId={post.id} released={post.released} />
+        {actions}
         <Glass display="flex" flexDirection="column" gap={2}>
           <div>
             <div>URL Slug</div>
