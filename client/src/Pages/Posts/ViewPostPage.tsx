@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
-import { ViewPost } from '../../Components/Posts/ViewPost'
+import { ViewPost } from '../../Components/Posts/ViewPost/ViewPost'
 import { PublicLayout } from '../../Layouts'
 
 export const ViewPostPage: FC = () => {

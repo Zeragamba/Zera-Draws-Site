@@ -4,8 +4,7 @@ import { Button, ButtonProps } from '@mui/material'
 import classnames from 'classnames'
 import { FC } from 'react'
 
-import styles from './PostForm.module.scss'
-
+import styles from './PublishToggle.module.scss'
 
 interface PublishToggleProps extends ButtonProps {
   released: boolean
@@ -16,7 +15,7 @@ export const PublishToggle: FC<PublishToggleProps> = ({
   ...btnProps
 }) => {
   return (
-    <Button {...btnProps} className={classnames(styles.PublishBtn, btnProps.className)}>
+    <Button {...btnProps} className={classnames(styles.PublishToggle, btnProps.className)}>
       {released ? (
         <><FontAwesomeIcon icon={faCheck} /> Public</>
       ) : (

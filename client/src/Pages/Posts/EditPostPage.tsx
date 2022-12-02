@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
-import { EditPost } from '../../Components/Posts/EditPost'
+import { EditPostForm } from '../../Components/Posts/Forms/EditPostForm'
 import { AdminLayout } from '../../Layouts'
 
 export const EditPostPage: FC = () => {
@@ -14,7 +14,7 @@ export const EditPostPage: FC = () => {
 
   return (
     <AdminLayout>
-      <EditPost postId={postId} />
+      <EditPostForm postId={postId} />
     </AdminLayout>
   )
 }

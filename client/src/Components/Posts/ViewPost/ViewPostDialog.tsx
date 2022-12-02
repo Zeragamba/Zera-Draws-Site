@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Dialog } from '../UI/Dialog'
+import { Dialog } from '../../UI/Dialog'
 import { ViewPost } from './ViewPost'
 
 

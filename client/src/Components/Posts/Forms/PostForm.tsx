@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 
-import { EditableImage, Image, Post } from '../../Lib/ServerApi'
-import { Glass } from '../UI/Glass'
+import { EditableImage, Image, Post } from '../../../Lib/ServerApi'
+import { Glass } from '../../UI/Glass'
 import { EditPostImages } from './EditPostImages'
 
 import styles from './PostForm.module.scss'

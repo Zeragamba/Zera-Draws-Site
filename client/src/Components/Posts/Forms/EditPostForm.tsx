@@ -3,10 +3,10 @@ import { isError } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { EditableImage, Image, Post, usePost } from '../../Lib/ServerApi'
-import { useEditPost } from '../../Lib/ServerApi/EndPoints/Posts/EditPost'
-import { Glass } from '../UI/Glass'
-import { addImage, editImage, removeImage, useImageChanges } from './ImagesChangeManager'
+import { EditableImage, Image, Post, usePost } from '../../../Lib/ServerApi'
+import { useEditPost } from '../../../Lib/ServerApi/EndPoints/Posts/EditPost'
+import { Glass } from '../../UI/Glass'
+import { addImage, editImage, removeImage, useImageChanges } from './ImageChangesManager'
 import { PostForm } from './PostForm'
 import { PublishToggle } from './PublishToggle'
 
@@ -14,7 +14,7 @@ interface ViewPostProps {
   postId: string
 }
 
-export const EditPost: FC<ViewPostProps> = ({
+export const EditPostForm: FC<ViewPostProps> = ({
   postId,
 }) => {
   const navigate = useNavigate()

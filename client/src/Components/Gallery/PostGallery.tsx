@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 import { Post } from '../../Lib/ServerApi'
 import { useHistory } from '../../Pages/AppRouter'
-import { ViewPostDialog } from '../Posts/ViewPostDialog'
+import { ViewPostDialog } from '../Posts/ViewPost/ViewPostDialog'
 import { Gallery } from './Gallery'
 import { GalleryItem } from './GalleryItem'
 

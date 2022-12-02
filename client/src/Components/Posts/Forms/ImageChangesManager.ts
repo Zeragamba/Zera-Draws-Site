@@ -1,7 +1,7 @@
 import { AnyAction, createAction, createReducer } from '@reduxjs/toolkit'
 import { Dispatch, useReducer } from 'react'
 
-import { ImageChangePayload } from '../../Lib/ServerApi/EndPoints/Posts/EditPost'
+import { ImageChangePayload } from '../../../Lib/ServerApi/EndPoints/Posts/EditPost'
 
 type AddImagePayload = { id: string; filename: string; order?: number; file: File }
 export const addImage = createAction<AddImagePayload>('add')

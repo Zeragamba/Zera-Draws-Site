@@ -1,4 +1,4 @@
-@import "../../common";
+@import "../../../common";
 
 .PostForm {
   display: grid;
@@ -27,10 +27,4 @@
 
 .PostActions {
 
-}
-
-.PublishBtn {
-  display: inline-flex;
-  padding: $padding-1 $padding-2;
-  gap: $padding-1;
 }
