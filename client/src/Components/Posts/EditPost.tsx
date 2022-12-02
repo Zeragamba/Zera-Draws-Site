@@ -1,6 +1,6 @@
 import { Button, Stack } from '@mui/material'
+import { isError } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
-import { isError } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 
 import { EditableImage, Image, Post, usePost } from '../../Lib/ServerApi'

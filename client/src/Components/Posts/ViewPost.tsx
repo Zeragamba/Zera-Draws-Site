@@ -1,5 +1,5 @@
+import { isError } from '@tanstack/react-query'
 import { FC, useState } from 'react'
-import { isError } from 'react-query'
 
 import { Post, usePost } from '../../Lib/ServerApi'
 import { useHistory } from '../../Pages/AppRouter'

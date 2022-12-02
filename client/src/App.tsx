@@ -1,6 +1,6 @@
 import { createTheme, ThemeProvider } from '@mui/material'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { CSSProperties, FC } from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
 
 import { AppRouter } from './Pages/AppRouter'
 

@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, UseQueryResult } from 'react-query'
+import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
 import { Post } from '../../Models'
 import { ServerClient } from '../../ServerClient'

@@ -21,7 +21,6 @@ export const PostForm: FC<PostFormProps> = ({
   onImageRemove,
   onImageEdit,
   onImageAdd,
-  onEdit,
 }) => {
   return (
     <div className={styles.PostForm}>

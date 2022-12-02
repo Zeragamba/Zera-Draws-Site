@@ -1,4 +1,4 @@
-import { useInfiniteQuery, UseInfiniteQueryResult } from 'react-query'
+import { useInfiniteQuery, UseInfiniteQueryResult } from '@tanstack/react-query'
 
 import { Post } from '../../Models'
 import { ServerClient } from '../../ServerClient'

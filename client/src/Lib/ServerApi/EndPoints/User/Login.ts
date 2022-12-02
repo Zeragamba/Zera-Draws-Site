@@ -1,6 +1,6 @@
-import { useMutation, UseMutationResult, useQueryClient } from 'react-query'
+import { useMutation, UseMutationResult, useQueryClient } from '@tanstack/react-query'
 
-import { User } from '../../Models/User'
+import { User } from '../../Models'
 import { ServerApiError, ServerClient } from '../../ServerClient'
 import { QueryKeys } from '../QueryKeys'
 import { ModelResponse } from '../Response'

@@ -1,6 +1,6 @@
-import { useQuery, UseQueryResult } from 'react-query'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
 
-import { User } from '../../Models/User'
+import { User } from '../../Models'
 import { isServerApiError, ServerClient } from '../../ServerClient'
 import { QueryKeys } from '../QueryKeys'
 import { ModelResponse } from '../Response'

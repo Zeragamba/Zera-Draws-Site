@@ -1,4 +1,4 @@
-import { useMutation, UseMutationResult, useQueryClient } from 'react-query'
+import { useMutation, UseMutationResult, useQueryClient } from '@tanstack/react-query'
 
 import { EditableImage, EditablePost, Post } from '../../Models'
 import { ServerClient } from '../../ServerClient'
