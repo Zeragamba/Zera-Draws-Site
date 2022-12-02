@@ -1,42 +1,36 @@
-import { RefCallback, useEffect, useState } from 'react'
+import { RefObject, useEffect } from 'react'
 
-type HookOptions = { allowMany?: boolean; scope?: Element }
-export const useFilesDropped = (callback: (files: File[]) => void, options: HookOptions = {}): RefCallback<Element> => {
-  const { allowMany = true, scope } = options
-  const [ dropScope, setDropScope ] = useState<Element | null>(scope || null)
+interface DropEvent extends DragEvent {
+  dataTransfer: DataTransfer
+}
 
+function isDragEvent(event: Event): event is DragEvent {
+  return event instanceof DragEvent
+}
+
+function isDropEvent(event: Event): event is DropEvent {
+  return isDragEvent(event) && !!event.dataTransfer
+}
+
+export function useFilesDropped(scopeRef: RefObject<Element>, callback: (files: File[]) => void): void {
   useEffect(() => {
+    const dropScope = scopeRef.current
     if (!dropScope) return
 
     const onDragOver = (event: Event) => {
+      if (!isDragEvent(event)) return
+
       // Prevent default behavior (Prevent file from being opened)
       event.preventDefault()
     }
 
     const onDrop = (event: Event) => {
-      if (!(event instanceof DragEvent)) return
-      if (!event.dataTransfer) return
+      if (!isDropEvent(event)) return
 
       // Prevent default behavior (Prevent file from being opened)
       event.preventDefault()
 
-      const files: File[] = []
-
-      if (event.dataTransfer.items) {
-        for (const item of event.dataTransfer.items) {
-          const file = item.getAsFile()
-          if (file) files.push(file)
-        }
-      } else {
-        for (const file of event.dataTransfer.files) {
-          files.push(file)
-        }
-      }
-
-      const images = files.filter(file => file.type.match(/^image\//))
-      if (images.length === 0) return
-
-      callback(allowMany ? images : Array.of(images[0]))
+      callback(processDroppedFiles(event))
     }
 
     dropScope.addEventListener('drop', onDrop)
@@ -46,7 +40,22 @@ export const useFilesDropped = (callback: (files: File[]) => void, options: Hook
       dropScope.removeEventListener('drop', onDrop)
       dropScope.removeEventListener('dragover', onDragOver)
     }
-  }, [ dropScope, callback, options ])
+  }, [ scopeRef, callback ])
+}
 
-  return setDropScope
+function processDroppedFiles(event: DropEvent): File[] {
+  const files: File[] = []
+
+  if (event.dataTransfer.items) {
+    for (const item of event.dataTransfer.items) {
+      const file = item.getAsFile()
+      if (file) files.push(file)
+    }
+  } else {
+    for (const file of event.dataTransfer.files) {
+      files.push(file)
+    }
+  }
+
+  return files
 }

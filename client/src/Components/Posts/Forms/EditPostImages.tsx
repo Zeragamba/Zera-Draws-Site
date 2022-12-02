@@ -1,13 +1,11 @@
-import { Box, Button, Stack } from '@mui/material'
-import classnames from 'classnames'
-import { FC } from 'react'
+import { Button, Stack } from '@mui/material'
+import { FC, useRef } from 'react'
 
+import { useDragActive } from '../../../Hooks/UseDragActive'
 import { EditableImage, Image } from '../../../Lib/ServerApi'
 import { ImagePicker } from '../../Images/ImagePicker'
 import { Glass } from '../../UI/Glass'
-import { PostImagePicker, useDragActive } from './PostImagePicker'
-
-import styles from './EditPostImages.module.scss'
+import { PostImagePicker } from './PostImagePicker'
 
 interface EditPostImagesProps {
   images: Image[]
@@ -22,7 +20,8 @@ export const EditPostImages: FC<EditPostImagesProps> = ({
   onEdit,
   onAdd,
 }) => {
-  const [ dragRef, dragActive ] = useDragActive()
+  const dragRef = useRef<HTMLButtonElement>(null)
+  const dragActive = useDragActive(dragRef)
 
   const onImagesAdded = (files: File[]) => {
     files.forEach(file => {
@@ -40,7 +39,6 @@ export const EditPostImages: FC<EditPostImagesProps> = ({
             key={image.id}
             image={image}
             onImageChange={(file) => onEdit(image, { filename: file.name, file })}
-            onFilenameChange={(filename) => onEdit(image, { filename })}
             onRemove={() => onRemove(image)}
             primary={index === 0}
           />
@@ -48,9 +46,9 @@ export const EditPostImages: FC<EditPostImagesProps> = ({
       </Stack>
 
       <ImagePicker onFilesPicked={onImagesAdded} multiple>
-        <Box className={classnames(dragActive && styles.dragActive)} ref={dragRef}>
-          <Button variant="outlined" fullWidth>Add Images</Button>
-        </Box>
+        <Button variant={dragActive ? 'contained' : 'outlined'} fullWidth ref={dragRef}>
+          Add Images
+        </Button>
       </ImagePicker>
     </Glass>
   )

@@ -15,6 +15,7 @@ export const ImagePicker: FC<ImagePickerProps> = ({
   multiple = false,
   children,
 }) => {
+  const dropRef = useRef<HTMLDivElement>(null)
   const fileSelectRef = useRef<HTMLInputElement>(null)
 
   const onFilesChanged = (files: File[]) => {
@@ -22,7 +23,7 @@ export const ImagePicker: FC<ImagePickerProps> = ({
     onFilesPicked(multiple ? files : Array.of(files[0]))
   }
 
-  const dropRef = useFilesDropped(onFilesChanged)
+  useFilesDropped(dropRef, onFilesChanged)
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files as FileList
