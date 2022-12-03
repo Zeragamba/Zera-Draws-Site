@@ -1,11 +1,10 @@
 import { Button, Stack } from '@mui/material'
-import { isError } from '@tanstack/react-query'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
-import { EditableImage, Image, Post, useCreatePost } from '../../../Lib/ServerApi'
+import { EditableImage, Post, useCreatePost } from '../../../Lib/ServerApi'
 import { noOp } from '../../../Lib/util'
 import { useImageManager } from '../../Images/ImageManager/UseImageManager'
-import { PostForm } from './PostForm'
+import { OnPostSubmitHandler, PostForm } from './PostForm'
 import { PublishToggle } from './PublishToggle'
 
 interface CreatePostFormProps {
@@ -16,8 +15,7 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
   onCreated = noOp,
 }) => {
   const createPost$ = useCreatePost()
-  const imageManager = useImageManager()
-  const [ post, setPost ] = useState<Post>({
+  const post = {
     id: '',
     title: '',
     date: '',
@@ -27,22 +25,10 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
     images: [],
     released: false,
     description: '',
-  })
-
-  const onImageAdd = (added: Required<EditableImage>) => {
-    imageManager.addImage({ id: `add-${added.filename}`, ...added })
   }
 
-  const onImageEdit = (edited: Image, changes: Partial<EditableImage>) => {
-    imageManager.editImage({ id: edited.id, ...changes })
-  }
-
-  const onImageRemove = (removed: Image) => {
-    imageManager.removeImage({ id: removed.id })
-  }
-
-  const onPostSave = async () => {
-    const images: Required<EditableImage>[] = imageManager.images
+  const onPostSave: OnPostSubmitHandler = async ({ post, images }) => {
+    const createdImages: Required<EditableImage>[] = images
       .filter(image => image.file)
       .map((image) => {
         return {
@@ -52,45 +38,31 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
         }
       })
 
-    const saved = await createPost$.mutateAsync({ post, images })
+    const saved = await createPost$.mutateAsync({ post, images: createdImages })
     onCreated(saved)
-  }
-
-  const onEdit = (changes: Partial<Post>) => {
-    if (!post) return
-    setPost({ ...post, ...changes })
   }
 
   return (
     <PostForm
-      post={{ ...post, images: imageManager.images }}
-      onImageRemove={onImageRemove}
-      onImageEdit={onImageEdit}
-      onImageAdd={onImageAdd}
-      onEdit={onEdit}
-      actions={
+      post={post}
+      onSubmit={onPostSave}
+      actions={(submitForm, setValue) => (
         <Stack gap={1}>
           <Button
             variant={'contained'}
             disabled={createPost$.isLoading}
-            onClick={onPostSave}
+            onClick={submitForm}
             fullWidth
           >Save</Button>
           <PublishToggle
             released={post.released}
-            onClick={() => onEdit({ released: !post.released })}
+            onClick={() => setValue('released', !post.released)}
             disabled={createPost$.isLoading}
             variant={'outlined'}
             fullWidth
           />
         </Stack>
-      }
+      )}
     />
   )
-
-}
-
-function formatError(error: unknown): string {
-  if (isError(error)) return error.toString()
-  return `${error}`
 }

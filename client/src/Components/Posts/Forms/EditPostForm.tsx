@@ -1,94 +1,52 @@
 import { Button, Stack } from '@mui/material'
-import { isError } from '@tanstack/react-query'
-import { FC, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { FC } from 'react'
 
-import { EditableImage, Image, Post, usePost } from '../../../Lib/ServerApi'
+import { Post, usePost } from '../../../Lib/ServerApi'
 import { useEditPost } from '../../../Lib/ServerApi/EndPoints/Posts/EditPost'
-import { useImageManager } from '../../Images/ImageManager/UseImageManager'
+import { noOp } from '../../../Lib/util'
 import { Glass } from '../../UI/Glass'
-import { PostForm } from './PostForm'
+import { OnPostSubmitHandler, PostForm } from './PostForm'
 import { PublishToggle } from './PublishToggle'
 
 interface ViewPostProps {
   postId: string
+  onUpdated?: (post: Post) => void
 }
 
 export const EditPostForm: FC<ViewPostProps> = ({
   postId,
+  onUpdated = noOp,
 }) => {
-  const navigate = useNavigate()
+  const post$ = usePost({ postId })
   const editPost$ = useEditPost()
-  const [ post, setPost ] = useState<Post | null>(null)
-  const imageManager = useImageManager()
-
-  const post$ = usePost({ postId, enabled: post === null })
-
-  useEffect(() => {
-    const updatedPost = post$.data
-    if (post || !updatedPost) return
-
-    setPost(updatedPost)
-    imageManager.setImages(updatedPost?.images)
-  }, [ post$.data ])
 
   if (post$.isLoading) {
     return <Glass>Loading...</Glass>
   } else if (post$.isError) {
-    return <Glass>Error Loading Post :( {formatError(post$.error)}</Glass>
-  } else if (!post$.data || !post) {
-    return <Glass>Unable to load post</Glass>
+    return <Glass>Error Loading Post :( {String(post$.error)}</Glass>
   }
 
-  const onImageAdd = (added: Required<EditableImage>) => {
-    imageManager.addImage({ id: `add-${added.filename}`, ...added })
+  const post = post$.data
+
+  const onPostSave: OnPostSubmitHandler = async ({ post, imageChanges }) => {
+    const saved = await editPost$.mutateAsync({ postId, post, images: imageChanges })
+    onUpdated(saved)
   }
 
-  const onImageEdit = (edited: Image, changes: Partial<EditableImage>) => {
-    imageManager.editImage({ id: edited.id, ...changes })
-  }
-
-  const onImageRemove = (removed: Image) => {
-    imageManager.removeImage({ id: removed.id })
-  }
-
-  const onPostSave = async () => {
-    const saved = await editPost$.mutateAsync({ postId, post, images: imageManager.changes })
-    navigate(`/post/${saved.slug}`)
-  }
-
-  const onPublishToggle = async () => {
-    if (!post) return
-    setPost({ ...post, released: !post.released })
-
-    const saved = await editPost$.mutateAsync({ postId, post: { released: !post.released } })
-    setPost((post) => {
-      if (post) {
-        post = { ...post, released: saved.released }
-      }
-
-      return post
-    })
-  }
-
-  const onEdit = (changes: Partial<Post>) => {
-    if (!post) return
-    setPost({ ...post, ...changes })
+  const onPublishToggle = () => {
+    editPost$.mutate({ postId, post: { released: !post.released } })
   }
 
   return (
     <PostForm
-      post={{ ...post, images: imageManager.images }}
-      onImageRemove={onImageRemove}
-      onImageEdit={onImageEdit}
-      onImageAdd={onImageAdd}
-      onEdit={onEdit}
-      actions={
+      post={post}
+      onSubmit={onPostSave}
+      actions={(submitForm) => (
         <Stack gap={1}>
           <Button
             variant={'contained'}
             disabled={editPost$.isLoading}
-            onClick={onPostSave}
+            onClick={submitForm}
             fullWidth
           >Save</Button>
           <PublishToggle
@@ -99,13 +57,7 @@ export const EditPostForm: FC<ViewPostProps> = ({
             fullWidth
           />
         </Stack>
-      }
+      )}
     />
   )
-
-}
-
-function formatError(error: unknown): string {
-  if (isError(error)) return error.toString()
-  return `${error}`
 }

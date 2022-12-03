@@ -1,10 +1,11 @@
 import { FC } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
 import { EditPostForm } from '../../Components/Posts/Forms/EditPostForm'
 import { AdminLayout } from '../../Layouts'
 
 export const EditPostPage: FC = () => {
+  const navigate = useNavigate()
   const { postId } = useParams()
 
   if (!postId) {
@@ -14,7 +15,7 @@ export const EditPostPage: FC = () => {
 
   return (
     <AdminLayout>
-      <EditPostForm postId={postId} />
+      <EditPostForm postId={postId} onUpdated={(post) => navigate(`/post/${post.slug}`)} />
     </AdminLayout>
   )
 }

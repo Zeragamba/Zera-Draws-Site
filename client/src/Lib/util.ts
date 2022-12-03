@@ -8,7 +8,7 @@ export function formatSlug(str: string): string {
   return str
     .toLowerCase()
     .replace(/\W+/g, ' ')
-    .replace(/\s+/g, '-');
+    .replace(/\s+/g, '-')
 }
 
 type FilenameMeta = {
