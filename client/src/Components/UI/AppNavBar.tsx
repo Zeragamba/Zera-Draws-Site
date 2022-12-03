@@ -19,7 +19,7 @@ export const AppNavBar: FC = () => {
           <Button onClick={() => navigate('/')}>Home</Button>
         </Stack>
         <Stack gap={1} className="right" direction="row" style={{ alignItems: 'center' }}>
-          {userQuery.isLoading && <div>Loading</div>}
+          {userQuery.isFetching && <div>Loading</div>}
 
           {!currentUser ? (
             <Button onClick={() => navigate('/login')}>Login</Button>

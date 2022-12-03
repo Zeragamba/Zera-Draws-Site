@@ -18,7 +18,7 @@ export const AppRouter: FC = () => {
       <Routes>
         {publicRoutes()}
         {adminRoutes(isAdmin)}
-        {fallbackRoute(userQuery.isLoading)}
+        {fallbackRoute(userQuery.isFetching)}
       </Routes>
     </BrowserRouter>
   )
@@ -45,8 +45,8 @@ const adminRoutes = (isAdmin: boolean) => {
   )
 }
 
-const fallbackRoute = (userLoading: boolean) => {
-  const page = userLoading ? <AuthorizingPage /> : <Navigate to={'/'} />
+const fallbackRoute = (authorizing: boolean) => {
+  const page = authorizing ? <AuthorizingPage /> : <Navigate to={'/'} />
 
   return (
     <Route path="*" element={page} />

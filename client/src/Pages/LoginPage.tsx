@@ -9,7 +9,7 @@ import { useCurrentUser } from '../Lib/ServerApi'
 export const LoginPage: FC = () => {
   const userQuery = useCurrentUser()
 
-  if (userQuery.isLoading) {
+  if (userQuery.isFetching) {
     return <div>Loading...</div>
   }
 
