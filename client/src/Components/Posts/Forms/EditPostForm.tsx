@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { EditableImage, Image, Post, usePost } from '../../../Lib/ServerApi'
 import { useEditPost } from '../../../Lib/ServerApi/EndPoints/Posts/EditPost'
+import { useImageManager } from '../../Images/ImageManager/UseImageManager'
 import { Glass } from '../../UI/Glass'
-import { addImage, editImage, removeImage, useImageChanges } from './ImageChangesManager'
 import { PostForm } from './PostForm'
 import { PublishToggle } from './PublishToggle'
 
@@ -19,14 +19,17 @@ export const EditPostForm: FC<ViewPostProps> = ({
 }) => {
   const navigate = useNavigate()
   const editPost$ = useEditPost()
-  const [ imageChanges, applyChange ] = useImageChanges()
   const [ post, setPost ] = useState<Post | null>(null)
+  const imageManager = useImageManager()
 
   const post$ = usePost({ postId, enabled: post === null })
 
   useEffect(() => {
-    if (post) return
-    setPost(post$.data || null)
+    const updatedPost = post$.data
+    if (post || !updatedPost) return
+
+    setPost(updatedPost)
+    imageManager.setImages(updatedPost?.images)
   }, [ post$.data ])
 
   if (post$.isLoading) {
@@ -38,90 +41,19 @@ export const EditPostForm: FC<ViewPostProps> = ({
   }
 
   const onImageAdd = (added: Required<EditableImage>) => {
-    const image = {
-      id: `add-${added.filename}`,
-      order: 0,
-      height: 0,
-      width: 0,
-      mime_type: '',
-      ext: '',
-      filename: added.filename,
-      srcs: {
-        full: URL.createObjectURL(added.file),
-      },
-      file: added.file,
-    }
-
-    applyChange(addImage({ id: image.id, ...added }))
-
-    setPost((post) => {
-      if (post) {
-        const images = [ ...post.images ]
-        images.push({ ...image, order: images.length })
-        post = { ...post, images }
-      }
-
-      return post
-    })
+    imageManager.addImage({ id: `add-${added.filename}`, ...added })
   }
 
   const onImageEdit = (edited: Image, changes: Partial<EditableImage>) => {
-    applyChange(editImage({ id: edited.id, ...changes }))
-
-    setPost((post) => {
-      if (post) {
-        const images = post.images.map(image => {
-          if (image.id !== edited.id) return image
-
-          if (changes.filename) {
-            image = {
-              ...image,
-              filename: changes.filename,
-            }
-          }
-
-          if (changes.file) {
-            image = {
-              ...image,
-              height: 0,
-              width: 0,
-              mime_type: '',
-              ext: '',
-              srcs: {
-                full: URL.createObjectURL(changes.file),
-              },
-              file: changes.file,
-            }
-          }
-
-          return image
-        })
-
-        post = { ...post, images }
-      }
-
-      return post
-    })
+    imageManager.editImage({ id: edited.id, ...changes })
   }
 
   const onImageRemove = (removed: Image) => {
-    applyChange(removeImage({ id: removed.id }))
-
-    setPost((post) => {
-      if (post) {
-        const images = post.images.filter(image => {
-          if (image.id !== removed.id) return image
-        })
-
-        post = { ...post, images }
-      }
-
-      return post
-    })
+    imageManager.removeImage({ id: removed.id })
   }
 
   const onPostSave = async () => {
-    const saved = await editPost$.mutateAsync({ postId, post, images: imageChanges })
+    const saved = await editPost$.mutateAsync({ postId, post, images: imageManager.changes })
     navigate(`/post/${saved.slug}`)
   }
 
@@ -146,7 +78,7 @@ export const EditPostForm: FC<ViewPostProps> = ({
 
   return (
     <PostForm
-      post={post}
+      post={{ ...post, images: imageManager.images }}
       onImageRemove={onImageRemove}
       onImageEdit={onImageEdit}
       onImageAdd={onImageAdd}

@@ -31,8 +31,6 @@ export const EditPostImages: FC<EditPostImagesProps> = ({
 
   return (
     <Glass display="flex" flexDirection="column" gap={2}>
-      <div>Images</div>
-
       <Stack direction="row" gap={2} sx={{ flexWrap: 'wrap' }} width={'100%'}>
         {images.map((image, index) => (
           <PostImagePicker
