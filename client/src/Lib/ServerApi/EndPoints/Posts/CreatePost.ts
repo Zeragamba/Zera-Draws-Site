@@ -15,14 +15,14 @@ export const createPost = ({ post, images }: CreatePostReq): Promise<Post> => {
   const formData = new FormData()
 
   Object.entries(post).forEach(([ prop, value ]) => {
-    formData.set(`Post[${prop}]`, String(value))
+    formData.set(`post[${prop}]`, String(value))
   })
 
   images.forEach((image, index) => {
     Object.entries(image).forEach(([ prop, value ]) => {
       switch (prop) {
         case 'file':
-          formData.set(`image[${index}][file]`, value)
+          formData.set(`image[${index}][file]`, value as File)
           break
         default:
           formData.set(`image[${index}][${prop}]`, String(value))

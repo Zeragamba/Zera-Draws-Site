@@ -25,7 +25,7 @@ export const EditPostImages: FC<EditPostImagesProps> = ({
 
   const onImagesAdded = (files: File[]) => {
     files.forEach(file => {
-      onAdd({ filename: file.name, file })
+      onAdd({ filename: file.name, file, order: images.length })
     })
   }
 
