@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { Image } from '../../../Lib/ServerApi'
+import { Image } from '../Image'
 import * as Actions from './Actions'
 
 export const imagesReducer = createReducer<Image[]>([], ({ addCase }) => {

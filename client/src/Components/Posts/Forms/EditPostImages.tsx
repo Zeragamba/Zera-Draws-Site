@@ -1,8 +1,8 @@
 import { Button, Stack } from '@mui/material'
 import { FC, useRef } from 'react'
 
-import { useDragActive } from '../../../Hooks/UseDragActive'
-import { EditableImage, Image } from '../../../Lib/ServerApi'
+import { useDragActive } from '../../../Lib/Hooks/UseDragActive'
+import { EditableImage, Image } from '../../Images/Image'
 import { ImagePicker } from '../../Images/ImagePicker'
 import { Glass } from '../../UI/Glass'
 import { PostImagePicker } from './PostImagePicker'
@@ -31,17 +31,19 @@ export const EditPostImages: FC<EditPostImagesProps> = ({
 
   return (
     <Glass display="flex" flexDirection="column" gap={2}>
-      <Stack direction="row" gap={2} sx={{ flexWrap: 'wrap' }} width={'100%'}>
-        {images.map((image, index) => (
-          <PostImagePicker
-            key={image.id}
-            image={image}
-            onImageChange={(file) => onEdit(image, { filename: file.name, file })}
-            onRemove={() => onRemove(image)}
-            primary={index === 0}
-          />
-        ))}
-      </Stack>
+      {images.length >= 1 && (
+        <Stack direction="row" gap={2} sx={{ flexWrap: 'wrap' }} width={'100%'}>
+          {images.map((image, index) => (
+            <PostImagePicker
+              key={image.id}
+              image={image}
+              onImageChange={(file) => onEdit(image, { filename: file.name, file })}
+              onRemove={() => onRemove(image)}
+              primary={index === 0}
+            />
+          ))}
+        </Stack>
+      )}
 
       <ImagePicker onFilesPicked={onImagesAdded} multiple>
         <Button variant={dragActive ? 'contained' : 'outlined'} fullWidth ref={dragRef}>

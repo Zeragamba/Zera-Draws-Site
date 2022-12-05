@@ -1,10 +1,9 @@
 import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
+import { PublicLayout } from '../Components/Layouts'
 import { LoginForm } from '../Components/Login/LoginForm'
-import { PublicLayout } from '../Layouts'
-import { useCurrentUser } from '../Lib/ServerApi'
-
+import { useCurrentUser } from '../Components/User/UsersApi'
 
 export const LoginPage: FC = () => {
   const userQuery = useCurrentUser()

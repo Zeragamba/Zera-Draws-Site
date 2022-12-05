@@ -2,7 +2,7 @@ import { Button, Stack } from '@mui/material'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useCurrentUser, useLogout } from '../../Lib/ServerApi'
+import { useCurrentUser, useLogout } from '../User/UsersApi'
 import { Glass } from './Glass'
 
 export const AppNavBar: FC = () => {

@@ -1,7 +1,7 @@
 import { Reducer } from '@reduxjs/toolkit'
 
-import { Image } from '../../../Lib/ServerApi'
-import { ImageChangePayload } from '../../../Lib/ServerApi/EndPoints/Posts/EditPost'
+import { ImageChangePayload } from '../../Posts/PostsApi/EditPost'
+import { Image } from '../Image'
 import { changesReducer } from './ChangesReducer'
 import { imagesReducer } from './ImagesReducer'
 

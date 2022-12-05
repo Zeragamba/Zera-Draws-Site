@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material'
 import classnames from 'classnames'
 import { FC } from 'react'
 
-import { Image } from '../../../Lib/ServerApi'
+import { Image } from '../../Images/Image'
 import { ImagePicker } from '../../Images/ImagePicker'
 
 import styles from './PostImagePicker.module.scss'

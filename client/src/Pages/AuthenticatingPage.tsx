@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
+import { PublicLayout } from '../Components/Layouts'
 import { Glass } from '../Components/UI/Glass'
-import { PublicLayout } from '../Layouts'
 
 export const AuthorizingPage: FC = () => {
   return (

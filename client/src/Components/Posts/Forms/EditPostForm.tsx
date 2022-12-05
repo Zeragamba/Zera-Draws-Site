@@ -1,10 +1,11 @@
 import { Button, Stack } from '@mui/material'
 import { FC } from 'react'
 
-import { Post, usePost } from '../../../Lib/ServerApi'
-import { useEditPost } from '../../../Lib/ServerApi/EndPoints/Posts/EditPost'
-import { noOp } from '../../../Lib/util'
+import { noOp } from '../../../Lib/Noop'
 import { Glass } from '../../UI/Glass'
+import { Post } from '../Post'
+import { usePost } from '../PostsApi'
+import { useEditPost } from '../PostsApi/EditPost'
 import { OnPostSubmitHandler, PostForm } from './PostForm'
 import { PublishToggle } from './PublishToggle'
 

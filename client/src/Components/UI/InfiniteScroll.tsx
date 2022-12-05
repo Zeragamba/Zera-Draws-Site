@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect } from 'react'
 
-import { useInViewport } from '../../Lib/InViewport'
+import { useInViewport } from '../../Lib/Hooks/UseInViewport'
 
 export interface InfiniteGalleryProps {
   hasNextPage: boolean

@@ -2,8 +2,8 @@ import classnames from 'classnames'
 import { FC, MouseEventHandler } from 'react'
 import { Link } from 'react-router-dom'
 
-import { useInViewport } from '../../Lib/InViewport'
-import { Image } from '../../Lib/ServerApi'
+import { useInViewport } from '../../Lib/Hooks/UseInViewport'
+import { Image } from '../Images/Image'
 import { AsyncImg } from '../UI/AsyncImg'
 import { useGalleryContext } from './GalleryContext'
 

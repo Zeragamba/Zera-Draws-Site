@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit'
 
-import { Image } from '../../../Lib/ServerApi'
+import { Image } from '../Image'
+
 
 export type SetImagesPayload = Image[]
 export const setImages = createAction<SetImagesPayload>('setImages')

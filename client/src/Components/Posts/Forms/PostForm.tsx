@@ -1,12 +1,14 @@
 import TextField from '@mui/material/TextField'
-import { FC, FormEventHandler, ReactNode } from 'react'
+import { FC, FormEventHandler, ReactNode, useEffect } from 'react'
 import { Controller, useForm, UseFormSetValue } from 'react-hook-form'
 
-import { EditableImage, Image, Post } from '../../../Lib/ServerApi'
-import { ImageChangePayload } from '../../../Lib/ServerApi/EndPoints/Posts/EditPost'
+import { formatSlug, parseFilename } from '../../../Lib/FilenameUtils'
+import { EditableImage, Image } from '../../Images/Image'
 import { useImageManager } from '../../Images/ImageManager/UseImageManager'
 import { muiField } from '../../UI/Form/RegisterMuiField'
 import { Glass } from '../../UI/Glass'
+import { Post } from '../Post'
+import { ImageChangePayload } from '../PostsApi/EditPost'
 import { EditPostImages } from './EditPostImages'
 
 import styles from './PostForm.module.scss'
@@ -28,16 +30,31 @@ export const PostForm: FC<PostFormProps> = ({
   actions,
   onSubmit,
 }) => {
-  const { handleSubmit, setValue, control } = useForm<Post>({ defaultValues: post })
+  const { handleSubmit, setValue, formState, control, watch, resetField } = useForm<Post>({ defaultValues: post })
   const imageManager = useImageManager({ images: post.images })
+  const hasImage = post.images.length >= 1
+
+  useEffect(() => {
+    const subscription = watch((post, { name }) => {
+      switch (name) {
+        case 'date':
+        case 'title':
+          if (formState.dirtyFields.slug) return
+          setValue('slug', formatSlug(`${post.date}-${post.title}`))
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  }, [ watch, setValue, formState ])
 
   const onImageAdd = (added: Required<EditableImage>) => {
     imageManager.addImage({ id: `add-${added.filename}`, ...added })
     if (imageManager.images.length === 0) {
-      const title = added.filename.replace(/\.[^/.]+$/, '')
+      const { date, title } = parseFilename(added.filename)
 
-      setValue('title', title)
-      setValue('slug', title.toLowerCase().replace(/\W+/g, '-'))
+      resetField('title', { defaultValue: title })
+      resetField('date', { defaultValue: date })
+      resetField('slug', { defaultValue: formatSlug(`${date}-${title}`) })
     }
   }
 

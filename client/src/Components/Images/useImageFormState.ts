@@ -2,7 +2,7 @@ import { createAction, createReducer, Dispatch } from '@reduxjs/toolkit'
 import { format as formatDate } from 'date-fns'
 import { useReducer } from 'react'
 
-import { formatSlug, parseFilename } from '../../Lib/util'
+import { formatSlug, parseFilename } from '../../Lib/FilenameUtils'
 
 export type ImageFormState =
   { image: File | undefined }

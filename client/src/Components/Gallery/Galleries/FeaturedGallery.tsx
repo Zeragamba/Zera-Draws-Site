@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { useGalleryPosts } from '../../../Lib/ServerApi'
+import { useGalleryPosts } from '../../Posts/PostsApi'
 import { Glass } from '../../UI/Glass'
 import { GalleryTitle } from '../GalleryTitle'
 import { PostGallery } from '../PostGallery'

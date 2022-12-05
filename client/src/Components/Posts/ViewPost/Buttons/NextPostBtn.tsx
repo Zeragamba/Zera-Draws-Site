@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
-import { Post, useNextPost } from '../../../../Lib/ServerApi'
+import { Post } from '../../Post'
+import { useNextPost } from '../../PostsApi'
 import { PostNavBtn, PostNavBtnProps } from './PostNavBtn'
 
 interface NextPostBtnProps extends Omit<PostNavBtnProps, 'post' | 'children'> {

@@ -1,9 +1,10 @@
 import { Button, Stack } from '@mui/material'
 import { FC } from 'react'
 
-import { EditableImage, Post, useCreatePost } from '../../../Lib/ServerApi'
-import { noOp } from '../../../Lib/util'
-import { useImageManager } from '../../Images/ImageManager/UseImageManager'
+import { noOp } from '../../../Lib/Noop'
+import { EditableImage } from '../../Images/Image'
+import { Post } from '../Post'
+import { useCreatePost } from '../PostsApi'
 import { OnPostSubmitHandler, PostForm } from './PostForm'
 import { PublishToggle } from './PublishToggle'
 
@@ -28,6 +29,7 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
   }
 
   const onPostSave: OnPostSubmitHandler = async ({ post, images }) => {
+    console.log(post, images)
     const createdImages: Required<EditableImage>[] = images
       .filter(image => image.file)
       .map((image) => {

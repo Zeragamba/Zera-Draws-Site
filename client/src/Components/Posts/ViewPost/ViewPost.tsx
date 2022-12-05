@@ -1,10 +1,11 @@
 import { isError } from '@tanstack/react-query'
 import { FC, useState } from 'react'
 
-import { Post, usePost } from '../../../Lib/ServerApi'
-import { useHistory } from '../../../Pages/AppRouter'
+import { useHistory } from '../../../App/AppRouter'
 import { AsyncImg } from '../../UI/AsyncImg'
 import { Glass } from '../../UI/Glass'
+import { Post } from '../Post'
+import { usePost } from '../PostsApi'
 import { NextPostBtn } from './Buttons/NextPostBtn'
 import { PrevPostBtn } from './Buttons/PrevPostBtn'
 

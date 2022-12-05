@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
+import { AdminLayout } from '../../Components/Layouts'
 import { CreatePostForm } from '../../Components/Posts/Forms/CreatePostForm'
-import { AdminLayout } from '../../Layouts'
 
 export const NewPostPage: FC = () => {
   return (

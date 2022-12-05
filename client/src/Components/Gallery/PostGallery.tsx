@@ -1,8 +1,8 @@
 import { FC, MouseEvent, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { Post } from '../../Lib/ServerApi'
-import { useHistory } from '../../Pages/AppRouter'
+import { useHistory } from '../../App/AppRouter'
+import { Post } from '../Posts/Post'
 import { ViewPostDialog } from '../Posts/ViewPost/ViewPostDialog'
 import { Gallery } from './Gallery'
 import { GalleryItem } from './GalleryItem'

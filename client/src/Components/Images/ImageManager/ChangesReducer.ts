@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { ImageChangePayload } from '../../../Lib/ServerApi/EndPoints/Posts/EditPost'
+import { ImageChangePayload } from '../../Posts/PostsApi/EditPost'
 import * as Actions from './Actions'
 
 export const changesReducer = createReducer<ImageChangePayload[]>([], ({ addCase }) => {

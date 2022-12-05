@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Component, MouseEventHandler, ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 
-import { DialogLayout } from '../../Layouts/DialogLayout'
+import { DialogLayout } from '../Layouts/DialogLayout'
 
 import styles from './Dialog.module.scss'
 

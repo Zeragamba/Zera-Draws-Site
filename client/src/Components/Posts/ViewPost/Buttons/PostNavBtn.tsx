@@ -1,8 +1,8 @@
 import { Link } from '@mui/material'
 import { FC, ReactNode, useEffect } from 'react'
 
-import { Post } from '../../../../Lib/ServerApi'
-import { noOp } from '../../../../Lib/util'
+import { noOp } from '../../../../Lib/Noop'
+import { Post } from '../../Post'
 
 export interface PostNavBtnProps {
   post: Post

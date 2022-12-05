@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { useAllPosts } from '../../../Lib/ServerApi'
+import { useAllPosts } from '../../Posts/PostsApi'
 import { Glass } from '../../UI/Glass'
 import { InfiniteScroll } from '../../UI/InfiniteScroll'
 import { GalleryTitle } from '../GalleryTitle'
