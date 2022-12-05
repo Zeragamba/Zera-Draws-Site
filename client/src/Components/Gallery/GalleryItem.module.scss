@@ -52,6 +52,7 @@
 }
 
 .metadata {
+  z-index: 10;
   position: absolute;
   width: 100%;
   padding: $padding-sm;
@@ -62,4 +63,10 @@
   &.metadataTop { top: -100%; }
 
   &.metadataBottom { bottom: -100%; }
+}
+
+.private {
+  .image {
+    filter: blur(10px);
+  }
 }

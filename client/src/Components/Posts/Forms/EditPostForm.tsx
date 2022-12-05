@@ -7,7 +7,6 @@ import { Post } from '../Post'
 import { usePost } from '../PostsApi'
 import { useEditPost } from '../PostsApi/EditPost'
 import { OnPostSubmitHandler, PostForm } from './PostForm'
-import { PublishToggle } from './PublishToggle'
 
 interface ViewPostProps {
   postId: string
@@ -34,10 +33,6 @@ export const EditPostForm: FC<ViewPostProps> = ({
     onUpdated(saved)
   }
 
-  const onPublishToggle = () => {
-    editPost$.mutate({ postId, post: { released: !post.released } })
-  }
-
   return (
     <PostForm
       post={post}
@@ -50,13 +45,6 @@ export const EditPostForm: FC<ViewPostProps> = ({
             onClick={submitForm}
             fullWidth
           >Save</Button>
-          <PublishToggle
-            released={post.released}
-            onClick={onPublishToggle}
-            disabled={editPost$.isLoading}
-            variant={'outlined'}
-            fullWidth
-          />
         </Stack>
       )}
     />

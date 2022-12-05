@@ -1,6 +1,6 @@
 import TextField from '@mui/material/TextField'
 import { FC, FormEventHandler, ReactNode, useEffect } from 'react'
-import { Controller, useForm, UseFormSetValue } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 import { formatSlug, parseFilename } from '../../../Lib/FilenameUtils'
 import { EditableImage, Image } from '../../Images/Image'
@@ -10,6 +10,7 @@ import { Glass } from '../../UI/Glass'
 import { Post } from '../Post'
 import { ImageChangePayload } from '../PostsApi/EditPost'
 import { EditPostImages } from './EditPostImages'
+import { PublishToggle } from './PublishToggle'
 
 import styles from './PostForm.module.scss'
 
@@ -21,7 +22,7 @@ export type OnPostSubmitHandler = (payload: {
 
 interface PostFormProps {
   post: Post
-  actions: (submitForm: FormEventHandler, setValue: UseFormSetValue<Post>) => ReactNode
+  actions: (submitForm: FormEventHandler) => ReactNode
   onSubmit: OnPostSubmitHandler
 }
 
@@ -32,7 +33,6 @@ export const PostForm: FC<PostFormProps> = ({
 }) => {
   const { handleSubmit, setValue, formState, control, watch, resetField } = useForm<Post>({ defaultValues: post })
   const imageManager = useImageManager({ images: post.images })
-  const hasImage = post.images.length >= 1
 
   useEffect(() => {
     const subscription = watch((post, { name }) => {
@@ -123,7 +123,19 @@ export const PostForm: FC<PostFormProps> = ({
         </Glass>
       </div>
       <div className={styles.RightColumn}>
-        {actions && actions(handleSubmit(onFormSubmit), setValue)}
+        {actions && actions(handleSubmit(onFormSubmit))}
+        <Controller
+          control={control}
+          name="released"
+          render={({ field }) => (
+            <PublishToggle
+              released={field.value}
+              onClick={() => field.onChange(!field.value)}
+              variant={'outlined'}
+              fullWidth
+            />
+          )}
+        />
         <Glass display="flex" flexDirection="column" gap={2}>
           <Controller
             control={control}

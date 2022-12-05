@@ -4,7 +4,7 @@ module Authentication
   class AuthError < StandardError; end
 
   def login_user(username, password)
-    user = User.where('lower(username) = :username', username: username.downcase).first
+    user = User.where('LOWER(username) = :username', username: username.downcase).first
     raise AuthError, "Invalid user or password" if !user&.authenticate(password)
     Current.user = user
     return AuthToken.encode(user)
@@ -30,6 +30,12 @@ module Authentication
     Current.user = user
   rescue JWT::DecodeError
     raise AuthError, "Invalid token"
+  end
+
+  def authenticate_user
+    authenticate
+  rescue
+    Current.user = User.new()
   end
 
   def authenticate_admin

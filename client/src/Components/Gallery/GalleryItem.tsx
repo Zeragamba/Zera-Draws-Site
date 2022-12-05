@@ -14,6 +14,7 @@ interface GalleryItemProps {
   image: Image
   title: string
   date?: string
+  released?: boolean
   linkTo?: string
   onClick?: MouseEventHandler
 }
@@ -22,6 +23,7 @@ export const GalleryItem: FC<GalleryItemProps> = ({
   image,
   title,
   date,
+  released,
   linkTo,
   onClick,
 }) => {
@@ -40,7 +42,11 @@ export const GalleryItem: FC<GalleryItemProps> = ({
 
   return (
     <div
-      className={classnames(styles.item, onClick && styles.hasOnClick)}
+      className={classnames(
+        styles.item,
+        onClick && styles.hasOnClick,
+        released ? styles.public : styles.private,
+      )}
       style={{ height: rowHeight, width: (a4Ratio / 2) * rowHeight }}
       ref={wrapperRef}
     >

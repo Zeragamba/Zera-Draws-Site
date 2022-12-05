@@ -6,7 +6,6 @@ import { EditableImage } from '../../Images/Image'
 import { Post } from '../Post'
 import { useCreatePost } from '../PostsApi'
 import { OnPostSubmitHandler, PostForm } from './PostForm'
-import { PublishToggle } from './PublishToggle'
 
 interface CreatePostFormProps {
   onCreated?: (post: Post) => void
@@ -48,7 +47,7 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
     <PostForm
       post={post}
       onSubmit={onPostSave}
-      actions={(submitForm, setValue) => (
+      actions={(submitForm) => (
         <Stack gap={1}>
           <Button
             variant={'contained'}
@@ -56,13 +55,6 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
             onClick={submitForm}
             fullWidth
           >Save</Button>
-          <PublishToggle
-            released={post.released}
-            onClick={() => setValue('released', !post.released)}
-            disabled={createPost$.isLoading}
-            variant={'outlined'}
-            fullWidth
-          />
         </Stack>
       )}
     />

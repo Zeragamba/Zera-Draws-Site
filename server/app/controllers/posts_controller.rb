@@ -6,14 +6,13 @@ class PostsController < ApplicationController
   def index
     num_per_page = 25
     page = params[:page]&.to_i || 0
-
-    posts = Post.released.includes(:tags)
+    posts = current_user.admin ? Post.all : Post.released
 
     if params[:tag]
       posts = posts.where(:tags => { slug: Slug.to_slug(params[:tag]) })
     end
 
-    render json: PostView.render_list(posts, num_per_page: num_per_page, page: page)
+    render json: PostView.render_list(posts.latest, num_per_page: num_per_page, page: page)
   end
 
   def view_gallery
@@ -88,10 +87,9 @@ class PostsController < ApplicationController
         return render_error(message: "At least one image is required", status: 400)
       end
 
-      images.each do |image|
-        image = Image.create!(filename: image.filename)
-        image.attach(image.file)
-        post.images << image
+      images.each_value do |image_data|
+        image = Image.create!(filename: image_data["filename"], post: post)
+        image.attach(image_data["file"].tempfile.path)
       end
 
       render json: PostView.render(post)

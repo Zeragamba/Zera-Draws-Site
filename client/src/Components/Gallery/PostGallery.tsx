@@ -42,6 +42,7 @@ export const PostGallery: FC<PostGalleryProps> = ({
             image={post.images[0]}
             date={post.date}
             title={post.title}
+            released={post.released}
             linkTo={getPostPath(post)}
             onClick={(event) => onPostClick(event, post)}
           />
