@@ -50,11 +50,6 @@ export const ViewPost: FC<ViewPostProps> = ({
       </Glass>
 
       <Glass className={styles.section}>
-        <div>
-          <div className={styles.title}>{post.title}</div>
-          <div className={styles.date}>{post.date}</div>
-        </div>
-
         <div className={styles.nav}>
           <div>
             <NextPostBtn
@@ -72,6 +67,13 @@ export const ViewPost: FC<ViewPostProps> = ({
               hotkey={'ArrowRight'}
             />
           </div>
+        </div>
+      </Glass>
+
+      <Glass className={styles.section}>
+        <div>
+          <div className={styles.title}>{post.title}</div>
+          <div className={styles.date}>{post.date}</div>
         </div>
 
         {tags.length > 0 && <div className={styles.tags}>{tags.join(', ')}</div>}

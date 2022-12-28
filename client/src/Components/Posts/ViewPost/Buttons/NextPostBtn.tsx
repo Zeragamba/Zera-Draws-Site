@@ -1,3 +1,5 @@
+import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FC } from 'react'
 
 import { Post } from '../../Post'
@@ -14,5 +16,11 @@ export const NextPostBtn: FC<NextPostBtnProps> = ({
 }) => {
   const { data: nextPost } = useNextPost({ postId: currentPostId })
   if (!nextPost) return null
-  return <PostNavBtn {...btnProps} post={nextPost}>Next</PostNavBtn>
+  return (
+    <PostNavBtn
+      {...btnProps}
+      startIcon={<FontAwesomeIcon icon={faAnglesLeft} />}
+      post={nextPost}
+    >Next</PostNavBtn>
+  )
 }

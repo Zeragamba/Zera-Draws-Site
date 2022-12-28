@@ -1,13 +1,12 @@
-import { Link } from '@mui/material'
-import { FC, ReactNode, useEffect } from 'react'
+import { Button, ButtonProps } from '@mui/material'
+import React, { FC, useEffect } from 'react'
 
 import { noOp } from '../../../../Lib/Noop'
 import { Post } from '../../Post'
 
-export interface PostNavBtnProps {
+export interface PostNavBtnProps extends Omit<ButtonProps, 'onClick'> {
   post: Post
   onClick?: (post: Post) => void
-  children: ReactNode
   preloadSize?: string
   hotkey?: string
 }
@@ -18,6 +17,7 @@ export const PostNavBtn: FC<PostNavBtnProps> = ({
   children,
   preloadSize,
   hotkey,
+  ...btnProps
 }) => {
   let imageSrc: string | undefined
   if (preloadSize) {
@@ -42,9 +42,9 @@ export const PostNavBtn: FC<PostNavBtnProps> = ({
   }, [ hotkey, onClick, post ])
 
   return (
-    <div>
-      <Link title={post.title} onClick={() => onClick(post)}>{children}</Link>
+    <>
+      <Button {...btnProps} onClick={() => onClick(post)} title={post.title}>{children}</Button>
       {imageSrc && <img style={{ display: 'none' }} src={imageSrc} />}
-    </div>
+    </>
   )
 }

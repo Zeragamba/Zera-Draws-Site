@@ -1,3 +1,5 @@
+import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FC } from 'react'
 
 import { Post } from '../../Post'
@@ -14,5 +16,11 @@ export const PrevPostBtn: FC<PrevPostBtnProps> = ({
 }) => {
   const { data: PrevPost } = usePrevPost({ postId: currentPostId })
   if (!PrevPost) return null
-  return <PostNavBtn {...btnProps} post={PrevPost}>Prev</PostNavBtn>
+  return (
+    <PostNavBtn
+      {...btnProps}
+      post={PrevPost}
+      endIcon={<FontAwesomeIcon icon={faAnglesRight} />}
+    >Prev</PostNavBtn>
+  )
 }
