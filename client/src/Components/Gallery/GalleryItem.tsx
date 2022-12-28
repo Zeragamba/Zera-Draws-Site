@@ -1,5 +1,7 @@
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classnames from 'classnames'
-import { FC, MouseEventHandler } from 'react'
+import React, { FC, MouseEventHandler } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useInViewport } from '../../Lib/Hooks/UseInViewport'
@@ -45,7 +47,6 @@ export const GalleryItem: FC<GalleryItemProps> = ({
       className={classnames(
         styles.item,
         onClick && styles.hasOnClick,
-        released ? styles.public : styles.private,
       )}
       style={{ height: rowHeight, width: (a4Ratio / 2) * rowHeight }}
       ref={wrapperRef}
@@ -55,6 +56,11 @@ export const GalleryItem: FC<GalleryItemProps> = ({
         <Link to={linkTo} className={styles.image} onClick={onClick}>{imgEle}</Link>
       ) : (
         <div className={styles.image} onClick={onClick}>{imgEle}</div>
+      )}
+      {!released && (
+        <div className={styles.privateMarker}>
+          <FontAwesomeIcon icon={faEyeSlash} /> Private
+        </div>
       )}
       <div className={classnames(styles.metadata, styles.metadataBottom)}>{title}</div>
     </div>

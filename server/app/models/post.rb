@@ -14,6 +14,8 @@ class Post < ApplicationRecord
 
   default_scope -> { order(order: :desc) }
 
+  before_create -> { self.order = Post.count if self.order == 0 }
+
   def build_slug
     "#{self.date}-#{self.title}"
   end

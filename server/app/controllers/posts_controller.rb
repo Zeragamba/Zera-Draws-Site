@@ -12,7 +12,7 @@ class PostsController < ApplicationController
       posts = posts.where(:tags => { slug: Slug.to_slug(params[:tag]) })
     end
 
-    render json: PostView.render_list(posts.latest, num_per_page: num_per_page, page: page)
+    render json: PostView.render_list(posts, num_per_page: num_per_page, page: page)
   end
 
   def view_gallery

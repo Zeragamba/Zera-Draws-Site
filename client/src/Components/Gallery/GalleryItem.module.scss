@@ -65,8 +65,12 @@
   &.metadataBottom { bottom: -100%; }
 }
 
-.private {
-  .image {
-    filter: blur(10px);
-  }
+.privateMarker {
+  position: absolute;
+  bottom: 0;
+  padding: 4px;
+  color: black;
+  background-color: lightgrey;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
 }
