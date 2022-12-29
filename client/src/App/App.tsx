@@ -1,23 +1,12 @@
-import { createTheme, ThemeProvider } from '@mui/material'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { CSSProperties, FC } from 'react'
+import { ThemeProvider } from '@mui/material'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { FC } from 'react'
 
+import { queryClient } from '../Lib/QueryClient'
+import { darkTheme, rootStyles } from '../Lib/Theme'
 import { AppRouter } from './AppRouter'
 
 import styles from './App.module.scss'
-
-const darkTheme = createTheme({
-  spacing: 4,
-  palette: {
-    mode: 'dark',
-  },
-})
-
-const queryClient = new QueryClient()
-
-const rootStyles = {
-  '--spacing': darkTheme.spacing(),
-} as CSSProperties
 
 export const App: FC = () => {
   return (

@@ -42,8 +42,11 @@ class PostsController < ApplicationController
       posts = Post.all
     end
 
+    if !current_user.admin
+      posts = posts.released
+    end
+
     next_post = posts
-      .released
       .where("\"order\" > :order", order: current_post.order)
       .last
 
@@ -69,8 +72,11 @@ class PostsController < ApplicationController
       posts = Post.all
     end
 
+    if !current_user.admin
+      posts = posts.released
+    end
+
     prev_post = posts
-      .released
       .where("\"order\" < :order", order: current_post.order)
       .first
 

@@ -1,4 +1,4 @@
-import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons'
+import { faAnglesLeft, faAnglesRight, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from '@mui/material'
 import { isError } from '@tanstack/react-query'
@@ -102,7 +102,11 @@ export const ViewPost: FC<ViewPostProps> = ({
 
       <Glass className={styles.section}>
         <div>
-          <div className={styles.title}>{post.title}</div>
+          <div className={styles.title}>
+            {!post.released && <FontAwesomeIcon icon={faEyeSlash} title="Private" />}
+            {' '}
+            {post.title}
+          </div>
           <div className={styles.date}>{post.date}</div>
         </div>
 
