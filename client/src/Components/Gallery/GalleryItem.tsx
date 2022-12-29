@@ -14,7 +14,7 @@ import styles from './GalleryItem.module.scss'
 
 interface GalleryItemProps {
   image: Image
-  title: string
+  title?: string
   date?: string
   released?: boolean
   linkTo?: string
@@ -62,7 +62,7 @@ export const GalleryItem: FC<GalleryItemProps> = ({
           <FontAwesomeIcon icon={faEyeSlash} /> Private
         </div>
       )}
-      <div className={classnames(styles.metadata, styles.metadataBottom)}>{title}</div>
+      {title && <div className={classnames(styles.metadata, styles.metadataBottom)}>{title}</div>}
     </div>
   )
 }

@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from '@mui/material'
 import { isError } from '@tanstack/react-query'
 import classnames from 'classnames'
-import React, { FC, MouseEventHandler, useState } from 'react'
+import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
 
-import { useHistory } from '../../../App/AppRouter'
 import { useHotkey } from '../../../Lib/Hooks/UseHotkey'
+import { Gallery } from '../../Gallery/Gallery'
+import { GalleryItem } from '../../Gallery/GalleryItem'
+import { ImagePreloader } from '../../Images/ImagePreloader'
 import { AsyncImg } from '../../UI/AsyncImg'
 import { Glass } from '../../UI/Glass'
 import { Post } from '../Post'
@@ -17,28 +19,41 @@ import styles from './ViewPost.module.scss'
 
 interface ViewPostProps {
   postId: Post['id']
+  onPostChange: (newPost: Post) => void
 }
 
 export const ViewPost: FC<ViewPostProps> = ({
   postId,
+  onPostChange,
 }) => {
-  const history = useHistory()
-  const [ currentPostId, setCurrentPostId ] = useState<Post['id']>(postId)
-  const { data: post, error, isLoading, isError } = usePost({ postId: currentPostId })
+  const [ activeImageIndex, setActiveImageIndex ] = useState<number>(0)
+  const { data: post, error, isLoading, isError } = usePost({ postId })
 
-  const { data: nextPost } = useNextPost({ postId: currentPostId })
-  const { data: prevPost } = usePrevPost({ postId: currentPostId })
+  const { data: nextPost } = useNextPost({ postId })
+  const { data: prevPost } = usePrevPost({ postId })
 
-  const onNextPost = () => nextPost && onChangePost(nextPost)
-  const onPrevPost = () => prevPost && onChangePost(prevPost)
+  useEffect(() => setActiveImageIndex(0), [ postId ])
+
+  const onNextPost = () => nextPost && onPostChange(nextPost)
+  const onNextImage = () => {
+    if (activeImageIndex < post!.images.length - 1) {
+      setActiveImageIndex(activeImageIndex + 1)
+    } else {
+      onPrevPost()
+    }
+  }
+
+  const onPrevPost = () => prevPost && onPostChange(prevPost)
+  const onPrevImage = () => {
+    if (activeImageIndex > 0) {
+      setActiveImageIndex(activeImageIndex - 1)
+    } else {
+      onNextPost()
+    }
+  }
 
   useHotkey('ArrowLeft', onNextPost)
   useHotkey('ArrowRight', onPrevPost)
-
-  const onChangePost = (post: Post) => {
-    setCurrentPostId(post.id)
-    history.replace(`/post/${post.slug}`)
-  }
 
   const onPrimaryImageClick: MouseEventHandler<HTMLDivElement> = (event) => {
     const clickTarget = event.currentTarget
@@ -46,9 +61,9 @@ export const ViewPost: FC<ViewPostProps> = ({
     const xCoordInClickTarget = event.clientX - clickTarget.getBoundingClientRect().left
 
     if (clickTargetWidth / 2 > xCoordInClickTarget) {
-      onNextPost()
+      onPrevImage()
     } else {
-      onPrevPost()
+      onNextImage()
     }
   }
 
@@ -60,7 +75,10 @@ export const ViewPost: FC<ViewPostProps> = ({
     return <Glass>Unable to load post</Glass>
   }
 
-  const primaryImage = post.images[0]
+  // Ensure the active index is in range. It could be out of range due to the postId changing
+  // and the index not being updated yet
+  const imageIndex: number = activeImageIndex >= post.images.length ? 0 : activeImageIndex
+  const activeImage = post.images[imageIndex]
 
   const tags = post.tags
     .map(tag => tag.name)
@@ -71,15 +89,28 @@ export const ViewPost: FC<ViewPostProps> = ({
   return (
     <>
       <Glass className={styles.imgWrapper} padding={0} onClick={onPrimaryImageClick}>
-        <AsyncImg src={primaryImage.srcs.high} />
+        <AsyncImg src={activeImage.srcs.high} />
       </Glass>
+
+      {post.images.length >= 2 && (
+        <Glass className={styles.section}>
+          <Gallery>
+            {post.images.map((image, index) => (
+              <React.Fragment key={image.id}>
+                <GalleryItem image={image} released={true} onClick={() => setActiveImageIndex(index)} />
+                <ImagePreloader image={image} size="high" />
+              </React.Fragment>
+            ))}
+          </Gallery>
+        </Glass>
+      )}
 
       {(prevPost || nextPost) && (
         <Glass className={classnames(styles.section, styles.nav)}>
           <div>
             {nextPost && (
               <>
-                <Button onClick={() => onChangePost(nextPost)} startIcon={<FontAwesomeIcon icon={faAnglesLeft} />}>
+                <Button onClick={onNextPost} startIcon={<FontAwesomeIcon icon={faAnglesLeft} />}>
                   Next
                 </Button>
                 <PostPreloader postId={nextPost.id} />
@@ -90,7 +121,7 @@ export const ViewPost: FC<ViewPostProps> = ({
           <div>
             {prevPost && (
               <>
-                <Button onClick={() => onChangePost(prevPost)} endIcon={<FontAwesomeIcon icon={faAnglesRight} />}>
+                <Button onClick={onPrevPost} endIcon={<FontAwesomeIcon icon={faAnglesRight} />}>
                   Prev
                 </Button>
                 <PostPreloader postId={prevPost.id} />
