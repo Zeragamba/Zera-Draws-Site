@@ -7,12 +7,15 @@
 }
 
 .imgWrapper {
+  position: relative;
   display: flex;
   justify-content: center;
   align-content: center;
   width: 100%;
   max-height: 750px;
   overflow: hidden;
+
+  user-select: none;
 
   img {
     object-fit: contain;
@@ -21,8 +24,28 @@
   }
 }
 
+.tapZones {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .prevZone {
+    flex-grow: 1;
+    background-color: blue;
+  }
+
+  .nextZone {
+    flex-grow: 1;
+    background-color: red;
+  }
+}
+
 .nav {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   width: 100%;
 

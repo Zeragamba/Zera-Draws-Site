@@ -1,13 +1,17 @@
+import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button } from '@mui/material'
 import { isError } from '@tanstack/react-query'
-import { FC, useState } from 'react'
+import classnames from 'classnames'
+import React, { FC, MouseEventHandler, useState } from 'react'
 
 import { useHistory } from '../../../App/AppRouter'
+import { useHotkey } from '../../../Lib/Hooks/UseHotkey'
 import { AsyncImg } from '../../UI/AsyncImg'
 import { Glass } from '../../UI/Glass'
 import { Post } from '../Post'
-import { usePost } from '../PostsApi'
-import { NextPostBtn } from './Buttons/NextPostBtn'
-import { PrevPostBtn } from './Buttons/PrevPostBtn'
+import { PostPreloader } from '../PostPreloader'
+import { useNextPost, usePost, usePrevPost } from '../PostsApi'
 
 import styles from './ViewPost.module.scss'
 
@@ -22,9 +26,30 @@ export const ViewPost: FC<ViewPostProps> = ({
   const [ currentPostId, setCurrentPostId ] = useState<Post['id']>(postId)
   const { data: post, error, isLoading, isError } = usePost({ postId: currentPostId })
 
+  const { data: nextPost } = useNextPost({ postId: currentPostId })
+  const { data: prevPost } = usePrevPost({ postId: currentPostId })
+
+  const onNextPost = () => nextPost && onChangePost(nextPost)
+  const onPrevPost = () => prevPost && onChangePost(prevPost)
+
+  useHotkey('ArrowLeft', onNextPost)
+  useHotkey('ArrowRight', onPrevPost)
+
   const onChangePost = (post: Post) => {
     setCurrentPostId(post.id)
     history.replace(`/post/${post.slug}`)
+  }
+
+  const onPrimaryImageClick: MouseEventHandler<HTMLDivElement> = (event) => {
+    const clickTarget = event.currentTarget
+    const clickTargetWidth = clickTarget.offsetWidth
+    const xCoordInClickTarget = event.clientX - clickTarget.getBoundingClientRect().left
+
+    if (clickTargetWidth / 2 > xCoordInClickTarget) {
+      onNextPost()
+    } else {
+      onPrevPost()
+    }
   }
 
   if (isLoading) {
@@ -45,30 +70,35 @@ export const ViewPost: FC<ViewPostProps> = ({
 
   return (
     <>
-      <Glass className={styles.imgWrapper} padding={0}>
+      <Glass className={styles.imgWrapper} padding={0} onClick={onPrimaryImageClick}>
         <AsyncImg src={primaryImage.srcs.high} />
       </Glass>
 
-      <Glass className={styles.section}>
-        <div className={styles.nav}>
+      {(prevPost || nextPost) && (
+        <Glass className={classnames(styles.section, styles.nav)}>
           <div>
-            <NextPostBtn
-              onClick={onChangePost}
-              currentPostId={currentPostId}
-              preloadSize={'high'}
-              hotkey={'ArrowLeft'}
-            />
+            {nextPost && (
+              <>
+                <Button onClick={() => onChangePost(nextPost)} startIcon={<FontAwesomeIcon icon={faAnglesLeft} />}>
+                  Next
+                </Button>
+                <PostPreloader postId={nextPost.id} />
+              </>
+            )}
           </div>
+
           <div>
-            <PrevPostBtn
-              onClick={onChangePost}
-              currentPostId={currentPostId}
-              preloadSize={'high'}
-              hotkey={'ArrowRight'}
-            />
+            {prevPost && (
+              <>
+                <Button onClick={() => onChangePost(prevPost)} endIcon={<FontAwesomeIcon icon={faAnglesRight} />}>
+                  Prev
+                </Button>
+                <PostPreloader postId={prevPost.id} />
+              </>
+            )}
           </div>
-        </div>
-      </Glass>
+        </Glass>
+      )}
 
       <Glass className={styles.section}>
         <div>
