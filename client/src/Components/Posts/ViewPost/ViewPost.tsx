@@ -1,6 +1,6 @@
 import { faEdit, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Box, Button, Paper, Stack } from '@mui/material'
+import { Box, Button, Chip, Paper, Stack } from '@mui/material'
 import { isError } from '@tanstack/react-query'
 import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -102,15 +102,24 @@ export const ViewPost: FC<ViewPostProps> = ({
       <Glass className={styles.section}>
         <Stack direction="row">
           <Box sx={{ flexGrow: 1 }}>
-            <div className={styles.title}>
-              {!post.released && <FontAwesomeIcon icon={faEyeSlash} title="Private" />}
+            <Text variant="h2">
               {' '}
-              <Text variant="h2">{post.title}</Text>
-            </div>
-            <Text variant="subtitle1">{post.date}</Text>
+              {post.title}
+            </Text>
+            <Stack direction="row" gap={2}>
+              <Text variant="subtitle1">{post.date}</Text>
+              {!post.released && (
+                <Chip
+                  icon={<FontAwesomeIcon icon={faEyeSlash} />}
+                  label="Private"
+                  size="small"
+                  sx={{ alignSelf: 'center' }}
+                />
+              )}
+            </Stack>
           </Box>
 
-          <Box sx={{ alignSelf: 'center' }}>
+          <Stack gap={1}>
             {(post && currentUser?.admin) && (
               <Button
                 component="a"
@@ -121,7 +130,8 @@ export const ViewPost: FC<ViewPostProps> = ({
                 Edit
               </Button>
             )}
-          </Box>
+
+          </Stack>
         </Stack>
       </Glass>
 
