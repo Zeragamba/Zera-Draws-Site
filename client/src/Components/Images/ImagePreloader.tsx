@@ -12,5 +12,5 @@ export const ImagePreloader: FC<PostPreloaderProps> = ({
   size = 'high',
 }) => {
   const src = image.srcs[size] || image.srcs.full
-  return <img style={{ display: 'none' }} src={src} />
+  return <link rel="preload" as="image" href={src} />
 }
