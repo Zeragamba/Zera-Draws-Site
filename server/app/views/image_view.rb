@@ -1,6 +1,6 @@
 class ImageView < ApplicationView
   # @param image [Image]
-  def self.format(image)
+  def self.as_json(image)
     return {
       id: image.id,
       order: image.order,
@@ -17,7 +17,7 @@ class ImageView < ApplicationView
   def self.render(image)
     return self.render_one(
       model: :image,
-      data: self.format(image)
+      data: self.as_json(image)
     )
   end
 
@@ -30,7 +30,7 @@ class ImageView < ApplicationView
     return self.render_many(
       model: :images,
       data: images.limit(num_per_page).offset(skip)
-        .map { |image| self.format(image) },
+        .map { |image| self.as_json(image) },
       count: images.count,
       page: page,
       total_pages: (images.count / num_per_page.to_f).ceil,

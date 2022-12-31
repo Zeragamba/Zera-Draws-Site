@@ -1,7 +1,7 @@
 class GalleryPostView < ApplicationView
   # @param post [GalleryPost]
-  def self.format(gallery_post)
-    post = PostView.format(gallery_post.post)
+  def self.as_json(gallery_post)
+    post = PostView.as_json(gallery_post.post)
     post[:order] = gallery_post.order
     return post
   end
@@ -10,7 +10,7 @@ class GalleryPostView < ApplicationView
   def self.render(gallery_post)
     return self.render_one(
       model: :post,
-      data: self.format(gallery_post)
+      data: self.as_json(gallery_post)
     )
   end
 
@@ -23,7 +23,7 @@ class GalleryPostView < ApplicationView
     return self.render_many(
       model: :posts,
       data: gallery_posts.limit(num_per_page).offset(skip)
-        .map { |post| self.format(post) },
+        .map { |post| self.as_json(post) },
       count: gallery_posts.count,
       page: page,
       total_pages: (gallery_posts.count / num_per_page.to_f).ceil,

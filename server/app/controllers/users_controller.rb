@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  include Authentication
   before_action :authenticate, :only => :view_current
 
   def login

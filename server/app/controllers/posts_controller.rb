@@ -1,10 +1,9 @@
 class PostsController < ApplicationController
-  include Authentication
-
   before_action :authenticate_admin, :only => [:upload, :update]
 
+  NUM_POSTS_PER_PAGE = 25
+
   def index
-    num_per_page = 25
     page = params[:page]&.to_i || 0
     posts = current_user.admin ? Post.all : Post.released
 
@@ -12,16 +11,23 @@ class PostsController < ApplicationController
       posts = posts.where(:tags => { slug: Slug.to_slug(params[:tag]) })
     end
 
-    render json: PostView.render_list(posts, num_per_page: num_per_page, page: page)
+    render json: PostView.render_list(posts, num_per_page: NUM_POSTS_PER_PAGE, page: page)
   end
 
   def view_gallery
-    num_per_page = 25
     page = params[:page]&.to_i || 0
 
     gallery = Gallery.find(params[:id_or_slug])
 
-    render json: GalleryPostView.render_list(gallery.gallery_posts, num_per_page: num_per_page, page: page)
+    render json: GalleryPostView.render_list(gallery.gallery_posts, num_per_page: NUM_POSTS_PER_PAGE, page: page)
+  end
+
+  def view_tagged
+    page = params[:page]&.to_i || 0
+
+    tag = Tag.find(params[:id_or_slug])
+
+    render json: PostView.render_list(tag.posts, num_per_page: NUM_POSTS_PER_PAGE, page: page)
   end
 
   def next
@@ -29,15 +35,12 @@ class PostsController < ApplicationController
 
     if params[:recent]
       posts = Post.latest
-    elsif params[:galleryId]
-      gallery = Gallery.find(params[:galleryId])
-      current_post = gallery.gallery_posts
-        .where(post_id: current_post.id)
-        .first
-
+    elsif params[:gallery]
+      posts = Gallery.find(params[:gallery]).gallery_posts
+      current_post = posts.where(post_id: current_post.id).first
       return render_not_found if (!current_post)
-
-      posts = gallery.gallery_posts
+    elsif params[:tag]
+      posts = Tag.find(params[:tag]).posts
     else
       posts = Post.all
     end
@@ -59,15 +62,12 @@ class PostsController < ApplicationController
 
     if params[:recent]
       posts = Post.latest
-    elsif params[:galleryId]
-      gallery = Gallery.find(params[:galleryId])
-      current_post = gallery.gallery_posts
-        .where(post_id: current_post.id)
-        .first
-
+    elsif params[:gallery]
+      posts = Gallery.find(params[:gallery]).gallery_posts
+      current_post = posts.where(post_id: current_post.id).first
       return render_not_found if (!current_post)
-
-      posts = gallery.gallery_posts
+    elsif params[:tag]
+      posts = Tag.find(params[:tag]).posts
     else
       posts = Post.all
     end

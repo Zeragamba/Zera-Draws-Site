@@ -1,12 +1,12 @@
 import { FC } from 'react'
 
-import { useGalleryPosts } from '../../Posts/PostsApi'
+import { useTaggedPosts } from '../../Posts/PostsApi/GetTaggedPosts'
 import { Glass } from '../../UI/Glass'
 import { GalleryTitle } from '../GalleryTitle'
 import { PostGallery } from '../PostGallery'
 
 export const FeaturedGallery: FC = () => {
-  const postsQuery = useGalleryPosts({ gallery: 'featured' })
+  const postsQuery = useTaggedPosts({ tag: 'featured' })
 
   if (postsQuery.isError) {
     return <Glass>Error loading gallery. :(</Glass>

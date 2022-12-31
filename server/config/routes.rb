@@ -18,4 +18,11 @@ Rails.application.routes.draw do
   get '/gallery/:id_or_slug/posts' => 'posts#view_gallery'
   patch '/gallery/:id_or_slug' => 'galleries#update'
   delete '/gallery/:id_or_slug' => 'galleries#destroy'
+
+  get '/tags' => 'tags#list'
+  post '/tag' => 'tags#create'
+  get '/tag/:id_or_slug' => 'tags#view'
+  get '/tag/:id_or_slug/posts' => 'posts#view_tagged'
+  patch '/tag/:id_or_slug' => 'tags#update'
+  delete '/tag/:id_or_slug' => 'tags#destroy'
 end

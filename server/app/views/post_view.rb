@@ -1,6 +1,6 @@
 class PostView < ApplicationView
   # @param post [Post]
-  def self.format(post)
+  def self.as_json(post)
     return GalleryPost.render(post) if post.is_a? GalleryPost
 
     return {
@@ -12,7 +12,7 @@ class PostView < ApplicationView
       description: post.description,
       released: post.released,
       tags: post.tags,
-      images: post.images.map { |image| ImageView.format(image) },
+      images: post.images.map { |image| ImageView.as_json(image) },
     }
   end
 
@@ -20,7 +20,7 @@ class PostView < ApplicationView
   def self.render(post)
     return self.render_one(
       model: :post,
-      data: self.format(post)
+      data: self.as_json(post)
     )
   end
 
@@ -35,7 +35,7 @@ class PostView < ApplicationView
     return self.render_many(
       model: :posts,
       data: posts.limit(num_per_page).offset(skip)
-        .map { |post| self.format(post) },
+        .map { |post| self.as_json(post) },
       count: posts.count,
       page: page,
       total_pages: (posts.count / num_per_page.to_f).ceil,

@@ -22,7 +22,7 @@ class Post < ApplicationRecord
 
   def add_tags(*tag_names)
     tag_names.each do |tag_name|
-      self.tags << Tag.find_or_create(tag_name)
+      self.tags << Tag.find_or_create(name: tag_name)
     end
 
     return self

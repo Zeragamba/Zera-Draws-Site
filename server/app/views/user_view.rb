@@ -1,5 +1,5 @@
 class UserView < ApplicationView
-  def self.format(user)
+  def self.as_json(user)
     return {
       username: user.username,
       email: user.email,
@@ -10,7 +10,7 @@ class UserView < ApplicationView
   end
 
   def self.render(user, auth_token: nil)
-    data = { user: self.format(user) }
+    data = { user: self.as_json(user) }
     data[:auth_token] = auth_token if auth_token
     return data
   end

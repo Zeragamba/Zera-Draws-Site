@@ -1,7 +1,9 @@
 class GalleriesController < ApplicationController
+  before_action :authenticate_admin, :only => [:create, :update, :destroy]
+
   def list
-    galleries = Gallery.includes(:pictures)
-    render json: GalleryView.render_list(galleries)
+    galleries = Gallery.all
+    render json: GalleryView.render_list(galleries, page: params[:page]&.to_i || 0)
   end
 
   def create
