@@ -2,6 +2,8 @@ import { createContext, FC, ReactNode, useContext } from 'react'
 
 export type GalleryConfig = {
   rowHeight: number
+  tagSlug?: string
+  gallerySlug?: string
 }
 
 const GalleryContext = createContext<GalleryConfig>({

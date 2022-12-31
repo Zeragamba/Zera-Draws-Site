@@ -30,6 +30,8 @@ const publicRoutes = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/post/:postId" element={<ViewPostPage />} />
+      <Route path="/tag/:tagId/:postId" element={<ViewPostPage />} />
+      <Route path="/gallery/:galleryId/:postId" element={<ViewPostPage />} />
     </>
   )
 }

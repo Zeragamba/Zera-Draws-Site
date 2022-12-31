@@ -16,7 +16,7 @@ export const FeaturedGallery: FC = () => {
     return (
       <Glass padding={0}>
         <GalleryTitle>Featured Posts</GalleryTitle>
-        <PostGallery posts={posts} rowHeight={300} />
+        <PostGallery posts={posts} rowHeight={300} tagSlug="featured" />
       </Glass>
     )
   } else {
