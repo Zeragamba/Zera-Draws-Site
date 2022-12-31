@@ -14,7 +14,7 @@ export const FeaturedGallery: FC = () => {
     const posts = postsQuery.data.pages[0]
 
     return (
-      <Glass>
+      <Glass padding={0}>
         <GalleryTitle>Featured Posts</GalleryTitle>
         <PostGallery posts={posts} rowHeight={300} />
       </Glass>

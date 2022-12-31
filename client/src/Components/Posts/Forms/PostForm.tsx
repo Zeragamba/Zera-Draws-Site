@@ -82,9 +82,9 @@ export const PostForm: FC<PostFormProps> = ({
           <Controller
             control={control}
             name={'title'}
-            render={({ field }) => (
+            render={(fieldProps) => (
               <TextField
-                {...muiField(field)}
+                {...muiField(fieldProps)}
                 label="Title"
                 variant="filled"
                 required
@@ -95,9 +95,10 @@ export const PostForm: FC<PostFormProps> = ({
           <Controller
             control={control}
             name={'date'}
-            render={({ field }) => (
+            rules={{ required: true }}
+            render={(fieldProps) => (
               <TextField
-                {...muiField(field)}
+                {...muiField(fieldProps)}
                 label="Date"
                 variant="filled"
                 required
@@ -108,12 +109,11 @@ export const PostForm: FC<PostFormProps> = ({
           <Controller
             control={control}
             name={'description'}
-            render={({ field }) => (
+            render={(fieldProps) => (
               <TextField
-                {...muiField(field)}
+                {...muiField(fieldProps)}
                 label="Description"
                 variant="filled"
-                required
                 multiline
                 minRows={5}
                 fullWidth
@@ -140,9 +140,9 @@ export const PostForm: FC<PostFormProps> = ({
           <Controller
             control={control}
             name={'slug'}
-            render={({ field }) => (
+            render={(fieldProps) => (
               <TextField
-                {...muiField(field)}
+                {...muiField(fieldProps)}
                 label="URL Slug"
                 variant="filled"
                 required

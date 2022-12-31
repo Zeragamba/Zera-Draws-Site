@@ -4,8 +4,6 @@ import { createRoot } from 'react-dom/client'
 import { App } from './App/App'
 import reportWebVitals from './report-web-vitals'
 
-import './index.scss'
-
 const rootEle = document.getElementById('root') as Element
 const root = createRoot(rootEle)
 root.render(<App />)

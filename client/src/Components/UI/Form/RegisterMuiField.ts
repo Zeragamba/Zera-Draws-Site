@@ -1,8 +1,13 @@
 import { TextFieldProps } from '@mui/material/TextField'
-import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form'
+import { ControllerFieldState, ControllerRenderProps, FieldValues, Path } from 'react-hook-form'
+
+type FieldProps<TFieldValues extends FieldValues, TName extends Path<TFieldValues>> = {
+  field: ControllerRenderProps<TFieldValues, TName>
+  fieldState: ControllerFieldState
+}
 
 export function muiField<TFieldValues extends FieldValues, TName extends Path<TFieldValues>>(
-  field: ControllerRenderProps<TFieldValues, TName>,
+  { field, fieldState }: FieldProps<TFieldValues, TName>,
 ): Partial<TextFieldProps> {
   return {
     onChange: field.onChange,
@@ -10,5 +15,6 @@ export function muiField<TFieldValues extends FieldValues, TName extends Path<TF
     name: field.name,
     inputRef: field.ref,
     value: field.value,
+    error: !!fieldState.error,
   }
 }

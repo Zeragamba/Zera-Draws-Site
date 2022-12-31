@@ -1,4 +1,4 @@
-import { useInfiniteQuery, UseInfiniteQueryResult } from '@tanstack/react-query'
+import { useInfiniteQuery, UseInfiniteQueryResult, useQueryClient } from '@tanstack/react-query'
 
 import { PagedModelResponse } from '../../../Lib/ServerApi/Response'
 import { ServerClient } from '../../../Lib/ServerApi/ServerClient'
@@ -15,10 +15,18 @@ export const getAllPosts = (params: Params = {}): Promise<GetAllPostsRes> => {
 }
 
 export const useAllPosts = (): UseInfiniteQueryResult<Post[]> => {
+  const queryClient = useQueryClient()
+
   return useInfiniteQuery<GetAllPostsRes, unknown, Post[]>({
     queryKey: postsQueryKeys.getAllPosts(),
     queryFn: ({ pageParam = 0 }) => {
       return getAllPosts({ page: pageParam })
+    },
+    onSuccess: (data) => {
+      const posts: Post[] = data.pages.map(page => page).flat()
+      posts.forEach((post) => {
+        queryClient.setQueryData(postsQueryKeys.getPost(post.id), post)
+      })
     },
     select: (data) => ({
       pages: data.pages.map(page => page.posts),

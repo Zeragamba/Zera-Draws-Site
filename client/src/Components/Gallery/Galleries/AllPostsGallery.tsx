@@ -16,7 +16,7 @@ export const AllPostsGallery: FC = () => {
     const posts = postsQuery.data.pages.flat()
 
     return (
-      <Glass>
+      <Glass padding={0}>
         <GalleryTitle>All Posts</GalleryTitle>
         <InfiniteScroll
           fetchingNextPage={postsQuery.isFetchingNextPage}

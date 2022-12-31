@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Glass } from './Glass'
+import { Text } from './Text'
 
 import styles from './Header.module.scss'
 
@@ -10,7 +11,9 @@ export const Header: FC = () => {
 
   return (
     <Glass className={styles.header} onClick={() => navigate('/')}>
-      <header>Zeragamba</header>
+      <header>
+        <Text variant="h1">Zeragamba</Text>
+      </header>
     </Glass>
   )
 }

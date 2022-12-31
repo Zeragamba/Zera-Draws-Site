@@ -23,18 +23,14 @@
   width: 100%;
   max-width: 1000px;
 
-  margin: $padding-md auto;
+  margin: 0 auto;
+  padding: $padding-md
 }
 
 .closeBtn {
   font-size: 20px;
 
-  position: absolute;
-  z-index: 100;
-  top: $padding-1;
-  right: $padding-1;
-
-  display: grid;
+  display: flex;
   align-items: center;
   justify-content: center;
 
