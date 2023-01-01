@@ -4,9 +4,9 @@ import { useLocation } from 'react-router-dom'
 import { useHistory } from '../../App/AppRouter'
 import { Post } from '../Posts/Post'
 import { ViewPostDialog } from '../Posts/ViewPost/ViewPostDialog'
-import { Gallery } from './Gallery'
 import { GalleryConfig } from './GalleryContext'
 import { GalleryItem } from './GalleryItem'
+import { GalleryWrapper } from './GalleryWrapper'
 
 interface PostGalleryProps extends Omit<GalleryConfig, 'rowHeight'> {
   rowHeight?: number
@@ -45,7 +45,7 @@ export const PostGallery: FC<PostGalleryProps> = ({
 
   return (
     <>
-      <Gallery rowHeight={rowHeight} {...galleryConfig}>
+      <GalleryWrapper rowHeight={rowHeight} {...galleryConfig}>
         {posts.map(post => (
           <GalleryItem
             key={post.id}
@@ -57,7 +57,7 @@ export const PostGallery: FC<PostGalleryProps> = ({
             onClick={(event) => onPostClick(event, post)}
           />
         ))}
-      </Gallery>
+      </GalleryWrapper>
       {activePost && <ViewPostDialog postId={activePost} onClose={onDialogClose} open />}
     </>
   )

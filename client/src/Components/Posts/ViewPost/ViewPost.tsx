@@ -6,8 +6,8 @@ import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useHotkey } from '../../../Lib/Hooks/UseHotkey'
-import { Gallery } from '../../Gallery/Gallery'
 import { GalleryItem } from '../../Gallery/GalleryItem'
+import { GalleryWrapper } from '../../Gallery/GalleryWrapper'
 import { ImagePreloader } from '../../Images/ImagePreloader'
 import { AsyncImg } from '../../UI/AsyncImg'
 import { Glass } from '../../UI/Glass'
@@ -63,8 +63,8 @@ export const ViewPost: FC<ViewPostProps> = ({
     navigate(`/post/${post.id}/edit`)
   }
 
-  useHotkey('ArrowLeft', onNextPost)
-  useHotkey('ArrowRight', onPrevPost)
+  useHotkey('ArrowRight', onNextImage)
+  useHotkey('ArrowLeft', onPrevImage)
 
   const onPrimaryImageClick: MouseEventHandler<HTMLDivElement> = (event) => {
     const clickTarget = event.currentTarget
@@ -145,14 +145,14 @@ export const ViewPost: FC<ViewPostProps> = ({
 
       {post.images.length >= 2 && (
         <Glass padding={0}>
-          <Gallery>
+          <GalleryWrapper>
             {post.images.map((image, index) => (
               <React.Fragment key={image.id}>
                 <GalleryItem image={image} released={true} onClick={() => setActiveImageIndex(index)} />
                 <ImagePreloader image={image} size="high" />
               </React.Fragment>
             ))}
-          </Gallery>
+          </GalleryWrapper>
         </Glass>
       )}
 
