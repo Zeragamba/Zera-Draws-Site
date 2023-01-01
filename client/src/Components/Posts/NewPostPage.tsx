@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { AdminLayout } from '../../Components/Layouts'
-import { CreatePostForm } from '../../Components/Posts/Forms/CreatePostForm'
+import { AdminLayout } from '../Layouts'
+import { CreatePostForm } from './Forms/CreatePostForm'
 
 export const NewPostPage: FC = () => {
   const navigate = useNavigate()

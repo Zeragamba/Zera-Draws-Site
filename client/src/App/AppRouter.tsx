@@ -3,10 +3,7 @@ import { FC } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { useCurrentUser } from '../Components/User/UsersApi'
-import { AuthorizingPage } from '../Pages/AuthenticatingPage'
-import { HomePage } from '../Pages/HomePage'
-import { LoginPage } from '../Pages/LoginPage'
-import { EditPostPage, NewPostPage, ViewPostPage } from '../Pages/Posts'
+import * as Pages from '../Pages'
 
 export const AppRouter: FC = () => {
   const userQuery = useCurrentUser()
@@ -27,11 +24,11 @@ export const AppRouter: FC = () => {
 const publicRoutes = () => {
   return (
     <>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/post/:postId" element={<ViewPostPage />} />
-      <Route path="/tag/:tagId/:postId" element={<ViewPostPage />} />
-      <Route path="/gallery/:galleryId/:postId" element={<ViewPostPage />} />
+      <Route path="/" element={<Pages.HomePage />} />
+      <Route path="/login" element={<Pages.LoginPage />} />
+      <Route path="/post/:postId" element={<Pages.ViewPostPage />} />
+      <Route path="/tag/:tagId/:postId" element={<Pages.ViewPostPage />} />
+      <Route path="/gallery/:galleryId/:postId" element={<Pages.ViewPostPage />} />
     </>
   )
 }
@@ -41,14 +38,14 @@ const adminRoutes = (isAdmin: boolean) => {
 
   return (
     <>
-      <Route path="/post/new" element={<NewPostPage />} />
-      <Route path="/post/:postId/edit" element={<EditPostPage />} />
+      <Route path="/post/new" element={<Pages.NewPostPage />} />
+      <Route path="/post/:postId/edit" element={<Pages.EditPostPage />} />
     </>
   )
 }
 
 const fallbackRoute = (authorizing: boolean) => {
-  const page = authorizing ? <AuthorizingPage /> : <Navigate to={'/'} />
+  const page = authorizing ? <Pages.AuthorizingPage /> : <Navigate to={'/'} />
 
   return (
     <Route path="*" element={page} />

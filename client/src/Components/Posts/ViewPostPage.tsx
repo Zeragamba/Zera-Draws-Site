@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
-import { PublicLayout } from '../../Components/Layouts'
-import { Post } from '../../Components/Posts/Post'
-import { ViewPost } from '../../Components/Posts/ViewPost/ViewPost'
+import { PublicLayout } from '../Layouts'
+import { Post } from './Post'
+import { ViewPost } from './ViewPost/ViewPost'
 
 export const ViewPostPage: FC = () => {
   const { postId } = useParams()
