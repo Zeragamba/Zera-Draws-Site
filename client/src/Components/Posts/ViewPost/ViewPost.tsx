@@ -140,7 +140,7 @@ export const ViewPost: FC<ViewPostProps> = ({
       {prevPost && (<PostPreloader postId={prevPost.id} />)}
 
       <Glass className={styles.imgWrapper} padding={0} onClick={onPrimaryImageClick}>
-        <AsyncImg src={activeImage.srcs.high} />
+        <AsyncImg key={activeImage.id} src={activeImage.srcs.high} />
       </Glass>
 
       {post.images.length >= 2 && (
