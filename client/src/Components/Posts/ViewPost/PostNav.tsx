@@ -1,4 +1,4 @@
-import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons'
+import { faAnglesLeft, faAnglesRight, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from '@mui/material'
 import React, { FC, MouseEventHandler } from 'react'
@@ -20,10 +20,8 @@ export const PostNav: FC<PostNavProps> = ({
   onNextPost,
   onPrevPost,
 }) => {
-  const { data: nextPost } = useNextPost({ postId })
-  const { data: prevPost } = usePrevPost({ postId })
-
-  if (!prevPost && !nextPost) return null
+  const { data: nextPost, isLoading: nextLoading } = useNextPost({ postId })
+  const { data: prevPost, isLoading: prevLoading } = usePrevPost({ postId })
 
   const onPrevClick: MouseEventHandler = (event) => {
     if (!prevPost) return
@@ -40,33 +38,31 @@ export const PostNav: FC<PostNavProps> = ({
   return (
     <div className={styles.nav}>
       <div>
-        {nextPost && (
-          <Button
-            component="a"
-            href={`/post/${nextPost.slug}`}
-            onClick={onNextClick}
-            variant="contained"
-            sx={{ background: colours.grey, color: colours.light }}
-            startIcon={<FontAwesomeIcon icon={faAnglesLeft} />}
-          >
-            Next
-          </Button>
-        )}
+        <Button
+          component="a"
+          href={nextPost ? `/post/${nextPost.slug}` : '/'}
+          onClick={onNextClick}
+          variant="contained"
+          sx={{ background: colours.grey, color: colours.light }}
+          startIcon={<FontAwesomeIcon icon={nextLoading ? faSpinner : faAnglesLeft} spin={nextLoading} />}
+          disabled={!nextPost}
+        >
+          Next
+        </Button>
       </div>
 
       <div>
-        {prevPost && (
-          <Button
-            component="a"
-            href={`/post/${prevPost.slug}`}
-            onClick={onPrevClick}
-            variant="contained"
-            sx={{ background: colours.grey, color: colours.light }}
-            endIcon={<FontAwesomeIcon icon={faAnglesRight} />}
-          >
-            Prev
-          </Button>
-        )}
+        <Button
+          component="a"
+          href={prevPost ? `/post/${prevPost.slug}` : '/'}
+          onClick={onPrevClick}
+          variant="contained"
+          sx={{ background: colours.grey, color: colours.light }}
+          endIcon={<FontAwesomeIcon icon={prevLoading ? faSpinner : faAnglesRight} spin={prevLoading} />}
+          disabled={!prevPost}
+        >
+          Prev
+        </Button>
       </div>
     </div>
   )
