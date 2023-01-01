@@ -12,6 +12,7 @@ services:
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt
       SSL_KEY_FILE: /opt/ssl/current.key
+      REACT_APP_ENV: development
     command: yarn start
     ports:
       - "${CLIENT_PORT}:3000"

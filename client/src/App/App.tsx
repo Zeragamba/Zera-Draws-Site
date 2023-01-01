@@ -3,6 +3,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React, { FC } from 'react'
 
+import { Config } from '../Config'
 import { queryClient } from '../Lib/QueryClient'
 import { darkTheme, rootStyles } from '../Lib/Theme'
 import { AppRouter } from './AppRouter'
@@ -20,7 +21,7 @@ export const App: FC = () => {
 
           <div id="modal-root" />
 
-          <ReactQueryDevtools initialIsOpen={false} />
+          {Config.ENVIRONMENT === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
         </QueryClientProvider>
       </ThemeProvider>
     </div>

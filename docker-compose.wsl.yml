@@ -13,6 +13,7 @@ services:
     volumes:
       - ./.volumes/ssl:/opt/ssl
     environment:
+      REACT_APP_ENV: development
       REACT_APP_SERVER_URL: http://${SERVER_HOST}
     command: yarn start
     ports:

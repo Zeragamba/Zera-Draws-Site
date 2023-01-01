@@ -32,6 +32,7 @@ services:
       DB_PASS: "${DB_PASS}"
       TOKEN_SECRET: "${TOKEN_SECRET}"
       IMAGES_DIR: "/opt/images"
+      REACT_APP_ENV: production
 
   client:
     build: ./client
