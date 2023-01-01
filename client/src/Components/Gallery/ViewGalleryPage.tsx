@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
 import { PublicLayout } from '../Layouts'
-import { Gallery } from './Gallery'
+import { GalleryPostsGallery } from './Galleries/GalleryPostsGallery'
 
 export const ViewGalleryPage: FC = () => {
   const params = useParams()
@@ -10,7 +10,7 @@ export const ViewGalleryPage: FC = () => {
 
   return (
     <PublicLayout>
-      <Gallery galleryId={params.galleryId} />
+      <GalleryPostsGallery galleryId={params.galleryId} />
     </PublicLayout>
   )
 }

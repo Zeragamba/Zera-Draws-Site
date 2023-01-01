@@ -28,7 +28,6 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
   }
 
   const onPostSave: OnPostSubmitHandler = async ({ post, images }) => {
-    console.log(post, images)
     const createdImages: Required<EditableImage>[] = images
       .filter(image => image.file)
       .map((image) => {

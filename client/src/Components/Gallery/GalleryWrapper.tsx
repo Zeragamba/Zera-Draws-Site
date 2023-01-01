@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react'
 
 import { GalleryContextProvider } from './GalleryContext'
 
-import styles from './Gallery.module.scss'
+import styles from './GalleryWrapper.module.scss'
 
 export interface GalleryProps {
   children: ReactNode

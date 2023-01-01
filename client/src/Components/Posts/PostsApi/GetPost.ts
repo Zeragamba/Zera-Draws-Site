@@ -26,7 +26,6 @@ export const usePost = (params: Params): UseQueryResult<Post> => {
 }
 
 export const setGetPostData = (queryClient: QueryClient, post: Post) => {
-  console.log(`caching post ${post.id} ${post.slug}`)
   queryClient.setQueryData(postsQueryKeys.getPost(post.id), post)
   queryClient.setQueryData(postsQueryKeys.getPost(post.slug), post)
 }

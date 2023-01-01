@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
+import { TaggedPostsGallery } from '../Gallery/Galleries/TaggedPostsGallery'
 import { PublicLayout } from '../Layouts'
-import { TagGallery } from './TagGallery'
 
 export const ViewTagPage: FC = () => {
   const params = useParams()
@@ -10,7 +10,7 @@ export const ViewTagPage: FC = () => {
 
   return (
     <PublicLayout>
-      <TagGallery tagId={params.tagId} />
+      <TaggedPostsGallery tagId={params.tagId} />
     </PublicLayout>
   )
 }
