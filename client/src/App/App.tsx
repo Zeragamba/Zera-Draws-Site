@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@mui/material'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { FC } from 'react'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import React, { FC } from 'react'
 
 import { queryClient } from '../Lib/QueryClient'
 import { darkTheme, rootStyles } from '../Lib/Theme'
@@ -18,6 +19,8 @@ export const App: FC = () => {
           </div>
 
           <div id="modal-root" />
+
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </ThemeProvider>
     </div>
