@@ -6,9 +6,8 @@ import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useHotkey } from '../../../Lib/Hooks/UseHotkey'
-import { GalleryItem } from '../../Gallery/GalleryItem'
-import { GalleryWrapper } from '../../Gallery/GalleryWrapper'
-import { ImagePreloader } from '../../Images/ImagePreloader'
+import { Image } from '../../Images/Image'
+import { ImageGallery } from '../../Images/ImageGallery'
 import { AsyncImg } from '../../UI/AsyncImg'
 import { Glass } from '../../UI/Glass'
 import { Text } from '../../UI/Text'
@@ -41,7 +40,9 @@ export const ViewPost: FC<ViewPostProps> = ({
 
   const onNextPost = () => nextPost && onPostChange(nextPost)
   const onNextImage = () => {
-    if (activeImageIndex < post!.images.length - 1) {
+    if (!post) return
+
+    if (activeImageIndex < post.images.length - 1) {
       setActiveImageIndex(activeImageIndex + 1)
     } else {
       onPrevPost()
@@ -76,6 +77,11 @@ export const ViewPost: FC<ViewPostProps> = ({
     } else {
       onNextImage()
     }
+  }
+
+  const onSubImageClick = (image: Image) => {
+    if (!post) return
+    setActiveImageIndex(post.images.indexOf(image) || 0)
   }
 
   if (isLoading) {
@@ -145,14 +151,7 @@ export const ViewPost: FC<ViewPostProps> = ({
 
       {post.images.length >= 2 && (
         <Glass padding={0}>
-          <GalleryWrapper>
-            {post.images.map((image, index) => (
-              <React.Fragment key={image.id}>
-                <GalleryItem image={image} released={true} onClick={() => setActiveImageIndex(index)} />
-                <ImagePreloader image={image} size="high" />
-              </React.Fragment>
-            ))}
-          </GalleryWrapper>
+          <ImageGallery images={post.images} onImageClick={onSubImageClick} />
         </Glass>
       )}
 
