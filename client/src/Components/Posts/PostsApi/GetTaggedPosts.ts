@@ -9,7 +9,7 @@ type Params = { tag: string; page?: number }
 
 type ResponseBody = PagedModelResponse<'posts', Post>
 
-export const getGalleryPosts = (params: Params): Promise<ResponseBody> => {
+export const getTaggedPosts = (params: Params): Promise<ResponseBody> => {
   const { page = 0, tag } = params
   return ServerClient.get<ResponseBody>(`/tag/${tag}/posts`, { params: { page } })
 }
@@ -18,7 +18,7 @@ export const useTaggedPosts = ({ tag }: Omit<Params, 'page'>): UseInfiniteQueryR
   return useInfiniteQuery<ResponseBody, unknown, Post[]>({
     queryKey: postsQueryKeys.getTaggedPosts(tag),
     queryFn: ({ pageParam = 0 }) => {
-      return getGalleryPosts({ page: pageParam, tag })
+      return getTaggedPosts({ page: pageParam, tag })
     },
     select: (data) => ({
       pages: data.pages.map(page => page.posts),

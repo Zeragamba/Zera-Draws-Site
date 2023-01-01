@@ -1,7 +1,6 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 
-import { ModelResponse } from '../../../Lib/ServerApi/Response'
-import { ServerClient } from '../../../Lib/ServerApi/ServerClient'
+import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
 import { Post } from '../Post'
 import { postsQueryKeys } from './PostsQueryKeys'
 

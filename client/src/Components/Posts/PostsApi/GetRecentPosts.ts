@@ -1,7 +1,6 @@
 import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
-import { PagedModelResponse } from '../../../Lib/ServerApi/Response'
-import { ServerClient } from '../../../Lib/ServerApi/ServerClient'
+import { PagedModelResponse, ServerClient } from '../../../Lib/ServerApi'
 import { Post } from '../Post'
 import { postsQueryKeys } from './PostsQueryKeys'
 

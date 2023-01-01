@@ -1,14 +1,11 @@
-import { faAnglesLeft, faAnglesRight, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from '@mui/material'
 import React, { FC, MouseEventHandler } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { colours } from '../../../Lib/Theme'
-import { useCurrentUser } from '../../User/UsersApi'
 import { Post } from '../Post'
-import { PostPreloader } from '../PostPreloader'
-import { useNextPost, usePost, usePrevPost } from '../PostsApi'
+import { useNextPost, usePrevPost } from '../PostsApi'
 
 import styles from './ViewPost.module.scss'
 
