@@ -1,7 +1,8 @@
-import { useInfiniteQuery, UseInfiniteQueryResult } from '@tanstack/react-query'
+import { useInfiniteQuery, UseInfiniteQueryResult, useQueryClient } from '@tanstack/react-query'
 
 import { PagedModelResponse, ServerClient } from '../../../Lib/ServerApi'
 import { Post } from '../Post'
+import { setGetPostData } from './GetPost'
 import { postsQueryKeys } from './PostsQueryKeys'
 
 
@@ -15,10 +16,16 @@ export const getTaggedPosts = (params: Params): Promise<ResponseBody> => {
 }
 
 export const useTaggedPosts = ({ tag }: Omit<Params, 'page'>): UseInfiniteQueryResult<Post[]> => {
+  const queryClient = useQueryClient()
+
   return useInfiniteQuery<ResponseBody, unknown, Post[]>({
     queryKey: postsQueryKeys.getTaggedPosts(tag),
     queryFn: ({ pageParam = 0 }) => {
       return getTaggedPosts({ page: pageParam, tag })
+    },
+    onSuccess: (data) => {
+      const posts: Post[] = data.pages.map(page => page).flat()
+      posts.forEach((post) => setGetPostData(queryClient, post))
     },
     select: (data) => ({
       pages: data.pages.map(page => page.posts),

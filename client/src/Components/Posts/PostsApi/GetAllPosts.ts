@@ -2,6 +2,7 @@ import { useInfiniteQuery, UseInfiniteQueryResult, useQueryClient } from '@tanst
 
 import { PagedModelResponse, ServerClient } from '../../../Lib/ServerApi'
 import { Post } from '../Post'
+import { setGetPostData } from './GetPost'
 import { postsQueryKeys } from './PostsQueryKeys'
 
 type Params = { page?: number }
@@ -23,9 +24,7 @@ export const useAllPosts = (): UseInfiniteQueryResult<Post[]> => {
     },
     onSuccess: (data) => {
       const posts: Post[] = data.pages.map(page => page).flat()
-      posts.forEach((post) => {
-        queryClient.setQueryData(postsQueryKeys.getPost(post.id), post)
-      })
+      posts.forEach((post) => setGetPostData(queryClient, post))
     },
     select: (data) => ({
       pages: data.pages.map(page => page.posts),

@@ -2,6 +2,7 @@ import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
 import { PagedModelResponse, ServerClient } from '../../../Lib/ServerApi'
 import { Post } from '../Post'
+import { setGetPostData } from './GetPost'
 import { postsQueryKeys } from './PostsQueryKeys'
 
 type Params = { numImages?: number }
@@ -20,9 +21,7 @@ export const useRecentPosts = (params: Params): UseQueryResult<Post[]> => {
     queryKey: postsQueryKeys.getRecent(),
     queryFn: () => getRecentPosts(params),
     onSuccess: (recentPosts) => {
-      recentPosts.forEach(post => {
-        queryClient.setQueryData(postsQueryKeys.getPost(post.id), post)
-      })
+      recentPosts.forEach(post => setGetPostData(queryClient, post))
     },
   })
 }

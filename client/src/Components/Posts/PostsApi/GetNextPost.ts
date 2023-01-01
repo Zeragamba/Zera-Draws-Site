@@ -2,27 +2,27 @@ import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
 import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
 import { Post } from '../Post'
+import { setGetPostData } from './GetPost'
 import { postsQueryKeys } from './PostsQueryKeys'
 
-type Params = { postId: Post['id']; enabled?: boolean }
+type GetNextPostParams = {
+  postId: Post['id']
+}
 
-type ResponseBody = ModelResponse<'post', Post>
+type GetNextPostRes = ModelResponse<'post', Post>
 
-export const getNextPost = ({ postId }: Params): Promise<Post> => {
-  return ServerClient.get<ResponseBody>(`/posts/${postId}/next`)
+export const getNextPost = ({ postId }: GetNextPostParams): Promise<Post> => {
+  return ServerClient.get<GetNextPostRes>(`/posts/${postId}/next`)
     .then(res => res.post)
 }
 
-export const useNextPost = (params: Params): UseQueryResult<Post> => {
+export const useNextPost = (params: GetNextPostParams): UseQueryResult<Post> => {
   const queryClient = useQueryClient()
 
   return useQuery({
-    enabled: params.enabled,
     queryKey: postsQueryKeys.getNextPost(params.postId),
     queryFn: () => getNextPost(params),
     retry: false,
-    onSuccess: (post) => {
-      queryClient.setQueryData(postsQueryKeys.getPost(post.id), post)
-    },
+    onSuccess: (post) => setGetPostData(queryClient, post),
   })
 }
