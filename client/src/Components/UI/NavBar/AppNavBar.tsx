@@ -38,8 +38,9 @@ export const AppNavBar: FC = () => {
 export const LeftNavLinks: FC = () => {
   return (
     <>
-      <NavBarLink to="/latest" label="Latest" />
-      <NavBarLink to="/archive" label="Archive" />
+      <NavBarLink label="Home" to="/" />
+      <NavBarLink label="Latest" to="/latest" />
+      <NavBarLink label="Archive" to="/archive" />
       <TagsMenu />
     </>
   )
