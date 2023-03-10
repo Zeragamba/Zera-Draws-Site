@@ -10,13 +10,15 @@ export const AdminPage: FC = () => {
     <AdminLayout>
       <Stack gap={2} direction={'row'} sx={{ flexGrow: 1, height: '100%' }}>
         <Paper>
-          <AdminNavItem to="about" label="About Page" />
-          <AdminNavItem to="socials" label="Socials" />
-          <AdminNavItem to="tags" label="Tags" />
-          <AdminNavItem to="posts" label="Posts" />
+          <Box sx={{ position: 'sticky', top: 115 }}>
+            <AdminNavItem to="about" label="About Page" />
+            <AdminNavItem to="socials" label="Socials" />
+            <AdminNavItem to="tags" label="Tags" />
+            <AdminNavItem to="posts" label="Posts" />
+          </Box>
         </Paper>
 
-        <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
+        <Box sx={{ flexGrow: 1 }}>
           <Outlet />
         </Box>
       </Stack>
