@@ -1,27 +1,27 @@
 import { useMutation, UseMutationResult, useQueryClient } from '@tanstack/react-query'
 
-import { ModelResponse } from '../../../Lib/ServerApi/Response'
-import { ServerApiError, ServerClient } from '../../../Lib/ServerApi/ServerClient'
-import { User } from '../User'
 import { userQueryKeys } from './UserQueryKeys'
+import { ModelResponse, ServerApiError, ServerClient } from '../../../Lib/ServerApi'
+import { UserData } from '../UserData'
 
 type Params = { username: string; password: string }
 
 type RequestBody = Params
-export type LoginRes = ModelResponse<'user', User> & { auth_token: string }
+export type LoginRes = ModelResponse<'user', UserData> & { auth_token: string }
 
-export const login = async ({ username, password }: Params): Promise<User> => {
+export const login = async ({ username, password }: Params): Promise<UserData> => {
   const res = await ServerClient.post<LoginRes, RequestBody>('/login', { username, password })
   ServerClient.authToken = res.auth_token
   return res.user
 }
 
-export const useLogin = (): UseMutationResult<User, ServerApiError, Params> => {
+export const useLogin = (): UseMutationResult<UserData, ServerApiError, Params> => {
   const queryClient = useQueryClient()
 
-  return useMutation<User, ServerApiError, Params>(login, {
+  return useMutation<UserData, ServerApiError, Params>(login, {
     onSuccess: async (user) => {
-      await queryClient.setQueryData(userQueryKeys.getCurrentUser(), user)
+      await queryClient.invalidateQueries()
+      queryClient.setQueryData(userQueryKeys.current.queryKey, user)
     },
   })
 }

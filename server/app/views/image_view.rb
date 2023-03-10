@@ -3,7 +3,7 @@ class ImageView < ApplicationView
   def self.as_json(image)
     return {
       id: image.id,
-      order: image.order,
+      position: image.position,
       filename: image.filename,
       height: image.height,
       width: image.width,

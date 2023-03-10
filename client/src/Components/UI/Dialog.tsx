@@ -4,7 +4,6 @@ import { Component, MouseEventHandler, ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 
 import { DialogLayout } from '../Layouts/DialogLayout'
-import { Glass } from './Glass'
 
 import styles from './Dialog.module.scss'
 
@@ -40,11 +39,9 @@ export class Dialog extends Component<ModelProps> {
     const wrapper = (
       <div className={styles.curtain} onClick={onOverlayClick}>
         <DialogLayout className={styles.body}>
-          <Glass sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <div className={styles.closeBtn} onClick={this.props.onClose}>
-              <FontAwesomeIcon icon={faTimes} />
-            </div>
-          </Glass>
+          <div className={styles.closeBtn} onClick={this.props.onClose}>
+            <FontAwesomeIcon icon={faTimes} />
+          </div>
 
           {this.props.children}
         </DialogLayout>

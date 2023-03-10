@@ -1,36 +1,32 @@
+import { Paper } from '@mui/material'
 import { UseInfiniteQueryResult } from '@tanstack/react-query'
-import { FC, MouseEvent, ReactNode, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { FC, MouseEvent, ReactNode } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { useHistory } from '../../App/AppRouter'
-import { Post } from '../Posts/Post'
-import { ViewPostDialog } from '../Posts/ViewPost/ViewPostDialog'
-import { Glass } from '../UI/Glass'
-import { InfiniteScroll } from '../UI/InfiniteScroll'
 import { GalleryConfig } from './GalleryContext'
 import { GalleryItem } from './GalleryItem'
 import { GalleryTitle } from './GalleryTitle'
 import { GalleryWrapper } from './GalleryWrapper'
+import { PostData } from '../Posts/PostData'
+import { InfiniteScroll } from '../UI/InfiniteScroll'
 
-interface PostGalleryProps extends Omit<GalleryConfig, 'rowHeight'> {
+export interface PostGalleryProps extends Omit<GalleryConfig, 'rowHeight'> {
   title?: string
   rowHeight?: number
-  postsQuery: UseInfiniteQueryResult<Post[]>
+  postsQuery: UseInfiniteQueryResult<PostData[]>
 }
 
 export const PostGallery: FC<PostGalleryProps> = ({
   title,
   postsQuery,
-  rowHeight = 250,
+  rowHeight = 175,
   ...galleryConfig
 }) => {
-  const { pathname } = useLocation()
-  const history = useHistory()
-  const [ activePost, setActivePost ] = useState<Post['id'] | null>(null)
+  const navigate = useNavigate()
 
   const onFetchNextPage = () => postsQuery.fetchNextPage()
 
-  const getPostPath = (post: Post) => {
+  const getPostPath = (post: PostData) => {
     if (galleryConfig.tagSlug) {
       return `/tag/${galleryConfig.tagSlug}/${post.slug}`
     } else if (galleryConfig.gallerySlug) {
@@ -40,22 +36,16 @@ export const PostGallery: FC<PostGalleryProps> = ({
     }
   }
 
-  const onPostClick = (event: MouseEvent, post: Post) => {
+  const onPostClick = (event: MouseEvent, post: PostData) => {
     event.preventDefault()
-    setActivePost(post.id)
-    history.replace(getPostPath(post))
-  }
-
-  const onDialogClose = () => {
-    setActivePost(null)
-    history.replace(pathname)
+    navigate(getPostPath(post))
   }
 
   let content: ReactNode
   if (postsQuery.isError) {
-    content = <Glass>Error loading gallery. :(</Glass>
+    content = <Paper>Error loading gallery. :(</Paper>
   } else if (postsQuery.isLoading) {
-    content = <Glass>Loading...</Glass>
+    content = <Paper>Loading...</Paper>
   } else {
     const posts = postsQuery.data.pages.flat()
 
@@ -83,14 +73,9 @@ export const PostGallery: FC<PostGalleryProps> = ({
   }
 
   return (
-    <Glass padding={0}>
-      {title && (
-        <GalleryTitle>{title}</GalleryTitle>
-      )}
-
+    <Paper>
+      {title && <GalleryTitle>{title}</GalleryTitle>}
       {content}
-
-      {activePost && <ViewPostDialog postId={activePost} onClose={onDialogClose} open />}
-    </Glass>
+    </Paper>
   )
 }

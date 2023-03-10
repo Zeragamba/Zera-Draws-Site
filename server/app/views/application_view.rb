@@ -13,4 +13,14 @@ class ApplicationView
       model => data,
     }
   end
+
+  def self.render_empty(model:)
+    return self.render_many(
+      model: model,
+      count: 0,
+      page: 0,
+      total_pages: 0,
+      data: [],
+    )
+  end
 end

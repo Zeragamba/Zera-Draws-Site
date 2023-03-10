@@ -1,27 +1,26 @@
 class PostView < ApplicationView
   # @param post [Post]
   def self.as_json(post)
-    return GalleryPost.render(post) if post.is_a? GalleryPost
+    return GalleryPostView.as_json(post) if post.is_a? GalleryPost
+    return TaggedPostView.as_json(post) if post.is_a? TaggedPost
 
     return {
       id: post.id,
       date: post.date,
-      order: post.order,
+      position: post.position,
       title: post.title,
       slug: post.slug,
       description: post.description,
       released: post.released,
-      tags: post.tags,
+      scheduled: post.scheduled,
+      tags: post.tags.map { |tag| TagView.as_json(tag) },
       images: post.images.map { |image| ImageView.as_json(image) },
     }
   end
 
   # @param post [Post]
   def self.render(post)
-    return self.render_one(
-      model: :post,
-      data: self.as_json(post)
-    )
+    return self.render_one(model: :post, data: self.as_json(post))
   end
 
   # @param posts [ActiveRecord::Relation<Post>]

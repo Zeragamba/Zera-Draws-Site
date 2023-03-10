@@ -1,7 +1,5 @@
-import { QueryKey } from '@tanstack/react-query'
+import { createQueryKeys } from '@lukemorales/query-key-factory'
 
-const namespace = [ 'user' ]
-export const userQueryKeys = {
-  namespace: namespace,
-  getCurrentUser: (): QueryKey => [ ...namespace, 'current' ],
-}
+export const userQueryKeys = createQueryKeys('user', {
+  current: null,
+})

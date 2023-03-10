@@ -1,13 +1,18 @@
-import { QueryKey } from '@tanstack/react-query'
+import { createQueryKeys } from '@lukemorales/query-key-factory'
 
-const namespace = [ 'posts' ]
-export const postsQueryKeys = {
-  namespace: namespace,
-  getAllPosts: (): QueryKey => [ ...namespace, 'all' ],
-  getGalleryPosts: (gallery: string): QueryKey => [ ...namespace, 'gallery', gallery ],
-  getTaggedPosts: (tag: string): QueryKey => [ ...namespace, 'tagged', tag ],
-  getPost: (PostId: string): QueryKey => [ ...namespace, PostId ],
-  getNextPost: (PostId: string, galleryId = 'none'): QueryKey => [ ...namespace, 'next', PostId, galleryId ],
-  getPrevPost: (PostId: string, galleryId = 'none'): QueryKey => [ ...namespace, 'prev', PostId, galleryId ],
-  getRecent: (): QueryKey => [ ...namespace, 'recent' ],
-}
+type NextPostParams = { gallery?: string; tag?: string }
+type PrevPostParams = { gallery?: string; tag?: string }
+
+export const postsQueryKeys = createQueryKeys('posts', {
+  all: null,
+  recent: null,
+  latest: null,
+  first: null,
+  get: (postId: string) => ({
+    queryKey: [ postId ],
+    contextQueries: {
+      next: (params: NextPostParams) => [ params ],
+      prev: (params: PrevPostParams) => [ params ],
+    },
+  }),
+})

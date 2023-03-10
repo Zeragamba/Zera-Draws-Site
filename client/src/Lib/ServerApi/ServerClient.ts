@@ -1,10 +1,6 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse, Method } from 'axios'
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, isAxiosError, Method } from 'axios'
 
 import { Config } from '../../Config'
-
-const axiosClient = axios.create({
-  baseURL: Config.SERVER_URL,
-})
 
 export interface ErrorResponse extends AxiosResponse {
   data: {
@@ -17,44 +13,44 @@ export interface ServerApiError extends AxiosError {
 }
 
 export function isServerApiError(error: unknown): error is ServerApiError {
-  return (axios.isAxiosError(error) && error.response?.data.error)
+  return (isAxiosError(error) && error.response?.data.error)
 }
 
 export class ServerClient {
+  static axios = axios.create({ baseURL: Config.SERVER_URL })
+
   static _authToken: string | null
 
   public static set authToken(newToken: string | null) {
     if (newToken === null) {
-      sessionStorage.removeItem('authToken')
+      localStorage.removeItem('authToken')
     } else {
-      sessionStorage.setItem('authToken', newToken)
+      localStorage.setItem('authToken', newToken)
     }
 
     this._authToken = newToken
   }
 
   public static get authToken(): string {
-    return this._authToken ||= sessionStorage.getItem('authToken') as string
-  }
-
-  private static addAuthHeader(headers: AxiosRequestHeaders = {}): AxiosRequestHeaders {
-    if (!this.authToken) return headers
-
-    return {
-      ...headers,
-      'Authorization': `Bearer ${this.authToken}`,
-    }
+    return this._authToken ||= localStorage.getItem('authToken') as string
   }
 
   public static async request<Res>(method: Method, path: string, config: AxiosRequestConfig = {}): Promise<Res> {
     try {
-      const { headers, ...axiosConfig } = config
+      let { headers } = config
 
-      const res = await axiosClient.request<Res>({
+      if (this.authToken) {
+        headers = {
+          ...headers,
+          'Authorization': `Bearer ${this.authToken}`,
+        }
+      }
+
+      const res = await this.axios.request<Res>({
+        ...config,
+        headers: headers,
         method: method,
         url: path,
-        headers: this.addAuthHeader(headers),
-        ...axiosConfig,
       })
 
       return res.data
@@ -71,19 +67,19 @@ export class ServerClient {
     return this.request<Res>('GET', path, config)
   }
 
-  public static async post<Res, Data>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<Res> {
+  public static async post<Res, Data = {}>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<Res> {
     return this.request<Res>('POST', path, { data, ...config })
   }
 
-  public static async put<Res, Data>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<Res> {
+  public static async put<Res, Data = {}>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<Res> {
     return this.request<Res>('PUT', path, { data, ...config })
   }
 
-  public static async patch<Res, Data>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<Res> {
+  public static async patch<Res, Data = {}>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<Res> {
     return this.request<Res>('PATCH', path, { data, ...config })
   }
 
-  public static async delete<Res, Data>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<Res> {
+  public static async delete<Res, Data = {}>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<Res> {
     return this.request<Res>('DELETE', path, { data, ...config })
   }
 }

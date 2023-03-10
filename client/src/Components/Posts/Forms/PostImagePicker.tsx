@@ -1,17 +1,19 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, Paper } from '@mui/material'
 import classnames from 'classnames'
-import { FC } from 'react'
+import React, { FC, Ref } from 'react'
 
-import { Image } from '../../Images/Image'
+import { ImageData } from '../../Images/ImageData'
 import { ImagePicker } from '../../Images/ImagePicker'
 
 import styles from './PostImagePicker.module.scss'
 
-interface PostImagePickerProps {
-  image: Image
+export interface PostImagePickerProps {
+  image: ImageData
   onImageChange: (file: File) => void
   onRemove: () => void
   primary?: boolean
+  containerRef?: Ref<HTMLDivElement>
+  imageRef?: Ref<HTMLDivElement>
 }
 
 export const PostImagePicker: FC<PostImagePickerProps> = ({
@@ -19,6 +21,8 @@ export const PostImagePicker: FC<PostImagePickerProps> = ({
   onImageChange,
   onRemove,
   primary = false,
+  containerRef,
+  imageRef,
 }) => {
   const { filename, srcs } = image
   const src = srcs.gallery || srcs.full
@@ -28,20 +32,21 @@ export const PostImagePicker: FC<PostImagePickerProps> = ({
   }
 
   return (
-    <Box className={classnames(styles.image, primary && styles.primary)}>
-      <Box className={styles.imgWrapper}>
+    <Paper className={classnames(styles.image, primary && styles.primary)} ref={containerRef}>
+      <Box className={styles.imgWrapper} ref={imageRef}>
         <img src={src} alt={filename} />
       </Box>
+
       <Box className={styles.actionsWrapper}>
         <ImagePicker onFilesPicked={onFilesPicked}>
-          <Button fullWidth variant={'contained'} size={'small'}>
+          <Button fullWidth variant="contained" size={'small'}>
             Replace
           </Button>
         </ImagePicker>
-        <Button fullWidth onClick={onRemove} variant={'contained'} size={'small'}>
+        <Button fullWidth onClick={onRemove} variant="contained" size={'small'}>
           Remove
         </Button>
       </Box>
-    </Box>
+    </Paper>
   )
 }

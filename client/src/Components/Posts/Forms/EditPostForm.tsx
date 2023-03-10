@@ -1,29 +1,32 @@
-import { Button, Stack } from '@mui/material'
+import { Button, Paper, Stack } from '@mui/material'
 import { FC } from 'react'
 
-import { noOp } from '../../../Lib/Noop'
-import { Glass } from '../../UI/Glass'
-import { Post } from '../Post'
-import { usePost } from '../PostsApi'
-import { useEditPost } from '../PostsApi/EditPost'
 import { OnPostSubmitHandler, PostForm } from './PostForm'
+import { noop } from '../../../Lib/Noop'
+import { PostData } from '../PostData'
+import { usePost } from '../PostsApi'
+import { useEditPost$ } from '../PostsApi/EditPost'
 
 interface ViewPostProps {
   postId: string
-  onUpdated?: (post: Post) => void
+  onUpdated?: (post: PostData) => void
+  onCancel?: () => void
+  onDeleted?: (post: PostData) => void
 }
 
 export const EditPostForm: FC<ViewPostProps> = ({
   postId,
-  onUpdated = noOp,
+  onUpdated = noop,
+  onCancel = noop,
+  onDeleted = noop,
 }) => {
   const post$ = usePost({ postId })
-  const editPost$ = useEditPost()
+  const editPost$ = useEditPost$()
 
   if (post$.isLoading) {
-    return <Glass>Loading...</Glass>
+    return <Paper>Loading...</Paper>
   } else if (post$.isError) {
-    return <Glass>Error Loading Post :( {String(post$.error)}</Glass>
+    return <Paper>Error Loading Post :( {String(post$.error)}</Paper>
   }
 
   const post = post$.data
@@ -35,16 +38,24 @@ export const EditPostForm: FC<ViewPostProps> = ({
 
   return (
     <PostForm
+      mode="edit"
       post={post}
       onSubmit={onPostSave}
+      onDeleted={onDeleted}
       actions={(submitForm) => (
-        <Stack gap={1}>
+        <Stack gap={2}>
           <Button
             variant={'contained'}
             disabled={editPost$.isLoading}
             onClick={submitForm}
             fullWidth
           >Save</Button>
+          <Button
+            variant="outlined"
+            disabled={editPost$.isLoading}
+            onClick={onCancel}
+            fullWidth
+          >Cancel</Button>
         </Stack>
       )}
     />

@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&family=Shantell+Sans&display=swap");
+
+body {
+  margin: 0;
+}
+
+body * {
+  box-sizing: border-box;
+}

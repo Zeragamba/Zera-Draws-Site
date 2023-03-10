@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 
-import { ImagePreloader } from '../Images/ImagePreloader'
-import { Post } from './Post'
+import { PostData } from './PostData'
 import { usePost } from './PostsApi'
+import { ImagePreloader } from '../Images/ImagePreloader'
 
 interface PostPreloaderProps {
-  postId: Post['id']
+  postId: PostData['id']
   imageSize?: string
 }
 

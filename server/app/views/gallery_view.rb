@@ -5,7 +5,7 @@ class GalleryView < ApplicationView
       id: gallery.id,
       name: gallery.name,
       slug: gallery.slug,
-      order: gallery.order,
+      position: gallery.position,
       created_at: gallery.created_at,
       updated_at: gallery.updated_at,
       posts: gallery.gallery_posts.map { |picture| GalleryPostView.as_json(picture) },

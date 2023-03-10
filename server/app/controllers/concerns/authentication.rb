@@ -10,7 +10,7 @@ module Authentication
     return AuthToken.encode(user)
   end
 
-  def authenticate
+  def authenticate_user
     auth_header = request.headers["AUTHORIZATION"] ||= "None"
     auth_type, auth_value = auth_header.split(' ')
 
@@ -32,14 +32,14 @@ module Authentication
     raise AuthError, "Invalid token"
   end
 
-  def authenticate_user
-    authenticate
+  def authenticate
+    authenticate_user
   rescue
     Current.user = User.new()
   end
 
   def authenticate_admin
     authenticate
-    raise AuthError, "Not Authorized" if !Current.user.admin
+    raise AuthError, "Not Authorized" if !Current.admin?
   end
 end

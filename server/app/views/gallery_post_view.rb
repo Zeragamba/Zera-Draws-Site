@@ -2,7 +2,7 @@ class GalleryPostView < ApplicationView
   # @param post [GalleryPost]
   def self.as_json(gallery_post)
     post = PostView.as_json(gallery_post.post)
-    post[:order] = gallery_post.order
+    post[:position] = gallery_post.position
     return post
   end
 

@@ -1,93 +1,91 @@
 class PostsController < ApplicationController
-  before_action :authenticate_admin, :only => [:upload, :update]
+  before_action :authenticate_admin, :except => [
+    :first,
+    :index,
+    :latest,
+    :next,
+    :prev,
+    :recent,
+    :view,
+    :view_gallery,
+    :view_tagged,
+  ]
 
   NUM_POSTS_PER_PAGE = 25
 
   def index
     page = params[:page]&.to_i || 0
-    posts = current_user.admin ? Post.all : Post.released
-
-    if params[:tag]
-      posts = posts.where(:tags => { slug: Slug.to_slug(params[:tag]) })
-    end
-
-    render json: PostView.render_list(posts, num_per_page: NUM_POSTS_PER_PAGE, page: page)
+    render json: PostView.render_list(Post.latest.released, num_per_page: NUM_POSTS_PER_PAGE, page: page)
   end
 
   def view_gallery
     page = params[:page]&.to_i || 0
 
-    gallery = Gallery.find(params[:id_or_slug])
+    gallery = Gallery.find(params[:gallery_id])
 
-    render json: GalleryPostView.render_list(gallery.gallery_posts, num_per_page: NUM_POSTS_PER_PAGE, page: page)
+    render json: GalleryPostView.render_list(gallery.gallery_posts.latest.released, num_per_page: NUM_POSTS_PER_PAGE, page: page)
   end
 
   def view_tagged
     page = params[:page]&.to_i || 0
 
-    tag = Tag.find(params[:id_or_slug])
+    tag = Tag.find(params[:tag_id])
 
-    render json: PostView.render_list(tag.posts, num_per_page: NUM_POSTS_PER_PAGE, page: page)
+    render json: TaggedPostView.render_list(tag.tagged_posts.latest.released, num_per_page: NUM_POSTS_PER_PAGE, page: page)
   end
 
   def next
-    current_post = Post.find(params[:id_or_slug])
+    if params[:gallery_id]
+      gallery = Gallery.find(params[:gallery_id])
+      raise ActiveRecord::RecordNotFound.new("Gallery not found") if !gallery
 
-    if params[:recent]
-      posts = Post.latest
-    elsif params[:gallery]
-      posts = Gallery.find(params[:gallery]).gallery_posts
-      current_post = posts.where(post_id: current_post.id).first
-      return render_not_found if (!current_post)
-    elsif params[:tag]
-      posts = Tag.find(params[:tag]).posts
+      cur_post = gallery.find_post(params[:post_id])
+    elsif params[:tag_id]
+      tag = Tag.find(params[:tag_id])
+      raise ActiveRecord::RecordNotFound.new("Tag not found") if !tag
+
+      cur_post = tag.find_post(params[:post_id])
     else
-      posts = Post.all
+      cur_post = Post.find(params[:post_id])
     end
 
-    if !current_user.admin
-      posts = posts.released
-    end
+    raise ActiveRecord::RecordNotFound.new("Post not found") if !cur_post
 
-    next_post = posts
-      .where("\"order\" > :order", order: current_post.order)
-      .last
+    next_post = cur_post.next
+    raise ActiveRecord::RecordNotFound.new("Post not found") if !next_post
 
-    return render_not_found if (!next_post)
     render json: PostView.render(next_post)
   end
 
   def prev
-    current_post = Post.find(params[:id_or_slug])
+    if params[:gallery_id]
+      gallery = Gallery.find(params[:gallery_id])
+      raise ActiveRecord::RecordNotFound.new("Gallery not found") if !gallery
 
-    if params[:recent]
-      posts = Post.latest
-    elsif params[:gallery]
-      posts = Gallery.find(params[:gallery]).gallery_posts
-      current_post = posts.where(post_id: current_post.id).first
-      return render_not_found if (!current_post)
-    elsif params[:tag]
-      posts = Tag.find(params[:tag]).posts
+      cur_post = gallery.find_post(params[:post_id])
+    elsif params[:tag_id]
+      tag = Tag.find(params[:tag_id])
+      raise ActiveRecord::RecordNotFound.new("Tag not found") if !tag
+
+      cur_post = tag.find_post(params[:post_id])
     else
-      posts = Post.all
+      cur_post = Post.find(params[:post_id])
     end
 
-    if !current_user.admin
-      posts = posts.released
-    end
+    raise ActiveRecord::RecordNotFound.new("Post not found") if !cur_post
 
-    prev_post = posts
-      .where("\"order\" < :order", order: current_post.order)
-      .first
+    prev_post = cur_post.prev
+    raise ActiveRecord::RecordNotFound.new("Post not found") if !prev_post
 
-    return render_not_found if (!prev_post)
     render json: PostView.render(prev_post)
   end
 
   def upload
     Post.transaction do
       images = params[:images]
+
       post = Post.create!(post_params)
+      post.update_tags!(params[:tags]) if params[:tags]
 
       if images.empty?
         return render_error(message: "At least one image is required", status: 400)
@@ -108,18 +106,27 @@ class PostsController < ApplicationController
     render json: PostView.render_list(posts)
   end
 
+  def latest
+    post = Post.latest.released.first
+    render json: PostView.render(post)
+  end
+
+  def first
+    post = Post.released.reorder(position: :asc).first
+    render json: PostView.render(post)
+  end
+
   def view
-    post = Post.find(params[:id_or_slug])
+    post = Post.find(params[:post_id])
     render json: PostView.render(post)
   end
 
   def update
     Post.transaction do
-      post = Post.find(params[:id_or_slug])
+      post = Post.find(params[:post_id])
 
-      if params[:post]
-        post.update!(post_params)
-      end
+      post.update!(post_params) if params[:post]
+      post.update_tags!(params[:tags]) if params[:tags]
 
       images = params[:images] || Hash.new
       images.each_value do |image_data|
@@ -129,15 +136,15 @@ class PostsController < ApplicationController
           when 'add'
             image = Image.create!(
               filename: image_data["filename"],
-              order: post.images.size,
+              position: image_data["position"],
               post: post,
             )
             image.attach(tmp_file.path)
           when 'edit'
             image = Image.find(image_data["id"])
 
-            if image_data["order"]
-              image.order = image_data["order"]
+            if image_data["position"]
+              image.position = image_data["position"]
             end
 
             if image_data["filename"]
@@ -149,7 +156,7 @@ class PostsController < ApplicationController
 
               new_image = Image.create!(
                 filename: image["filename"],
-                order: image["order"],
+                position: image["position"],
                 post: post,
               )
               new_image.attach(tmp_file.path)
@@ -170,8 +177,17 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    Post.transaction do
+      post = Post.find(params[:post_id])
+      post.destroy!
+
+      render json: PostView.render(post)
+    end
+  end
+
   def post_params
     params.require(:post)
-      .permit(:title, :order, :date, :slug, :description, :released)
+      .permit(:title, :position, :date, :slug, :description, :released, :scheduled)
   end
 end

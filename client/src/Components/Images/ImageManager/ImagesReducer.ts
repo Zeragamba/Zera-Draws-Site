@@ -1,19 +1,19 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { Image } from '../Image'
 import * as Actions from './Actions'
+import { ImageData } from '../ImageData'
 
-export const imagesReducer = createReducer<Image[]>([], ({ addCase }) => {
+export const imagesReducer = createReducer<ImageData[]>([], ({ addCase }) => {
   addCase(Actions.setImages, (images, { payload }) => {
     return payload
   })
 
   addCase(Actions.addImage, (images, { payload }) => {
-    const { id, filename, order = 0, file } = payload
+    const { id, filename, position = 0, file } = payload
 
     images.push({
       id: id,
-      order: order,
+      position: position,
       height: 0,
       width: 0,
       mime_type: '',
@@ -32,12 +32,12 @@ export const imagesReducer = createReducer<Image[]>([], ({ addCase }) => {
     const existing = images.find(i => i.id === payload.id)
     if (!existing) return images
 
-    if (payload.filename) {
+    if (typeof payload.filename !== 'undefined') {
       existing.filename = payload.filename
     }
 
-    if (payload.order) {
-      existing.order = payload.order
+    if (typeof payload.position !== 'undefined') {
+      existing.position = payload.position
     }
 
     if (payload.file) {

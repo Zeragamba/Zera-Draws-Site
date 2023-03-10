@@ -2,27 +2,36 @@ import { createContext, FC, ReactNode, useContext } from 'react'
 
 export type GalleryConfig = {
   rowHeight: number
+  numRows?: number
   tagSlug?: string
   gallerySlug?: string
 }
 
-const GalleryContext = createContext<GalleryConfig>({
+export const defaultGalleryConfig: GalleryConfig = {
   rowHeight: 250,
-})
+}
+
+const GalleryContext = createContext<GalleryConfig>(defaultGalleryConfig)
 
 export const useGalleryContext = (): GalleryConfig => {
   return useContext(GalleryContext)
 }
 
 interface GalleryContextProviderProps {
-  config: GalleryConfig
+  config: Partial<GalleryConfig>
   children: ReactNode
 }
 
-export const GalleryContextProvider: FC<GalleryContextProviderProps> = ({ config, children }) => {
+export const GalleryContextProvider: FC<GalleryContextProviderProps> = ({
+  config,
+  children,
+}) => {
   return (
-    <GalleryContext.Provider value={config}>
-      {children}
+    <GalleryContext.Provider value={{ ...defaultGalleryConfig, ...config }}>
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      <div style={{ '--gallery-height': config.rowHeight + 'px' } as any}>
+        {children}
+      </div>
     </GalleryContext.Provider>
   )
 }

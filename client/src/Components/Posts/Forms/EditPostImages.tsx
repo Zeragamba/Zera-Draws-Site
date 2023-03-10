@@ -1,16 +1,16 @@
 import { Button, Stack } from '@mui/material'
-import { FC, useRef } from 'react'
+import { FC } from 'react'
+import { useDrag, useDrop } from 'react-dnd'
 
-import { useDragActive } from '../../../Lib/Hooks/UseDragActive'
-import { EditableImage, Image } from '../../Images/Image'
+import { PostImagePicker, PostImagePickerProps } from './PostImagePicker'
+import { EditableImage, ImageData } from '../../Images/ImageData'
 import { ImagePicker } from '../../Images/ImagePicker'
-import { Glass } from '../../UI/Glass'
-import { PostImagePicker } from './PostImagePicker'
+import { useSortable } from '../../UI/UseSortable'
 
 interface EditPostImagesProps {
-  images: Image[]
-  onRemove: (image: Image) => void
-  onEdit: (image: Image, changes: Partial<EditableImage>) => void
+  images: ImageData[]
+  onRemove: (image: ImageData) => void
+  onEdit: (image: ImageData, changes: Partial<EditableImage>) => void
   onAdd: (image: Required<EditableImage>) => void
 }
 
@@ -20,21 +20,32 @@ export const EditPostImages: FC<EditPostImagesProps> = ({
   onEdit,
   onAdd,
 }) => {
-  const dragRef = useRef<HTMLButtonElement>(null)
-  const dragActive = useDragActive(dragRef)
+  const [ orderedImages, reorderImage ] = useSortable(images)
 
   const onImagesAdded = (files: File[]) => {
-    files.forEach(file => {
-      onAdd({ filename: file.name, file, order: images.length })
+    files.forEach((file, index) => {
+      onAdd({ filename: file.name, file, position: images.length + index })
+    })
+  }
+
+  const onImageOrderHover = (id: ImageData['id'], position: number) => {
+    reorderImage(id, position)
+  }
+
+  const onImageOrderDrop = () => {
+    orderedImages.forEach((image, index) => {
+      onEdit(image, { position: index })
     })
   }
 
   return (
-    <Glass display="flex" flexDirection="column" gap={2}>
+    <Stack gap={2}>
       {images.length >= 1 && (
-        <Stack direction="row" gap={2} sx={{ flexWrap: 'wrap' }} width={'100%'}>
-          {images.map((image, index) => (
-            <PostImagePicker
+        <Stack direction="row" gap={2} sx={{ flexWrap: 'wrap' }} justifyContent={'space-between'} width={'100%'}>
+          {orderedImages.map((image, index) => (
+            <PostImageItem
+              onOrderHover={onImageOrderHover}
+              onOrderDrop={onImageOrderDrop}
               key={image.id}
               image={image}
               onImageChange={(file) => onEdit(image, { filename: file.name, file })}
@@ -46,10 +57,55 @@ export const EditPostImages: FC<EditPostImagesProps> = ({
       )}
 
       <ImagePicker onFilesPicked={onImagesAdded} multiple>
-        <Button variant={dragActive ? 'contained' : 'outlined'} fullWidth ref={dragRef}>
+        <Button
+          variant="contained"
+          fullWidth
+          color="primary"
+          sx={{ minHeight: orderedImages.length === 0 ? 200 : undefined }}
+        >
           Add Images
         </Button>
       </ImagePicker>
-    </Glass>
+    </Stack>
+  )
+}
+
+interface PostImageItemProps extends PostImagePickerProps {
+  onOrderHover: (postId: ImageData['id'], position: number) => void
+  onOrderDrop: (postId: ImageData['id'], position: number) => void
+}
+
+const PostImageItem: FC<PostImageItemProps> = ({
+  onOrderHover,
+  onOrderDrop,
+  image,
+  ...pickerProps
+}) => {
+  const [ _dragProps, dragHandleRef, dragPreviewRef ] = useDrag<{ id: string }>({
+    type: 'image',
+    item: { id: image.id },
+  })
+
+  const [ _dropProps, dropRef ] = useDrop<{ id: string }>({
+    accept: 'image',
+    hover: (item) => {
+      if (item.id === image.id) return
+      onOrderHover(item.id, image.position)
+    },
+    drop: item => {
+      onOrderDrop(item.id, image.position)
+    },
+  })
+
+  return (
+    <PostImagePicker
+      image={image}
+      {...pickerProps}
+      containerRef={node => {
+        dragHandleRef(node)
+        dropRef(node)
+      }}
+      imageRef={dragPreviewRef}
+    />
   )
 }

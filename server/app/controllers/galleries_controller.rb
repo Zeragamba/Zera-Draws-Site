@@ -1,5 +1,5 @@
 class GalleriesController < ApplicationController
-  before_action :authenticate_admin, :only => [:create, :update, :destroy]
+  before_action :authenticate_admin, :except => [:list, :view]
 
   def list
     galleries = Gallery.all
@@ -12,18 +12,18 @@ class GalleriesController < ApplicationController
   end
 
   def view
-    gallery = Gallery.find(params[:id_or_slug])
+    gallery = Gallery.find(params[:gallery_id])
     render json: GalleryView.render(gallery)
   end
 
   def update
-    gallery = Gallery.find(params[:id_or_slug])
+    gallery = Gallery.find(params[:gallery_id])
     gallery.update!(gallery_params)
     render json: GalleryView.render(gallery)
   end
 
   def destroy
-    gallery = Gallery.find(params[:id_or_slug])
+    gallery = Gallery.find(params[:gallery_id])
     gallery.destroy!
     render json: GalleryView.render(gallery)
   end

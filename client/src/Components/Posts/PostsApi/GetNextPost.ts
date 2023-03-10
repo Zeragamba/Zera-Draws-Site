@@ -1,28 +1,38 @@
 import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
-import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
-import { Post } from '../Post'
-import { setGetPostData } from './GetPost'
+import { cachePostData, getPostUrl } from './GetPost'
 import { postsQueryKeys } from './PostsQueryKeys'
+import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
+import { usePageContext } from '../../Layouts/PageContext'
+import { PostData } from '../PostData'
 
 type GetNextPostParams = {
-  postId: Post['id']
+  postId: PostData['id']
+  galleryId?: string
+  tagId?: string
 }
 
-type GetNextPostRes = ModelResponse<'post', Post>
+type GetNextPostRes = ModelResponse<'post', PostData>
 
-export const getNextPost = ({ postId }: GetNextPostParams): Promise<Post> => {
-  return ServerClient.get<GetNextPostRes>(`/posts/${postId}/next`)
+export const getNextPost = ({ postId, tagId, galleryId }: GetNextPostParams): Promise<PostData> => {
+  return ServerClient.get<GetNextPostRes>(getPostUrl({ postId, tagId: tagId, galleryId: galleryId }) + '/next')
     .then(res => res.post)
 }
 
-export const useNextPost = (params: GetNextPostParams): UseQueryResult<Post> => {
+export const useNextPost = (curPostId: PostData['id' | 'slug']): UseQueryResult<PostData> => {
   const queryClient = useQueryClient()
+  const { tagId, galleryId } = usePageContext()
 
   return useQuery({
-    queryKey: postsQueryKeys.getNextPost(params.postId),
-    queryFn: () => getNextPost(params),
-    retry: false,
-    onSuccess: (post) => setGetPostData(queryClient, post),
+    ...postsQueryKeys.get(curPostId)._ctx.next({
+      gallery: galleryId,
+      tag: tagId,
+    }),
+    queryFn: () => getNextPost({
+      postId: curPostId,
+      galleryId: galleryId,
+      tagId: tagId,
+    }),
+    onSuccess: (post) => cachePostData(queryClient, post),
   })
 }

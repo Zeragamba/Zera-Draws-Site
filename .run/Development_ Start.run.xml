@@ -6,18 +6,26 @@
         <option name="envVars">
           <list>
             <DockerEnvVarImpl>
-              <option name="name" value="SERVER_URL" />
-              <option name="value" value="https://localhost:8080/api" />
-            </DockerEnvVarImpl>
-            <DockerEnvVarImpl>
               <option name="name" value="IMAGES_URL" />
               <option name="value" value="https://localhost:8080/images" />
             </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="SERVER_URL" />
+              <option name="value" value="https://localhost:8080/api" />
+            </DockerEnvVarImpl>
           </list>
         </option>
+        <option name="commandLineOptions" value="--build" />
         <option name="secondarySourceFiles">
           <list>
             <option value="docker-compose.dev.yml" />
+          </list>
+        </option>
+        <option name="services">
+          <list>
+            <option value="router" />
+            <option value="server" />
+            <option value="client" />
           </list>
         </option>
         <option name="sourceFilePath" value="docker-compose.yml" />

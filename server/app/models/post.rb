@@ -1,23 +1,56 @@
 class Post < ApplicationRecord
   include WithSlug
-  include WithOrder
+  include WithPosition
 
-  has_and_belongs_to_many :tags
-  has_many :gallery_posts
-  has_many :images
+  has_many :gallery_posts, dependent: :destroy
+  has_many :tagged_posts, dependent: :destroy
 
+  has_many :tags, :through => :tagged_posts
   eager_load :tags
+
+  has_many :images, dependent: :destroy
   eager_load :images
 
-  scope :latest, -> { reorder(date: :desc, order: :desc) }
-  scope :released, -> { where(:released => true) }
+  default_scope -> { latest }
+  scope :latest, -> { reorder(position: :desc) }
+  scope :released, -> { Current.admin? ? all : where(released: true) }
 
-  default_scope -> { order(order: :desc) }
+  validates :slug, exclusion: {
+    in: ['recent', 'latest', 'first'],
+    message: '%{value} is reserved'
+  }
 
-  before_create -> { self.order = Post.count if self.order == 0 }
+  def self.release_scheduled
+    self
+      .where(released: false)
+      .where("scheduled <= NOW()")
+      .update_all(released: true, scheduled: nil)
+  end
 
   def build_slug
-    "#{self.date}-#{self.title}"
+    self.title
+  end
+
+  def next
+    return Post
+      .where("position > :position", position: self.position)
+      .last
+  end
+
+  def prev
+    return Post
+      .where("position < :position", position: self.position)
+      .first
+  end
+
+  def update_tags!(tag_ids)
+    if tag_ids === "__none__"
+      self.tag_ids = []
+    else
+      self.tag_ids = tag_ids
+    end
+
+    self.save!
   end
 
   def add_tags(*tag_names)

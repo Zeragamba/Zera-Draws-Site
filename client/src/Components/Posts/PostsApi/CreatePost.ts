@@ -1,22 +1,19 @@
 import { useMutation, UseMutationResult, useQueryClient } from '@tanstack/react-query'
 
-import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
-import { EditableImage } from '../../Images/Image'
-import { EditablePost, Post } from '../Post'
 import { postsQueryKeys } from './PostsQueryKeys'
+import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
+import { EditableImage } from '../../Images/ImageData'
+import { tagQueryKeys } from '../../Tags/TagQueryKeys'
+import { EditablePost, PostData, postToFormData } from '../PostData'
 
-export type CreatePostRes = ModelResponse<'post', Post>
+export type CreatePostRes = ModelResponse<'post', PostData>
 export type CreatePostReq = {
   post: EditablePost
   images: Required<EditableImage>[]
 }
 
-export const createPost = ({ post, images }: CreatePostReq): Promise<Post> => {
-  const formData = new FormData()
-
-  Object.entries(post).forEach(([ prop, value ]) => {
-    formData.set(`post[${prop}]`, String(value))
-  })
+export const createPost = ({ post, images }: CreatePostReq): Promise<PostData> => {
+  const formData = postToFormData(post)
 
   images.forEach((image, index) => {
     Object.entries(image).forEach(([ prop, value ]) => {
@@ -34,13 +31,15 @@ export const createPost = ({ post, images }: CreatePostReq): Promise<Post> => {
     .then(res => res.post)
 }
 
-export const useCreatePost = (): UseMutationResult<Post, unknown, CreatePostReq> => {
+export const useCreatePost$ = (): UseMutationResult<PostData, unknown, CreatePostReq> => {
   const queryClient = useQueryClient()
 
-  return useMutation<Post, unknown, CreatePostReq>(createPost, {
-    onSuccess: async (createdPost) => {
-      await queryClient.invalidateQueries(postsQueryKeys.namespace)
-      queryClient.setQueryData(postsQueryKeys.getPost(createdPost.id), createdPost)
+  return useMutation<PostData, unknown, CreatePostReq>(createPost, {
+    onSuccess: (createdPost) => {
+      queryClient.invalidateQueries(postsQueryKeys._def)
+      queryClient.invalidateQueries(tagQueryKeys._def)
+      queryClient.setQueryData(postsQueryKeys.get(createdPost.id).queryKey, createdPost)
+      queryClient.setQueryData(postsQueryKeys.get(createdPost.slug).queryKey, createdPost)
     },
   })
 }

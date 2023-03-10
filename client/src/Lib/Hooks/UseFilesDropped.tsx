@@ -12,8 +12,10 @@ function isDropEvent(event: Event): event is DropEvent {
   return isDragEvent(event) && !!event.dataTransfer
 }
 
-export function useFilesDropped(scopeRef: RefObject<Element>, callback: (files: File[]) => void): void {
+export function useFilesDropped(scopeRef: RefObject<Element> | undefined, callback: (files: File[]) => void): void {
   useEffect(() => {
+    if (!scopeRef) return
+
     const dropScope = scopeRef.current
     if (!dropScope) return
 

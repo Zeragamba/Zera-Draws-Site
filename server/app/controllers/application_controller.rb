@@ -1,9 +1,13 @@
 class ApplicationController < ActionController::API
   include Authentication
-  before_action :authenticate_user
+  before_action :authenticate
 
   rescue_from 'Authentication::AuthError' do |error|
     render_error(message: error.message, status: 401)
+  end
+
+  rescue_from 'ActiveRecord::RecordNotFound' do |error|
+    render_error(message: error.message, status: 404)
   end
 
   def current_user

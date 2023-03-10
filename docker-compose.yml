@@ -1,16 +1,16 @@
 version: "3.9"
 
 services:
-  nginx:
-    image: nginx:stable
+  router:
+    build: ./router
     depends_on:
       - server
-      - client
+      - og-injector
     volumes:
-      - ./.volumes/router/conf.d:/etc/nginx/conf.d
+      - ./router/conf.d:/etc/nginx/conf.d
       - ./.volumes/ssl:/opt/ssl
       - ./.volumes/images:/opt/images
-      - ./client/build:/opt/client
+      - ./.volumes/client:/opt/client
     ports:
       - "${NGINX_PORT}:443"
 
@@ -18,7 +18,7 @@ services:
     build: ./server
     command: bin/rails s -p 3000 -b 0.0.0.0
     volumes:
-      - ./server:/opt/server
+      - ./.volumes/client:/opt/client
       - ./.volumes/images:/opt/images
     depends_on:
       - db
@@ -28,25 +28,41 @@ services:
       IMAGES_URL: "https://${NGINX_HOST}/images"
       DB_HOST: db
       DB_PORT: 5432
+      DB_NAME: "${DB_NAME}"
       DB_USER: "${DB_USER}"
       DB_PASS: "${DB_PASS}"
       TOKEN_SECRET: "${TOKEN_SECRET}"
       IMAGES_DIR: "/opt/images"
+      CLIENT_DIR: "/opt/client"
       REACT_APP_ENV: production
 
   client:
+    profiles: [ "build" ]
     build: ./client
     working_dir: /opt/client
     volumes:
-      - ./client:/opt/client
+      - ./.volumes/client:/opt/client/build
     environment:
       REACT_APP_SERVER_URL: "https://${NGINX_HOST}/api"
     command: yarn build
+
+  og-injector:
+    build: ./og-injector
+    working_dir: /opt/og-injector
+    volumes:
+      - ./og-injector:/opt/og-injector
+      - ./.volumes/client:/opt/client
+    environment:
+      SERVER_URL: "http://server:3000"
+      CLIENT_URL: "https://${NGINX_HOST}"
+      CLIENT_DIR: "/opt/client"
+    command: yarn start
 
   db:
     image: postgres:15
     volumes:
       - ./.volumes/db:/var/lib/postgresql/data
     environment:
+      POSTGRES_DB: "${DB_NAME}"
       POSTGRES_USER: "${DB_USER}"
       POSTGRES_PASSWORD: "${DB_PASS}"

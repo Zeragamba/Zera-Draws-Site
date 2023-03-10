@@ -6,35 +6,35 @@ class PictureManager
   }
 
   ##
-  # @param picture [Post]
+  # @param image [Image]
   # @param size [string]
-  def self.url_for(picture, size:)
-    return [IMAGES_URL, picture.id, size.to_s + picture.ext].join('/')
+  def self.url_for(image, size:)
+    return [IMAGES_URL, image.id, size.to_s + image.ext].join('/')
   end
 
-  def self.path_for(picture, size: :full)
-    return File.join(IMAGES_DIR, picture.id, size.to_s + picture.ext)
+  def self.path_for(image, size: :full)
+    return File.join(IMAGES_DIR, image.id, size.to_s + image.ext)
   end
 
   ##
-  # @return picture [Post]
-  def self.import(title:, date:, order: 0, filename:)
-    picture = Post.create!(
+  # @return image [Image]
+  def self.import(title:, date:, position: 0, filename:)
+    image = Image.create!(
       title: title,
       date: date,
-      order: order,
+      position: position,
     )
 
-    self.attach(picture, filename)
+    self.attach(image, filename)
 
-    return picture
+    return image
   end
 
   ##
   # @param image [Image]
   # @param filename [String]
   def self.attach(image, filename)
-    Post.transaction do
+    Image.transaction do
       ext = File.extname(filename)
 
       width, height = FastImage.size(filename)
@@ -51,8 +51,14 @@ class PictureManager
     end
   end
 
-  def self.read(picture, size: :full)
-    return open(self.path_for(picture, size: size), "rb") { |f| f.read }
+  def self.remove(image)
+    img_dir = File.join(IMAGES_DIR, image.id)
+    Rails.logger.info("Removing directory #{img_dir}")
+    FileUtils.remove_dir(img_dir, true)
+  end
+
+  def self.read(image, size: :full)
+    return open(self.path_for(image, size: size), "rb") { |f| f.read }
   end
 
   # @param image [Image]

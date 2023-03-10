@@ -1,27 +1,27 @@
 import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
-import { PagedModelResponse, ServerClient } from '../../../Lib/ServerApi'
-import { Post } from '../Post'
-import { setGetPostData } from './GetPost'
+import { cachePostData } from './GetPost'
 import { postsQueryKeys } from './PostsQueryKeys'
+import { PagedModelResponse, ServerClient } from '../../../Lib/ServerApi'
+import { PostData } from '../PostData'
 
 type Params = { numImages?: number }
 
-type ResponseBody = PagedModelResponse<'posts', Post>
+type ResponseBody = PagedModelResponse<'posts', PostData>
 
-export const getRecentPosts = ({ numImages }: Params): Promise<Post[]> => {
+export const getRecentPosts = ({ numImages }: Params): Promise<PostData[]> => {
   return ServerClient.get<ResponseBody>('/posts/recent', { params: { numImages } })
     .then(res => res.posts)
 }
 
-export const useRecentPosts = (params: Params): UseQueryResult<Post[]> => {
+export const useRecentPosts = (params: Params): UseQueryResult<PostData[]> => {
   const queryClient = useQueryClient()
 
   return useQuery({
-    queryKey: postsQueryKeys.getRecent(),
+    ...postsQueryKeys.recent,
     queryFn: () => getRecentPosts(params),
     onSuccess: (recentPosts) => {
-      recentPosts.forEach(post => setGetPostData(queryClient, post))
+      recentPosts.forEach(post => cachePostData(queryClient, post))
     },
   })
 }

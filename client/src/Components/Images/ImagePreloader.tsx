@@ -1,9 +1,10 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 
-import { Image } from './Image'
+import { useImagePreload } from './ImageApi/ImageQueries'
+import { ImageData } from './ImageData'
 
 interface PostPreloaderProps {
-  image: Image
+  image: ImageData
   size?: string
 }
 
@@ -12,5 +13,6 @@ export const ImagePreloader: FC<PostPreloaderProps> = ({
   size = 'high',
 }) => {
   const src = image.srcs[size] || image.srcs.full
-  return <link rel="preload" as="image" href={src} />
+  useImagePreload(src)
+  return null
 }

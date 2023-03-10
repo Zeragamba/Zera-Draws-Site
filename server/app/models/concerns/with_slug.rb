@@ -3,13 +3,6 @@ require_relative '../../lib/uuid'
 module WithSlug
   extend ActiveSupport::Concern
 
-  included do
-    before_validation :update_slug
-
-    validates_presence_of :slug
-    validates_uniqueness_of :slug
-  end
-
   class_methods do
     def find(id_or_slug)
       if UUID.is_uuid?(id_or_slug)
@@ -20,11 +13,18 @@ module WithSlug
     end
   end
 
-  def build_slug
-    raise NotImplementedError
-  end
+  included do
+    before_validation :update_slug
 
-  def update_slug
-    self.slug = Slug.to_slug(self.slug || self.build_slug)
+    validates_presence_of :slug
+    validates_uniqueness_of :slug
+
+    def build_slug
+      raise NotImplementedError
+    end
+
+    def update_slug
+      self.slug = Slug.to_slug(self.slug || self.build_slug)
+    end
   end
 end

@@ -23,6 +23,11 @@ module.exports = {
     'react',
     '@typescript-eslint',
   ],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
     'react/function-component-definition': ['error', {
       namedComponents: 'arrow-function',
@@ -38,6 +43,10 @@ module.exports = {
         '{}': false,
       },
       extendDefaults: true,
+    }],
+    '@typescript-eslint/no-unused-vars': ['error', {
+      argsIgnorePattern: '^_',
+      varsIgnorePattern: '^_',
     }],
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',

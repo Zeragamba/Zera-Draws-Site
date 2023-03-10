@@ -1,50 +1,9 @@
 @import "../../common";
 
 .row {
-  display: flex;
-  align-content: stretch;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-
-  &::after { // Right align last row of content
-    flex: auto;
-    flex-grow: 100;
-    content: "";
-  }
+  display: grid;
+  grid-template-columns: repeat(var(--gallery-cols), 1fr);
 }
-
-.item {
-  position: relative;
-  display: inline-flex;
-  overflow: hidden;
-
-  align-items: center;
-  flex-grow: 1;
-  justify-content: center;
-
-  background: gray;
-
-  .image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    padding: 0;
-    transition: padding 200ms;
-  }
-
-  &:hover {
-    .image {
-      padding: 4px;
-    }
-
-    .metadata {
-      &.metadataTop {top: 0;}
-      &.metadataBottom {bottom: 0;}
-    }
-  }
-}
-
 
 .metadata {
   position: absolute;

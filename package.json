@@ -1,0 +1,12 @@
+{
+  "name": "zera-draws-site",
+  "version": "1.0.0",
+  "repository": "git@github.com:Zeragamba/zera-draws-site.git",
+  "author": "Zeragamba <Zera@zeragamba.ca>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "docker compose build && docker compose up client",
+    "start": "yarn build && docker compose up"
+  }
+}

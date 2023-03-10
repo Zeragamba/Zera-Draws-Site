@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material'
 import { FC, ReactNode } from 'react'
 
 import { Text } from '../UI/Text'
@@ -11,6 +10,6 @@ export const GalleryTitle: FC<GalleryTitleProps> = ({
   children,
 }) => {
   return (
-    <Text variant="h2" sx={{padding: 2}}>{children}</Text>
+    <Text variant="h2" sx={{ padding: 2 }}>{children}</Text>
   )
 }

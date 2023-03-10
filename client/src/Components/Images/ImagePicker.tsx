@@ -6,7 +6,7 @@ type ImagePickerProps = {
   onFilesPicked: (files: File[]) => void
   disabled?: boolean
   multiple?: boolean
-  children: ReactNode
+  children?: ReactNode
 }
 
 export const ImagePicker: FC<ImagePickerProps> = ({

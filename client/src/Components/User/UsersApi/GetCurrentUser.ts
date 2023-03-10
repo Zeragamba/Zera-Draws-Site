@@ -1,13 +1,12 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 
-import { ModelResponse } from '../../../Lib/ServerApi/Response'
-import { isServerApiError, ServerClient } from '../../../Lib/ServerApi/ServerClient'
-import { User } from '../User'
 import { userQueryKeys } from './UserQueryKeys'
+import { isServerApiError, ModelResponse, ServerClient } from '../../../Lib/ServerApi'
+import { UserData } from '../UserData'
 
-export type GetCurrentUserRes = ModelResponse<'user', User>
+export type GetCurrentUserRes = ModelResponse<'user', UserData>
 
-export const getCurrentUser = (): Promise<User | null> => {
+export const getCurrentUser = (): Promise<UserData | null> => {
   return ServerClient.get<GetCurrentUserRes>('/user/me')
     .then(res => res.user)
     .catch(error => {
@@ -21,10 +20,15 @@ export const getCurrentUser = (): Promise<User | null> => {
     })
 }
 
-export const useCurrentUser = (): UseQueryResult<User | null> => {
+export const useCurrentUser = (): UseQueryResult<UserData | null> => {
   return useQuery({
-    queryKey: userQueryKeys.getCurrentUser(),
+    ...userQueryKeys.current,
     queryFn: () => getCurrentUser(),
     enabled: ServerClient.authToken !== null,
   })
+}
+
+export const useIsAdmin = (): boolean => {
+  const { data: currentUser } = useCurrentUser()
+  return currentUser?.admin || false
 }

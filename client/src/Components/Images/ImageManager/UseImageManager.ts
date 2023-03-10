@@ -17,6 +17,8 @@ type UseImageManagerResult = State & {
 export function useImageManager({ images = [] }: UseImageManagerProps = {}): UseImageManagerResult {
   const [ state, dispatch ] = useReducer(rootReducer, { images, changes: [] })
 
+  console.log(state)
+
   return {
     ...state,
     addImage: (params) => dispatch(Actions.addImage(params)),

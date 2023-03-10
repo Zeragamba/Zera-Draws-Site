@@ -1,30 +1,30 @@
 import { useInfiniteQuery, UseInfiniteQueryResult, useQueryClient } from '@tanstack/react-query'
 
-import { PagedModelResponse, ServerClient } from '../../../Lib/ServerApi'
-import { Post } from '../Post'
-import { setGetPostData } from './GetPost'
+import { cachePostData } from './GetPost'
 import { postsQueryKeys } from './PostsQueryKeys'
+import { PagedModelResponse, ServerClient } from '../../../Lib/ServerApi'
+import { PostData } from '../PostData'
 
 type Params = { page?: number }
 
-export type GetAllPostsRes = PagedModelResponse<'posts', Post>
+export type GetAllPostsRes = PagedModelResponse<'posts', PostData>
 
 export const getAllPosts = (params: Params = {}): Promise<GetAllPostsRes> => {
   const { page = 0 } = params
   return ServerClient.get<GetAllPostsRes>('/posts', { params: { page } })
 }
 
-export const useAllPosts = (): UseInfiniteQueryResult<Post[]> => {
+export const useAllPosts$ = (): UseInfiniteQueryResult<PostData[]> => {
   const queryClient = useQueryClient()
 
-  return useInfiniteQuery<GetAllPostsRes, unknown, Post[]>({
-    queryKey: postsQueryKeys.getAllPosts(),
+  return useInfiniteQuery<GetAllPostsRes, unknown, PostData[]>({
+    ...postsQueryKeys.all,
     queryFn: ({ pageParam = 0 }) => {
       return getAllPosts({ page: pageParam })
     },
     onSuccess: (data) => {
-      const posts: Post[] = data.pages.map(page => page).flat()
-      posts.forEach((post) => setGetPostData(queryClient, post))
+      const posts: PostData[] = data.pages.map(page => page).flat()
+      posts.forEach((post) => cachePostData(queryClient, post))
     },
     select: (data) => ({
       pages: data.pages.map(page => page.posts),

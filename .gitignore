@@ -1,9 +1,11 @@
-/.idea/**/*.iml
+.idea/**/*.iml
 
-/.volumes/db
-/.volumes/images
-/.volumes/ssl
+images/
 
-/.env
+vendor/
+
+.volumes/
+
+.env
 
 !/**/.keep

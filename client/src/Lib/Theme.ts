@@ -1,34 +1,38 @@
 import { createTheme } from '@mui/material'
 import { CSSProperties } from 'react'
 
-import './Theme.scss'
-
-export const colours = {
+export const Colours = {
+  primary: 'hsl(0,91%,25%)',
+  secondary: '#eaa84f',
   dark: 'hsl(0, 0%, 10%)',
   grey: 'hsl(0, 0%, 40%)',
-  light: 'hsl(0, 0%, 95%)',
+  light: 'hsl(15,44%,93%)',
 }
 
 const displayFontFamily = [
-  'Capriola',
-  'sans-serif',
+  'Shantell Sans',
+  'cursive',
 ].join(', ')
 
 const bodyFontFamily = [
-  'Quicksand',
-  'Arial',
+  'Nunito',
   'sans-serif',
 ].join(', ')
 
 export const darkTheme = createTheme({
   spacing: 4,
   palette: {
-    mode: 'dark',
+    primary: {
+      main: Colours.primary,
+    },
+    secondary: {
+      main: Colours.secondary,
+    },
     text: {
-      primary: colours.light,
+      primary: Colours.dark,
     },
     background: {
-      paper: colours.dark,
+      paper: Colours.light,
     },
   },
   typography: {
@@ -48,7 +52,6 @@ export const darkTheme = createTheme({
   },
 })
 
-export const rootStyles = {
-  '--spacing': darkTheme.spacing(),
-  fontFamily: bodyFontFamily,
-} as CSSProperties
+type CSSVariables = Record<`--${string}`, string | number>
+
+export type StyleProp = CSSProperties & CSSVariables

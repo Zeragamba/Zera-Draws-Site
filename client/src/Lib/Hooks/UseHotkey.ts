@@ -11,7 +11,9 @@ export const useHotkey = (hotkey: string, action: () => void): void => {
 
   useEffect(() => {
     const onkeydown = (event: KeyboardEvent) => {
-      if (event.key === hotkey) actionRef.current()
+      if (event.key !== hotkey) return
+      event.preventDefault()
+      actionRef.current()
     }
 
     document.addEventListener('keydown', onkeydown)

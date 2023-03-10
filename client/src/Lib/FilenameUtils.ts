@@ -1,11 +1,15 @@
-import { format as formatDate } from 'date-fns'
-
 export function formatSlug(str: string): string {
   return str
     .toLowerCase()
-    .replace(/\W+/g, ' ')
+    .replace(/[\W_]+/g, ' ')
     .replace(/\s+/g, '-')
 }
+
+export function formatTitle(str: string): string {
+  return str
+    .replace(/_+/g, ' ')
+}
+
 type FilenameMeta = {
   date: string
   title: string
@@ -20,7 +24,7 @@ export const parseFilename = (filename: string): FilenameMeta => {
   }
 
   let { title, date } = filenameMatch.groups
-  date ||= formatDate(new Date(), 'yyyy-MM-dd')
+  date ||= new Date().toISOString()
 
   if (title.match(/^\d{4}-\d{2}-\d{2}$/)) {
     date = title

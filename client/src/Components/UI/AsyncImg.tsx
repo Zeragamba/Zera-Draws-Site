@@ -1,6 +1,7 @@
-import { CSSProperties, FC, ImgHTMLAttributes, useEffect, useState } from 'react'
+import { CSSProperties, FC, ImgHTMLAttributes } from 'react'
 
 import { Spinner } from './Spinner'
+import { useImage$ } from '../Images/ImageApi/ImageQueries'
 
 type AsyncImageProps = ImgHTMLAttributes<HTMLImageElement>
 
@@ -10,25 +11,18 @@ export const AsyncImg: FC<AsyncImageProps> = ({
   style = {},
   ...imgProps
 }) => {
-  const [ imgLoading, setImgLoading ] = useState<boolean>(true)
-
-  useEffect(() => {
-    if (!src) return
-
-    const image = new Image()
-    image.onload = () => setImgLoading(false)
-    image.src = src
-
-    setImgLoading(true)
-  }, [ src ])
+  const { data: image } = useImage$(src)
 
   const imgStyles = { ...style }
-  if (imgLoading) imgStyles.display = 'none'
+  if (!image) imgStyles.display = 'none'
 
   return (
     <>
-      {imgLoading && <Spinner />}
-      <img {...imgProps} src={src} alt={alt} style={imgStyles as CSSProperties} loading={'lazy'} />
+      {!image ? (
+        <Spinner />
+      ) : (
+        <img {...imgProps} src={image.src} alt={alt} style={imgStyles as CSSProperties} />
+      )}
     </>
   )
 }

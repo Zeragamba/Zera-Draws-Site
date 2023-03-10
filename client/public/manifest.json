@@ -1,6 +1,7 @@
 {
-  "short_name": "Zeragamba.ca",
-  "name": "Zeragamba's Portfolio site",
+
+  "name": "Zeragamba Draws",
+  "short_name": "Zeragamba",
   "icons": [
     {
       "src": "avatar.png",

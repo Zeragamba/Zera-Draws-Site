@@ -1,21 +1,23 @@
 import React, { FC } from 'react'
 
+import { ImageData } from './ImageData'
+import { ImagePreloader } from './ImagePreloader'
 import { GalleryItem } from '../Gallery/GalleryItem'
 import { GalleryWrapper } from '../Gallery/GalleryWrapper'
-import { Image } from './Image'
-import { ImagePreloader } from './ImagePreloader'
 
 interface ImageGalleryProps {
-  images: Image[]
-  onImageClick: (image: Image) => void
+  images: ImageData[]
+  rowHeight?: number
+  onImageClick: (image: ImageData) => void
 }
 
 export const ImageGallery: FC<ImageGalleryProps> = ({
   onImageClick,
+  rowHeight,
   images,
 }) => {
   return (
-    <GalleryWrapper>
+    <GalleryWrapper rowHeight={rowHeight}>
       {images.map((image) => (
         <React.Fragment key={image.id}>
           <GalleryItem image={image} released={true} onClick={() => onImageClick(image)} />

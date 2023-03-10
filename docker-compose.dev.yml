@@ -2,11 +2,14 @@ version: "3.9"
 
 services:
   server:
+    volumes:
+      - ./server:/opt/server
     environment:
       RAILS_ENV: development
 
   client:
     volumes:
+      - ./client:/opt/client
       - ./.volumes/ssl:/opt/ssl
     environment:
       HTTPS: true
@@ -16,6 +19,13 @@ services:
     command: yarn start
     ports:
       - "${CLIENT_PORT}:3000"
+
+  og-injector:
+    volumes:
+      - ./og-injector:/opt/og-injector
+    command: yarn watch
+    environment:
+      CLIENT_URL: "https://${HOSTNAME}:${CLIENT_PORT}"
 
   db:
     ports:

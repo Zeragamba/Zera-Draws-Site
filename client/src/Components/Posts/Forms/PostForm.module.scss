@@ -2,19 +2,22 @@
 
 .PostForm {
   display: grid;
-  gap: $padding-1;
+  gap: 8px;
   grid-template-areas:
-    "images images"
+    "images right"
     "left   right";
   grid-template-rows: auto 1fr;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr auto;
 }
 
 .LeftColumn,
 .RightColumn {
   display: flex;
   flex-direction: column;
-  gap: $padding-1;
+}
+
+.images {
+  grid-area: images;
 }
 
 .LeftColumn {
@@ -23,8 +26,4 @@
 
 .RightColumn {
   grid-area: right;
-}
-
-.PostActions {
-
 }

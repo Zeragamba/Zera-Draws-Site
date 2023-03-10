@@ -1,0 +1,23 @@
+import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
+
+import { cachePostData } from './GetPost'
+import { postsQueryKeys } from './PostsQueryKeys'
+import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
+import { PostData } from '../PostData'
+
+type ResponseBody = ModelResponse<'post', PostData>
+
+export const getFirstPost = (): Promise<PostData> => {
+  return ServerClient.get<ResponseBody>('/post/first')
+    .then(res => res.post)
+}
+
+export const useFirstPost$ = (): UseQueryResult<PostData> => {
+  const queryClient = useQueryClient()
+
+  return useQuery({
+    ...postsQueryKeys.first,
+    queryFn: () => getFirstPost(),
+    onSuccess: (latest) => cachePostData(queryClient, latest),
+  })
+}

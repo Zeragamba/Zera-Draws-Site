@@ -9,7 +9,7 @@ export const ViewTagPage: FC = () => {
   if (!params.tagId) return <Navigate to="/" />
 
   return (
-    <PublicLayout>
+    <PublicLayout tagId={params.tagId}>
       <TaggedPostsGallery tagId={params.tagId} />
     </PublicLayout>
   )

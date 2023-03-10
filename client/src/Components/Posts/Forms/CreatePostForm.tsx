@@ -1,30 +1,42 @@
 import { Button, Stack } from '@mui/material'
+import { addDays, setHours, setMinutes } from 'date-fns'
 import { FC } from 'react'
 
-import { noOp } from '../../../Lib/Noop'
-import { EditableImage } from '../../Images/Image'
-import { Post } from '../Post'
-import { useCreatePost } from '../PostsApi'
 import { OnPostSubmitHandler, PostForm } from './PostForm'
+import { noOp } from '../../../Lib/Noop'
+import { EditableImage } from '../../Images/ImageData'
+import { PostData } from '../PostData'
+import { useCreatePost$ } from '../PostsApi'
 
 interface CreatePostFormProps {
-  onCreated?: (post: Post) => void
+  onCreated?: (post: PostData) => void
 }
 
 export const CreatePostForm: FC<CreatePostFormProps> = ({
   onCreated = noOp,
 }) => {
-  const createPost$ = useCreatePost()
+  const createPost$ = useCreatePost$()
+
+  let scheduledDate = new Date()
+
+  if (scheduledDate.getHours() >= 8) {
+    scheduledDate = addDays(scheduledDate, 1)
+  }
+
+  scheduledDate = setHours(scheduledDate, 8)
+  scheduledDate = setMinutes(scheduledDate, 0)
+
   const post = {
     id: '',
     title: '',
-    date: '',
+    date: new Date().toISOString(),
     slug: '',
-    order: 0,
+    position: 0,
     tags: [],
     images: [],
     released: false,
     description: '',
+    scheduled: scheduledDate.toISOString(),
   }
 
   const onPostSave: OnPostSubmitHandler = async ({ post, images }) => {
@@ -33,7 +45,7 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
       .map((image) => {
         return {
           filename: image.filename,
-          order: image.order,
+          position: image.position,
           file: image.file as File,
         }
       })
@@ -44,6 +56,7 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
 
   return (
     <PostForm
+      mode="create"
       post={post}
       onSubmit={onPostSave}
       actions={(submitForm) => (

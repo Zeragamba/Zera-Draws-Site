@@ -1,15 +1,23 @@
-import { Stack } from '@mui/material'
-import { Outlet } from 'react-router-dom'
+import React from 'react'
+import { Navigate } from 'react-router-dom'
 
-import { AppNavBar } from '../UI/AppNavBar'
 import { Layout } from './Layout'
+import { PublicLayout } from './PublicLayout'
+import { AuthorizingPage } from '../User/Login/AuthenticatingPage'
+import { LoginPage } from '../User/Login/LoginPage'
+import { useCurrentUser } from '../User/UsersApi'
+
 
 export const AdminLayout: Layout = ({ children }) => {
+  const userQuery = useCurrentUser()
+
+  if (userQuery.isFetching) return <AuthorizingPage />
+  if (!userQuery.data) return <LoginPage />
+  if (!userQuery.data.admin) return <Navigate to={'/'} />
+
   return (
-    <Stack gap={1}>
-      <AppNavBar />
+    <PublicLayout>
       {children}
-      <Outlet />
-    </Stack>
+    </PublicLayout>
   )
 }

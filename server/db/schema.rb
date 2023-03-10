@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_15_161214) do
+ActiveRecord::Schema.define(version: 2023_02_26_051633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -19,18 +19,18 @@ ActiveRecord::Schema.define(version: 2022_10_15_161214) do
   create_table "galleries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "slug", null: false
-    t.integer "order", default: 0, null: false
+    t.integer "position", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_galleries_on_name"
-    t.index ["order"], name: "index_galleries_on_order"
+    t.index ["position"], name: "index_galleries_on_position"
     t.index ["slug"], name: "index_galleries_on_slug"
   end
 
-  create_table "gallery_posts", id: false, force: :cascade do |t|
+  create_table "gallery_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "gallery_id", null: false
     t.uuid "post_id", null: false
-    t.integer "order", null: false
+    t.integer "position", null: false
   end
 
   create_table "images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -40,25 +40,35 @@ ActiveRecord::Schema.define(version: 2022_10_15_161214) do
     t.integer "width"
     t.string "mime_type"
     t.string "ext"
-    t.integer "order", default: 0, null: false
+    t.integer "position", default: 0, null: false
     t.index ["post_id"], name: "index_images_on_post_id"
   end
 
+  create_table "meta", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "group", null: false
+    t.string "key", null: false
+    t.string "value", null: false
+    t.index ["group", "key"], name: "index_meta_on_group_and_key", unique: true
+    t.index ["group"], name: "index_meta_on_group"
+    t.index ["key"], name: "index_meta_on_key"
+  end
+
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.date "date", null: false
-    t.integer "order", default: 0, null: false
+    t.datetime "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.integer "position", default: 0, null: false
     t.string "title", null: false
     t.string "slug", null: false
     t.text "description"
     t.boolean "released", default: false, null: false
+    t.datetime "scheduled"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
-  create_table "posts_tags", id: false, force: :cascade do |t|
+  create_table "tagged_posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "tag_id"
     t.uuid "post_id"
-    t.index ["post_id"], name: "index_posts_tags_on_post_id"
-    t.index ["tag_id"], name: "index_posts_tags_on_tag_id"
+    t.index ["post_id"], name: "index_tagged_posts_on_post_id"
+    t.index ["tag_id"], name: "index_tagged_posts_on_tag_id"
   end
 
   create_table "tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

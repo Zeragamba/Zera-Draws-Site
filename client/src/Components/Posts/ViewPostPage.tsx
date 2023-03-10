@@ -1,24 +1,25 @@
 import { FC } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
-import { PublicLayout } from '../Layouts'
-import { Post } from './Post'
+import { PostData } from './PostData'
+import { getPostUrl } from './PostsApi'
 import { ViewPost } from './ViewPost/ViewPost'
+import { PublicLayout } from '../Layouts'
 
 export const ViewPostPage: FC = () => {
-  const { postId } = useParams()
+  const { postId, tagId, galleryId } = useParams()
   const navigate = useNavigate()
 
   if (!postId) {
     return <Navigate to={'/'} />
   }
 
-  const onPostChange = (post: Post) => {
-    navigate(`/post/${post.slug}`)
+  const onPostChange = (post: PostData) => {
+    return navigate(getPostUrl({ postId: post.slug, tagId, galleryId }))
   }
 
   return (
-    <PublicLayout>
+    <PublicLayout thinHeader tagId={tagId} galleryId={galleryId}>
       <ViewPost postId={postId} onPostChange={onPostChange} />
     </PublicLayout>
   )

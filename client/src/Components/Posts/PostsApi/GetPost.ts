@@ -1,31 +1,50 @@
 import { QueryClient, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
-import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
-import { Post } from '../Post'
 import { postsQueryKeys } from './PostsQueryKeys'
+import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
+import { PostData } from '../PostData'
 
 type Params = {
-  postId: Post['id']
+  postId: PostData['id']
+  tag?: string
+  gallery?: string
 }
 
-type ResponseBody = ModelResponse<'post', Post>
+type ResponseBody = ModelResponse<'post', PostData>
 
-export const getPost = ({ postId }: Params): Promise<Post> => {
-  return ServerClient.get<ResponseBody>(`/posts/${postId}`)
+
+export const getPost = ({ postId, tag, gallery }: Params): Promise<PostData> => {
+  return ServerClient.get<ResponseBody>(getPostUrl({ postId, tagId: tag, galleryId: gallery }))
     .then(res => res.post)
 }
 
-export const usePost = (params: Params): UseQueryResult<Post> => {
+export const usePost = (params: Params): UseQueryResult<PostData> => {
   const queryClient = useQueryClient()
 
   return useQuery({
-    queryKey: postsQueryKeys.getPost(params.postId),
+    ...postsQueryKeys.get(params.postId),
     queryFn: () => getPost(params),
-    onSuccess: (post) => setGetPostData(queryClient, post),
+    onSuccess: (post) => cachePostData(queryClient, post),
   })
 }
 
-export const setGetPostData = (queryClient: QueryClient, post: Post) => {
-  queryClient.setQueryData(postsQueryKeys.getPost(post.id), post)
-  queryClient.setQueryData(postsQueryKeys.getPost(post.slug), post)
+export const cachePostData = (queryClient: QueryClient, post: PostData) => {
+  queryClient.setQueryData(postsQueryKeys.get(post.id).queryKey, post)
+  queryClient.setQueryData(postsQueryKeys.get(post.slug).queryKey, post)
+}
+
+type PostUrlParams = {
+  postId: string
+  tagId?: string
+  galleryId?: string
+}
+
+export const getPostUrl = ({ postId, tagId, galleryId }: PostUrlParams) => {
+  if (tagId) {
+    return `/tag/${tagId}/${postId}`
+  } else if (galleryId) {
+    return `/gallery/${galleryId}/${postId}`
+  } else {
+    return `/post/${postId}`
+  }
 }

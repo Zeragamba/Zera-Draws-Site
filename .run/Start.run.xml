@@ -1,6 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Start" type="CompoundRunConfigurationType">
-    <toRun name="Development: Start" type="docker-deploy" />
-    <method v="2" />
-  </configuration>
-</component>

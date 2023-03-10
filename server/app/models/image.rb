@@ -1,7 +1,9 @@
 class Image < ApplicationRecord
   belongs_to :post
 
-  default_scope -> { order(:order).order(:filename) }
+  default_scope -> { order(:position).order(:filename) }
+
+  after_destroy -> { PictureManager.remove(self) }
 
   # @param filename [string]
   def attach(filename)
