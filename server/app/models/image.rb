@@ -3,20 +3,20 @@ class Image < ApplicationRecord
 
   default_scope -> { order(:position).order(:filename) }
 
-  after_destroy -> { PictureManager.remove(self) }
+  after_destroy -> { ImageManager.remove(self) }
 
   # @param filename [string]
   def attach(filename)
-    PictureManager.attach(self, filename)
+    ImageManager.attach(self, filename)
   end
 
   def srcs
     srcs = {
-      full: PictureManager.url_for(self, size: 'full')
+      full: ImageManager.url_for(self, size: 'full')
     }
 
-    PictureManager::SIZES.keys.map do |size|
-      srcs[size] = PictureManager.url_for(self, size: size)
+    ImageManager::SIZES.keys.map do |size|
+      srcs[size] = ImageManager.url_for(self, size: size)
     end
 
     return srcs

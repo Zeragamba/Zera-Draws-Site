@@ -1,4 +1,4 @@
-class PictureManager
+class ImageManager
   SIZES = {
     high: 3000,
     low: 1000,
@@ -14,20 +14,6 @@ class PictureManager
 
   def self.path_for(image, size: :full)
     return File.join(IMAGES_DIR, image.id, size.to_s + image.ext)
-  end
-
-  ##
-  # @return image [Image]
-  def self.import(title:, date:, position: 0, filename:)
-    image = Image.create!(
-      title: title,
-      date: date,
-      position: position,
-    )
-
-    self.attach(image, filename)
-
-    return image
   end
 
   ##
