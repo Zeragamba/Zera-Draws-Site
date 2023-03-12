@@ -1,10 +1,9 @@
 .idea/**/*.iml
 
-images/
+.volumes/
+import/
 
 vendor/
-
-.volumes/
 
 .env
 

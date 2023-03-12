@@ -14,14 +14,30 @@ class PostImporter
 
   ##
   # @return image [Image]
-  def self.import(title:, date:, position: 0, filename:, &block)
+  def self.import(title:, date:, position: 0, filename: nil, tags: [], images: [], root_dir: nil, &block)
     Post.transaction do
-      import = self.new(title: title, date: date, position: position, filename: filename)
-      block.call(import)
+      puts "#{date} #{title}"
+      import = self.new(title: title, date: date, position: position)
+
+      if filename
+        import.images << filename
+      end
+
+      if tags.length >= 1
+        import.add_tags(*tags)
+      end
+
+      if images.length >= 1
+        raise Error("root_dir is required for importing images") if root_dir.nil?
+        import.add_images(root_dir: root_dir, images: images)
+      end
+
+      block.call(import) if block
 
       post = Post.create!(title: title, date: date, position: position, released: true)
 
       import.images.each do |path|
+        puts "  #{path}"
         image = Image.create!(filename: File.basename(path), post: post)
         image.attach(path)
       end
@@ -30,20 +46,25 @@ class PostImporter
         post.tags << Tag.find_or_create(name: tag_name)
       end
 
+      puts "  Slug: #{post.slug}"
       return post
     end
   end
 
-  def initialize(title:, date:, position:, filename:)
+  def initialize(title:, date:, position:)
     @title = title
     @date = date
     @position = position
-    @images = Set.new([filename])
+    @images = Set.new()
     @tags = Set.new
     @description = ""
   end
 
   def add_tags(*tags)
     tags.each { |tag| @tags << tag }
+  end
+
+  def add_images(root_dir:, images:)
+    images.each { |image| @images << File.join(root_dir, image) }
   end
 end

@@ -28,7 +28,7 @@ class Post < ApplicationRecord
   end
 
   def build_slug
-    self.title
+    return "#{self.date.strftime("%Y-%m-%d")}-#{self.title}"
   end
 
   def next

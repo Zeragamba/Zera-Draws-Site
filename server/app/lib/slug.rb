@@ -2,8 +2,8 @@ class Slug < ActiveRecord::Type::String
   def self.to_slug(name)
     return name
       .downcase
-      .gsub(/[^\w-]/, ' ')
+      .gsub(/\W+/, ' ')
       .strip
-      .gsub(/ +/, '-')
+      .gsub(/\s+/, '-')
   end
 end

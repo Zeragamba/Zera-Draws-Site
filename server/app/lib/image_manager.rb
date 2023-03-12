@@ -71,4 +71,16 @@ class ImageManager
     magick_img.resize "#{size}x#{size}>"
     magick_img.write(dest)
   end
+
+  def self.clean_deleted
+    Dir.entries(IMAGES_DIR).each do |dir|
+      next if dir.start_with?(".")
+      path = File.join(IMAGES_DIR, dir)
+      image = Image.find_by(id: dir)
+      if image.nil?
+        puts "removing image dir #{path}"
+        FileUtils.rm_r(path)
+      end
+    end
+  end
 end
