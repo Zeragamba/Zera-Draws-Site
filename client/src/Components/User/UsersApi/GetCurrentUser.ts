@@ -11,9 +11,8 @@ export const getCurrentUser = (): Promise<UserData | null> => {
     .then(res => res.user)
     .catch(error => {
       if (isServerApiError(error)) {
-        if (error.response.status === 401) {
-          return null
-        }
+        if (error.response.status === 401) return null
+        if (error.response.status === 404) return null
       }
 
       throw error

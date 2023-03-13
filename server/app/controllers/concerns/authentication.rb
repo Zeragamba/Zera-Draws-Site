@@ -21,7 +21,7 @@ module Authentication
         raise AuthError, "Missing Authorization header"
       when "Bearer"
         token = AuthToken.decode(auth_value)
-        user = User.find(token["usr"])
+        user = User.find_by(id: token["usr"])
       else
         raise AuthError, "Invalid authorization header"
     end
