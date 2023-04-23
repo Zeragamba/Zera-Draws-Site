@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_26_051633) do
+ActiveRecord::Schema.define(version: 2023_04_22_235026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -91,4 +91,14 @@ ActiveRecord::Schema.define(version: 2023_02_26_051633) do
     t.index "lower((username)::text)", name: "index_users_username", unique: true
   end
 
+  create_table "views", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "timestamp", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.uuid "viewer_id", null: false
+    t.uuid "post_id"
+    t.index ["post_id"], name: "index_views_on_post_id"
+    t.index ["timestamp"], name: "index_views_on_timestamp"
+    t.index ["viewer_id"], name: "index_views_on_viewer_id"
+  end
+
+  add_foreign_key "views", "posts"
 end

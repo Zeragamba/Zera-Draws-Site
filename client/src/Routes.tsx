@@ -2,7 +2,7 @@ import React from 'react'
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import { AboutPage } from './Components/About/AboutPage'
-import { AdminPage } from './Components/Admin/AdminPage'
+import { AdminLayout } from './Components/Admin/AdminLayout'
 import { AdminRoutes } from './Components/Admin/Routes'
 import { ArchivePage } from './Components/Archive/ArchivePage'
 import { HomePage } from './Components/HomePage'
@@ -18,7 +18,7 @@ export const routes: RouteObject[] = [
   { path: 'about', element: <AboutPage /> },
   { path: 'latest', element: <LatestPostPage /> },
 
-  { path: 'admin', element: <AdminPage />, children: AdminRoutes },
+  { path: 'admin', element: <AdminLayout />, children: AdminRoutes },
 
   { path: 'archive', element: <ArchivePage /> },
 

@@ -7,12 +7,16 @@ Rails.application.routes.draw do
   get '/meta/:group' => 'meta#list'
   put '/meta/:group' => 'meta#save'
 
+  get '/metrics/views' => 'metrics#export_views'
+
   get '/posts' => 'posts#index'
   post '/posts' => 'posts#upload'
   get '/posts/recent' => 'posts#recent'
   get '/post/latest' => 'posts#latest'
   get '/post/first' => 'posts#first'
   get '/post/:post_id' => 'posts#view'
+  get '/post/:post_id/views' => 'views#get_views'
+  post '/post/:post_id/views' => 'views#add_view'
   patch '/post/:post_id' => 'posts#update'
   delete '/post/:post_id' => 'posts#destroy'
 

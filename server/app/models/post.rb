@@ -4,6 +4,7 @@ class Post < ApplicationRecord
 
   has_many :gallery_posts, dependent: :destroy
   has_many :tagged_posts, dependent: :destroy
+  has_many :views, dependent: :destroy
 
   has_many :tags, :through => :tagged_posts
   eager_load :tags
@@ -51,6 +52,15 @@ class Post < ApplicationRecord
     end
 
     self.save!
+  end
+
+  def num_views(type = :all)
+    case type
+      when :all
+        return self.views.count
+      when :unique
+        return self.views.distinct.count(:viewer_id)
+    end
   end
 
   def add_tags(*tag_names)

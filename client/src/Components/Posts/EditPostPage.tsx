@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
 import { EditPostForm } from './Forms/EditPostForm'
-import { AdminLayout } from '../Layouts'
+import { AdminLayout } from '../Admin/AdminLayout'
 
 export const EditPostPage: FC = () => {
   const navigate = useNavigate()

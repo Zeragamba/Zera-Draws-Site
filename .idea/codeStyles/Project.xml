@@ -61,19 +61,23 @@
       <option name="ENFORCE_QUOTES_ON_FORMAT" value="true" />
     </ScssCodeStyleSettings>
     <SqlCodeStyleSettings version="6">
+      <option name="DISABLE_FORMATTING" value="true" />
       <option name="KEYWORD_CASE" value="2" />
       <option name="TYPE_CASE" value="3" />
       <option name="CUSTOM_TYPE_CASE" value="3" />
       <option name="ALIAS_CASE" value="4" />
-      <option name="QUERY_EL_LINE" value="101" />
+      <option name="QUERY_EL_LINE" value="0" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
       <option name="QUERY_ALIGN_ELEMENTS" value="false" />
+      <option name="SUBQUERY_OPENING" value="4" />
       <option name="SUBQUERY_CONTENT" value="4" />
-      <option name="SUBQUERY_CLOSING" value="4" />
+      <option name="SUBQUERY_CLOSING" value="3" />
       <option name="INSERT_INTO_NL" value="1" />
       <option name="INSERT_CONTENT" value="4" />
       <option name="SET_EL_LINE" value="101" />
+      <option name="SET_EL_WRAP" value="2" />
+      <option name="SET_EL_COMMA" value="2" />
       <option name="SET_ALIGN_EQUAL_SIGN" value="false" />
       <option name="SELECT_ALIGN_AS" value="false" />
       <option name="FROM_PLACE_ON" value="21" />
@@ -81,6 +85,9 @@
       <option name="IMP_DECLARE_ALIGN_TYPE" value="false" />
       <option name="IMP_DECLARE_ALIGN_EQ" value="false" />
       <option name="EXPR_BINARY_OP_ALIGN" value="false" />
+      <option name="EXPR_CASE_THEN_WRAP" value="true" />
+      <option name="EXPR_CASE_END" value="1" />
+      <option name="EXPR_CASE_KEEP_NL_AFTER_THEN" value="true" />
     </SqlCodeStyleSettings>
     <SybaseCodeStyleSettings version="6">
       <option name="USE_GENERIC_STYLE" value="true" />
@@ -1114,6 +1121,11 @@
           </section>
         </rules>
       </arrangement>
+    </codeStyleSettings>
+    <codeStyleSettings language="SQL">
+      <indentOptions>
+        <option name="CONTINUATION_INDENT_SIZE" value="4" />
+      </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="TypeScript">
       <option name="ALIGN_MULTILINE_PARAMETERS" value="false" />
