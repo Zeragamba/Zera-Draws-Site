@@ -12,6 +12,7 @@ import { useHotkey } from '../../../Lib/Hooks/UseHotkey'
 import { AsyncImg } from '../../UI/AsyncImg'
 import { Text } from '../../UI/Text'
 import { useCurrentUser } from '../../User/UsersApi'
+import { useRecordView } from '../../Views/ViewHooks'
 import { PostData } from '../PostData'
 import { PostPreloader } from '../PostPreloader'
 import { useNextPost, usePost, usePrevPost } from '../PostsApi'
@@ -28,6 +29,7 @@ export const ViewPost: FC<ViewPostProps> = ({
   postId,
   onPostChange,
 }) => {
+  const recordView = useRecordView()
   const navigate = useNavigate()
   const { data: currentUser } = useCurrentUser()
   const [ activeImageIndex, setActiveImageIndex ] = useState<number>(0)
@@ -84,6 +86,7 @@ export const ViewPost: FC<ViewPostProps> = ({
   } else if (!post) {
     return <Paper>Unable to load post</Paper>
   }
+  recordView(post.id)
 
   // Ensure the active og-injector is in range. It could be out of range due to the postId changing
   // and the og-injector not being updated yet

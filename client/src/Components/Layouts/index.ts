@@ -1,2 +1,2 @@
-export * from './AdminLayout'
+export * from './Layout'
 export * from './PublicLayout'

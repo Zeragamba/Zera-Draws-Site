@@ -1,5 +1,7 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
+import { ViewsApi } from '../../Views/ViewsApi'
+
 type NextPostParams = { gallery?: string; tag?: string }
 type PrevPostParams = { gallery?: string; tag?: string }
 
@@ -13,6 +15,10 @@ export const postsQueryKeys = createQueryKeys('posts', {
     contextQueries: {
       next: (params: NextPostParams) => [ params ],
       prev: (params: PrevPostParams) => [ params ],
+      views: {
+        queryKey: null,
+        queryFn: () => ViewsApi.postViews({ postId }),
+      },
     },
   }),
 })

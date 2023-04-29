@@ -8,6 +8,8 @@ import { PostData } from './PostData'
 import { ScheduledChip } from './ViewPost/ScheduledChip'
 import { TagChip } from '../Tags/TagChip'
 import { TagList } from '../Tags/TagList'
+import { useIsAdmin } from '../User/UsersApi'
+import { ViewCounter } from '../Views/ViewCounter'
 
 interface PostTagsProps {
   post: PostData
@@ -16,8 +18,14 @@ interface PostTagsProps {
 export const PostTags: FC<PostTagsProps> = ({
   post,
 }) => {
+  const isAdmin = useIsAdmin()
+
   return (
     <Stack direction="row" gap={1} flexWrap="wrap">
+      {isAdmin && (
+        <ViewCounter postId={post.id} />
+      )}
+
       {!post.released && (
         <TagChip icon={<FontAwesomeIcon icon={faEyeSlash} />} label="Private" />
       )}
