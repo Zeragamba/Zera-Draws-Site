@@ -91,7 +91,7 @@ export const MetricsPage: FC = () => {
         </Stack>
       </Paper>
 
-      <Paper sx={{ padding: 2 }}>
+      <Paper sx={{ padding: 2, height: 600 }}>
         {metrics$.isLoading && (
           <Spinner />
         )}
@@ -99,7 +99,7 @@ export const MetricsPage: FC = () => {
           <div>{String(metrics$.error)}</div>
         )}
         {metrics$.data && (
-          <DataGrid columns={columns} rows={metrics$.data} autoHeight density={'compact'} />
+          <DataGrid columns={columns} rows={metrics$.data} density={'compact'} />
         )}
       </Paper>
     </Stack>
