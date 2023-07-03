@@ -1,4 +1,4 @@
-import { Menu, MenuItem } from '@mui/material'
+import { Box, Menu, MenuItem, TextField } from '@mui/material'
 import React, { FC, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,10 +10,22 @@ import { useIsMobile } from '../ScreenSize'
 export const TagsMenu: FC = () => {
   const isMobile = useIsMobile()
   const navigate = useNavigate()
-  const { data: tags } = useAllTags$()
+  const allTags$ = useAllTags$()
   const [ menuOpen, setMenuOpen ] = useState<boolean>(false)
+  const [ filterText, setFilterText ] = useState<string>('')
 
   const anchorEl = useRef<HTMLAnchorElement | null>(null)
+
+  const activeTags = allTags$.data?.filter(tag => tag.num_posts >= 1) ?? []
+  const filteredTags = activeTags
+    .filter(tag => {
+      if (filterText) {
+        return tag.name.includes(filterText)
+      } else {
+        return tag.num_posts >= 10
+      }
+    })
+
 
   const onTagClick = (tag: TagData) => {
     setMenuOpen(false)
@@ -29,6 +41,9 @@ export const TagsMenu: FC = () => {
         anchorEl={anchorEl.current}
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
+        TransitionProps={{
+          onExited: () => setFilterText(''),
+        }}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'center',
@@ -44,17 +59,30 @@ export const TagsMenu: FC = () => {
           },
         }}
       >
-        {!tags && <MenuItem disabled>Loading...</MenuItem>}
-        {(tags && tags?.length === 0) && <MenuItem disabled>None</MenuItem>}
-        {(tags && tags.length >= 1) && (
-          tags
-            .filter(tag => tag.num_posts >= 1)
-            .map(tag => (
-              <MenuItem key={tag.id} onClick={() => onTagClick(tag)}>
-                {tag.name}
-              </MenuItem>
-            ))
+        {(activeTags.length >= 15) && (
+          <MenuItem onKeyDown={(e) => e.stopPropagation()}>
+            <TextField
+              fullWidth
+              size={'small'}
+              placeholder={'Search...'}
+              value={filterText}
+              onChange={(event) => setFilterText(event.target.value)}
+            />
+          </MenuItem>
         )}
+
+        {allTags$.isLoading && <MenuItem disabled>Loading...</MenuItem>}
+
+        {filteredTags.map(tag => (
+          <MenuItem
+            key={tag.id}
+            onClick={() => onTagClick(tag)}
+            sx={{ justifyContent: 'space-between', gap: 2 }}
+          >
+            <Box>{tag.name}</Box>
+            <Box>{tag.num_posts}</Box>
+          </MenuItem>
+        ))}
       </Menu>
     </>
   )
