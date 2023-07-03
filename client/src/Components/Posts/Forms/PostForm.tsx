@@ -136,7 +136,7 @@ export const PostForm: FC<PostFormProps> = ({
                       label="Date"
                       showDaysOutsideCurrentMonth
                       value={parseISO(fieldProps.field.value || '')}
-                      onChange={(date) => fieldProps.field.onChange(date?.toISOString() || null)}
+                      onChange={(date) => fieldProps.field.onChange(date?.toISOString() || '')}
                       slotProps={{
                         textField: { size: 'small' },
                       }}
