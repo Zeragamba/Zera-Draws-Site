@@ -1,16 +1,19 @@
 {
-
   "name": "Zeragamba Draws",
   "short_name": "Zeragamba",
+  "theme_color": "#cc3838",
+  "background_color": "#424242",
+  "description": "Gallery Site for Zeragamba",
+  "dir": "auto",
+  "lang": "en-CA",
+  "display": "standalone",
+  "start_url": ".",
+  "scope": "/",
   "icons": [
     {
       "src": "favicon.png",
       "type": "image/png",
       "sizes": "1296x1296"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  ]
 }
