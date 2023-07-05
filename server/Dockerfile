@@ -1,4 +1,4 @@
-FROM ruby:3.2.0
+FROM ruby:3.2.2
 RUN apt install imagemagick
 
 # throw errors if Gemfile has been modified since Gemfile.lock

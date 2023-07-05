@@ -7,7 +7,5 @@ class CreateUsers < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-
-    User.create(username: "Zeragamba", email: "zera@zeragamba.ca", password: ENV.fetch("ADMIN_PASS"))
   end
 end
