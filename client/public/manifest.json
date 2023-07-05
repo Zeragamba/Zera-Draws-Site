@@ -4,7 +4,7 @@
   "short_name": "Zeragamba",
   "icons": [
     {
-      "src": "avatar.png",
+      "src": "avatar.jpg",
       "type": "image/png",
       "sizes": "138x451"
     }

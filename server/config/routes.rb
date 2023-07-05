@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get '/' => 'home#index'
+  get '/status' => 'home#index'
 
   post '/login' => 'users#login'
   get '/user/me' => 'users#view_current'
