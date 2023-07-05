@@ -12,11 +12,14 @@ git pull
 
 cd og-injector
   echo "=== Updating OG Injector ==="
+  nvm use
   yarn install
 cd ..
 
 cd server
   echo "=== Updating server ==="
+  rvm use
+
   bundle
   bundle exec whenever --update-crontab
 
@@ -26,6 +29,7 @@ cd ..
 
 cd client
   echo "=== Updating client ==="
+  nvm use
   yarn install
 
   echo "=== Building client ==="
