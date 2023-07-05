@@ -1,12 +1,15 @@
 import axios, { AxiosRequestConfig, Method } from 'axios'
 import { SERVER_URL } from '../config'
 import { PostData } from './models/PostData'
+import { logger } from './Logger'
 
 const apiClient = axios.create({
   baseURL: SERVER_URL,
 })
 
 function request<Res>(method: Method, path: string, config: AxiosRequestConfig = {}): Promise<Res> {
+  logger.info(`[ServerApi] ${method} ${path}`)
+
   return apiClient.request<Res>({ method, url: path, ...config })
     .then(res => res.data)
 }

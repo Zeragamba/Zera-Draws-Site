@@ -2,6 +2,7 @@ import { CLIENT_URL } from '../config'
 import { PostData } from './models/PostData'
 import { getPost } from './ServerApi'
 import { getAppManifest } from './Client'
+import { logger } from './Logger'
 
 type OpenGraphData = {
   type?: string
@@ -18,6 +19,8 @@ type OpenGraphData = {
 
 export const injectPostMeta = async (html: string, postId: PostData['id']) => {
   const post = await getPost(postId)
+  logger.info(`Injecting Post data: ${JSON.stringify(post)}`)
+
   return await injectMeta(html, {
     title: post.title,
     description: post.description,
@@ -32,6 +35,7 @@ export const injectPostMeta = async (html: string, postId: PostData['id']) => {
 }
 
 export const injectMeta = async (html: string, metadata: OpenGraphData): Promise<string> => {
+  logger.info(`Injecting OG data: ${JSON.stringify(metadata)}`)
   if (!html.includes('</head>')) throw new Error('</head> not found')
 
   const manifest = await getAppManifest()

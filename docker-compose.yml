@@ -23,7 +23,7 @@ services:
     depends_on:
       - db
     environment:
-      RAILS_ENV: production
+      RAILS_ENV: ${RAILS_ENV}
       SERVER_URL: "https://${NGINX_HOST}/api"
       IMAGES_URL: "https://${NGINX_HOST}/images"
       DB_HOST: db
@@ -37,7 +37,6 @@ services:
       TOKEN_SECRET: "${TOKEN_SECRET}"
       IMAGES_DIR: "/opt/images"
       CLIENT_DIR: "/opt/client"
-      REACT_APP_ENV: production
 
   client:
     profiles: [ "build" ]
@@ -46,6 +45,8 @@ services:
     volumes:
       - ./.volumes/client:/opt/client/build
     environment:
+      NODE_ENV: ${NODE_ENV}
+      REACT_APP_ENV: ${REACT_APP_ENV}
       REACT_APP_SERVER_URL: "https://${NGINX_HOST}/api"
     command: yarn build
 
@@ -56,6 +57,7 @@ services:
       - ./og-injector:/opt/og-injector
       - ./.volumes/client:/opt/client
     environment:
+      NODE_ENV: ${NODE_ENV}
       SERVER_URL: "http://server:3000"
       CLIENT_URL: "https://${NGINX_HOST}"
       CLIENT_DIR: "/opt/client"
