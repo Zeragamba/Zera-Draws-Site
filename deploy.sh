@@ -11,29 +11,17 @@ echo "=== Updating repo ==="
 git pull
 
 cd og-injector
-  echo "=== Stopping OG Injector ==="
-  sudo systemctl stop og-injector
-
   echo "=== Updating OG Injector ==="
   yarn install
-
-  echo "=== Starting OG Injector ==="
-  sudo systemctl start og-injector
 cd ..
 
 cd server
-  echo "=== Stopping server ==="
-  sudo systemctl stop rails
-
   echo "=== Updating server ==="
   bundle
   bundle exec whenever --update-crontab
 
   echo "=== Migrating Database ==="
   rails db:migrate
-
-  echo "=== Starting server ==="
-  sudo systemctl start rails
 cd ..
 
 cd client
@@ -43,6 +31,9 @@ cd client
   echo "=== Building client ==="
   yarn build
 cd ..
+
+echo "=== Restarting Passenger ==="
+passenger-config restart-app $(pwd)
 
 rm ./offline.html
 echo "=== All Done ==="
