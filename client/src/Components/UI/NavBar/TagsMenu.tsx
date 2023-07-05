@@ -15,17 +15,19 @@ export const TagsMenu: FC = () => {
   const [ filterText, setFilterText ] = useState<string>('')
 
   const anchorEl = useRef<HTMLAnchorElement | null>(null)
+  const MIN_TAGS_FOR_SEARCH = 15
 
   const activeTags = allTags$.data?.filter(tag => tag.num_posts >= 1) ?? []
   const filteredTags = activeTags
     .filter(tag => {
       if (filterText) {
         return tag.name.includes(filterText)
-      } else {
+      } else if (activeTags.length >= MIN_TAGS_FOR_SEARCH) {
         return tag.num_posts >= 10
+      } else {
+        return true
       }
     })
-
 
   const onTagClick = (tag: TagData) => {
     setMenuOpen(false)
@@ -59,7 +61,7 @@ export const TagsMenu: FC = () => {
           },
         }}
       >
-        {(activeTags.length >= 15) && (
+        {(activeTags.length >= MIN_TAGS_FOR_SEARCH) && (
           <MenuItem onKeyDown={(e) => e.stopPropagation()}>
             <TextField
               fullWidth
