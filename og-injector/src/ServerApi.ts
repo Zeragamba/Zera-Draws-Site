@@ -8,7 +8,7 @@ const apiClient = axios.create({
 })
 
 function request<Res>(method: Method, path: string, config: AxiosRequestConfig = {}): Promise<Res> {
-  logger.info(`[ServerApi] ${method} ${path}`)
+  logger.info(`ServerAPI: ${method} ${SERVER_URL}${path}`)
 
   return apiClient.request<Res>({ method, url: path, ...config })
     .then(res => res.data)

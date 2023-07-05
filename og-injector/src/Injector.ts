@@ -35,52 +35,58 @@ export const injectPostMeta = async (html: string, postId: PostData['id']) => {
 }
 
 export const injectMeta = async (html: string, metadata: OpenGraphData): Promise<string> => {
-  logger.info(`Injecting OG data: ${JSON.stringify(metadata)}`)
-  if (!html.includes('</head>')) throw new Error('</head> not found')
+  try {
 
-  const manifest = await getAppManifest()
-  let metaTags: string[] = []
+    logger.info(`Injecting OG data: ${JSON.stringify(metadata)}`)
+    if (!html.includes('</head>')) throw new Error('</head> not found')
 
-  if (metadata.title) {
-    metadata.title = `${manifest.name} | ${metadata.title}`
-  } else {
-    metadata.title = manifest.name
-  }
+    const manifest = await getAppManifest()
+    let metaTags: string[] = []
 
-  metadata.description ||= manifest.description
-  metadata.url ||= CLIENT_URL
+    if (metadata.title) {
+      metadata.title = `${manifest.name} | ${metadata.title}`
+    } else {
+      metadata.title = manifest.name
+    }
 
-  metadata.title = trimString(metadata.title, 70)
-  metadata.description = trimString(metadata.description, 200)
+    metadata.description ||= manifest.description
+    metadata.url ||= CLIENT_URL
 
-  metaTags = [
-    ...metaTags,
-    `<meta name="og:type" content="${metadata.type || 'website'}"/>`,
+    metadata.title = trimString(metadata.title, 70)
+    metadata.description = trimString(metadata.description, 200)
 
-    `<meta name="og:url" content="${metadata.url}"/>`,
-    `<meta name="og:title" content="${metadata.title}"/>`,
-    `<meta name="og:description" content="${metadata.description}"/>`,
-
-    `<meta name="twitter:card" content="${metadata.image ? 'summary_large_image' : 'summary'}"/>`,
-    `<meta name="twitter:url" content="${metadata.url}"/>`,
-    `<meta name="twitter:title" content="${metadata.title}"/>`,
-    `<meta name="twitter:description" content="${metadata.description}"/>`,
-  ]
-
-  if (metadata.image) {
     metaTags = [
       ...metaTags,
-      `<meta name="og:image" content="${metadata.image.url}"/>`,
-      `<meta name="og:image:type" content="${metadata.image.type}"/>`,
-      `<meta name="og:image:height" content="${metadata.image.height}"/>`,
-      `<meta name="og:image:width" content="${metadata.image.width}"/>`,
+      `<meta name="og:type" content="${metadata.type || 'website'}"/>`,
 
-      `<meta name="twitter:image" content="${metadata.image.url}"/>`,
+      `<meta name="og:url" content="${metadata.url}"/>`,
+      `<meta name="og:title" content="${metadata.title}"/>`,
+      `<meta name="og:description" content="${metadata.description}"/>`,
+
+      `<meta name="twitter:card" content="${metadata.image ? 'summary_large_image' : 'summary'}"/>`,
+      `<meta name="twitter:url" content="${metadata.url}"/>`,
+      `<meta name="twitter:title" content="${metadata.title}"/>`,
+      `<meta name="twitter:description" content="${metadata.description}"/>`,
     ]
-  }
 
-  logger.info(`Injecting meta tags`, { tags: metaTags })
-  return html.replace('</head>', `${metaTags.join('')} </head>`)
+    if (metadata.image) {
+      metaTags = [
+        ...metaTags,
+        `<meta name="og:image" content="${metadata.image.url}"/>`,
+        `<meta name="og:image:type" content="${metadata.image.type}"/>`,
+        `<meta name="og:image:height" content="${metadata.image.height}"/>`,
+        `<meta name="og:image:width" content="${metadata.image.width}"/>`,
+
+        `<meta name="twitter:image" content="${metadata.image.url}"/>`,
+      ]
+    }
+
+    logger.info(`Injecting meta tags`, { tags: metaTags })
+    return html.replace('</head>', `${metaTags.join('')} </head>`)
+  } catch (err) {
+    logger.error(`Error injecting tags:`, { err })
+    return html
+  }
 }
 
 function trimString(str: string, maxLength: number) {

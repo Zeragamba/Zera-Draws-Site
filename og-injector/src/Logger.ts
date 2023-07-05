@@ -13,8 +13,17 @@ const logfile = path.join(LOG_DIR, `${NODE_ENV}.log`)
 export const logger = winston.createLogger({
   transports: [
     new winston.transports.Console({
-      format: winston.format.simple(),
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple(),
+      ),
     }),
-    new DailyRotateFile({ filename: logfile }),
+    new DailyRotateFile({
+      filename: logfile,
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.json(),
+      ),
+    }),
   ],
 })
