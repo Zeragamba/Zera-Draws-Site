@@ -34,7 +34,7 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
     position: 0,
     tags: [],
     images: [],
-    released: false,
+    released: true,
     description: '',
     scheduled: scheduledDate.toISOString(),
   }
