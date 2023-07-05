@@ -55,6 +55,7 @@ export const injectMeta = async (html: string, metadata: OpenGraphData): Promise
     metadata.title = trimString(metadata.title, 70)
     metadata.description = trimString(metadata.description, 200)
 
+    logger.info(`Injecting base meta tags`)
     metaTags = [
       ...metaTags,
       `<meta name="og:type" content="${metadata.type || 'website'}"/>`,
@@ -70,6 +71,7 @@ export const injectMeta = async (html: string, metadata: OpenGraphData): Promise
     ]
 
     if (metadata.image) {
+      logger.info(`Injecting image meta tags`)
       metaTags = [
         ...metaTags,
         `<meta name="og:image" content="${metadata.image.url}"/>`,
@@ -84,7 +86,7 @@ export const injectMeta = async (html: string, metadata: OpenGraphData): Promise
     logger.info(`Injecting meta tags`, { tags: metaTags })
     return html.replace('</head>', `${metaTags.join('')} </head>`)
   } catch (err) {
-    logger.error(`Error injecting tags:`, { err })
+    logger.error(`Error injecting tags`, { err })
     return html
   }
 }
