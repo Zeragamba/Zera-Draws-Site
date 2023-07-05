@@ -43,15 +43,18 @@ export const injectMeta = async (html: string, metadata: OpenGraphData): Promise
     const manifest = await getAppManifest()
     let metaTags: string[] = []
 
+    logger.info(`Updating metadata`)
     if (metadata.title) {
       metadata.title = `${manifest.name} | ${metadata.title}`
     } else {
       metadata.title = manifest.name
     }
 
+    logger.info(`Applying defaults`)
     metadata.description ||= manifest.description
     metadata.url ||= CLIENT_URL
 
+    logger.info(`Trimming base meta tags`)
     metadata.title = trimString(metadata.title, 70)
     metadata.description = trimString(metadata.description, 200)
 

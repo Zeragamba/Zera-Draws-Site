@@ -61,7 +61,6 @@ services:
       SERVER_URL: "http://server:3000"
       CLIENT_URL: "https://${NGINX_HOST}"
       CLIENT_DIR: "/opt/client"
-    command: yarn start
 
   db:
     image: postgres:15
