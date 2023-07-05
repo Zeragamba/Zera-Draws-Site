@@ -38,7 +38,7 @@ app.get('*', async (req, res) => {
 })
 
 app.use(async (err, req, res, next) => {
-  logger.info('Error in Injector', { err })
+  logger.info('Error in Injector', { err: String(err) })
 
   if (res.headersSent) return next(err)
 
