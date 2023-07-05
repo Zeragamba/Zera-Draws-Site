@@ -79,7 +79,8 @@ export const injectMeta = async (html: string, metadata: OpenGraphData): Promise
     ]
   }
 
-  return html.replace('</head>', `${metaTags.join('')}</head>`)
+  logger.info(`Injecting meta tags`, { tags: metaTags })
+  return html.replace('</head>', `${metaTags.join('')} </head>`)
 }
 
 function trimString(str: string, maxLength: number) {

@@ -34,13 +34,11 @@ app.get('*', async (req, res) => {
   logger.info('Request received')
   const indexHtml = await getIndexHtml()
   const updatedHtml = await injectMeta(indexHtml, {})
-
   res.send(updatedHtml)
 })
 
 app.use(async (err, req, res, next) => {
-  logger.info('Error while trying to inject data')
-  logger.error(err)
+  logger.info('Error while trying to inject data', { err })
 
   if (res.headersSent) return next(err)
 
