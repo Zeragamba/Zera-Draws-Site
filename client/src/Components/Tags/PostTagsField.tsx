@@ -4,8 +4,7 @@ import { Autocomplete, createFilterOptions, Stack, TextField } from '@mui/materi
 import React, { FC } from 'react'
 
 import { TagData } from './TagData'
-import { useAllTags$ } from './TagsApi'
-import { useCreateTag$ } from './TagsApi/CreateTag'
+import { useAllTags$, useCreateTag$ } from './TagsApi'
 import { byTagName } from './TagSorters'
 import { formatSlug } from '../../Lib/FilenameUtils'
 

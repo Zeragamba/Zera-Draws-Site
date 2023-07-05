@@ -1,12 +1,12 @@
 import { FC } from 'react'
 
-import { TaggedPostsGallery } from './Gallery/Galleries/TaggedPostsGallery'
+import { AllPostsGallery } from './Gallery/Galleries/AllPostsGallery'
 import { PublicLayout } from './Layouts'
 
 export const HomePage: FC = () => {
   return (
     <PublicLayout>
-      <TaggedPostsGallery tagId="featured" />
+      <AllPostsGallery />
     </PublicLayout>
   )
 }

@@ -200,8 +200,8 @@ export const PostForm: FC<PostFormProps> = ({
                 name={'tags'}
                 render={({ field }) => (
                   <>
-                    <SelectedTagList tags={field.value} onDelete={onTagRemoved} />
                     <PostTagsField selected={field.value} onChange={field.onChange} />
+                    <SelectedTagList tags={field.value} onDelete={onTagRemoved} />
                   </>
                 )}
               />
