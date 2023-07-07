@@ -1,8 +1,8 @@
 import { Box, FormHelperText, Grid, Paper, Stack, Typography } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { DatePicker } from '@mui/x-date-pickers'
-import { parseISO } from 'date-fns'
-import React, { FC, FormEventHandler, ReactNode, useEffect } from 'react'
+import * as dateFns from 'date-fns'
+import { FC, FormEventHandler, ReactNode, useEffect } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 
 import { DeletePostButton } from './DeletePostButton'
@@ -46,13 +46,19 @@ export const PostForm: FC<PostFormProps> = ({
   const form = useForm<PostData>({ defaultValues: post })
   const imageManager = useImageManager({ images: post.images })
 
+  function formatPostSlug({ date, title }: { date?: string; title?: string }): string {
+    date = dateFns.format(dateFns.parseISO(date || ''), 'yyyyMMdd')
+    return formatSlug(`${date} ${title || ''}`)
+  }
+
   useEffect(() => {
     const subscription = form.watch((post, { name }) => {
       switch (name) {
         case 'title':
+        case 'date':
           if (form.formState.dirtyFields.slug) return
           if (mode !== 'create') return
-          form.setValue('slug', formatSlug(post.title || ''))
+          form.setValue('slug', formatPostSlug(post))
           break
       }
     })
@@ -65,13 +71,9 @@ export const PostForm: FC<PostFormProps> = ({
 
     if (imageManager.images.length === 0) {
       const { date, title } = parseFilename(added.filename)
-
       form.resetField('title', { defaultValue: formatTitle(title) })
       form.resetField('date', { defaultValue: date })
-
-      if (mode !== 'create') {
-        form.resetField('slug', { defaultValue: formatSlug(title) })
-      }
+      form.resetField('slug', { defaultValue: formatPostSlug({ date, title }) })
     }
   }
 
@@ -135,7 +137,7 @@ export const PostForm: FC<PostFormProps> = ({
                     <DatePicker
                       label="Date"
                       showDaysOutsideCurrentMonth
-                      value={parseISO(fieldProps.field.value || '')}
+                      value={dateFns.parseISO(fieldProps.field.value || '')}
                       onChange={(date) => fieldProps.field.onChange(date?.toISOString() || '')}
                       slotProps={{
                         textField: { size: 'small' },

@@ -86,6 +86,7 @@ export const ViewPost: FC<ViewPostProps> = ({
   } else if (!post) {
     return <Paper>Unable to load post</Paper>
   }
+
   recordView(post.id)
 
   // Ensure the active og-injector is in range. It could be out of range due to the postId changing
@@ -113,30 +114,30 @@ export const ViewPost: FC<ViewPostProps> = ({
         />
 
         <Paper sx={{ padding: 2 }}>
-          <Stack direction="row" justifyContent="space-between">
-            <Text variant="h2">{post.title}</Text>
+          <Stack gap={2}>
+            <Stack direction="row" justifyContent="space-between">
+              <Text variant="h2">{post.title}</Text>
 
-            {(post && currentUser?.admin) && (
-              <Box>
-                <Button
-                  component="a"
-                  variant="contained"
-                  href={`/post/${post.id}/edit`}
-                  onClick={onEditPost}
-                  endIcon={<FontAwesomeIcon icon={faEdit} />}
-                  size="small"
-                >
-                  Edit
-                </Button>
-              </Box>
-            )}
-          </Stack>
+              {(post && currentUser?.admin) && (
+                <Box>
+                  <Button
+                    component="a"
+                    variant="contained"
+                    href={`/post/${post.id}/edit`}
+                    onClick={onEditPost}
+                    endIcon={<FontAwesomeIcon icon={faEdit} />}
+                    size="small"
+                  >
+                    Edit
+                  </Button>
+                </Box>
+              )}
+            </Stack>
 
-          <Box sx={{ flexGrow: 1 }}>
             <Stack direction="row" gap={2} alignItems="center" flexWrap="wrap">
               <PostTags post={post} />
             </Stack>
-          </Box>
+          </Stack>
         </Paper>
 
         {nextPost && (<PostPreloader postId={nextPost.id} imageSize="high" />)}

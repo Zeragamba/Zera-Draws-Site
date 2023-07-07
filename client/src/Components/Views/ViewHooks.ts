@@ -29,6 +29,8 @@ async function addView(postId: PostData['id']): Promise<void> {
   await ViewsApi.addView({ postId, viewerId })
 }
 
-export function useRecordView() {
-  return (postId: PostData['id']) => addView(postId).catch(noop)
+export type UseRecordViewReturn = (postId: PostData['id']) => void
+
+export function useRecordView(): UseRecordViewReturn {
+  return (postId) => addView(postId).catch(noop)
 }
