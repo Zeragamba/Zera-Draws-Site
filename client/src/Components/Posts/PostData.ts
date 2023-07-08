@@ -28,6 +28,10 @@ export enum EditablePostFields {
 export type EditablePost = Pick<PostData, EditablePostFields>
 
 export function postToFormData(post: Partial<EditablePost>): FormData {
+  if (post.released) {
+    post = { ...post, scheduled: null }
+  }
+
   const formData = new FormData()
 
   const editableFields: string[] = Object.values(EditablePostFields)

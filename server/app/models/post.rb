@@ -23,7 +23,6 @@ class Post < ApplicationRecord
 
   def self.release_scheduled
     self
-      .where(released: false)
       .where("scheduled <= NOW()")
       .update_all(released: true, scheduled: nil)
   end
