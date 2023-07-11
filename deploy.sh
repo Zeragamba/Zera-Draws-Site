@@ -20,11 +20,14 @@ cd server
   echo "=== Updating server ==="
   rvm use
 
-  bundle
-  bundle exec whenever --update-crontab
+  bundle config set --local deployment 'true'
+  bundle config set --local without 'development test'
+  bundle install
 
   echo "=== Migrating Database ==="
   rails db:migrate
+
+  bundle exec whenever --update-crontab
 cd ..
 
 cd client
