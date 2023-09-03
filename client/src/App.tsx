@@ -11,6 +11,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import backgroundImage from './Assets/dark_geometric.png'
 import { AgeGateProvider } from './Components/User/AgeGate'
 import { Config } from './Config'
+import { ErrorHandlerProvider } from './Lib/ErrorHandler'
 import { queryClient } from './Lib/QueryClient'
 import { darkTheme } from './Lib/Theme'
 import { routes } from './Routes'
@@ -29,15 +30,17 @@ export const App: FC = () => {
       <ThemeProvider theme={darkTheme}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <QueryClientProvider client={queryClient}>
-            <Box id="app-root" sx={AppStyles}>
-              <DndProvider backend={HTML5Backend}>
-                <RouterProvider router={createBrowserRouter(routes)} />
-              </DndProvider>
-            </Box>
+            <DndProvider backend={HTML5Backend}>
+              <ErrorHandlerProvider>
+                <Box id="app-root" sx={AppStyles}>
+                  <RouterProvider router={createBrowserRouter(routes)} />
+                </Box>
 
-            <div id="modal-root" />
+                <div id="modal-root" />
 
-            {Config.ENVIRONMENT === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
+                {Config.ENVIRONMENT === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
+              </ErrorHandlerProvider>
+            </DndProvider>
           </QueryClientProvider>
         </LocalizationProvider>
       </ThemeProvider>
