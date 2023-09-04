@@ -13,14 +13,6 @@ export const EditPostPage: FC = () => {
   const postId = useParams().postId as string
   const post$ = usePost$({ postId })
 
-  const onCancel = () => {
-    if (history.length > 1) {
-      navigate(-1)
-    } else {
-      navigate(`/post/${postId}`)
-    }
-  }
-
   return (
     <AdminLayout>
       <QueryGate
@@ -36,7 +28,7 @@ export const EditPostPage: FC = () => {
           <EditPostForm
             post={post}
             onSaved={(post) => navigate(`/post/${post.slug}`)}
-            onCancel={onCancel}
+            onCancel={() => navigate(-1)}
             onDelete={() => navigate('/archive')}
           />
         )}

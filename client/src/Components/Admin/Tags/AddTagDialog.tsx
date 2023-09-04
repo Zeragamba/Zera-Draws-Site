@@ -33,19 +33,20 @@ const EditTagDialogContent: FC<AddTagDialogContentProps> = ({
 }) => {
   const createTag$ = useCreateTag$()
   const form = useForm<EditableTagData>({ values: { name: '', slug: '' } })
+  const { watch, setValue, formState } = form
 
   useEffect(() => {
-    const subscription = form.watch((post, { name }) => {
+    const subscription = watch((post, { name }) => {
       switch (name) {
         case 'name':
-          if (form.formState.dirtyFields.slug) return
-          form.setValue('slug', formatSlug(post.name || ''))
+          if (formState.dirtyFields.slug) return
+          setValue('slug', formatSlug(post.name || ''))
           break
       }
     })
 
     return () => subscription.unsubscribe()
-  }, [ form.watch, form.setValue, form.formState ])
+  }, [ watch, setValue, formState ])
 
   const onSubmit = form.handleSubmit(async (tag) => {
     await createTag$.mutateAsync({ tag: tag })

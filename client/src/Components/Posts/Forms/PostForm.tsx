@@ -37,21 +37,22 @@ export const PostForm: FC<PostFormProps> = ({
   imageManager,
   slots,
 }) => {
+  const { watch, setValue, formState } = form
 
   useEffect(() => {
-    const subscription = form.watch((post, { name }) => {
+    const subscription = watch((post, { name }) => {
       switch (name) {
         case 'title':
         case 'date':
-          if (form.formState.dirtyFields.slug) return
+          if (formState.dirtyFields.slug) return
           if (mode !== 'create') return
-          form.setValue('slug', formatPostSlug(post))
+          setValue('slug', formatPostSlug(post))
           break
       }
     })
 
     return () => subscription.unsubscribe()
-  }, [ form.watch, form.setValue, form.formState ])
+  }, [ watch, setValue, formState, mode ])
 
   const onImageAdd = (added: Required<EditableImage>) => {
     imageManager.addImage({ id: `add-${crypto.randomUUID()}`, ...added })
@@ -165,7 +166,7 @@ export const PostForm: FC<PostFormProps> = ({
                 )}
               />
               <FormHelperText>
-                <img src={markdownIcon} style={{ height: 16, marginRight: 4, verticalAlign: 'middle' }} />
+                <img src={markdownIcon} style={{ height: 16, marginRight: 4, verticalAlign: 'middle' }} alt={'Markdown Icon'}/>
                 <a href="https://commonmark.org/help/" target="_blank" rel="noreferrer">Markdown</a> format supported
               </FormHelperText>
             </Grid>

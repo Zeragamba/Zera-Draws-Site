@@ -18,7 +18,7 @@ export const EditSocialsPage: FC = () => {
 
   useEffect(() => {
     if (formState.isDirty) updateMeta.reset()
-  }, [ formState.isDirty ])
+  }, [ formState.isDirty, updateMeta ])
 
   const onFormSave: SubmitHandler<SocialsMeta> = (data) => {
     updateMeta.mutate({ group: 'socials', values: data })

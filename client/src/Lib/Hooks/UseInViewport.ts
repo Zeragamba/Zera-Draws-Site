@@ -7,7 +7,7 @@ export function useInViewport(): InViewportHook {
   const [ inViewport, setInViewport ] = useState<boolean>(false)
   const [ element, setElement ] = useState<Element | null>(null)
 
-  const elementRef = useCallback(setElement, [])
+  const elementRef = useCallback(setElement, [ setElement ])
 
   useEffect(() => {
     if (!element) return

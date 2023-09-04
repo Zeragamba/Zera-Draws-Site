@@ -19,7 +19,7 @@ export const EditAboutPage: FC = () => {
 
   useEffect(() => {
     if (formState.isDirty) updateMeta.reset()
-  }, [ formState.isDirty ])
+  }, [ formState.isDirty, updateMeta ])
 
   const onFormSave: SubmitHandler<ContentMeta> = (data) => {
     updateMeta.mutate({ group: 'content', values: data })
@@ -90,7 +90,11 @@ export const EditAboutPage: FC = () => {
             />
 
             <FormHelperText>
-              <img src={markdownIcon} style={{ height: 16, marginRight: 4, verticalAlign: 'middle' }} />
+              <img
+                src={markdownIcon}
+                style={{ height: 16, marginRight: 4, verticalAlign: 'middle' }}
+                alt={'Markdown Icon'}
+              />
               <a href="https://commonmark.org/help/" target="_blank" rel="noreferrer">Markdown</a> format
               supported
             </FormHelperText>
