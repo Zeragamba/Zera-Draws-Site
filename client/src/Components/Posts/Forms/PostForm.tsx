@@ -95,6 +95,9 @@ export const PostForm: FC<PostFormProps> = ({
               <Controller
                 control={form.control}
                 name={'title'}
+                rules={{
+                  required: 'Title is required',
+                }}
                 render={(fieldProps) => (
                   <TextField
                     {...muiField(fieldProps)}
@@ -110,7 +113,9 @@ export const PostForm: FC<PostFormProps> = ({
               <Controller
                 control={form.control}
                 name={'date'}
-                rules={{ required: true }}
+                rules={{
+                  required: 'Date is required',
+                }}
                 render={(fieldProps) => (
                   <DatePicker
                     label="Date"
@@ -129,6 +134,9 @@ export const PostForm: FC<PostFormProps> = ({
               <Controller
                 control={form.control}
                 name={'slug'}
+                rules={{
+                  required: 'Slug is required',
+                }}
                 render={(fieldProps) => (
                   <TextField
                     {...muiField(fieldProps)}

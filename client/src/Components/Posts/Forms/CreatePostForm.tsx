@@ -1,11 +1,13 @@
-import { Button, LinearProgress, Stack } from '@mui/material'
+import { Button, Stack } from '@mui/material'
 import { FC, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { PostForm } from './PostForm'
 import { noOp } from '../../../Lib/Noop'
+import { ErrorAlert } from '../../../Lib/UI/ErrorAlert'
 import { EditableImage } from '../../Images/ImageData'
 import { useImageManager } from '../../Images/ImageManager/UseImageManager'
+import { UploadProgress } from '../../UI/UploadProgress'
 import { createPostData, PostData } from '../PostData'
 import { useCreatePost$ } from '../PostsApi'
 
@@ -39,30 +41,34 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
     const saved = await createPost$.mutateAsync({
       post,
       images: createdImages,
-      onUploadProgress: (progress) => setUploadProgress(progress),
+      onUploadProgress: (progress) => setUploadProgress(() => progress),
     })
 
     onCreated(saved)
   })
 
   return (
-    <PostForm
-      form={form}
-      mode="create"
-      imageManager={imageManager}
-      slots={{
-        actions: (
-          <Stack gap={1}>
-            <Button
-              variant={'contained'}
-              disabled={createPost$.isLoading}
-              onClick={onPostSave}
-              fullWidth
-            >Save</Button>
-            {uploadProgress !== 0 && <LinearProgress value={uploadProgress * 100} />}
-          </Stack>
-        ),
-      }}
-    />
+    <Stack gap={2}>
+      {createPost$.isError && <ErrorAlert error={createPost$.error} />}
+
+      <PostForm
+        form={form}
+        mode="create"
+        imageManager={imageManager}
+        slots={{
+          actions: (
+            <Stack gap={1}>
+              <Button
+                variant={'contained'}
+                disabled={createPost$.isLoading}
+                onClick={onPostSave}
+                fullWidth
+              >Save</Button>
+              {uploadProgress !== 0 && <UploadProgress value={uploadProgress} />}
+            </Stack>
+          ),
+        }}
+      />
+    </Stack>
   )
 }

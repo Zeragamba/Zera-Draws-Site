@@ -1,11 +1,13 @@
-import { Button, LinearProgress, Stack } from '@mui/material'
+import { Button, Stack } from '@mui/material'
 import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { DeletePostButton } from './DeletePostButton'
 import { PostForm } from './PostForm'
 import { noop } from '../../../Lib/Noop'
+import { ErrorAlert } from '../../../Lib/UI/ErrorAlert'
 import { useImageManager } from '../../Images/ImageManager'
+import { UploadProgress } from '../../UI/UploadProgress'
 import { PostData } from '../PostData'
 import { useEditPost$ } from '../PostsApi/EditPost'
 
@@ -40,37 +42,41 @@ export const EditPostForm: FC<EditPostFormProps> = ({
   })
 
   return (
-    <PostForm
-      form={form}
-      mode="edit"
-      imageManager={imageManager}
-      slots={{
-        actions: (
-          <Stack gap={2}>
-            <Button
-              variant={'contained'}
-              disabled={editPost$.isLoading}
-              onClick={onPostSave}
+    <Stack gap={2}>
+      {editPost$.isError && <ErrorAlert error={editPost$.error} />}
+
+      <PostForm
+        form={form}
+        mode="edit"
+        imageManager={imageManager}
+        slots={{
+          actions: (
+            <Stack gap={2}>
+              <Button
+                variant={'contained'}
+                disabled={editPost$.isLoading}
+                onClick={onPostSave}
+                fullWidth
+              >Save</Button>
+              <Button
+                variant="outlined"
+                disabled={editPost$.isLoading}
+                onClick={onCancel}
+                fullWidth
+              >Cancel</Button>
+              {uploadProgress !== 0 && <UploadProgress value={uploadProgress} />}
+            </Stack>
+          ),
+          rightCol: (
+            <DeletePostButton
+              post={post}
               fullWidth
-            >Save</Button>
-            <Button
-              variant="outlined"
+              onDeleted={onDelete}
               disabled={editPost$.isLoading}
-              onClick={onCancel}
-              fullWidth
-            >Cancel</Button>
-            {uploadProgress !== 0 && <LinearProgress value={uploadProgress} />}
-          </Stack>
-        ),
-        rightCol: (
-          <DeletePostButton
-            post={post}
-            fullWidth
-            onDeleted={onDelete}
-            disabled={editPost$.isLoading}
-          />
-        ),
-      }}
-    />
+            />
+          ),
+        }}
+      />
+    </Stack>
   )
 }

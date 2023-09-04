@@ -10,6 +10,10 @@ class ApplicationController < ActionController::API
     render_error(message: error.message, status: 404)
   end
 
+  rescue_from 'ActiveRecord::RecordInvalid' do |error|
+    render_error(message: error.message, status: 400)
+  end
+
   def current_user
     Current.user
   end

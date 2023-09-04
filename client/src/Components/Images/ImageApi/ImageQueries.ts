@@ -1,7 +1,7 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
-import { useErrorHandler } from '../../../Lib/ErrorHandler'
+import { errorHandler } from '../../../Lib/ErrorHandler'
 
 export const ImageQueries = createQueryKeys('images', {
   get: (src: string) => ({
@@ -23,8 +23,6 @@ export const useImage$ = (src: string | undefined): UseQueryResult<HTMLImageElem
 }
 
 export const useImagePreload = (src: string) => {
-  const errorHandler = useErrorHandler()
-
   useQueryClient().prefetchQuery(ImageQueries.get(src))
     .catch(errorHandler)
 }
