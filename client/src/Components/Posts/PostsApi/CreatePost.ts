@@ -25,7 +25,10 @@ export const createPost = (params: CreatePostReq): Promise<PostData> => {
     '/posts',
     postToFormData({ post, images }),
     {
-      onUploadProgress: (event) => onUploadProgress(event.progress || 0),
+      onUploadProgress: (event) => {
+        const progress = event.progress || 0
+        onUploadProgress(progress * 100)
+      },
     },
   ).then(res => res.post)
 }

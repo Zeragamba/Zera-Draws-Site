@@ -8,6 +8,18 @@ export interface ErrorResponse extends AxiosResponse {
   }
 }
 
+export function isErrorResponse(obj: unknown): obj is ErrorResponse {
+  if (!obj) return false
+
+  const errorRes = obj as ErrorResponse
+
+  return (
+    typeof errorRes === 'object'
+    && typeof errorRes.data === 'object'
+    && typeof errorRes.data.error === 'string'
+  )
+}
+
 export interface ServerApiError extends AxiosError {
   response: ErrorResponse
 }

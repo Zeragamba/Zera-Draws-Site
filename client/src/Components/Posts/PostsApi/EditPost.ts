@@ -27,7 +27,10 @@ export const editPost = (params: EditPostParams): Promise<PostData> => {
     `/post/${postId}`,
     postToFormData({ post, changes }),
     {
-      onUploadProgress: (event) => onUploadProgress(event.progress || 0),
+      onUploadProgress: (event) => {
+        const progress = event.progress || 0
+        onUploadProgress(progress * 100)
+      },
     },
   ).then(res => res.post)
 }
