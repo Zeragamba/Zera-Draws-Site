@@ -159,10 +159,10 @@ const AdminPostListItem: FC<PostListItemProps> = ({
       <Dialog open={isEditing} fullWidth maxWidth="xl" sx={{ alignItems: 'flex-start' }}>
         <DialogContent>
           <EditPostForm
-            postId={post.id}
-            onUpdated={() => setIsEditing(false)}
+            post={post}
+            onSaved={() => setIsEditing(false)}
             onCancel={() => setIsEditing(false)}
-            onDeleted={() => setIsEditing(false)}
+            onDelete={() => setIsEditing(false)}
           />
         </DialogContent>
       </Dialog>

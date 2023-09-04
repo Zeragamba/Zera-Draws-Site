@@ -7,7 +7,7 @@ import { noop } from '../../../Lib/Noop'
 import { usePageContext } from '../../Layouts/PageContext'
 import { useIsMobile } from '../../UI/ScreenSize'
 import { PostData } from '../PostData'
-import { getPostUrl, useNextPost, usePost, usePrevPost } from '../PostsApi'
+import { getPostUrl, useNextPost, usePost$, usePrevPost } from '../PostsApi'
 
 import styles from './ViewPost.module.scss'
 
@@ -25,7 +25,7 @@ export const PostNav: FC<PostNavProps> = ({
   onImageChange = noop,
 }) => {
   const { tagId, galleryId } = usePageContext()
-  const { data: curPost } = usePost({ postId })
+  const { data: curPost } = usePost$({ postId })
   const { data: nextPost, isLoading: nextLoading } = useNextPost(postId)
   const { data: prevPost, isLoading: prevLoading } = usePrevPost(postId)
   const numImages = curPost?.images?.length || 1

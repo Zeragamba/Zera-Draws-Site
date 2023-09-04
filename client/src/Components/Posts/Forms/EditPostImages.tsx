@@ -41,7 +41,7 @@ export const EditPostImages: FC<EditPostImagesProps> = ({
   return (
     <Stack gap={2}>
       {images.length >= 1 && (
-        <Stack direction="row" gap={2} sx={{ flexWrap: 'wrap' }} justifyContent={'space-between'} width={'100%'}>
+        <Stack direction="row" gap={2} sx={{ flexWrap: 'wrap' }} width={'100%'}>
           {orderedImages.map((image, index) => (
             <PostImageItem
               onOrderHover={onImageOrderHover}

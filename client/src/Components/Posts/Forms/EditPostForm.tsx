@@ -1,63 +1,76 @@
-import { Button, Paper, Stack } from '@mui/material'
-import { FC } from 'react'
+import { Button, LinearProgress, Stack } from '@mui/material'
+import { FC, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { OnPostSubmitHandler, PostForm } from './PostForm'
+import { DeletePostButton } from './DeletePostButton'
+import { PostForm } from './PostForm'
 import { noop } from '../../../Lib/Noop'
+import { useImageManager } from '../../Images/ImageManager'
 import { PostData } from '../PostData'
-import { usePost } from '../PostsApi'
 import { useEditPost$ } from '../PostsApi/EditPost'
 
-interface ViewPostProps {
-  postId: string
-  onUpdated?: (post: PostData) => void
+export interface EditPostFormProps {
+  post: PostData
+  onSaved?: (post: PostData) => void
   onCancel?: () => void
-  onDeleted?: (post: PostData) => void
+  onDelete?: () => void
 }
 
-export const EditPostForm: FC<ViewPostProps> = ({
-  postId,
-  onUpdated = noop,
+export const EditPostForm: FC<EditPostFormProps> = ({
+  post,
+  onSaved = noop,
   onCancel = noop,
-  onDeleted = noop,
+  onDelete = noop,
 }) => {
-  const post$ = usePost({ postId })
+  const form = useForm({ values: post })
+  const imageManager = useImageManager({ images: post?.images || [] })
+  const [ uploadProgress, setUploadProgress ] = useState<number>(0)
+
   const editPost$ = useEditPost$()
 
-  if (post$.isLoading) {
-    return <Paper>Loading...</Paper>
-  } else if (post$.isError) {
-    return <Paper>Error Loading Post :( {String(post$.error)}</Paper>
-  }
+  const onPostSave = form.handleSubmit(async (post) => {
+    const saved = await editPost$.mutateAsync({
+      postId: post.id,
+      post,
+      changes: imageManager.changes,
+      onUploadProgress: (progress) => setUploadProgress(progress),
+    })
 
-  const post = post$.data
-
-  const onPostSave: OnPostSubmitHandler = async ({ post, imageChanges }) => {
-    const saved = await editPost$.mutateAsync({ postId, post, images: imageChanges })
-    onUpdated(saved)
-  }
+    onSaved(saved)
+  })
 
   return (
     <PostForm
+      form={form}
       mode="edit"
-      post={post}
-      onSubmit={onPostSave}
-      onDeleted={onDeleted}
-      actions={(submitForm) => (
-        <Stack gap={2}>
-          <Button
-            variant={'contained'}
-            disabled={editPost$.isLoading}
-            onClick={submitForm}
+      imageManager={imageManager}
+      slots={{
+        actions: (
+          <Stack gap={2}>
+            <Button
+              variant={'contained'}
+              disabled={editPost$.isLoading}
+              onClick={onPostSave}
+              fullWidth
+            >Save</Button>
+            <Button
+              variant="outlined"
+              disabled={editPost$.isLoading}
+              onClick={onCancel}
+              fullWidth
+            >Cancel</Button>
+            {uploadProgress !== 0 && <LinearProgress value={uploadProgress} />}
+          </Stack>
+        ),
+        rightCol: (
+          <DeletePostButton
+            post={post}
             fullWidth
-          >Save</Button>
-          <Button
-            variant="outlined"
+            onDeleted={onDelete}
             disabled={editPost$.isLoading}
-            onClick={onCancel}
-            fullWidth
-          >Cancel</Button>
-        </Stack>
-      )}
+          />
+        ),
+      }}
     />
   )
 }

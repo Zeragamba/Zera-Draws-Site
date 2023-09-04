@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 import { PostData } from './PostData'
-import { usePost } from './PostsApi'
+import { usePost$ } from './PostsApi'
 import { ImagePreloader } from '../Images/ImagePreloader'
 
 interface PostPreloaderProps {
@@ -13,7 +13,7 @@ export const PostPreloader: FC<PostPreloaderProps> = ({
   postId,
   imageSize = 'high',
 }) => {
-  const { data: post } = usePost({ postId })
+  const { data: post } = usePost$({ postId })
   if (!post) return null
 
   return (

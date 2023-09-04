@@ -1,6 +1,7 @@
 import { useMutation, UseMutationResult, useQueryClient } from '@tanstack/react-query'
 
 import { postsQueryKeys } from './PostsQueryKeys'
+import { noop } from '../../../Lib/Noop'
 import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
 import { EditableImage } from '../../Images/ImageData'
 import { tagQueryKeys } from '../../Tags/TagQueryKeys'
@@ -9,26 +10,24 @@ import { EditablePost, PostData, postToFormData } from '../PostData'
 export type CreatePostRes = ModelResponse<'post', PostData>
 export type CreatePostReq = {
   post: EditablePost
-  images: Required<EditableImage>[]
+  images: EditableImage[]
+  onUploadProgress?: (progress: number) => void
 }
 
-export const createPost = ({ post, images }: CreatePostReq): Promise<PostData> => {
-  const formData = postToFormData(post)
+export const createPost = (params: CreatePostReq): Promise<PostData> => {
+  const {
+    post,
+    images,
+    onUploadProgress = noop,
+  } = params
 
-  images.forEach((image, index) => {
-    Object.entries(image).forEach(([ prop, value ]) => {
-      switch (prop) {
-        case 'file':
-          formData.set(`images[${index}][file]`, value as File)
-          break
-        default:
-          formData.set(`images[${index}][${prop}]`, String(value))
-      }
-    })
-  })
-
-  return ServerClient.post<CreatePostRes, FormData>('/posts', formData)
-    .then(res => res.post)
+  return ServerClient.post<CreatePostRes, FormData>(
+    '/posts',
+    postToFormData({ post, images }),
+    {
+      onUploadProgress: (event) => onUploadProgress(event.progress || 0),
+    },
+  ).then(res => res.post)
 }
 
 export const useCreatePost$ = (): UseMutationResult<PostData, unknown, CreatePostReq> => {

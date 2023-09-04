@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 
 import * as Actions from './Actions'
+import { reorderItems } from '../../UI/UseSortable'
 import { ImageData } from '../ImageData'
 
 export const imagesReducer = createReducer<ImageData[]>([], ({ addCase }) => {
@@ -36,11 +37,7 @@ export const imagesReducer = createReducer<ImageData[]>([], ({ addCase }) => {
       existing.filename = payload.filename
     }
 
-    if (typeof payload.position !== 'undefined') {
-      existing.position = payload.position
-    }
-
-    if (payload.file) {
+    if (typeof payload.file !== 'undefined') {
       existing.height = 0
       existing.width = 0
       existing.mime_type = ''
@@ -49,6 +46,10 @@ export const imagesReducer = createReducer<ImageData[]>([], ({ addCase }) => {
       existing.srcs = {
         full: URL.createObjectURL(payload.file),
       }
+    }
+
+    if (typeof payload.position !== 'undefined') {
+      return reorderItems(images, payload.id, payload.position)
     }
   })
 
