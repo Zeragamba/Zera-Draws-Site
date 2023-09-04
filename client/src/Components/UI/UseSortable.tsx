@@ -13,32 +13,33 @@ export function useSortable<Data extends SortableData>(items: Data[]): UseSortab
   useEffect(() => setLocalItems(items), [ items ])
 
   const move: MoveAction = (srcPostId, targetPos) => {
-    const srcOrder = localItems.find(post => post.id === srcPostId)
-    if (!srcOrder) throw new Error('item not found')
-
-    const sourcePos: number = srcOrder.position
-    if (sourcePos === targetPos) return
-
-    const minPos = Math.min(sourcePos, targetPos)
-    const maxPos = Math.max(sourcePos, targetPos)
-
-    const reordered = localItems
-      .map(post => {
-        if (post.id === srcPostId) {
-          return { ...post, position: targetPos }
-        } else if (post.position >= minPos && post.position <= maxPos) {
-          if (targetPos > sourcePos) {
-            return { ...post, position: post.position - 1 }
-          } else {
-            return { ...post, position: post.position + 1 }
-          }
-        } else {
-          return post
-        }
-      })
-
-    setLocalItems(reordered)
+    setLocalItems(reorderItems(localItems, srcPostId, targetPos))
   }
 
   return [ sortArray(localItems, byPosition), move ]
+}
+
+export function reorderItems<T extends SortableData>(items: T[], targetId: string, targetPosition: number): T[] {
+  const targetItem = items.find(item => item.id === targetId)
+  if (!targetItem) throw new Error('item not found')
+
+  const startPosition: number = targetItem.position
+  if (startPosition === targetPosition) return items
+
+  const minPos = Math.min(startPosition, targetPosition)
+  const maxPos = Math.max(startPosition, targetPosition)
+
+  return items.map(post => {
+    if (post.id === targetId) {
+      return { ...post, position: targetPosition }
+    } else if (post.position >= minPos && post.position <= maxPos) {
+      if (targetPosition > startPosition) {
+        return { ...post, position: post.position - 1 }
+      } else {
+        return { ...post, position: post.position + 1 }
+      }
+    } else {
+      return post
+    }
+  })
 }

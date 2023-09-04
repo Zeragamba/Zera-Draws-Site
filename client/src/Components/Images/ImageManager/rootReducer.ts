@@ -2,12 +2,12 @@ import { Reducer } from '@reduxjs/toolkit'
 
 import { changesReducer } from './ChangesReducer'
 import { imagesReducer } from './ImagesReducer'
-import { ImageChangePayload } from '../../Posts/PostsApi/EditPost'
+import { ImageChangeRecord } from '../ImageApi/ImageChangeRecord'
 import { ImageData } from '../ImageData'
 
 export type State = {
   images: ImageData[]
-  changes: ImageChangePayload[]
+  changes: ImageChangeRecord[]
 }
 
 const defaultState: State = { images: [], changes: [] }

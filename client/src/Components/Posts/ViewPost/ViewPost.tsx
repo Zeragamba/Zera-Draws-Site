@@ -15,7 +15,7 @@ import { useCurrentUser } from '../../User/UsersApi'
 import { useRecordView } from '../../Views/ViewHooks'
 import { PostData } from '../PostData'
 import { PostPreloader } from '../PostPreloader'
-import { useNextPost, usePost, usePrevPost } from '../PostsApi'
+import { useNextPost, usePost$, usePrevPost } from '../PostsApi'
 import { PostTags } from '../PostTags'
 
 import styles from './ViewPost.module.scss'
@@ -33,7 +33,7 @@ export const ViewPost: FC<ViewPostProps> = ({
   const navigate = useNavigate()
   const { data: currentUser } = useCurrentUser()
   const [ activeImageIndex, setActiveImageIndex ] = useState<number>(0)
-  const { data: post, error, isLoading, isError } = usePost({ postId })
+  const { data: post, error, isLoading, isError } = usePost$({ postId })
 
   const { data: nextPost } = useNextPost(postId)
   const { data: prevPost } = usePrevPost(postId)

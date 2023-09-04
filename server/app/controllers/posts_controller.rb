@@ -82,17 +82,22 @@ class PostsController < ApplicationController
 
   def upload
     Post.transaction do
-      images = params[:images]
 
       post = Post.create!(post_params)
       post.update_tags!(params[:tags]) if params[:tags]
 
+      images = params[:images]
       if images.empty?
         return render_error(message: "At least one image is required", status: 400)
       end
 
       images.each_value do |image_data|
-        image = Image.create!(filename: image_data["filename"], post: post)
+        image = Image.create!(
+          filename: image_data["filename"],
+          position: image_data["position"],
+          post: post
+        )
+
         image.attach(image_data["file"].tempfile.path)
       end
 
@@ -128,30 +133,30 @@ class PostsController < ApplicationController
       post.update!(post_params) if params[:post]
       post.update_tags!(params[:tags]) if params[:tags]
 
-      images = params[:images] || Hash.new
-      images.each_value do |image_data|
-        tmp_file = image_data["file"].tempfile if image_data["file"]
+      changes = params[:changes] || Hash.new
+      changes.each_value do |change_data|
+        tmp_file = change_data["file"].tempfile if change_data["file"]
 
-        case image_data["action"]
+        case change_data["action"]
           when 'add'
             image = Image.create!(
-              filename: image_data["filename"],
-              position: image_data["position"],
+              filename: change_data["filename"],
+              position: change_data["position"],
               post: post,
             )
             image.attach(tmp_file.path)
           when 'edit'
-            image = Image.find(image_data["id"])
+            image = Image.find(change_data["id"])
 
-            if image_data["position"]
-              image.position = image_data["position"]
+            if change_data["position"]
+              image.position = change_data["position"]
             end
 
-            if image_data["filename"]
-              image.filename = image_data["filename"]
+            if change_data["filename"]
+              image.filename = change_data["filename"]
             end
 
-            if image_data["file"]
+            if change_data["file"]
               image.destroy!
 
               new_image = Image.create!(
@@ -166,10 +171,10 @@ class PostsController < ApplicationController
 
             image.save!
           when 'remove'
-            image = Image.find(image_data["id"])
+            image = Image.find(change_data["id"])
             image.destroy!
           else
-            raise Error("Unknown image action #{image_data["action"]}")
+            raise Error("Unknown image action #{change_data["action"]}")
         end
       end
 

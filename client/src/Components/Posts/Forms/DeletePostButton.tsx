@@ -8,6 +8,7 @@ import { useDeletePost } from '../PostsApi/DeletePost'
 interface DeletePostButtonProps {
   post: PostData
   fullWidth?: boolean
+  disabled?: boolean
   onDeleted?: (post: PostData) => void
 }
 
@@ -15,6 +16,7 @@ export const DeletePostButton: FC<DeletePostButtonProps> = ({
   post,
   fullWidth = false,
   onDeleted = noop,
+  disabled,
 }) => {
   const deletePostQuery = useDeletePost()
   const [ promptOpen, setPromptOpen ] = useState<boolean>(false)
@@ -31,6 +33,7 @@ export const DeletePostButton: FC<DeletePostButtonProps> = ({
         color="error"
         onClick={() => setPromptOpen(true)}
         fullWidth={fullWidth}
+        disabled={disabled}
       >
         Delete Post
       </Button>

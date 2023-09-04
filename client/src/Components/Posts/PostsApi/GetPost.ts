@@ -18,7 +18,7 @@ export const getPost = ({ postId, tag, gallery }: Params): Promise<PostData> => 
     .then(res => res.post)
 }
 
-export const usePost = (params: Params): UseQueryResult<PostData> => {
+export const usePost$ = (params: Params): UseQueryResult<PostData> => {
   const queryClient = useQueryClient()
 
   return useQuery({
