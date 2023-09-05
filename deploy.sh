@@ -33,7 +33,7 @@ cd ..
 cd client
   echo "=== Updating client ==="
   nvm use
-  yarn install
+  yarn install --production
 
   echo "=== Building client ==="
   yarn build

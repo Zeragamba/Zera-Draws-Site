@@ -20,7 +20,7 @@ export const InfiniteScroll: FC<InfiniteGalleryProps> = ({
   useEffect(() => {
     if (!hasNextPage || !endInView) return
     fetchNextPage()
-  }, [ endInView ])
+  }, [ hasNextPage, endInView, fetchNextPage ])
 
   return (
     <div>
