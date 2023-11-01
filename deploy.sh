@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -l
 set -e
 
 set -o allexport
@@ -33,7 +33,7 @@ cd ..
 cd client
   echo "=== Updating client ==="
   nvm use
-  yarn install --production
+  yarn install
 
   echo "=== Building client ==="
   yarn build

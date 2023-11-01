@@ -70,7 +70,7 @@ export const PostTagsField: FC<PostTagsFieldProps> = ({
         const filtered = tagsFilter(options, params)
         const { inputValue } = params
 
-        const isExisting = options.some((option) => inputValue === option.name)
+        const isExisting = options.some((option) => inputValue.toLowerCase() === option.name.toLowerCase())
         if (inputValue !== '' && !isExisting) {
           filtered.push({ name: inputValue, id: null })
         }
