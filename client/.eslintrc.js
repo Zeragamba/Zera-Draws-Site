@@ -1,11 +1,9 @@
-/* global module */
 module.exports = {
   env: {
     browser: true,
     es2021: true,
   },
   extends: [
-    'react-app',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:import/recommended',
@@ -21,7 +19,6 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    'react',
     '@typescript-eslint',
   ],
   settings: {
@@ -29,6 +26,10 @@ module.exports = {
       version: 'detect',
     },
   },
+  ignorePatterns: [
+    'scripts/**',
+    'config/**',
+  ],
   rules: {
     'react/function-component-definition': ['error', {
       namedComponents: 'arrow-function',
