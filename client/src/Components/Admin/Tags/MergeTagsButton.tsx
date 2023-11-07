@@ -80,7 +80,7 @@ export const MergeTagButton: FC<MergeTagButtonProps> = ({
           )}
         </DialogContent>
         <DialogActions>
-          {mergeTags$.isLoading ? (
+          {mergeTags$.isPending ? (
             <Stack gap={2} direction="row">
               <FontAwesomeIcon icon={faSpinner} spin />
               <Typography>Merging...</Typography>

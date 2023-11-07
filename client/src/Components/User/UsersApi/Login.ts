@@ -18,7 +18,8 @@ export const login = async ({ username, password }: Params): Promise<UserData> =
 export const useLogin = (): UseMutationResult<UserData, ServerApiError, Params> => {
   const queryClient = useQueryClient()
 
-  return useMutation<UserData, ServerApiError, Params>(login, {
+  return useMutation<UserData, ServerApiError, Params>({
+    mutationFn: login,
     onSuccess: async (user) => {
       await queryClient.invalidateQueries()
       queryClient.setQueryData(userQueryKeys.current.queryKey, user)

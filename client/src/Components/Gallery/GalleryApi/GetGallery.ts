@@ -17,10 +17,11 @@ export const useGallery = (params: GetGalleryPrams): UseQueryResult<GalleryData>
 
   return useQuery({
     ...galleryQueryKeys.get(params.galleryId),
-    queryFn: () => getGallery(params),
-    onSuccess: (gallery) => {
+    queryFn: async () => {
+      const gallery = await getGallery(params)
       queryClient.setQueryData(galleryQueryKeys.get(gallery.id).queryKey, gallery)
       queryClient.setQueryData(galleryQueryKeys.get(gallery.slug).queryKey, gallery)
+      return gallery
     },
   })
 }

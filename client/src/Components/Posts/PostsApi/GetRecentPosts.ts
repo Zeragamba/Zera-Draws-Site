@@ -19,9 +19,10 @@ export const useRecentPosts = (params: Params): UseQueryResult<PostData[]> => {
 
   return useQuery({
     ...postsQueryKeys.recent,
-    queryFn: () => getRecentPosts(params),
-    onSuccess: (recentPosts) => {
-      recentPosts.forEach(post => cachePostData(queryClient, post))
+    queryFn: async () => {
+      const posts = await getRecentPosts(params)
+      posts.forEach(post => cachePostData(queryClient, post))
+      return posts
     },
   })
 }

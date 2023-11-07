@@ -67,7 +67,7 @@ const EditTagDialogContent: FC<AddTagDialogContentProps> = ({
               size="small"
               required
               onChange={field.onChange}
-              disabled={createTag$.isLoading}
+              disabled={createTag$.isPending}
             />
           )}
         />
@@ -83,7 +83,7 @@ const EditTagDialogContent: FC<AddTagDialogContentProps> = ({
               size="small"
               required
               onChange={(event) => field.onChange(formatSlug(event.target.value))}
-              disabled={createTag$.isLoading}
+              disabled={createTag$.isPending}
             />
           )}
         />
@@ -92,7 +92,7 @@ const EditTagDialogContent: FC<AddTagDialogContentProps> = ({
           <Button
             variant="outlined"
             onClick={onClose}
-            disabled={createTag$.isLoading}
+            disabled={createTag$.isPending}
           >
             Cancel
           </Button>
@@ -100,8 +100,8 @@ const EditTagDialogContent: FC<AddTagDialogContentProps> = ({
           <Button
             variant="contained"
             onClick={onSubmit}
-            disabled={createTag$.isLoading}
-            startIcon={createTag$.isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : null}
+            disabled={createTag$.isPending}
+            startIcon={createTag$.isPending ? <FontAwesomeIcon icon={faSpinner} spin /> : null}
           >
             Save
           </Button>

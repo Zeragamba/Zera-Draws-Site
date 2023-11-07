@@ -1,3 +1,4 @@
+import { QueryKey } from '@tanstack/query-core/build/modern/index'
 import { useInfiniteQuery, UseInfiniteQueryResult, useQueryClient } from '@tanstack/react-query'
 
 import { cachePostData } from './GetPost'
@@ -17,19 +18,15 @@ export const getAllPosts = (params: Params = {}): Promise<GetAllPostsRes> => {
 export const useAllPosts$ = (): UseInfiniteQueryResult<PostData[]> => {
   const queryClient = useQueryClient()
 
-  return useInfiniteQuery<GetAllPostsRes, unknown, PostData[]>({
+  return useInfiniteQuery<GetAllPostsRes, Error, PostData[], QueryKey, number>({
     ...postsQueryKeys.all,
-    queryFn: ({ pageParam = 0 }) => {
-      return getAllPosts({ page: pageParam })
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }) => {
+      const res = await getAllPosts({ page: pageParam })
+      res.posts.forEach((post) => cachePostData(queryClient, post))
+      return res
     },
-    onSuccess: (data) => {
-      const posts: PostData[] = data.pages.map(page => page).flat()
-      posts.forEach((post) => cachePostData(queryClient, post))
-    },
-    select: (data) => ({
-      pages: data.pages.map(page => page.posts),
-      pageParams: data.pageParams,
-    }),
+    select: (data) => data.pages.map(page => page.posts).flat(),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total_pages - 1) {
         return lastPage.page + 1

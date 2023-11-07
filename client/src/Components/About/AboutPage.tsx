@@ -10,7 +10,7 @@ import { LoadingPage } from '../UI/LoadingPage'
 export const AboutPage: FC = () => {
   const contentMetaQuery = useSiteMeta('content')
 
-  if (contentMetaQuery.isLoading) return <LoadingPage />
+  if (contentMetaQuery.isPending) return <LoadingPage />
   if (contentMetaQuery.isError) return <ErrorPage error={String(contentMetaQuery.error)} />
   const contentMeta = contentMetaQuery.data
 

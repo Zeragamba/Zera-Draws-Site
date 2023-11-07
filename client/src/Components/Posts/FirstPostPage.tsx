@@ -8,7 +8,7 @@ import { LoadingPage } from '../UI/LoadingPage'
 export const FirstPostPage: FC = () => {
   const firstPost$ = useFirstPost$()
 
-  if (firstPost$.isLoading) return <LoadingPage />
+  if (firstPost$.isPending) return <LoadingPage />
   if (firstPost$.isError) return <ArchivePage />
 
   const firstPost = firstPost$.data

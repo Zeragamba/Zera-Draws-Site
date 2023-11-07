@@ -42,7 +42,7 @@ export const DeleteEmptyTagsButton: FC<DeleteTagButtonProps> = ({
           <DialogContentText>Are you sure you want to delete all empty tags?</DialogContentText>
         </DialogContent>
         <DialogActions>
-          {deleteTags$.isLoading ? (
+          {deleteTags$.isPending ? (
             <Stack gap={2} direction="row">
               <FontAwesomeIcon icon={faSpinner} spin />
               <Typography>Deleting...</Typography>

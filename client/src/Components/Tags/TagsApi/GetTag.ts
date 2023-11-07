@@ -33,7 +33,10 @@ export const useTag = (params: GetTagParams): UseQueryResult<TagData> => {
 
   return useQuery({
     queryKey: TagQueryKeys.getTag(params.tag),
-    queryFn: () => getTag(params),
-    onSuccess: (tag) => setTagCache(queryClient, tag),
+    queryFn: async () => {
+      const tag = await getTag(params)
+      setTagCache(queryClient, tag)
+      return tag
+    },
   })
 }

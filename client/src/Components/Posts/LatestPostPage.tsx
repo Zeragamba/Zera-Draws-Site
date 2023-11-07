@@ -11,7 +11,7 @@ export const LatestPostPage: FC = () => {
   const navigate = useNavigate()
   const latestPost$ = useLatestPost$()
 
-  if (latestPost$.isLoading) return <LoadingPage />
+  if (latestPost$.isPending) return <LoadingPage />
   if (latestPost$.isError) return <ArchivePage />
 
   const latestPost = latestPost$.data

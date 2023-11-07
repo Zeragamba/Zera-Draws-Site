@@ -1,13 +1,13 @@
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Box, Button, Paper, Stack } from '@mui/material'
-import { isError } from '@tanstack/react-query'
 import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useNavigate } from 'react-router-dom'
 
 
 import { PostNav } from './PostNav'
+import { formatError } from '../../../Lib/FormatError'
 import { useHotkey } from '../../../Lib/Hooks/UseHotkey'
 import { AsyncImg } from '../../UI/AsyncImg'
 import { Text } from '../../UI/Text'
@@ -33,7 +33,7 @@ export const ViewPost: FC<ViewPostProps> = ({
   const navigate = useNavigate()
   const { data: currentUser } = useCurrentUser()
   const [ activeImageIndex, setActiveImageIndex ] = useState<number>(0)
-  const { data: post, error, isLoading, isError } = usePost$({ postId })
+  const { data: post, error, isPending, isError } = usePost$({ postId })
 
   const { data: nextPost } = useNextPost(postId)
   const { data: prevPost } = usePrevPost(postId)
@@ -79,10 +79,10 @@ export const ViewPost: FC<ViewPostProps> = ({
     }
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Paper>Loading...</Paper>
   } else if (isError) {
-    return <Paper>Error Loading Post :( {formatError(error)}</Paper>
+    return <Paper>Error Loading Post: {formatError(error)}</Paper>
   } else if (!post) {
     return <Paper>Unable to load post</Paper>
   }
@@ -152,9 +152,4 @@ export const ViewPost: FC<ViewPostProps> = ({
     </>
   )
 
-}
-
-function formatError(error: unknown): string {
-  if (isError(error)) return error.toString()
-  return `${error}`
 }

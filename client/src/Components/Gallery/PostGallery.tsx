@@ -44,10 +44,10 @@ export const PostGallery: FC<PostGalleryProps> = ({
   let content: ReactNode
   if (postsQuery.isError) {
     content = <Paper>Error loading gallery. :(</Paper>
-  } else if (postsQuery.isLoading) {
+  } else if (postsQuery.isPending) {
     content = <Paper>Loading...</Paper>
   } else {
-    const posts = postsQuery.data.pages.flat()
+    const posts = postsQuery.data
 
     content = (
       <InfiniteScroll

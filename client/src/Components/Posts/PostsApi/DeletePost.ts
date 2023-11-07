@@ -17,12 +17,13 @@ export const deletePost = ({ postId }: DeletePostParams): Promise<PostData> => {
 export const useDeletePost = (): UseMutationResult<PostData, unknown, DeletePostParams> => {
   const queryClient = useQueryClient()
 
-  return useMutation<PostData, unknown, DeletePostParams>(deletePost, {
+  return useMutation<PostData, unknown, DeletePostParams>({
+    mutationFn: deletePost,
     onSuccess: async (deletedPost) => {
-      queryClient.invalidateQueries(tagQueryKeys._def)
-      queryClient.invalidateQueries(postsQueryKeys.get(deletedPost.id).queryKey)
-      queryClient.invalidateQueries(postsQueryKeys.get(deletedPost.slug).queryKey)
-      queryClient.invalidateQueries(postsQueryKeys.all)
+      await queryClient.invalidateQueries({ queryKey: tagQueryKeys._def })
+      await queryClient.invalidateQueries({ queryKey: postsQueryKeys.get(deletedPost.id).queryKey })
+      await queryClient.invalidateQueries({ queryKey: postsQueryKeys.get(deletedPost.slug).queryKey })
+      await queryClient.invalidateQueries({ queryKey: postsQueryKeys.all.queryKey })
     },
   })
 }

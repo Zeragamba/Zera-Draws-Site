@@ -15,7 +15,7 @@ export const ViewCounter: FC<ViewCounterProps> = ({
 }) => {
   const views$ = usePostViews$(postId)
 
-  if (views$.isLoading || views$.isError) return null
+  if (views$.isPending || views$.isError) return null
   const { total, unique } = views$.data
 
   return (

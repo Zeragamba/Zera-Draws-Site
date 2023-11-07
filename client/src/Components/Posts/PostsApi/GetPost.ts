@@ -23,8 +23,11 @@ export const usePost$ = (params: Params): UseQueryResult<PostData> => {
 
   return useQuery({
     ...postsQueryKeys.get(params.postId),
-    queryFn: () => getPost(params),
-    onSuccess: (post) => cachePostData(queryClient, post),
+    queryFn: async () => {
+      const post = await getPost(params)
+      cachePostData(queryClient, post)
+      return post
+    },
   })
 }
 

@@ -54,13 +54,13 @@ export const EditPostForm: FC<EditPostFormProps> = ({
             <Stack gap={2}>
               <Button
                 variant={'contained'}
-                disabled={editPost$.isLoading}
+                disabled={editPost$.isPending}
                 onClick={onPostSave}
                 fullWidth
               >Save</Button>
               <Button
                 variant="outlined"
-                disabled={editPost$.isLoading}
+                disabled={editPost$.isPending}
                 onClick={onCancel}
                 fullWidth
               >Cancel</Button>
@@ -72,7 +72,7 @@ export const EditPostForm: FC<EditPostFormProps> = ({
               post={post}
               fullWidth
               onDeleted={onDelete}
-              disabled={editPost$.isLoading}
+              disabled={editPost$.isPending}
             />
           ),
         }}

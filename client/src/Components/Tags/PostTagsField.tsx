@@ -26,7 +26,7 @@ export const PostTagsField: FC<PostTagsFieldProps> = ({
   const allTags$ = useAllTags$()
   const createTag$ = useCreateTag$()
 
-  if (allTags$.isLoading) {
+  if (allTags$.isPending) {
     return <div>Loading...</div>
   } else if (allTags$.isError) {
     return <div>Error: {String(allTags$.error)}</div>

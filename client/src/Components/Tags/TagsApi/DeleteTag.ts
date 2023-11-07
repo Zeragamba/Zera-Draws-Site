@@ -17,8 +17,8 @@ export const useDeleteTag$ = (): UseMutationResult<TagData, unknown, DeleteTagPa
 
   return useMutation({
     mutationFn: (params) => deleteTag(params),
-    onSuccess: () => {
-      queryClient.invalidateQueries(tagQueryKeys._def)
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: tagQueryKeys._def })
     },
   })
 }

@@ -45,7 +45,7 @@ export const DeleteTagButton: FC<DeleteTagButtonProps> = ({
           {tag.num_posts >= 5 && <DialogContentText>It is attached to {tag.num_posts} posts</DialogContentText>}
         </DialogContent>
         <DialogActions>
-          {deleteTag$.isLoading ? (
+          {deleteTag$.isPending ? (
             <Stack gap={2} direction="row">
               <FontAwesomeIcon icon={faSpinner} spin />
               <Typography>Deleting...</Typography>
