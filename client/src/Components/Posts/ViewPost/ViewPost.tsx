@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 import { PostNav } from './PostNav'
-import { formatError } from '../../../../lib/FormatError'
+import { formatError } from '../../../Lib/FormatError'
 import { useHotkey } from '../../../Lib/Hooks/UseHotkey'
 import { AsyncImg } from '../../UI/AsyncImg'
 import { Text } from '../../UI/Text'

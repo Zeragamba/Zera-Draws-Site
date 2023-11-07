@@ -1,3 +1,4 @@
+import { QueryKey } from '@tanstack/query-core/build/modern/index'
 import { useInfiniteQuery, UseInfiniteQueryResult, useQueryClient } from '@tanstack/react-query'
 
 import { cachePostData } from './GetPost'
@@ -18,19 +19,15 @@ export const getGalleryPosts = (params: Params): Promise<ResponseBody> => {
 export const useGalleryPosts = ({ gallery }: Omit<Params, 'page'>): UseInfiniteQueryResult<PostData[]> => {
   const queryClient = useQueryClient()
 
-  return useInfiniteQuery<ResponseBody, unknown, PostData[]>({
+  return useInfiniteQuery<ResponseBody, Error, PostData[], QueryKey, number>({
     ...galleryQueryKeys.get(gallery)._ctx.posts,
-    queryFn: ({ pageParam = 0 }) => {
-      return getGalleryPosts({ page: pageParam, gallery })
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }) => {
+      const res = await getGalleryPosts({ page: pageParam, gallery })
+      res.posts.forEach((post) => cachePostData(queryClient, post))
+      return res
     },
-    onSuccess: (data) => {
-      const posts: PostData[] = data.pages.map(page => page).flat()
-      posts.forEach((post) => cachePostData(queryClient, post))
-    },
-    select: (data) => ({
-      pages: data.pages.map(page => page.posts),
-      pageParams: data.pageParams,
-    }),
+    select: (data) => data.pages.map(page => page.posts).flat(),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total_pages - 1) {
         return lastPage.page + 1

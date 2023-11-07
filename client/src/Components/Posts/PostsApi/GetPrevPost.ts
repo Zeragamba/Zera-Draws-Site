@@ -28,11 +28,15 @@ export const usePrevPost = (curPostId: PostData['id' | 'slug']): UseQueryResult<
       gallery: galleryId,
       tag: tagId,
     }),
-    queryFn: () => getPrevPost({
-      postId: curPostId,
-      gallery: galleryId,
-      tag: tagId,
-    }),
-    onSuccess: (post) => cachePostData(queryClient, post),
+    queryFn: async () => {
+      const post = await getPrevPost({
+        postId: curPostId,
+        gallery: galleryId,
+        tag: tagId,
+      })
+
+      cachePostData(queryClient, post)
+      return post
+    },
   })
 }

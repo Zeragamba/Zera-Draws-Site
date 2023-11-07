@@ -17,7 +17,10 @@ export const useLatestPost$ = (): UseQueryResult<PostData> => {
 
   return useQuery({
     ...postsQueryKeys.latest,
-    queryFn: () => getLatestPost(),
-    onSuccess: (latest) => cachePostData(queryClient, latest),
+    queryFn: async () => {
+      const post = await getLatestPost()
+      cachePostData(queryClient, post)
+      return post
+    },
   })
 }

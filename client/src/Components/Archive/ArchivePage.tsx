@@ -16,7 +16,7 @@ export const ArchivePage: FC = () => {
           hasNextPage={posts$.hasNextPage || false}
           fetchNextPage={() => posts$.fetchNextPage()}
         >
-          <PostsList posts={posts$.data.pages.flat()} />
+          <PostsList posts={posts$.data} />
         </InfiniteScroll>
       )}
     </PublicLayout>

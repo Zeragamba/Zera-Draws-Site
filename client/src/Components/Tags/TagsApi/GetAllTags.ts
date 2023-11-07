@@ -25,9 +25,10 @@ export const useAllTags$ = ({ enabled, ...params }: UseAllTagsParams = {}): UseQ
   return useQuery({
     enabled,
     queryKey: TagQueryKeys.getAllTags(),
-    queryFn: () => getAllTags(params),
-    onSuccess: (tags) => {
+    queryFn: async () => {
+      const tags = await getAllTags(params)
       tags.forEach(tag => setTagCache(queryClient, tag))
+      return tags
     },
   })
 }

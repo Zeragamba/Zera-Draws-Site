@@ -15,7 +15,7 @@ export const EditPostsPage: FC = () => {
           hasNextPage={posts$.hasNextPage || false}
           fetchNextPage={() => posts$.fetchNextPage()}
         >
-          <AdminPostsList posts={posts$.data.pages.flat()} />
+          <AdminPostsList posts={posts$.data} />
         </InfiniteScroll>
       )}
     </>
