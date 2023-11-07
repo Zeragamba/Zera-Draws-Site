@@ -36,7 +36,7 @@ export const AdminPostsList: FC<AdminPostsListProps> = ({
         <AdminPostListItem
           key={post.id}
           post={post}
-          reorderDisabled={editPost$.isLoading}
+          reorderDisabled={editPost$.isPending}
           onOrderHover={reorderPost}
           onOrderDrop={onOrderDrop}
         />

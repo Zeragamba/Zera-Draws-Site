@@ -92,7 +92,7 @@ export const MetricsPage: FC = () => {
       </Paper>
 
       <Paper sx={{ padding: 2, height: 600 }}>
-        {metrics$.isLoading && (
+        {metrics$.isPending && (
           <Spinner />
         )}
         {metrics$.isError && (

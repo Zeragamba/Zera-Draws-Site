@@ -57,7 +57,7 @@ export const EditAboutPage: FC = () => {
             <Button size="small" variant="contained" onClick={handleSubmit(onFormSave)}>Save</Button>
           )}
 
-          {updateMeta.isLoading && (
+          {updateMeta.isPending && (
             <Button size="small" variant="contained" disabled>Saving</Button>
           )}
 

@@ -73,7 +73,7 @@ export const TagsMenu: FC = () => {
           </MenuItem>
         )}
 
-        {allTags$.isLoading && <MenuItem disabled>Loading...</MenuItem>}
+        {allTags$.isPending && <MenuItem disabled>Loading...</MenuItem>}
 
         {filteredTags.map(tag => (
           <MenuItem

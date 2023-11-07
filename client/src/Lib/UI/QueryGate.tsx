@@ -4,7 +4,7 @@ import React, { ReactElement, ReactNode } from 'react'
 
 interface QueryGateProps<Data, Error = unknown> {
   query: UseQueryResult<Data, Error>
-  renderLoading?: () => ReactNode
+  renderPending?: () => ReactNode
   renderError?: (error: Error) => ReactNode
   renderData?: (data: Data) => ReactNode
 }
@@ -12,14 +12,14 @@ interface QueryGateProps<Data, Error = unknown> {
 export const QueryGate = <Data, Error = unknown>(props: QueryGateProps<Data, Error>): ReactElement | null => {
   const {
     query,
-    renderLoading = () => <LinearProgress />,
+    renderPending = () => <LinearProgress />,
     renderError = (error) => <Alert color={'error'}>{String(error)}</Alert>,
     renderData = () => null,
   } = props
 
   switch (query.status) {
-    case 'loading':
-      return <>{renderLoading()}</>
+    case 'pending':
+      return <>{renderPending()}</>
     case 'error':
       return <>{renderError(query.error)}</>
     case 'success':

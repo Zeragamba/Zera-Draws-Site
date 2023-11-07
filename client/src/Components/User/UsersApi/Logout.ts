@@ -10,7 +10,8 @@ export const logout = async (): Promise<void> => {
 export const useLogout = (): UseMutationResult<void> => {
   const queryClient = useQueryClient()
 
-  return useMutation(logout, {
+  return useMutation({
+    mutationFn: logout,
     onSuccess: async () => {
       await queryClient.invalidateQueries()
       queryClient.setQueryData(userQueryKeys.current.queryKey, null)

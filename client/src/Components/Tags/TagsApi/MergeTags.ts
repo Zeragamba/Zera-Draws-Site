@@ -17,8 +17,8 @@ export const useMergeTags$ = (): UseMutationResult<TagData, unknown, MergeTagPar
 
   return useMutation({
     mutationFn: (params) => mergeTags(params),
-    onSuccess: () => {
-      queryClient.invalidateQueries(tagQueryKeys._def)
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: tagQueryKeys._def })
     },
   })
 }

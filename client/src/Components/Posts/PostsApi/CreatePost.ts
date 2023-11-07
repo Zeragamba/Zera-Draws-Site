@@ -36,10 +36,11 @@ export const createPost = (params: CreatePostReq): Promise<PostData> => {
 export const useCreatePost$ = (): UseMutationResult<PostData, unknown, CreatePostReq> => {
   const queryClient = useQueryClient()
 
-  return useMutation<PostData, unknown, CreatePostReq>(createPost, {
-    onSuccess: (createdPost) => {
-      queryClient.invalidateQueries(postsQueryKeys._def)
-      queryClient.invalidateQueries(tagQueryKeys._def)
+  return useMutation<PostData, unknown, CreatePostReq>({
+    mutationFn: createPost,
+    onSuccess: async (createdPost) => {
+      await queryClient.invalidateQueries({ queryKey: postsQueryKeys._def })
+      await queryClient.invalidateQueries({ queryKey: tagQueryKeys._def })
       queryClient.setQueryData(postsQueryKeys.get(createdPost.id).queryKey, createdPost)
       queryClient.setQueryData(postsQueryKeys.get(createdPost.slug).queryKey, createdPost)
     },

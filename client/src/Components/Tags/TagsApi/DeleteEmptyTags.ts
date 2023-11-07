@@ -16,8 +16,8 @@ export const useDeleteEmptyTags$ = (): UseMutationResult<TagData[], unknown, voi
 
   return useMutation({
     mutationFn: () => deleteEmptyTags(),
-    onSuccess: () => {
-      queryClient.invalidateQueries(tagQueryKeys._def)
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: tagQueryKeys._def })
     },
   })
 }

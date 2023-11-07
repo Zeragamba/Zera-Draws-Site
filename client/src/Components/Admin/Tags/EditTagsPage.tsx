@@ -17,7 +17,7 @@ export const EditTagsPage: FC = () => {
   const tagsQuery = useAllTags$()
   const [ activeTag, setActiveTag ] = useState<TagData | null>(null)
 
-  if (tagsQuery.isLoading) return <div>Loading...</div>
+  if (tagsQuery.isPending) return <div>Loading...</div>
   if (tagsQuery.isError) return <div>Error: {String(tagsQuery.error)}</div>
   const allTags = tagsQuery.data
 

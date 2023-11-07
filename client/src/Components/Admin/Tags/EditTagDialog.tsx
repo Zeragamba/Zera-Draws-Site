@@ -43,7 +43,7 @@ const EditTagDialogContent: FC<EditTagDialogContentProps> = ({
   const editTag$ = useEditTag()
   const form = useForm<TagData>({ values: tag$.data })
 
-  if (tag$.isLoading) return <DialogContent>Loading...</DialogContent>
+  if (tag$.isPending) return <DialogContent>Loading...</DialogContent>
   if (tag$.isError) return <DialogContent>Error: {String(tag$.error)}</DialogContent>
   const tag = tag$.data
 
@@ -66,7 +66,7 @@ const EditTagDialogContent: FC<EditTagDialogContentProps> = ({
               size="small"
               required
               onChange={field.onChange}
-              disabled={editTag$.isLoading}
+              disabled={editTag$.isPending}
             />
           )}
         />
@@ -82,7 +82,7 @@ const EditTagDialogContent: FC<EditTagDialogContentProps> = ({
               size="small"
               required
               onChange={(event) => field.onChange(formatSlug(event.target.value))}
-              disabled={editTag$.isLoading}
+              disabled={editTag$.isPending}
               helperText="Warning: Changing the slug will break links and bookmarks"
             />
           )}
@@ -98,7 +98,7 @@ const EditTagDialogContent: FC<EditTagDialogContentProps> = ({
             <Button
               variant="outlined"
               onClick={onClose}
-              disabled={editTag$.isLoading}
+              disabled={editTag$.isPending}
             >
               Cancel
             </Button>
@@ -106,8 +106,8 @@ const EditTagDialogContent: FC<EditTagDialogContentProps> = ({
             <Button
               variant="contained"
               onClick={onSubmit}
-              disabled={editTag$.isLoading}
-              startIcon={editTag$.isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : null}
+              disabled={editTag$.isPending}
+              startIcon={editTag$.isPending ? <FontAwesomeIcon icon={faSpinner} spin /> : null}
             >
               Save
             </Button>

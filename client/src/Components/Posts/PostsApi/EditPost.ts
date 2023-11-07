@@ -41,8 +41,8 @@ export const useEditPost$ = (): UseMutationResult<PostData, unknown, EditPostPar
   return useMutation<PostData, unknown, EditPostParams>({
     mutationFn: (params: EditPostParams) => editPost(params),
     onSuccess: async (updatedPost) => {
-      queryClient.invalidateQueries(postsQueryKeys._def)
-      queryClient.invalidateQueries(tagQueryKeys._def)
+      await queryClient.invalidateQueries({ queryKey: postsQueryKeys._def })
+      await queryClient.invalidateQueries({ queryKey: tagQueryKeys._def })
       queryClient.setQueryData(postsQueryKeys.get(updatedPost.id).queryKey, updatedPost)
       queryClient.setQueryData(postsQueryKeys.get(updatedPost.slug).queryKey, updatedPost)
     },

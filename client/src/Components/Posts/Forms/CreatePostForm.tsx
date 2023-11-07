@@ -60,7 +60,7 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
             <Stack gap={1}>
               <Button
                 variant={'contained'}
-                disabled={createPost$.isLoading}
+                disabled={createPost$.isPending}
                 onClick={onPostSave}
                 fullWidth
               >Save</Button>

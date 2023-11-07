@@ -26,8 +26,8 @@ export const PostNav: FC<PostNavProps> = ({
 }) => {
   const { tagId, galleryId } = usePageContext()
   const { data: curPost } = usePost$({ postId })
-  const { data: nextPost, isLoading: nextLoading } = useNextPost(postId)
-  const { data: prevPost, isLoading: prevLoading } = usePrevPost(postId)
+  const { data: nextPost, isPending: nextPending } = useNextPost(postId)
+  const { data: prevPost, isPending: prevPending } = usePrevPost(postId)
   const numImages = curPost?.images?.length || 1
 
   const onPrevPostClick: MouseEventHandler = (event) => {
@@ -63,7 +63,7 @@ export const PostNav: FC<PostNavProps> = ({
           href={nextPost ? getPostUrl({ postId: nextPost.slug, tagId, galleryId }) : '/'}
           onClick={onNextPostClick}
           variant="contained"
-          startIcon={<FontAwesomeIcon icon={nextLoading ? faSpinner : faAnglesLeft} spin={nextLoading} />}
+          startIcon={<FontAwesomeIcon icon={nextPending ? faSpinner : faAnglesLeft} spin={nextPending} />}
           disabled={!nextPost}
         >
           Next
@@ -85,7 +85,7 @@ export const PostNav: FC<PostNavProps> = ({
           href={prevPost ? getPostUrl({ postId: prevPost.slug, tagId, galleryId }) : '/'}
           onClick={onPrevPostClick}
           variant="contained"
-          endIcon={<FontAwesomeIcon icon={prevLoading ? faSpinner : faAnglesRight} spin={prevLoading} />}
+          endIcon={<FontAwesomeIcon icon={prevPending ? faSpinner : faAnglesRight} spin={prevPending} />}
           disabled={!prevPost}
         >
           Prev

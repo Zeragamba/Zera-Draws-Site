@@ -26,7 +26,7 @@ export const MetricsExportBtn: FC<MetricsExportBtnProps> = ({
   })
 
   let icon = <FontAwesomeIcon icon={faDownload} />
-  if (export$.isLoading) icon = <FontAwesomeIcon icon={faSpinner} spin />
+  if (export$.isPending) icon = <FontAwesomeIcon icon={faSpinner} spin />
   if (export$.isError) icon = <FontAwesomeIcon icon={faWarning} />
   if (export$.isSuccess) icon = <FontAwesomeIcon icon={faCheck} />
 
