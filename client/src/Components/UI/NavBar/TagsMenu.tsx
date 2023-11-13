@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { NavBarLink } from './NavBarLink'
 import { TagData } from '../../Tags/TagData'
+import { filterTags, TagFilter } from '../../Tags/TagFilter'
 import { useAllTags$ } from '../../Tags/TagsApi'
 import { useIsMobile } from '../ScreenSize'
 
@@ -18,16 +19,16 @@ export const TagsMenu: FC = () => {
   const MIN_TAGS_FOR_SEARCH = 15
 
   const activeTags = allTags$.data?.filter(tag => tag.num_posts >= 1) ?? []
-  const filteredTags = activeTags
-    .filter(tag => {
-      if (filterText) {
-        return tag.name.includes(filterText)
-      } else if (activeTags.length >= MIN_TAGS_FOR_SEARCH) {
-        return tag.num_posts >= 10
-      } else {
-        return true
-      }
-    })
+
+  const tagFilter: TagFilter = {}
+
+  if (filterText) {
+    tagFilter.name = filterText
+  } else if (activeTags.length >= MIN_TAGS_FOR_SEARCH) {
+    tagFilter.minPosts = 10
+  }
+
+  const filteredTags = filterTags(activeTags, tagFilter)
 
   const onTagClick = (tag: TagData) => {
     setMenuOpen(false)
