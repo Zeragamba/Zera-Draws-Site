@@ -2,8 +2,8 @@ import { createTheme } from '@mui/material'
 import { CSSProperties } from 'react'
 
 export const Colours = {
-  primary: 'hsl(0,91%,25%)',
-  secondary: '#eaa84f',
+  primary: 'hsl(0, 91%, 25%)',
+  secondary: 'hsl(34, 79%, 61%)',
   dark: 'hsl(0, 0%, 10%)',
   grey: 'hsl(0, 0%, 40%)',
   light: 'hsl(15,44%,93%)',

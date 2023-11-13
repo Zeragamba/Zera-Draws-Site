@@ -1,9 +1,10 @@
 import { faAngleDown, faAnglesLeft, faAnglesRight, faAngleUp, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Paper, SxProps, Typography } from '@mui/material'
+import { Button, Paper, Stack, SxProps, Typography } from '@mui/material'
 import React, { FC, MouseEventHandler } from 'react'
 
 import { noop } from '../../../Lib/Noop'
+import { AltImagesView } from '../../Images/AltImagesView'
 import { usePageContext } from '../../Layouts/PageContext'
 import { useIsMobile } from '../../UI/ScreenSize'
 import { PostData } from '../PostData'
@@ -28,7 +29,8 @@ export const PostNav: FC<PostNavProps> = ({
   const { data: curPost } = usePost$({ postId })
   const { data: nextPost, isPending: nextPending } = useNextPost(postId)
   const { data: prevPost, isPending: prevPending } = usePrevPost(postId)
-  const numImages = curPost?.images?.length || 1
+
+  const images = curPost?.images || []
 
   const onPrevPostClick: MouseEventHandler = (event) => {
     if (!prevPost) return
@@ -50,48 +52,57 @@ export const PostNav: FC<PostNavProps> = ({
 
   const onNextImageClick: MouseEventHandler = (event) => {
     event.preventDefault()
-    if (imageIndex >= numImages - 1) return
+    if (imageIndex >= images.length - 1) return
     onImageChange(imageIndex + 1)
   }
 
-
   return (
-    <div className={styles.nav}>
-      <div>
-        <Button
-          component="a"
-          href={nextPost ? getPostUrl({ postId: nextPost.slug, tagId, galleryId }) : '/'}
-          onClick={onNextPostClick}
-          variant="contained"
-          startIcon={<FontAwesomeIcon icon={nextPending ? faSpinner : faAnglesLeft} spin={nextPending} />}
-          disabled={!nextPost}
-        >
-          Next
-        </Button>
+    <Stack gap={2}>
+      <div className={styles.nav}>
+        <div>
+          <Button
+            component="a"
+            href={nextPost ? getPostUrl({ postId: nextPost.slug, tagId, galleryId }) : '/'}
+            onClick={onNextPostClick}
+            variant="contained"
+            startIcon={<FontAwesomeIcon icon={nextPending ? faSpinner : faAnglesLeft} spin={nextPending} />}
+            disabled={!nextPost}
+          >
+            Next
+          </Button>
+        </div>
+
+        {images.length > 1 && (
+          <ImagesNav
+            curImage={imageIndex}
+            numImages={images.length}
+            onPrevImageClick={onPrevImageClick}
+            onNextImageClick={onNextImageClick}
+          />
+        )}
+
+        <div>
+          <Button
+            component="a"
+            href={prevPost ? getPostUrl({ postId: prevPost.slug, tagId, galleryId }) : '/'}
+            onClick={onPrevPostClick}
+            variant="contained"
+            endIcon={<FontAwesomeIcon icon={prevPending ? faSpinner : faAnglesRight} spin={prevPending} />}
+            disabled={!prevPost}
+          >
+            Prev
+          </Button>
+        </div>
       </div>
 
-      {numImages > 1 && (
-        <ImagesNav
-          curImage={imageIndex}
-          numImages={numImages}
-          onPrevImageClick={onPrevImageClick}
-          onNextImageClick={onNextImageClick}
+      {images.length > 1 && (
+        <AltImagesView
+          images={images}
+          onImageClick={onImageChange}
+          activeIndex={imageIndex}
         />
       )}
-
-      <div>
-        <Button
-          component="a"
-          href={prevPost ? getPostUrl({ postId: prevPost.slug, tagId, galleryId }) : '/'}
-          onClick={onPrevPostClick}
-          variant="contained"
-          endIcon={<FontAwesomeIcon icon={prevPending ? faSpinner : faAnglesRight} spin={prevPending} />}
-          disabled={!prevPost}
-        >
-          Prev
-        </Button>
-      </div>
-    </div>
+    </Stack>
   )
 }
 
