@@ -1,19 +1,34 @@
-import { Button, ButtonGroup, FormHelperText, Paper, Stack, Typography } from '@mui/material'
+import {
+  Button,
+  ButtonGroup,
+  FormControlLabel,
+  FormGroup,
+  FormHelperText,
+  Paper,
+  Stack,
+  Switch,
+  Typography,
+} from '@mui/material'
 import TextField from '@mui/material/TextField'
 import React, { FC, useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import ReactMarkdown from 'react-markdown'
 
-import { ContentMeta } from '../../SiteMeta/SiteMetaData'
-import { useMetaContent } from '../../SiteMeta/UseSiteMeta'
+import { ContentMeta, FeatureFlag, MetaDataGroup } from '../../SiteMeta/SiteMetaData'
+import { useFeatureFlags, useMetaContent } from '../../SiteMeta/UseSiteMeta'
 import { useUpdateMeta } from '../../SiteMeta/UseUpdateMeta'
 import { muiField } from '../../UI/Form/RegisterMuiField'
 
 import markdownIcon from '../../../Assets/markdown.svg'
 
 export const EditAboutPage: FC = () => {
+  const featureFlags = useFeatureFlags()
+  const aboutPageEnabled = featureFlags[FeatureFlag.AboutPage] === 'true'
+
   const contentMeta = useMetaContent()
   const updateMeta = useUpdateMeta()
+  const updateFlags = useUpdateMeta()
+
   const { handleSubmit, control, watch, formState } = useForm<ContentMeta>({ values: contentMeta })
   const [ mode, setMode ] = useState<'source' | 'split' | 'preview'>('split')
 
@@ -22,7 +37,16 @@ export const EditAboutPage: FC = () => {
   }, [ formState.isDirty, updateMeta ])
 
   const onFormSave: SubmitHandler<ContentMeta> = (data) => {
-    updateMeta.mutate({ group: 'content', values: data })
+    updateMeta.mutate({ group: MetaDataGroup.Content, values: data })
+  }
+  const onEnabledToggle = () => {
+    updateFlags.mutate({
+      group: MetaDataGroup.Features,
+      values: {
+        ...featureFlags,
+        [FeatureFlag.AboutPage]: (!aboutPageEnabled).toString(),
+      },
+    })
   }
 
   return (
@@ -53,6 +77,13 @@ export const EditAboutPage: FC = () => {
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end" alignItems="center" sx={{ width: '33.333%' }}>
+          <FormGroup>
+            <FormControlLabel
+              control={<Switch checked={aboutPageEnabled} onChange={onEnabledToggle} />}
+              label="Enabled"
+            />
+          </FormGroup>
+
           {updateMeta.isIdle && (
             <Button size="small" variant="contained" onClick={handleSubmit(onFormSave)}>Save</Button>
           )}

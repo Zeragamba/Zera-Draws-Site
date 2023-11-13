@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 
-import { ContentMeta, SiteMetaData, SocialsMeta } from './SiteMetaData'
+import { ContentMeta, FeatureFlags, MetaDataGroup, SiteMetaData, SocialsMeta } from './SiteMetaData'
 import { SiteMetaQueries } from './SiteMetaQueries'
 
 export const useSiteMeta = (group: string): UseQueryResult<SiteMetaData> => {
@@ -9,10 +9,14 @@ export const useSiteMeta = (group: string): UseQueryResult<SiteMetaData> => {
   })
 }
 
+export const useFeatureFlags = (): FeatureFlags => {
+  return (useSiteMeta(MetaDataGroup.Features).data || {})
+}
+
 export const useSocials = (): SocialsMeta => {
-  return (useSiteMeta('socials').data || {})
+  return (useSiteMeta(MetaDataGroup.Socials).data || {})
 }
 
 export const useMetaContent = (): ContentMeta => {
-  return (useSiteMeta('content').data || {})
+  return (useSiteMeta(MetaDataGroup.Content).data || {})
 }

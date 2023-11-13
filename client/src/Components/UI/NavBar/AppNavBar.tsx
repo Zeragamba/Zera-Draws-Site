@@ -3,6 +3,7 @@ import React, { FC, useRef, useState } from 'react'
 
 import { NavBarLink } from './NavBarLink'
 import { TagsMenu } from './TagsMenu'
+import { useFeatureFlags } from '../../SiteMeta/UseSiteMeta'
 import { SocialsNav } from '../../Socials/SocalsNav'
 import { useCurrentUser, useLogout } from '../../User/UsersApi'
 import { useIsMobile } from '../ScreenSize'
@@ -50,10 +51,13 @@ export const RightNavLinks: FC = () => {
   const { data: currentUser } = useCurrentUser()
   const isAdmin = currentUser?.admin || false
   const logoutQuery = useLogout()
+  const featureFlags = useFeatureFlags()
 
   return (
     <>
-      <NavBarLink to="/about" label="About" />
+      {featureFlags.AboutPage === 'true' && (
+        <NavBarLink to="/about" label="About" />
+      )}
 
       {isAdmin ? (
         <>
