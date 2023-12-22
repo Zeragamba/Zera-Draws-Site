@@ -40,7 +40,13 @@ export const EditTagsPage: FC = () => {
             direction="row"
             justifyContent="space-between"
             alignItems="center"
-            sx={{ padding: 2 }}
+            sx={{
+              padding: 2,
+              transition: 'background-color 250ms',
+              '&:hover': {
+                backgroundColor: 'hsla(0deg, 0%, 0%, 5%)',
+              },
+            }}
           >
             <Box sx={{ flexGrow: 1 }}>
               <Typography>{tag.name}</Typography>
