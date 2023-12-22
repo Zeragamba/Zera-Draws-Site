@@ -3,10 +3,15 @@ import { TagData } from './TagData'
 export interface TagFilter {
   name?: string
   minPosts?: number
+  featured?: true
 }
 
 export function filterTags(allTags: TagData[], filter: TagFilter): TagData[] {
   let filtered = allTags
+
+  if (filter.featured) {
+    filtered = filtered.filter((tag) => tag.featured)
+  }
 
   if (filter.minPosts) {
     const minPosts = filter.minPosts

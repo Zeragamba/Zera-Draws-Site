@@ -1,12 +1,12 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Dialog, DialogContent, Stack, TextField } from '@mui/material'
+import { Button, Dialog, DialogContent, Stack } from '@mui/material'
 import { FC } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { DeleteTagButton } from './DeleteTagButton'
 import { MergeTagButton } from './MergeTagsButton'
-import { formatSlug } from '../../../Lib/FilenameUtils'
+import { TagForm } from './TagForm'
 import { TagData } from '../../Tags/TagData'
 import { useTag } from '../../Tags/TagsApi'
 import { useEditTag } from '../../Tags/TagsApi/EditTag'
@@ -41,13 +41,18 @@ const EditTagDialogContent: FC<EditTagDialogContentProps> = ({
 }) => {
   const tag$ = useTag({ tag: tagId })
   const editTag$ = useEditTag()
-  const form = useForm<TagData>({ values: tag$.data })
+
+  const formData = tag$.data ? {
+    tag: tag$.data,
+  } : undefined
+
+  const form = useForm<{ tag: TagData }>({ values: formData })
 
   if (tag$.isPending) return <DialogContent>Loading...</DialogContent>
   if (tag$.isError) return <DialogContent>Error: {String(tag$.error)}</DialogContent>
   const tag = tag$.data
 
-  const onSubmit = form.handleSubmit(async (tag) => {
+  const onSubmit = form.handleSubmit(async ({ tag }) => {
     await editTag$.mutateAsync({ tagId: tag.id, tag: tag })
     onClose()
   })
@@ -55,38 +60,7 @@ const EditTagDialogContent: FC<EditTagDialogContentProps> = ({
   return (
     <DialogContent>
       <Stack gap={4}>
-        <Controller
-          control={form.control}
-          name="name"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextField
-              label="name"
-              value={field.value}
-              size="small"
-              required
-              onChange={field.onChange}
-              disabled={editTag$.isPending}
-            />
-          )}
-        />
-
-        <Controller
-          control={form.control}
-          name="slug"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextField
-              label="slug"
-              value={field.value}
-              size="small"
-              required
-              onChange={(event) => field.onChange(formatSlug(event.target.value))}
-              disabled={editTag$.isPending}
-              helperText="Warning: Changing the slug will break links and bookmarks"
-            />
-          )}
-        />
+        <TagForm control={form.control} disabled={editTag$.isPending} />
 
         <Stack direction="row" gap={1} justifyContent="space-between">
           <Stack direction="row" gap={1}>
