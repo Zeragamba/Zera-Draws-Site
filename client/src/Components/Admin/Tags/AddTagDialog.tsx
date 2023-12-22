@@ -1,11 +1,11 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Dialog, DialogContent, Stack, TextField } from '@mui/material'
-import { FC, useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { Button, Dialog, DialogContent, Stack } from '@mui/material'
+import { FC } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { formatSlug } from '../../../Lib/FilenameUtils'
-import { EditableTagData } from '../../Tags/TagData'
+import { TagForm } from './TagForm'
+import { buildTagData, TagData } from '../../Tags/TagData'
 import { useCreateTag$ } from '../../Tags/TagsApi'
 
 interface AddTagDialogProps {
@@ -28,27 +28,17 @@ interface AddTagDialogContentProps {
   onClose: () => void
 }
 
+const defaultTagData = buildTagData()
+
 const EditTagDialogContent: FC<AddTagDialogContentProps> = ({
   onClose,
 }) => {
   const createTag$ = useCreateTag$()
-  const form = useForm<EditableTagData>({ values: { name: '', slug: '' } })
-  const { watch, setValue, formState } = form
+  const form = useForm<{ tag: TagData }>({
+    values: { tag: defaultTagData },
+  })
 
-  useEffect(() => {
-    const subscription = watch((post, { name }) => {
-      switch (name) {
-        case 'name':
-          if (formState.dirtyFields.slug) return
-          setValue('slug', formatSlug(post.name || ''))
-          break
-      }
-    })
-
-    return () => subscription.unsubscribe()
-  }, [ watch, setValue, formState ])
-
-  const onSubmit = form.handleSubmit(async (tag) => {
+  const onSubmit = form.handleSubmit(async ({ tag }) => {
     await createTag$.mutateAsync({ tag: tag })
     onClose()
   })
@@ -56,37 +46,7 @@ const EditTagDialogContent: FC<AddTagDialogContentProps> = ({
   return (
     <DialogContent>
       <Stack gap={4}>
-        <Controller
-          control={form.control}
-          name="name"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextField
-              label="name"
-              value={field.value}
-              size="small"
-              required
-              onChange={field.onChange}
-              disabled={createTag$.isPending}
-            />
-          )}
-        />
-
-        <Controller
-          control={form.control}
-          name="slug"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextField
-              label="slug"
-              value={field.value}
-              size="small"
-              required
-              onChange={(event) => field.onChange(formatSlug(event.target.value))}
-              disabled={createTag$.isPending}
-            />
-          )}
-        />
+        <TagForm control={form.control} disabled={createTag$.isPending} />
 
         <Stack direction="row" gap={1} justifyContent="flex-end">
           <Button

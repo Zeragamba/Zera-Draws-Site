@@ -38,7 +38,7 @@ export const PostTagsField: FC<PostTagsFieldProps> = ({
     const newTags = tags.filter(tag => tag.id === null) as NewTagData[]
     if (newTags.length >= 0) {
       const createdTags = await Promise.all(newTags.map(tag => {
-        const tagPayload = { name: tag.name, slug: formatSlug(tag.name) }
+        const tagPayload = { name: tag.name, slug: formatSlug(tag.name), featured: false }
         return createTag$.mutateAsync({ tag: tagPayload })
       }))
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_22_235026) do
+ActiveRecord::Schema.define(version: 2023_12_22_192115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_235026) do
     t.integer "position", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "image_id"
     t.index ["name"], name: "index_galleries_on_name"
     t.index ["position"], name: "index_galleries_on_position"
     t.index ["slug"], name: "index_galleries_on_slug"
@@ -76,6 +77,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_235026) do
     t.string "slug", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "featured", default: false
     t.index ["name"], name: "index_tags_on_name", unique: true
     t.index ["slug"], name: "index_tags_on_slug", unique: true
   end
@@ -100,5 +102,6 @@ ActiveRecord::Schema.define(version: 2023_04_22_235026) do
     t.index ["viewer_id"], name: "index_views_on_viewer_id"
   end
 
+  add_foreign_key "galleries", "images"
   add_foreign_key "views", "posts"
 end

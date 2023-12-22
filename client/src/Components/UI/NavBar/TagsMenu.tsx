@@ -1,4 +1,5 @@
 import { Box, Menu, MenuItem, TextField } from '@mui/material'
+import { sortArray, sortBy } from 'dyna-sort'
 import React, { FC, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -6,6 +7,7 @@ import { NavBarLink } from './NavBarLink'
 import { TagData } from '../../Tags/TagData'
 import { filterTags, TagFilter } from '../../Tags/TagFilter'
 import { useAllTags$ } from '../../Tags/TagsApi'
+import { byFeatured, byTagName } from '../../Tags/TagSorters'
 import { useIsMobile } from '../ScreenSize'
 
 export const TagsMenu: FC = () => {
@@ -25,10 +27,11 @@ export const TagsMenu: FC = () => {
   if (filterText) {
     tagFilter.name = filterText
   } else if (activeTags.length >= MIN_TAGS_FOR_SEARCH) {
-    tagFilter.minPosts = 10
+    tagFilter.featured = true
   }
 
   const filteredTags = filterTags(activeTags, tagFilter)
+  const sortedTags = sortArray(filteredTags, sortBy(byFeatured, byTagName))
 
   const onTagClick = (tag: TagData) => {
     setMenuOpen(false)
@@ -76,7 +79,7 @@ export const TagsMenu: FC = () => {
 
         {allTags$.isPending && <MenuItem disabled>Loading...</MenuItem>}
 
-        {filteredTags.map(tag => (
+        {sortedTags.map(tag => (
           <MenuItem
             key={tag.id}
             onClick={() => onTagClick(tag)}

@@ -8,6 +8,7 @@ class TagView < ApplicationView
       num_posts: tag.tagged_posts.released.count,
       created_at: tag.created_at,
       updated_at: tag.updated_at,
+      featured: tag.featured,
     }
   end
 
