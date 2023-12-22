@@ -23,11 +23,14 @@ export const TagsMenu: FC = () => {
   const activeTags = allTags$.data?.filter(tag => tag.num_posts >= 1) ?? []
 
   const tagFilter: TagFilter = {}
+  const numFeatured = activeTags.filter((tag) => tag.featured).length
 
   if (filterText) {
     tagFilter.name = filterText
-  } else if (activeTags.length >= MIN_TAGS_FOR_SEARCH) {
+  } else if (numFeatured >= 1) {
     tagFilter.featured = true
+  } else if (activeTags.length >= MIN_TAGS_FOR_SEARCH) {
+    tagFilter.minPosts = 15
   }
 
   const filteredTags = filterTags(activeTags, tagFilter)
