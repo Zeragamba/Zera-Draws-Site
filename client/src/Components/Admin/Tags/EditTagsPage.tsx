@@ -1,6 +1,6 @@
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Grid, Paper, Stack, Typography } from '@mui/material'
+import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import { sortArray } from 'dyna-sort'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -25,54 +25,57 @@ export const EditTagsPage: FC = () => {
 
   return (
     <Paper sx={{ padding: 2 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Stack direction="row" justifyContent="space-between">
-            <AddTagButton />
-            {emptyTags && <DeleteEmptyTagsButton />}
-          </Stack>
-        </Grid>
+      <Stack gap={2}>
+        <Stack direction="row" justifyContent="space-between">
+          <AddTagButton />
+          {emptyTags && <DeleteEmptyTagsButton />}
+        </Stack>
 
         {sortArray(allTags, byTagName).map(tag => (
-          <Grid item sm={12} md={6} lg={4} key={tag.id}>
-            <Stack
-              component={Paper}
-              variant="outlined"
-              gap={1}
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              sx={{ padding: 2 }}
-            >
+          <Stack
+            key={tag.id}
+            component={Paper}
+            variant="outlined"
+            gap={1}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{
+              padding: 2,
+              transition: 'background-color 250ms',
+              '&:hover': {
+                backgroundColor: 'hsla(0deg, 0%, 0%, 5%)',
+              },
+            }}
+          >
+            <Box sx={{ flexGrow: 1 }}>
               <Typography>{tag.name}</Typography>
+            </Box>
 
-              <Stack direction="row" gap={2} alignItems="center">
-                <Button
-                  component="a"
-                  href={`/tag/${tag.slug}`}
-                  onClick={(event) => {
-                    event.preventDefault()
-                    navigate(`/tag/${tag.slug}`)
-                  }}
-                >
-                  {tag.num_posts} posts
-                </Button>
+            <Button
+              component="a"
+              href={`/tag/${tag.slug}`}
+              onClick={(event) => {
+                event.preventDefault()
+                navigate(`/tag/${tag.slug}`)
+              }}
+            >
+              {tag.num_posts} posts
+            </Button>
 
-                <Button
-                  size="small"
-                  sx={{ alignItems: 'stretch' }}
-                  startIcon={<FontAwesomeIcon icon={faEdit} />}
-                  onClick={() => setActiveTag(tag)}
-                >
-                  Edit
-                </Button>
-              </Stack>
-            </Stack>
+            <Button
+              size="small"
+              sx={{ alignItems: 'stretch' }}
+              startIcon={<FontAwesomeIcon icon={faEdit} />}
+              onClick={() => setActiveTag(tag)}
+            >
+              Edit
+            </Button>
 
             <EditTagDialog tagId={tag.id} open={activeTag?.id === tag.id} onClose={() => setActiveTag(null)} />
-          </Grid>
+          </Stack>
         ))}
-      </Grid>
+      </Stack>
     </Paper>
   )
 }
