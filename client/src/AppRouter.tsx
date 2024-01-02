@@ -1,18 +1,25 @@
 import React from 'react'
-import { Navigate, RouteObject } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 
 import { AboutPage } from './Components/About/AboutPage'
 import { AdminLayout } from './Components/Admin/AdminLayout'
 import { AdminRoutes } from './Components/Admin/Routes'
 import { ArchivePage } from './Components/Archive/ArchivePage'
-import { HomePage } from './Components/HomePage'
+import { AllPostsGallery } from './Components/Gallery/Galleries/AllPostsGallery'
 import { LatestPostPage } from './Components/Posts/LatestPostPage'
 import { EditPostPage, NewPostPage, ViewPostPage } from './Components/Posts/Pages'
 import { ViewTagPage } from './Components/Tags/ViewTagPage'
 import { LoginPage } from './Components/User/Login/Pages'
+import { MainLayout } from './Theme/ZeraDark'
 
-export const routes: RouteObject[] = [
-  { index: true, element: <HomePage /> },
+export const appRouter = createBrowserRouter([
+  {
+    path: '/',
+    element: <MainLayout />,
+    children: [
+      { path: '/', element: <AllPostsGallery /> },
+    ],
+  },
 
   { path: 'login', element: <LoginPage /> },
   { path: 'about', element: <AboutPage /> },
@@ -30,4 +37,4 @@ export const routes: RouteObject[] = [
   { path: 'tag/:tagId/:postId', element: <ViewPostPage /> },
 
   { path: '*', element: <Navigate to={'/'} replace /> },
-]
+])

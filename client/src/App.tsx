@@ -6,14 +6,14 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React, { FC } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 
+import { appRouter } from './AppRouter'
 import backgroundImage from './Assets/dark_geometric.png'
 import { AgeGateProvider } from './Components/User/AgeGate'
 import { Config } from './Config'
 import { queryClient } from './Lib/QueryClient'
-import { darkTheme } from './Lib/Theme'
-import { routes } from './Routes'
+import { MuiTheme } from './Theme/ZeraDark'
 
 const AppStyles: SxProps = {
   overflow: 'auto',
@@ -26,12 +26,12 @@ const AppStyles: SxProps = {
 export const App: FC = () => {
   return (
     <AgeGateProvider>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={MuiTheme}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <QueryClientProvider client={queryClient}>
             <DndProvider backend={HTML5Backend}>
               <Box id="app-root" sx={AppStyles}>
-                <RouterProvider router={createBrowserRouter(routes)} />
+                <RouterProvider router={appRouter} />
               </Box>
 
               <div id="modal-root" />
