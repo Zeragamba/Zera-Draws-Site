@@ -31,6 +31,7 @@ export const NavItem: FC<NavItemProps> = ({
     }
 
     if (to) {
+      event.preventDefault()
       return navigate(to)
     }
   }

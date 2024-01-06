@@ -18,6 +18,10 @@ export const appRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: '/', element: <AllPostsGallery /> },
+      { path: 'post/:postId', element: <ViewPostPage /> },
+
+      { path: 'tag/:tagId', element: <ViewTagPage /> },
+      { path: 'tag/:tagId/:postId', element: <ViewPostPage /> },
     ],
   },
 
@@ -30,11 +34,7 @@ export const appRouter = createBrowserRouter([
   { path: 'archive', element: <ArchivePage /> },
 
   { path: 'post/new', element: <NewPostPage /> },
-  { path: 'post/:postId', element: <ViewPostPage /> },
   { path: 'post/:postId/edit', element: <EditPostPage /> },
-
-  { path: 'tag/:tagId', element: <ViewTagPage /> },
-  { path: 'tag/:tagId/:postId', element: <ViewPostPage /> },
 
   { path: '*', element: <Navigate to={'/'} replace /> },
 ])

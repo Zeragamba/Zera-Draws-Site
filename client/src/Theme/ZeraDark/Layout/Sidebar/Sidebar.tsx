@@ -2,6 +2,7 @@ import { faAngleRight, faBars, faChevronLeft, faDoorOpen, faGears, faPlus } from
 import { Box, Chip, Divider, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import React, { FC, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { NavItem } from './NavItem'
 import { SidebarGroup } from './SidebarGroup'
@@ -16,6 +17,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: FC<SidebarProps> = () => {
+  const navigate = useNavigate()
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
   const [ open, setOpen ] = useState<boolean>(isSmallScreen)
@@ -58,9 +60,19 @@ export const Sidebar: FC<SidebarProps> = () => {
       {open && (
         <>
           <SidebarGroup>
-            <Box sx={{ color: 'primary.light' }}>
-              <Typography variant={'h1'}>Zeragamba</Typography>
-            </Box>
+            <Typography variant={'h1'}>
+              <Box
+                component="a"
+                href={'/'}
+                onClick={(event) => {
+                  event.preventDefault()
+                  navigate('/')
+                }}
+                sx={{ color: 'primary.light', textDecoration: 'none' }}
+              >
+                Zeragamba
+              </Box>
+            </Typography>
           </SidebarGroup>
 
           {isAdmin && (
@@ -94,12 +106,12 @@ export const Sidebar: FC<SidebarProps> = () => {
             <>
               <SidebarGroup>
                 <NavItem
-                  label={'Featured'}
-                  to={'/featured'}
-                />
-                <NavItem
                   label={'All'}
                   to={'/'}
+                />
+                <NavItem
+                  label={'Featured'}
+                  to={'/tag/featured'}
                 />
                 <NavItem
                   label={'Latest'}

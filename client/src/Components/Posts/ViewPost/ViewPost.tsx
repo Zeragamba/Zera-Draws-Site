@@ -89,8 +89,8 @@ export const ViewPost: FC<ViewPostProps> = ({
 
   recordView(post.id)
 
-  // Ensure the active og-injector is in range. It could be out of range due to the postId changing
-  // and the og-injector not being updated yet
+  // Ensure the active index is in range. It could be out of range due to the postId changing
+  // and the index was not updated yet
   const imageIndex: number = activeImageIndex >= post.images.length ? 0 : activeImageIndex
   const activeImage = post.images[imageIndex]
 

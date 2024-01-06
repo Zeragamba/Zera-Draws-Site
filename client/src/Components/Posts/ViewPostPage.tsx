@@ -4,7 +4,6 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { PostData } from './PostData'
 import { getPostUrl } from './PostsApi'
 import { ViewPost } from './ViewPost/ViewPost'
-import { PublicLayout } from '../Layouts'
 
 export const ViewPostPage: FC = () => {
   const { postId, tagId, galleryId } = useParams()
@@ -19,8 +18,6 @@ export const ViewPostPage: FC = () => {
   }
 
   return (
-    <PublicLayout thinHeader tagId={tagId} galleryId={galleryId}>
-      <ViewPost postId={postId} onPostChange={onPostChange} />
-    </PublicLayout>
+    <ViewPost postId={postId} onPostChange={onPostChange} />
   )
 }
