@@ -1,5 +1,5 @@
 import { faAngleRight, faBars, faChevronLeft, faDoorOpen, faGears, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Box, Divider, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Chip, Divider, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import React, { FC, useEffect, useState } from 'react'
 
@@ -7,6 +7,8 @@ import { NavItem } from './NavItem'
 import { SidebarGroup } from './SidebarGroup'
 import { SidebarTags } from './SidebarTags'
 import { SocialsGroup } from './SocialsGroup'
+import { FeatureFlag } from '../../../../Components/SiteMeta/SiteMetaData'
+import { useFeatureFlag } from '../../../../Components/SiteMeta/UseSiteMeta'
 import { useIsAdmin, useLogout } from '../../../../Components/User/UsersApi'
 import { FontAwesomeIcon } from '../../../../Lib/Icons/FontAwesomeIcon'
 
@@ -19,6 +21,8 @@ export const Sidebar: FC<SidebarProps> = () => {
   const [ open, setOpen ] = useState<boolean>(isSmallScreen)
   const [ showTags, setShowTags ] = useState<boolean>(false)
 
+  const commissionsEnabled = useFeatureFlag(FeatureFlag.Commissions)
+  const requestsEnabled = useFeatureFlag(FeatureFlag.Requests)
   const isAdmin = useIsAdmin()
   const logout$ = useLogout()
 
@@ -111,8 +115,18 @@ export const Sidebar: FC<SidebarProps> = () => {
               <Divider sx={{ borderColor: grey[500] }} />
 
               <SidebarGroup>
-                <NavItem label="Commissions (Closed)" to={'/'} />
-                <NavItem label="Requests (Closed)" to={'/'} />
+                {commissionsEnabled && (
+                  <NavItem
+                    label="Commissions"
+                    adornments={{ right: <Chip size="small" label="Closed" color="error" variant="outlined" /> }}
+                  />
+                )}
+                {requestsEnabled && (
+                  <NavItem
+                    label="Requests"
+                    adornments={{ right: <Chip size="small" label="Closed" color="error" variant="outlined" /> }}
+                  />
+                )}
               </SidebarGroup>
             </>
           )}

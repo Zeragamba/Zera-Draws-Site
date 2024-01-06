@@ -8,6 +8,8 @@ export enum MetaDataGroup {
 
 export enum FeatureFlag {
   AboutPage = 'AboutPage',
+  Commissions = 'Commissions',
+  Requests = 'Requests',
 }
 
 export type FeatureFlags = Partial<Record<FeatureFlag, 'true' | 'false'>>
