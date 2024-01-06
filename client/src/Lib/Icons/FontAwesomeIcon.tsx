@@ -3,6 +3,7 @@ import { SvgIcon } from '@mui/material'
 import { forwardRef } from 'react'
 
 type FontAwesomeSvgIconProps = {
+  className?: string
   icon: IconDefinition
   spin?: boolean
   fixedWidth?: boolean
@@ -10,14 +11,14 @@ type FontAwesomeSvgIconProps = {
 
 export const FontAwesomeIcon = forwardRef<SVGSVGElement, FontAwesomeSvgIconProps>(
   function FontAwesomeIcon(props, ref) {
-    const { icon } = props
+    const { className, icon } = props
 
     const {
       icon: [ width, height, , , svgPathData ],
     } = icon
 
     return (
-      <SvgIcon ref={ref} viewBox={`0 0 ${width} ${height}`}>
+      <SvgIcon ref={ref} viewBox={`0 0 ${width} ${height}`} className={className}>
         {typeof svgPathData === 'string' ? (
           <path d={svgPathData} />
         ) : (
