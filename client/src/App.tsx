@@ -12,6 +12,7 @@ import { appRouter } from './AppRouter'
 import backgroundImage from './Assets/dark_geometric.png'
 import { AgeGateProvider } from './Components/User/AgeGate'
 import { Config } from './Config'
+import { PreloadProvider } from './Lib/PreloadProvider'
 import { queryClient } from './Lib/QueryClient'
 import { MuiTheme } from './Theme/ZeraDark'
 
@@ -29,6 +30,8 @@ export const App: FC = () => {
       <ThemeProvider theme={MuiTheme}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <QueryClientProvider client={queryClient}>
+            <PreloadProvider />
+            
             <DndProvider backend={HTML5Backend}>
               <Box id="app-root" sx={AppStyles}>
                 <RouterProvider router={appRouter} />
