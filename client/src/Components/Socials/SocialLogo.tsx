@@ -1,17 +1,28 @@
-import { FC } from 'react'
+import {
+  faDeviantart,
+  faDiscord,
+  faMastodon,
+  faPixiv,
+  faThreads,
+  faTumblr,
+  faTwitter,
+} from '@fortawesome/free-brands-svg-icons'
+import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
+import { FC, ReactNode } from 'react'
 
+import { FontAwesomeIcon } from '../../Lib/Icons/FontAwesomeIcon'
+import { IconBluesky } from '../../Lib/Icons/IconBluesky'
 import { SocialPlatform } from '../SiteMeta/SiteMetaData'
 
-import styles from './SocialLogo.module.scss'
-
-import deviantArtLogo from './Logos/deviantart-logo.svg'
-import discordLogo from './Logos/discord-logo.svg'
-import twitterLogo from './Logos/twitter-logo.svg'
-
-export const socialLogo: Record<SocialPlatform, string> = {
-  [SocialPlatform.deviantArt]: deviantArtLogo,
-  [SocialPlatform.twitter]: twitterLogo,
-  [SocialPlatform.discord]: discordLogo,
+export const socialLogo: Record<SocialPlatform, ReactNode> = {
+  [SocialPlatform.bluesky]: <IconBluesky />,
+  [SocialPlatform.deviantArt]: <FontAwesomeIcon icon={faDeviantart} />,
+  [SocialPlatform.discord]: <FontAwesomeIcon icon={faDiscord} />,
+  [SocialPlatform.mastodon]: <FontAwesomeIcon icon={faMastodon} />,
+  [SocialPlatform.pixiv]: <FontAwesomeIcon icon={faPixiv} />,
+  [SocialPlatform.threads]: <FontAwesomeIcon icon={faThreads} />,
+  [SocialPlatform.tumblr]: <FontAwesomeIcon icon={faTumblr} />,
+  [SocialPlatform.twitter]: <FontAwesomeIcon icon={faTwitter} />,
 }
 
 interface SocialLogoProps {
@@ -19,6 +30,5 @@ interface SocialLogoProps {
 }
 
 export const SocialLogo: FC<SocialLogoProps> = ({ platform }) => {
-  const logo = socialLogo[platform]
-  return (<img className={styles.logo} src={logo} alt={platform} />)
+  return socialLogo[platform] || <FontAwesomeIcon icon={faCircleQuestion} />
 }

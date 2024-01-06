@@ -13,13 +13,18 @@ export enum FeatureFlag {
 export type FeatureFlags = Partial<Record<FeatureFlag, 'true' | 'false'>>
 
 export enum SocialPlatform {
-  discord = 'Discord',
+  bluesky = 'Bluesky',
   deviantArt = 'Deviant Art',
+  discord = 'Discord',
+  mastodon = 'Mastodon',
+  pixiv = 'Pixiv',
+  threads = 'Threads',
+  tumblr = 'Tumblr',
   twitter = 'Twitter',
 }
 
-
-export type SocialsMeta = Partial<Record<SocialPlatform, string>>
+export type SocialUrl = string
+export type SocialsMeta = Partial<Record<SocialPlatform, SocialUrl>>
 
 export type ContentMeta = {
   about?: string

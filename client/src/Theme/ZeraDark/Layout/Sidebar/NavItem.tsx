@@ -1,10 +1,11 @@
 import { Stack, Typography } from '@mui/material'
-import { FC, ReactNode } from 'react'
+import { FC, MouseEventHandler, ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface NavItemProps {
   label?: string | null
-  to: string
+  to?: string
+  onClick?: () => void
   adornments?: {
     left?: ReactNode
     right?: ReactNode
@@ -15,6 +16,7 @@ interface NavItemProps {
 export const NavItem: FC<NavItemProps> = ({
   label,
   to,
+  onClick,
   adornments,
   children,
 }) => {
@@ -22,15 +24,22 @@ export const NavItem: FC<NavItemProps> = ({
 
   const isExternalLink = !!(to?.match(/^https?:\/\//))
 
-  const onClick = () => {
-    navigate(to)
+  const onLinkClick: MouseEventHandler = (event) => {
+    if (onClick) {
+      event.preventDefault()
+      return onClick()
+    }
+
+    if (to) {
+      return navigate(to)
+    }
   }
 
   return (
     <Stack
-      component="a"
+      component={to ? 'a' : 'div'}
       href={to}
-      onClick={onClick}
+      onClick={onLinkClick}
       target={isExternalLink ? '_blank' : undefined}
       sx={{
         padding: 2,
