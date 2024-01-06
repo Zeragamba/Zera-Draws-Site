@@ -1,8 +1,8 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Component, MouseEventHandler, ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 
+import { FontAwesomeIcon } from '../../Lib/Icons/FontAwesomeIcon'
 import { DialogLayout } from '../Layouts/DialogLayout'
 
 import styles from './Dialog.module.scss'

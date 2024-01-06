@@ -1,8 +1,8 @@
 import { faCalendar } from '@fortawesome/free-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { format } from 'date-fns'
 import React, { FC } from 'react'
 
+import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
 import { TagChip } from '../../Tags/TagChip'
 
 interface ScheduledChipProps {

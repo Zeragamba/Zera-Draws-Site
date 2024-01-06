@@ -1,5 +1,4 @@
 import { faCheck, faDownload, faSpinner, faWarning } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
 import { format as formatDate } from 'date-fns'
@@ -8,6 +7,7 @@ import { FC } from 'react'
 import { ViewMetricsData } from './ViewMetricsData'
 import { toCsv } from '../../../Lib/CsvExporter'
 import { createFile, downloadFile } from '../../../Lib/FileUtils'
+import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
 
 interface MetricsExportBtnProps {
   metrics: ViewMetricsData[]

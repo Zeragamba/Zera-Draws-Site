@@ -1,8 +1,8 @@
 import { faAngleDown, faAnglesLeft, faAnglesRight, faAngleUp, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Paper, Stack, SxProps, Typography } from '@mui/material'
 import React, { FC, MouseEventHandler } from 'react'
 
+import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
 import { noop } from '../../../Lib/Noop'
 import { AltImagesView } from '../../Images/AltImagesView'
 import { usePageContext } from '../../Layouts/PageContext'

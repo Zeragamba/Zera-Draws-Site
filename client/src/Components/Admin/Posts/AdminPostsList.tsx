@@ -1,10 +1,10 @@
 import { faEdit, faSort, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Box, Button, Dialog, DialogContent, Paper, Stack, SxProps, Typography } from '@mui/material'
 import React, { FC, MouseEventHandler, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { useHref, useNavigate } from 'react-router-dom'
 
+import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
 import { EditPostForm } from '../../Posts/Forms/EditPostForm'
 import { PostData } from '../../Posts/PostData'
 import { useEditPost$ } from '../../Posts/PostsApi/EditPost'

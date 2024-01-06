@@ -1,5 +1,4 @@
 import { faTag } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { sortArray } from 'dyna-sort'
 import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { TagChip } from './TagChip'
 import { TagData } from './TagData'
 import { byTagName } from './TagSorters'
+import { FontAwesomeIcon } from '../../Lib/Icons/FontAwesomeIcon'
 
 interface TagListProps {
   tags: TagData[]

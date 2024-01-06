@@ -1,10 +1,10 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Dialog, DialogContent, Stack } from '@mui/material'
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { TagForm } from './TagForm'
+import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
 import { buildTagData, TagData } from '../../Tags/TagData'
 import { useCreateTag$ } from '../../Tags/TagsApi'
 

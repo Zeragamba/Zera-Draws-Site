@@ -1,9 +1,9 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from '@mui/material'
 import { FC, useState } from 'react'
 
 import { AddTagDialog } from './AddTagDialog'
+import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
 
 
 export const AddTagButton: FC = () => {

@@ -4,6 +4,8 @@ import { forwardRef } from 'react'
 
 type FontAwesomeSvgIconProps = {
   icon: IconDefinition
+  spin?: boolean
+  fixedWidth?: boolean
 };
 
 export const FontAwesomeIcon = forwardRef<SVGSVGElement, FontAwesomeSvgIconProps>(
