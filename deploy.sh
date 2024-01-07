@@ -1,6 +1,6 @@
 #!/bin/bash -l
 set -e
-source $HOME/.bashrc
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Load NVM
 
 set -o allexport
 source .env
