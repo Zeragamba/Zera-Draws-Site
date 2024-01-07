@@ -33,7 +33,7 @@ export const NavItem: FC<NavItemProps> = ({
       return onClick()
     }
 
-    if (to) {
+    if (to && !isExternalLink) {
       event.preventDefault()
       return navigate(to)
     }

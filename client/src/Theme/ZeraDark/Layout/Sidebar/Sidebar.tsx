@@ -1,7 +1,8 @@
 import { faAngleRight, faBars, faChevronLeft, faDoorOpen, faGears, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Box, Chip, Divider, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Chip, Divider, Stack, SxProps, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import React, { FC, useEffect, useState } from 'react'
+import classnames from 'classnames'
+import React, { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { NavItem } from './NavItem'
@@ -13,14 +14,30 @@ import { useFeatureFlag } from '../../../../Components/SiteMeta/UseSiteMeta'
 import { useIsAdmin, useLogout } from '../../../../Components/User/UsersApi'
 import { FontAwesomeIcon } from '../../../../Lib/Icons/FontAwesomeIcon'
 
+const styles = {
+  backgroundColor: 'hsla(0deg, 0%, 40%, 25%)',
+  padding: 2,
+  height: '100%',
+  color: grey[50],
+
+  '&.isSmallScreen.open': {
+    backgroundColor: 'hsla(0deg, 0%, 10%, 95%)',
+    width: 260,
+  },
+} satisfies SxProps
+
 interface SidebarProps {
+  open: boolean
+  setOpen: (value: boolean) => void
 }
 
-export const Sidebar: FC<SidebarProps> = () => {
+export const Sidebar: FC<SidebarProps> = ({
+  open,
+  setOpen,
+}) => {
   const navigate = useNavigate()
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
-  const [ open, setOpen ] = useState<boolean>(isSmallScreen)
   const [ showTags, setShowTags ] = useState<boolean>(false)
 
   const commissionsEnabled = useFeatureFlag(FeatureFlag.Commissions)
@@ -28,21 +45,16 @@ export const Sidebar: FC<SidebarProps> = () => {
   const isAdmin = useIsAdmin()
   const logout$ = useLogout()
 
-  useEffect(() => {
-    if (!isSmallScreen && !open) return setOpen(true)
-    if (isSmallScreen && open) return setOpen(false)
-  }, [ isSmallScreen ])
-
   return (
-    <Stack sx={{ padding: 2, height: '100%', color: grey[50], zIndex: 100 }}>
+    <Stack sx={styles} className={classnames({ open, isSmallScreen })}>
       {!open && (
         <>
           <Box
-            onClick={() => setOpen(!open)}
+            onClick={() => setOpen(true)}
             sx={{
               padding: 2,
               borderRadius: 2,
-              height: open ? 'auto' : '100%',
+              height: '100%',
               transition: 'background-color 250ms',
               backgroundColor: 'hsla(0deg, 0%, 100%, 0%)',
               '&:hover': {
@@ -59,6 +71,14 @@ export const Sidebar: FC<SidebarProps> = () => {
 
       {open && (
         <>
+          {isSmallScreen && (
+            <NavItem
+              label="Hide Menu"
+              onClick={() => setOpen(false)}
+              adornments={{ left: <FontAwesomeIcon icon={faChevronLeft} /> }}
+            />
+          )}
+
           <SidebarGroup>
             <Typography variant={'h1'}>
               <Box
