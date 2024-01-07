@@ -1,5 +1,6 @@
 #!/bin/bash -l
 set -e
+source $HOME/.bashrc
 
 set -o allexport
 source .env
