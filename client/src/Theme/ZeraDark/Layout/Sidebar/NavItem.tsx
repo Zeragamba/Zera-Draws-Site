@@ -1,6 +1,7 @@
 import { Stack, Typography } from '@mui/material'
+import classnames from 'classnames'
 import { FC, MouseEventHandler, ReactNode } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 interface NavItemProps {
   label?: string | null
@@ -20,9 +21,11 @@ export const NavItem: FC<NavItemProps> = ({
   adornments,
   children,
 }) => {
+  const location = useLocation()
   const navigate = useNavigate()
 
   const isExternalLink = !!(to?.match(/^https?:\/\//))
+  const isActive = location.pathname === to
 
   const onLinkClick: MouseEventHandler = (event) => {
     if (onClick) {
@@ -42,6 +45,9 @@ export const NavItem: FC<NavItemProps> = ({
       href={to}
       onClick={onLinkClick}
       target={isExternalLink ? '_blank' : undefined}
+      className={classnames({
+        'active': isActive,
+      })}
       sx={{
         padding: 2,
         cursor: 'pointer',
@@ -53,6 +59,14 @@ export const NavItem: FC<NavItemProps> = ({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 2,
+
+        '&.active': {
+          paddingLeft: '4px',
+          borderLeft: '4px solid red',
+          borderTopLeftRadius: 0,
+          borderBottomLeftRadius: 0,
+          borderLeftColor: 'primary.light',
+        },
 
         '&:hover': {
           backgroundColor: 'hsla(0deg, 0%, 100%, 15%)',

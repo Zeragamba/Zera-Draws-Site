@@ -7,7 +7,6 @@ import { Sidebar } from './Sidebar'
 const styles = {
   Layout: {
     flexDirection: 'row',
-    gap: 2,
     height: '100vh',
     width: '100vw',
   },
@@ -17,8 +16,8 @@ const styles = {
   Main: {
     flexGrow: 1,
     overflowX: 'auto',
-    padding: 2,
-    paddingLeft: 0,
+    padding: 4,
+    paddingLeft: 4,
   },
 } satisfies Record<string, SxProps>
 
