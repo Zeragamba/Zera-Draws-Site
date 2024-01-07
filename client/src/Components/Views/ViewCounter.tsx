@@ -1,8 +1,8 @@
 import { faEye } from '@fortawesome/free-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FC } from 'react'
 
 import { usePostViews$ } from './ViewsQueries'
+import { FontAwesomeIcon } from '../../Lib/Icons/FontAwesomeIcon'
 import { PostData } from '../Posts/PostData'
 import { TagChip } from '../Tags/TagChip'
 

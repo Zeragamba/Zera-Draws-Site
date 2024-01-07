@@ -1,5 +1,4 @@
 import { faRightToBracket, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   Button,
   Dialog,
@@ -14,6 +13,7 @@ import {
 } from '@mui/material'
 import React, { FC, useState } from 'react'
 
+import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
 import { noop } from '../../../Lib/Noop'
 import { TagData } from '../../Tags/TagData'
 import { useAllTags$ } from '../../Tags/TagsApi'

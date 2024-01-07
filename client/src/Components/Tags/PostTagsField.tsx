@@ -1,5 +1,4 @@
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Autocomplete, createFilterOptions, Stack, TextField } from '@mui/material'
 import React, { FC } from 'react'
 
@@ -7,6 +6,7 @@ import { TagData } from './TagData'
 import { useAllTags$, useCreateTag$ } from './TagsApi'
 import { byTagName } from './TagSorters'
 import { formatSlug } from '../../Lib/FilenameUtils'
+import { FontAwesomeIcon } from '../../Lib/Icons/FontAwesomeIcon'
 
 type NewTagData = { id: null; name: string }
 type TagOption = TagData | NewTagData

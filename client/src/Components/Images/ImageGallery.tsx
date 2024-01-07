@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 import { ImageData } from './ImageData'
-import { ImagePreloader } from './ImagePreloader'
+import { useImagePreloader } from './ImagePreloader'
 import { GalleryItem } from '../Gallery/GalleryItem'
 import { GalleryWrapper } from '../Gallery/GalleryWrapper'
 
@@ -16,13 +16,14 @@ export const ImageGallery: FC<ImageGalleryProps> = ({
   rowHeight,
   images,
 }) => {
+  const preloadImage = useImagePreloader()
+
+  images.map((image) => preloadImage({ image, size: 'high' }))
+
   return (
     <GalleryWrapper rowHeight={rowHeight}>
       {images.map((image) => (
-        <React.Fragment key={image.id}>
-          <GalleryItem image={image} released={true} onClick={() => onImageClick(image)} />
-          <ImagePreloader image={image} size="high" />
-        </React.Fragment>
+        <GalleryItem key={image.id} image={image} released={true} onClick={() => onImageClick(image)} />
       ))}
     </GalleryWrapper>
   )

@@ -1,33 +1,43 @@
 import React from 'react'
-import { Navigate, RouteObject } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 
 import { AboutPage } from './Components/About/AboutPage'
 import { AdminLayout } from './Components/Admin/AdminLayout'
 import { AdminRoutes } from './Components/Admin/Routes'
 import { ArchivePage } from './Components/Archive/ArchivePage'
-import { HomePage } from './Components/HomePage'
-import { LatestPostPage } from './Components/Posts/LatestPostPage'
-import { EditPostPage, NewPostPage, ViewPostPage } from './Components/Posts/Pages'
+import { AllPostsGallery } from './Components/Gallery/Galleries/AllPostsGallery'
+import { EditPostPage, NewPostPage } from './Components/Posts/Pages'
 import { ViewTagPage } from './Components/Tags/ViewTagPage'
 import { LoginPage } from './Components/User/Login/Pages'
+import { SiteTheme } from './Theme/ZeraDark'
 
-export const routes: RouteObject[] = [
-  { index: true, element: <HomePage /> },
+const { Pages, Layouts } = SiteTheme
+
+export const appRouter = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layouts.MainLayout />,
+    children: [
+      { path: '/', element: <AllPostsGallery /> },
+
+      { path: 'latest', element: <Pages.LatestPost /> },
+
+      { path: 'post/:postId', element: <Pages.ViewPost /> },
+
+      { path: 'tag/:tagId', element: <ViewTagPage /> },
+      { path: 'tag/:tagId/:postId', element: <Pages.ViewPost /> },
+    ],
+  },
 
   { path: 'login', element: <LoginPage /> },
   { path: 'about', element: <AboutPage /> },
-  { path: 'latest', element: <LatestPostPage /> },
 
   { path: 'admin', element: <AdminLayout />, children: AdminRoutes },
 
   { path: 'archive', element: <ArchivePage /> },
 
   { path: 'post/new', element: <NewPostPage /> },
-  { path: 'post/:postId', element: <ViewPostPage /> },
   { path: 'post/:postId/edit', element: <EditPostPage /> },
 
-  { path: 'tag/:tagId', element: <ViewTagPage /> },
-  { path: 'tag/:tagId/:postId', element: <ViewPostPage /> },
-
   { path: '*', element: <Navigate to={'/'} replace /> },
-]
+])

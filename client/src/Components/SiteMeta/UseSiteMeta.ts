@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 
-import { ContentMeta, FeatureFlags, MetaDataGroup, SiteMetaData, SocialsMeta } from './SiteMetaData'
+import { ContentMeta, FeatureFlag, FeatureFlags, MetaDataGroup, SiteMetaData, SocialsMeta } from './SiteMetaData'
 import { SiteMetaQueries } from './SiteMetaQueries'
 
 export const useSiteMeta = (group: string): UseQueryResult<SiteMetaData> => {
@@ -11,6 +11,10 @@ export const useSiteMeta = (group: string): UseQueryResult<SiteMetaData> => {
 
 export const useFeatureFlags = (): FeatureFlags => {
   return (useSiteMeta(MetaDataGroup.Features).data || {})
+}
+
+export const useFeatureFlag = (flag: FeatureFlag): boolean => {
+  return useFeatureFlags()[flag] === 'true'
 }
 
 export const useSocials = (): SocialsMeta => {

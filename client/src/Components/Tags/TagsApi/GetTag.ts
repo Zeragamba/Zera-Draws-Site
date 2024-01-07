@@ -3,7 +3,6 @@ import { QueryClient, useQuery, useQueryClient, UseQueryResult } from '@tanstack
 import { TagQueryKeys } from './QueryKeys'
 import { ModelResponse, ServerClient } from '../../../Lib/ServerApi'
 import { TagData } from '../TagData'
-import { byTagName } from '../TagSorters'
 
 type GetTagParams = { tag: string }
 type GetTagRes = ModelResponse<'tag', TagData>
@@ -17,15 +16,6 @@ export const setTagCache = (queryClient: QueryClient, tag: TagData) => {
   queryClient.setQueryData(TagQueryKeys.getTag(tag.id), tag)
   queryClient.setQueryData(TagQueryKeys.getTag(tag.slug), tag)
   queryClient.setQueryData(TagQueryKeys.getTag(tag.name), tag)
-  queryClient.setQueryData(TagQueryKeys.getAllTags(), (tags: TagData[] | undefined) => {
-    if (tags === undefined) {
-      return [ tag ]
-    } else if (tags.some(t => t.id === tag.id)) {
-      return tags.map(t => t.id === tag.id ? tag : t).sort(byTagName.ascending())
-    } else {
-      return [ ...tags, tag ].sort(byTagName.ascending())
-    }
-  })
 }
 
 export const useTag = (params: GetTagParams): UseQueryResult<TagData> => {

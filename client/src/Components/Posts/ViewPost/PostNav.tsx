@@ -1,60 +1,64 @@
-import { faAngleDown, faAnglesLeft, faAnglesRight, faAngleUp, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDown, faAnglesLeft, faAnglesRight, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 import { Button, Paper, Stack, SxProps, Typography } from '@mui/material'
-import React, { FC, MouseEventHandler } from 'react'
+import React, { FC, MouseEventHandler, useState } from 'react'
 
-import { noop } from '../../../Lib/Noop'
+import { useHotkey } from '../../../Lib/Hooks/UseHotkey'
+import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
 import { AltImagesView } from '../../Images/AltImagesView'
+import { ImageData } from '../../Images/ImageData'
 import { usePageContext } from '../../Layouts/PageContext'
 import { useIsMobile } from '../../UI/ScreenSize'
 import { PostData } from '../PostData'
-import { getPostUrl, useNextPost, usePost$, usePrevPost } from '../PostsApi'
+import { getPostUrl } from '../PostsApi'
 
-import styles from './ViewPost.module.scss'
+import styles from '../../../Theme/ZeraDark/Post/ViewPost.module.scss'
 
 interface PostNavProps {
-  postId: PostData['id']
-  imageIndex?: number
+  post: PostData
+  nextPost?: PostData
+  prevPost?: PostData
   onPostChange: (post: PostData) => void
-  onImageChange?: (index: number) => void
+  onImageChange: (image: ImageData) => void
 }
 
 export const PostNav: FC<PostNavProps> = ({
-  postId,
-  imageIndex = 0,
+  post,
+  nextPost,
+  prevPost,
   onPostChange,
-  onImageChange = noop,
+  onImageChange,
 }) => {
+  const [ imageIndex, setImageIndex ] = useState<number>(0)
   const { tagId, galleryId } = usePageContext()
-  const { data: curPost } = usePost$({ postId })
-  const { data: nextPost, isPending: nextPending } = useNextPost(postId)
-  const { data: prevPost, isPending: prevPending } = usePrevPost(postId)
 
-  const images = curPost?.images || []
+  const images = post.images
 
+  const onPrevImage = () => onImageIndexChange(imageIndex - 1)
+  const onPrevPost = () => prevPost && onPostChange(prevPost)
   const onPrevPostClick: MouseEventHandler = (event) => {
-    if (!prevPost) return
     event.preventDefault()
-    onPostChange(prevPost)
+    onPrevPost()
   }
 
+  const onNextImage = () => onImageIndexChange(imageIndex + 1)
+  const onNextPost = () => nextPost && onPostChange(nextPost)
   const onNextPostClick: MouseEventHandler = (event) => {
-    if (!nextPost) return
     event.preventDefault()
-    onPostChange(nextPost)
+    onNextPost()
   }
 
-  const onPrevImageClick: MouseEventHandler = (event) => {
-    event.preventDefault()
-    if (imageIndex <= 0) return
-    onImageChange(imageIndex - 1)
+  const onImageIndexChange = (newIndex: number) => {
+    if (newIndex <= 0) newIndex = 0
+    if (newIndex >= images.length - 1) newIndex = images.length - 1
+
+    onImageChange(images[newIndex])
+    setImageIndex(newIndex)
   }
 
-  const onNextImageClick: MouseEventHandler = (event) => {
-    event.preventDefault()
-    if (imageIndex >= images.length - 1) return
-    onImageChange(imageIndex + 1)
-  }
+  useHotkey('ArrowLeft', () => onNextPost())
+  useHotkey('ArrowRight', () => onPrevPost())
+  useHotkey('ArrowDown', () => onNextImage())
+  useHotkey('ArrowUp', () => onPrevImage())
 
   return (
     <Stack gap={2}>
@@ -65,7 +69,7 @@ export const PostNav: FC<PostNavProps> = ({
             href={nextPost ? getPostUrl({ postId: nextPost.slug, tagId, galleryId }) : '/'}
             onClick={onNextPostClick}
             variant="contained"
-            startIcon={<FontAwesomeIcon icon={nextPending ? faSpinner : faAnglesLeft} spin={nextPending} />}
+            startIcon={<FontAwesomeIcon icon={faAnglesLeft} />}
             disabled={!nextPost}
           >
             Next
@@ -76,8 +80,14 @@ export const PostNav: FC<PostNavProps> = ({
           <ImagesNav
             curImage={imageIndex}
             numImages={images.length}
-            onPrevImageClick={onPrevImageClick}
-            onNextImageClick={onNextImageClick}
+            onPrevImageClick={(event) => {
+              event.preventDefault()
+              onImageIndexChange(imageIndex - 1)
+            }}
+            onNextImageClick={(event) => {
+              event.preventDefault()
+              onImageIndexChange(imageIndex + 1)
+            }}
           />
         )}
 
@@ -87,7 +97,7 @@ export const PostNav: FC<PostNavProps> = ({
             href={prevPost ? getPostUrl({ postId: prevPost.slug, tagId, galleryId }) : '/'}
             onClick={onPrevPostClick}
             variant="contained"
-            endIcon={<FontAwesomeIcon icon={prevPending ? faSpinner : faAnglesRight} spin={prevPending} />}
+            endIcon={<FontAwesomeIcon icon={faAnglesRight} />}
             disabled={!prevPost}
           >
             Prev
@@ -98,7 +108,7 @@ export const PostNav: FC<PostNavProps> = ({
       {images.length > 1 && (
         <AltImagesView
           images={images}
-          onImageClick={onImageChange}
+          onImageClick={onImageIndexChange}
           activeIndex={imageIndex}
         />
       )}

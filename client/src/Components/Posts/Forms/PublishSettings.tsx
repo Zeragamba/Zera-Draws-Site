@@ -1,5 +1,4 @@
 import { faCalendar, faCheck, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, ButtonGroup, MenuItem, Select, SelectChangeEvent, SelectProps, Stack } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import classnames from 'classnames'
@@ -20,6 +19,7 @@ import {
 import React, { FC } from 'react'
 import { Control, useController } from 'react-hook-form'
 
+import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
 import { PostData } from '../PostData'
 
 import styles from './PublishToggle.module.scss'

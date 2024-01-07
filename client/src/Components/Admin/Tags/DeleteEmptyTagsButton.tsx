@@ -1,8 +1,8 @@
 import { faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Stack, Typography } from '@mui/material'
 import React, { FC, useState } from 'react'
 
+import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
 import { noop } from '../../../Lib/Noop'
 import { TagData } from '../../Tags/TagData'
 import { useDeleteEmptyTags$ } from '../../Tags/TagsApi/DeleteEmptyTags'

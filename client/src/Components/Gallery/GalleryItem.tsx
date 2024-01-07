@@ -1,5 +1,4 @@
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Box, SxProps, Typography } from '@mui/material'
 import { format, parseISO } from 'date-fns'
 import React, { FC, MouseEventHandler, ReactNode } from 'react'
@@ -7,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 import { useGalleryContext } from './GalleryContext'
 import { useInViewport } from '../../Lib/Hooks/UseInViewport'
+import { FontAwesomeIcon } from '../../Lib/Icons/FontAwesomeIcon'
 import { ImageData } from '../Images/ImageData'
 import { AsyncImg } from '../UI/AsyncImg'
 

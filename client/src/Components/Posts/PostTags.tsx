@@ -1,11 +1,11 @@
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Stack } from '@mui/material'
 import { parseISO } from 'date-fns'
 import React, { FC } from 'react'
 
 import { PostData } from './PostData'
 import { ScheduledChip } from './ViewPost/ScheduledChip'
+import { FontAwesomeIcon } from '../../Lib/Icons/FontAwesomeIcon'
 import { TagChip } from '../Tags/TagChip'
 import { TagList } from '../Tags/TagList'
 import { useIsAdmin } from '../User/UsersApi'

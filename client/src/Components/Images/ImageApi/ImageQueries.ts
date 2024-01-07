@@ -26,4 +26,3 @@ export const useImagePreload = (src: string) => {
   useQueryClient().prefetchQuery(ImageQueries.get(src))
     .catch(errorHandler)
 }
-
