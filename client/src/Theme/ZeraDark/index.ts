@@ -1,2 +1,1 @@
-export * from './Layout'
-export * from './MuiTheme'
+export { SiteTheme } from './SiteTheme'

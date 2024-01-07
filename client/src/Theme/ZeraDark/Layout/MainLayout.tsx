@@ -2,7 +2,7 @@ import { Box, Stack, SxProps } from '@mui/material'
 import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { Sidebar } from './Sidebar/Sidebar'
+import { Sidebar } from './Sidebar'
 
 const styles = {
   Layout: {
