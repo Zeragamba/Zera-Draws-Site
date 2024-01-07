@@ -1,4 +1,4 @@
-import { Box, Stack, SxProps, useMediaQuery, useTheme } from '@mui/material'
+import { Box, SxProps, useMediaQuery, useTheme } from '@mui/material'
 import classnames from 'classnames'
 import { FC, useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
@@ -6,25 +6,17 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { Sidebar } from './Sidebar'
 
 const styles = {
-  Layout: {
-    flexDirection: 'row',
-    minHeight: '100%',
-    width: '100%',
-  },
-  Sidebar: {
-    flexShrink: 0,
+  '.Sidebar': {
+    position: 'fixed',
+    top: 0,
+    left: 0,
     width: 260,
-
-    '&.mobile': {
-      width: 56,
-      zIndex: 100,
-    },
+    zIndex: 100,
   },
-  Main: {
-    flexGrow: 1,
-    overflowX: 'auto',
+  '.Main': {
+    paddingLeft: '260px',
   },
-  Overlay: {
+  '.Overlay': {
     width: '100%',
     height: '100%',
     backgroundColor: 'hsla(0deg, 0%, 0%, 15%)',
@@ -32,6 +24,11 @@ const styles = {
     top: 0,
     left: 0,
     zIndex: 90,
+  },
+
+  '&.mobile': {
+    '.Main': { paddingLeft: '56px' },
+    '.Sidebar': { width: '56px' },
   },
 } satisfies Record<string, SxProps>
 
@@ -56,18 +53,19 @@ export const MainLayout: FC<MainLayoutProps> = () => {
   }, [ isSmallScreen ])
 
   return (
-    <Stack sx={styles.Layout}>
-      <Box sx={styles.Sidebar} className={classnames({ mobile: isSmallScreen })}>
+    <Box className={classnames({ Layout: true, mobile: isSmallScreen })} sx={styles}>
+      <Box className={'Sidebar'}>
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
       </Box>
-      <Box sx={styles.Main}>
+      <Box className={'Main'}>
         {isSmallScreen && sidebarOpen && (
-          <Box sx={styles.Overlay} onClick={() => setSidebarOpen(false)} />
+          <Box className={'Overlay'} onClick={() => setSidebarOpen(false)} />
         )}
-        <Box sx={{ padding: 4 }}>
+
+        <Box sx={{ padding: isSmallScreen ? 2 : 4 }}>
           <Outlet />
         </Box>
       </Box>
-    </Stack>
+    </Box>
   )
 }

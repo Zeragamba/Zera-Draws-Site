@@ -1,5 +1,5 @@
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { Box, Button, Paper, Stack } from '@mui/material'
+import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import React, { FC } from 'react'
 import ReactMarkdown from 'react-markdown'
 
@@ -31,17 +31,6 @@ export const ViewPost: FC<ViewPostProps> = ({
   return (
     <>
       <Stack gap={2}>
-        <Box className={styles.imgWrapper} onClick={ctrl.onImageClick}>
-          <AsyncImg src={ctrl.currentImageSrc} />
-        </Box>
-
-        <PostNav
-          post={post}
-          nextPost={ctrl.nextPost}
-          prevPost={ctrl.prevPost}
-          onPostChange={onPostChange}
-          onImageChange={ctrl.setCurrentImage}
-        />
 
         <Paper sx={{ padding: 2 }}>
           <Stack gap={2}>
@@ -66,10 +55,25 @@ export const ViewPost: FC<ViewPostProps> = ({
                 </Box>
               )}
             </Stack>
+          </Stack>
+        </Paper>
 
-            <Stack direction="row" gap={2} alignItems="center" flexWrap="wrap">
-              <PostTags post={post} />
-            </Stack>
+        <Box className={styles.imgWrapper} onClick={ctrl.onImageClick}>
+          <AsyncImg src={ctrl.currentImageSrc} />
+        </Box>
+
+        <PostNav
+          post={post}
+          nextPost={ctrl.nextPost}
+          prevPost={ctrl.prevPost}
+          onPostChange={onPostChange}
+          onImageChange={ctrl.setCurrentImage}
+        />
+
+        <Paper sx={{ padding: 2 }}>
+          <Stack gap={2}>
+            <Typography variant={'h3'}>Tags</Typography>
+            <PostTags post={post} />
           </Stack>
         </Paper>
 
