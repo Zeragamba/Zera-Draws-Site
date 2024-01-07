@@ -17,7 +17,8 @@ import { FontAwesomeIcon } from '../../../../Lib/Icons/FontAwesomeIcon'
 const styles = {
   backgroundColor: 'hsla(0deg, 0%, 40%, 25%)',
   padding: 2,
-  height: '100%',
+  height: '100dvh',
+  position: 'fixed',
   color: grey[50],
 
   '&.isSmallScreen.open': {
@@ -142,11 +143,7 @@ export const Sidebar: FC<SidebarProps> = ({
                   onClick={() => setShowTags(true)}
                   adornments={{ right: <FontAwesomeIcon icon={faAngleRight} /> }}
                 />
-              </SidebarGroup>
 
-              <Divider sx={{ borderColor: grey[500] }} />
-
-              <SidebarGroup>
                 {commissionsEnabled && (
                   <NavItem
                     label="Commissions"

@@ -8,10 +8,13 @@ import { Sidebar } from './Sidebar'
 const styles = {
   Layout: {
     flexDirection: 'row',
-    height: '100dvh',
-    width: '100dvw',
+    minHeight: '100%',
+    width: '100%',
   },
   Sidebar: {
+    flexShrink: 0,
+    width: 260,
+
     '&.mobile': {
       width: 56,
       zIndex: 100,
@@ -20,14 +23,14 @@ const styles = {
   Main: {
     flexGrow: 1,
     overflowX: 'auto',
-    padding: 4,
-    paddingLeft: 4,
   },
   Overlay: {
     width: '100%',
     height: '100%',
     backgroundColor: 'hsla(0deg, 0%, 0%, 15%)',
     position: 'absolute',
+    top: 0,
+    left: 0,
     zIndex: 90,
   },
 } satisfies Record<string, SxProps>
@@ -61,7 +64,9 @@ export const MainLayout: FC<MainLayoutProps> = () => {
         {isSmallScreen && sidebarOpen && (
           <Box sx={styles.Overlay} onClick={() => setSidebarOpen(false)} />
         )}
-        <Outlet />
+        <Box sx={{ padding: 4 }}>
+          <Outlet />
+        </Box>
       </Box>
     </Stack>
   )
