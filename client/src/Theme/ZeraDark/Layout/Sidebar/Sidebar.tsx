@@ -160,14 +160,14 @@ export const Sidebar: FC<SidebarProps> = ({
                   />
                 )}
               </SidebarGroup>
+
+              <Box sx={{ flexGrow: 1 }} />
+
+              <Divider sx={{ borderColor: grey[500] }} />
+
+              <SocialsGroup />
             </>
           )}
-
-          <Box sx={{ flexGrow: 1 }} />
-
-          <Divider sx={{ borderColor: grey[500] }} />
-
-          <SocialsGroup />
         </>
       )}
     </Stack>
