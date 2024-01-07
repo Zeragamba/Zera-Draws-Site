@@ -8,8 +8,8 @@ import { Sidebar } from './Sidebar'
 const styles = {
   Layout: {
     flexDirection: 'row',
-    height: '100vh',
-    width: '100vw',
+    height: '100dvh',
+    width: '100dvw',
   },
   Sidebar: {
     '&.mobile': {
