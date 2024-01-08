@@ -30,6 +30,13 @@ const styles = {
     '.Main': { paddingLeft: '56px' },
     '.Sidebar': { width: '56px' },
   },
+  Overlay: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'hsla(0deg, 0%, 0%, 15%)',
+    position: 'absolute',
+    zIndex: 90,
+  },
 } satisfies Record<string, SxProps>
 
 interface MainLayoutProps {
@@ -54,7 +61,7 @@ export const MainLayout: FC<MainLayoutProps> = () => {
 
   return (
     <Box className={classnames({ Layout: true, mobile: isSmallScreen })} sx={styles}>
-      <Box className={'Sidebar'}>
+      <Box className={'Sidebar'} className={classnames({ mobile: isSmallScreen })}>
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
       </Box>
       <Box className={'Main'}>
@@ -63,7 +70,9 @@ export const MainLayout: FC<MainLayoutProps> = () => {
         )}
 
         <Box sx={{ padding: isSmallScreen ? 2 : 4 }}>
-          <Outlet />
+          {isSmallScreen && sidebarOpen && (
+          <Box sx={styles.Overlay} onClick={() => setSidebarOpen(false)} />
+        )}<Outlet />
         </Box>
       </Box>
     </Box>
