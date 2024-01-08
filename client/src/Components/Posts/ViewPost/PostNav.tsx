@@ -1,6 +1,7 @@
-import { faAngleDown, faAnglesLeft, faAnglesRight, faAngleUp } from '@fortawesome/free-solid-svg-icons'
-import { Button, Paper, Stack, SxProps, Typography } from '@mui/material'
-import React, { FC, MouseEventHandler, useState } from 'react'
+import { faAngleLeft, faAngleRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons'
+import { Box, Button, Paper, Stack, SxProps, Typography } from '@mui/material'
+import classnames from 'classnames'
+import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
 
 import { useHotkey } from '../../../Lib/Hooks/UseHotkey'
 import { FontAwesomeIcon } from '../../../Lib/Icons/FontAwesomeIcon'
@@ -28,8 +29,11 @@ export const PostNav: FC<PostNavProps> = ({
   onPostChange,
   onImageChange,
 }) => {
+  const isMobile = useIsMobile()
   const [ imageIndex, setImageIndex ] = useState<number>(0)
   const { tagId, galleryId } = usePageContext()
+
+  useEffect(() => setImageIndex(0), [ post ])
 
   const images = post.images
 
@@ -62,8 +66,8 @@ export const PostNav: FC<PostNavProps> = ({
 
   return (
     <Stack gap={2}>
-      <div className={styles.nav}>
-        <div>
+      <Box className={classnames(styles.nav, { [styles.mobile]: isMobile })}>
+        <Box className={styles.nextPost}>
           <Button
             component="a"
             href={nextPost ? getPostUrl({ postId: nextPost.slug, tagId, galleryId }) : '/'}
@@ -74,24 +78,26 @@ export const PostNav: FC<PostNavProps> = ({
           >
             Next
           </Button>
-        </div>
+        </Box>
 
         {images.length > 1 && (
-          <ImagesNav
-            curImage={imageIndex}
-            numImages={images.length}
-            onPrevImageClick={(event) => {
-              event.preventDefault()
-              onImageIndexChange(imageIndex - 1)
-            }}
-            onNextImageClick={(event) => {
-              event.preventDefault()
-              onImageIndexChange(imageIndex + 1)
-            }}
-          />
+          <Box className={styles.imageNav}>
+            <ImagesNav
+              curImage={imageIndex}
+              numImages={images.length}
+              onPrevImageClick={(event) => {
+                event.preventDefault()
+                onImageIndexChange(imageIndex - 1)
+              }}
+              onNextImageClick={(event) => {
+                event.preventDefault()
+                onImageIndexChange(imageIndex + 1)
+              }}
+            />
+          </Box>
         )}
 
-        <div>
+        <Box className={styles.prevPost}>
           <Button
             component="a"
             href={prevPost ? getPostUrl({ postId: prevPost.slug, tagId, galleryId }) : '/'}
@@ -102,8 +108,8 @@ export const PostNav: FC<PostNavProps> = ({
           >
             Prev
           </Button>
-        </div>
-      </div>
+        </Box>
+      </Box>
 
       {images.length > 1 && (
         <AltImagesView
@@ -164,13 +170,10 @@ export const ImagesNav: FC<ImagesNavProps> = ({
       <Button
         className="prev"
         onClick={onPrevImageClick}
-        startIcon={<FontAwesomeIcon
-          icon={faAngleUp}
-        />}
         disabled={curImage <= 0}
-        variant="contained"
+        variant="text"
       >
-        Prev
+        <FontAwesomeIcon icon={faAngleLeft} />
       </Button>
 
       <Typography className="counter">
@@ -180,13 +183,10 @@ export const ImagesNav: FC<ImagesNavProps> = ({
       <Button
         className="next"
         onClick={onNextImageClick}
-        endIcon={<FontAwesomeIcon
-          icon={faAngleDown}
-        />}
         disabled={curImage >= numImages - 1}
-        variant="contained"
+        variant="text"
       >
-        Next
+        <FontAwesomeIcon icon={faAngleRight} />
       </Button>
     </Paper>
   )
