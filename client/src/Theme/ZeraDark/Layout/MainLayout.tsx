@@ -61,7 +61,7 @@ export const MainLayout: FC<MainLayoutProps> = () => {
 
   return (
     <Box className={classnames({ Layout: true, mobile: isSmallScreen })} sx={styles}>
-      <Box className={'Sidebar'} className={classnames({ mobile: isSmallScreen })}>
+      <Box className={classnames('Sidebar', { mobile: isSmallScreen })}>
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
       </Box>
       <Box className={'Main'}>
@@ -71,8 +71,9 @@ export const MainLayout: FC<MainLayoutProps> = () => {
 
         <Box sx={{ padding: isSmallScreen ? 2 : 4 }}>
           {isSmallScreen && sidebarOpen && (
-          <Box sx={styles.Overlay} onClick={() => setSidebarOpen(false)} />
-        )}<Outlet />
+            <Box sx={styles.Overlay} onClick={() => setSidebarOpen(false)} />
+          )}
+          <Outlet />
         </Box>
       </Box>
     </Box>

@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { FC, useEffect, useState } from 'react'
 
-import { TagQueryKeys } from '../Components/Tags/TagsApi/QueryKeys'
+import { TagQueryKeys } from './Tags/TagsApi/QueryKeys'
 
 export const PreloadProvider: FC = () => {
   const [ preloaded, setPreloaded ] = useState<boolean>(false)

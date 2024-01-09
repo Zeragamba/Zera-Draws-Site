@@ -1,10 +1,10 @@
 import { sortArray, sortBy } from 'dyna-sort'
 import { useState } from 'react'
 
-import { TagData } from '../../Components/Tags/TagData'
-import { filterTags, TagFilter } from '../../Components/Tags/TagFilter'
-import { useAllTags$ } from '../../Components/Tags/TagsApi'
-import { byFeatured, byTagName } from '../../Components/Tags/TagSorters'
+import { TagData } from './TagData'
+import { filterTags, TagFilter } from './TagFilter'
+import { useAllTags$ } from './TagsApi'
+import { byFeatured, byTagName } from './TagSorters'
 
 export type UseTagMenuReturn = {
   isPending: boolean

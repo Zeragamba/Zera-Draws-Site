@@ -1,0 +1,19 @@
+@import "../../../common";
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(var(--gallery-cols), 1fr);
+}
+
+.metadata {
+  position: absolute;
+  width: 100%;
+  padding: $padding-sm;
+  transition: top 250ms ease, bottom 250ms ease;
+  color: hsl(0, 0%, 10%);
+  background: hsla(0, 100%, 100%, 0.75);
+
+  &.metadataTop { top: -100%; }
+
+  &.metadataBottom { bottom: -100%; }
+}

@@ -2,9 +2,7 @@ import { FC, ReactNode } from 'react'
 
 import { NavItem } from './NavItem'
 import { SidebarGroup } from './SidebarGroup'
-import { SocialPlatform } from '../../../../Components/SiteMeta/SiteMetaData'
-import { useSocials } from '../../../../Components/SiteMeta/UseSiteMeta'
-import { SocialLogo } from '../../../../Components/Socials/SocialLogo'
+import { SocialLogo, SocialPlatform, useSocials } from '../../../../Lib'
 
 
 interface SocialsGroupProps {

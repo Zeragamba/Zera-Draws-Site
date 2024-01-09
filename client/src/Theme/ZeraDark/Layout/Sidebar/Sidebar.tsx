@@ -9,10 +9,7 @@ import { NavItem } from './NavItem'
 import { SidebarGroup } from './SidebarGroup'
 import { SidebarTags } from './SidebarTags'
 import { SocialsGroup } from './SocialsGroup'
-import { FeatureFlag } from '../../../../Components/SiteMeta/SiteMetaData'
-import { useFeatureFlag } from '../../../../Components/SiteMeta/UseSiteMeta'
-import { useIsAdmin, useLogout } from '../../../../Components/User/UsersApi'
-import { FontAwesomeIcon } from '../../../../Lib/Icons/FontAwesomeIcon'
+import { FeatureFlag, FontAwesomeIcon, useFeatureFlag, useIsAdmin, useLogout } from '../../../../Lib'
 
 const styles = {
   backgroundColor: 'hsla(0deg, 0%, 40%, 25%)',

@@ -9,11 +9,9 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { RouterProvider } from 'react-router-dom'
 
 import { appRouter } from './AppRouter'
-import { AgeGateProvider } from './Components/User/AgeGate'
 import { Config } from './Config'
-import { PreloadProvider } from './Lib/PreloadProvider'
-import { queryClient } from './Lib/QueryClient'
-import { SiteTheme } from './Theme/ZeraDark'
+import { AgeGateProvider, PreloadProvider, queryClient } from './Lib'
+import { SiteTheme } from './Theme/./DefaultTheme'
 
 export const App: FC = () => {
   return (
