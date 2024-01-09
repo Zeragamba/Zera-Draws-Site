@@ -5,7 +5,8 @@ import { Outlet } from 'react-router-dom'
 import { Header } from './Header/Header'
 import { Layout, LayoutStyles } from './Layout'
 import { PageContextProvider } from './PageContext'
-import { AgeGatePage, useAgeGate } from '../../../Lib/UI/AgeGate'
+import { useAgeGate } from '../../../Lib'
+import { AgeGatePage } from '../Users/AgeGatePage'
 
 interface PublicLayoutProps {
   thinHeader?: boolean
@@ -36,7 +37,7 @@ export const PublicLayout: Layout<PublicLayoutProps> = ({
         </PageContextProvider>
 
         <Box sx={{ textAlign: 'center', padding: 2 }}>
-          &copy; Zeragamba {new Date().getFullYear()}
+          &copy; AyylaGTS {new Date().getFullYear()}
         </Box>
       </Box>
     </Box>

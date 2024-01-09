@@ -1,5 +1,5 @@
 import { PostData } from './PostData'
-import { useImagePreloader } from '../../Theme/./DefaultTheme/images/ImagePreloader'
+import { useImagePreloader } from '../Images/UseImagePreloader'
 
 interface PostPreloaderProps {
   post: PostData

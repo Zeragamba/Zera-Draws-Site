@@ -8,16 +8,18 @@ import {
   faTwitter,
 } from '@fortawesome/free-brands-svg-icons'
 import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
-import { FC, ReactNode } from 'react'
+import { FC, ReactElement } from 'react'
 
 import { FontAwesomeIcon } from './FontAwesomeIcon'
 import { IconBluesky } from './IconBluesky'
-import { SocialPlatform } from '../SiteMeta/SiteMetaData'
+import { IconGumroad } from './IconGumroad'
+import { SocialPlatform } from '../SiteMeta'
 
-export const socialLogo: Record<SocialPlatform, ReactNode> = {
+export const socialLogo: Record<SocialPlatform, ReactElement> = {
   [SocialPlatform.bluesky]: <IconBluesky />,
   [SocialPlatform.deviantArt]: <FontAwesomeIcon icon={faDeviantart} />,
   [SocialPlatform.discord]: <FontAwesomeIcon icon={faDiscord} />,
+  [SocialPlatform.gumroad]: <IconGumroad />,
   [SocialPlatform.mastodon]: <FontAwesomeIcon icon={faMastodon} />,
   [SocialPlatform.pixiv]: <FontAwesomeIcon icon={faPixiv} />,
   [SocialPlatform.threads]: <FontAwesomeIcon icon={faThreads} />,

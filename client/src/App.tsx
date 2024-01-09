@@ -8,21 +8,22 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { RouterProvider } from 'react-router-dom'
 
-import { appRouter } from './AppRouter'
 import { Config } from './Config'
 import { AgeGateProvider, PreloadProvider, queryClient } from './Lib'
-import { SiteTheme } from './Theme/./DefaultTheme'
+import { appRouter } from './Theme/ZeraDark/AppRouter'
+import { appStyles } from './Theme/ZeraDark/AppStyles'
+import { muiTheme } from './Theme/ZeraDark/MuiTheme'
 
 export const App: FC = () => {
   return (
     <AgeGateProvider>
-      <ThemeProvider theme={SiteTheme.MuiTheme}>
+      <ThemeProvider theme={muiTheme}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <QueryClientProvider client={queryClient}>
             <PreloadProvider />
 
             <DndProvider backend={HTML5Backend}>
-              <Box id="app-root" sx={SiteTheme.AppStyles}>
+              <Box id="app-root" sx={appStyles}>
                 <RouterProvider router={appRouter} />
               </Box>
 
