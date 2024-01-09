@@ -10,16 +10,16 @@ import { EditPostsPage } from './Theme/DefaultTheme/Admin/Posts/EditPostsPage'
 import { EditSocialsPage } from './Theme/DefaultTheme/Admin/Socials/EditSocialsPage'
 import { EditTagsPage } from './Theme/DefaultTheme/Admin/Tags/EditTagsPage'
 import { AllPostsGallery } from './Theme/DefaultTheme/Galleries/AllPostsGallery'
-import { PublicLayout } from './Theme/DefaultTheme/Layout'
 import { LatestPostPage, ViewPostPage } from './Theme/DefaultTheme/Posts'
 import { ArchivePage } from './Theme/DefaultTheme/Posts/ArchivePage'
 import { ViewTagPage } from './Theme/DefaultTheme/Tags/ViewTagPage'
 import { LoginPage } from './Theme/DefaultTheme/Users/Login/Pages'
+import { MainLayout } from './Theme/ZeraDark/Layout'
 
 export const appRouter = createBrowserRouter([
   {
     path: '/',
-    element: <PublicLayout />,
+    element: <MainLayout />,
     children: [
       { path: '/', element: <AllPostsGallery /> },
 

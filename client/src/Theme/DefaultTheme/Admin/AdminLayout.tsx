@@ -19,13 +19,11 @@ export const AdminLayout: FC = () => {
   return (
     <Stack gap={2} direction={'row'} sx={{ flexGrow: 1, height: '100%' }}>
       <Paper>
-        <Box sx={{ position: 'sticky', top: 115 }}>
-          <AdminNavItem to="about" label="About Page" />
-          <AdminNavItem to="socials" label="Socials" />
-          <AdminNavItem to="tags" label="Tags" />
-          <AdminNavItem to="posts" label="Posts" />
-          <AdminNavItem to="metrics" label="Metrics" />
-        </Box>
+        <AdminNavItem to="about" label="About Page" />
+        <AdminNavItem to="socials" label="Socials" />
+        <AdminNavItem to="tags" label="Tags" />
+        <AdminNavItem to="posts" label="Posts" />
+        <AdminNavItem to="metrics" label="Metrics" />
       </Paper>
 
       <Box sx={{ flexGrow: 1 }}>
