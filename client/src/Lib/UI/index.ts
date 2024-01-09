@@ -1,5 +1,4 @@
 export * from './AgeGate'
-export * from './AsyncImg'
 export * from './ErrorAlert'
 export * from './InfiniteScroll'
 export * from './LoadingGate'

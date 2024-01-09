@@ -18,6 +18,7 @@ export enum SocialPlatform {
   bluesky = 'Bluesky',
   deviantArt = 'Deviant Art',
   discord = 'Discord',
+  gumroad = 'Gumroad',
   mastodon = 'Mastodon',
   pixiv = 'Pixiv',
   threads = 'Threads',

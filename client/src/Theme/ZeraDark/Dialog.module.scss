@@ -1,0 +1,55 @@
+@import "../../common";
+
+.curtain {
+  position: fixed;
+
+  z-index: 100;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  overflow-y: auto;
+  align-items: flex-start;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: hsla(0, 0, 0, 0.4);
+}
+
+.body {
+  position: relative;
+
+  max-width: 1000px;
+
+  margin: 0 auto;
+  padding: $padding-md
+}
+
+.closeBtn {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  font-size: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  color: $colour-light;
+  background: $colour-grey;
+  transition: background-color 250ms, color 250ms;
+
+  &:hover {
+    color: $colour-primary;
+    background: $colour-dark;
+  }
+
+  &:active {
+    color: $colour-primary;
+    background: $colour-dark;
+  }
+}

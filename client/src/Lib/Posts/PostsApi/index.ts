@@ -1,4 +1,6 @@
 export * from './CreatePost'
+export * from './DeletePost'
+export * from './EditPost'
 export * from './GetAllPosts'
 export * from './GetFirstPost'
 export * from './GetGalleryPosts'

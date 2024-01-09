@@ -1,7 +1,7 @@
 import { CSSProperties, FC, ImgHTMLAttributes } from 'react'
 
-import { Spinner } from '../../Theme/./DefaultTheme/Spinner/Spinner'
-import { useImage$ } from '../Images/ImageApi/ImageQueries'
+import { useImage$ } from '../../../Lib'
+import { Spinner } from '../Spinner/Spinner'
 
 type AsyncImageProps = ImgHTMLAttributes<HTMLImageElement>
 
