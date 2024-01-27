@@ -22,13 +22,15 @@ app.get([ '/latest' ], async (req, res) => {
   res.send(updatedHtml)
 })
 
-app.get('/post/:postId', async (req, res) => {
+app.get([
+  '/post/:postId',
+  '/tag/:tagId/:postId',
+], async (req, res) => {
   logger.info('Request received for post')
   const indexHtml = await getIndexHtml()
   const updatedHtml = await injectPostMeta(indexHtml, req.params.postId)
   res.send(updatedHtml)
 })
-
 
 app.get('*', async (req, res) => {
   logger.info('Request received')
