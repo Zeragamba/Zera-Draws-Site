@@ -19,7 +19,7 @@ import {
 import React, { FC } from 'react'
 import { Control, useController } from 'react-hook-form'
 
-import { FontAwesomeIcon } from '../../../../Lib/Icons/FontAwesomeIcon'
+import { FontAwesomeIcon } from '../../../../Lib'
 import { PostData } from '../../../../Lib/Posts/PostData'
 
 import styles from './PublishToggle.module.scss'
@@ -128,6 +128,7 @@ export const PublishSettings: FC<PublishToggleProps> = ({
           />
 
           <TimeSelect
+            variant={'outlined'}
             size="small"
             fullWidth
             onChange={onScheduledDateChange}
