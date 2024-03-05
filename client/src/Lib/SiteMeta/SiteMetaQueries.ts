@@ -7,6 +7,5 @@ export const SiteMetaQueries = createQueryKeys('siteMeta', {
   get: (group: string) => ({
     queryKey: [ group ],
     queryFn: () => ServerClient.get<SiteMetaData>(`/meta/${group}`),
-    staleTime: Infinity,
   }),
 })

@@ -7,10 +7,12 @@ export const metricsQueries = createQueryKeys('metrics', {
   views: (params: MetricsApi.ViewsParams) => ({
     queryKey: [ params ],
     queryFn: () => MetricsApi.views(params),
-    staleTime: 0,
   }),
 })
 
 export const useViewMetrics$ = (params: MetricsApi.ViewsParams = {}) => {
-  return useQuery({ ...metricsQueries.views(params) })
+  return useQuery({
+    ...metricsQueries.views(params),
+    staleTime: 0,
+  })
 }

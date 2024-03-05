@@ -128,6 +128,7 @@ export const PublishSettings: FC<PublishToggleProps> = ({
           />
 
           <TimeSelect
+            variant={'outlined'}
             size="small"
             fullWidth
             onChange={onScheduledDateChange}
