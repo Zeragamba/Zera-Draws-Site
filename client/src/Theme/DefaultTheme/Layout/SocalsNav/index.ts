@@ -1,0 +1,1 @@
+export { SocialsNav } from './SocialsNav'
