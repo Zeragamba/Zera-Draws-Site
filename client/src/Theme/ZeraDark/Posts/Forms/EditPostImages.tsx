@@ -3,8 +3,7 @@ import { FC } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
 import { PostImagePicker, PostImagePickerProps } from './PostImagePicker'
-import { EditableImage, ImageData } from '../../../../Lib/Images'
-import { useSortable } from '../../../../Lib/UI'
+import { EditableImage, ImageData , useSortable } from '../../../../Lib'
 import { ImagePicker } from '../../images/ImagePicker'
 
 interface EditPostImagesProps {

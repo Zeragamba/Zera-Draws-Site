@@ -3,10 +3,11 @@ import { createRoot } from 'react-dom/client'
 
 import { App } from './App'
 import reportWebVitals from './report-web-vitals'
+import { zeraDarkTheme } from './Theme/ZeraDark/ZeraDarkTheme'
 
 const rootEle = document.getElementById('root') as Element
 const root = createRoot(rootEle)
-root.render(<App />)
+root.render(<App theme={zeraDarkTheme} />)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

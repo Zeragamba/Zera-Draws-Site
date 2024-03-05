@@ -10,21 +10,23 @@ import { RouterProvider } from 'react-router-dom'
 
 import { Config } from './Config'
 import { AgeGateProvider, PreloadProvider, queryClient } from './Lib'
-import { appRouter } from './Theme/ZeraDark/AppRouter'
-import { appStyles } from './Theme/ZeraDark/AppStyles'
-import { muiTheme } from './Theme/ZeraDark/MuiTheme'
+import { AppTheme } from './Lib/AppTheme'
 
-export const App: FC = () => {
+interface AppProps {
+  theme: AppTheme
+}
+
+export const App: FC<AppProps> = ({ theme }) => {
   return (
     <AgeGateProvider>
-      <ThemeProvider theme={muiTheme}>
+      <ThemeProvider theme={theme.muiTheme}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <QueryClientProvider client={queryClient}>
             <PreloadProvider />
 
             <DndProvider backend={HTML5Backend}>
-              <Box id="app-root" sx={appStyles}>
-                <RouterProvider router={appRouter} />
+              <Box id="app-root" sx={theme.appStyles}>
+                <RouterProvider router={theme.appRouter} />
               </Box>
 
               <div id="modal-root" />

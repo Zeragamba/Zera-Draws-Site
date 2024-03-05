@@ -3,9 +3,9 @@ import { FC } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
 import { PostImagePicker, PostImagePickerProps } from './PostImagePicker'
-import { ImagePicker } from '../../../Theme/./DefaultTheme/images/ImagePicker'
-import { EditableImage, ImageData } from '../../Images/ImageData'
-import { useSortable } from '../../UI/UseSortable'
+import { ImagePicker } from '../../../Theme/ZeraDark/images/ImagePicker'
+import { EditableImage, ImageData } from '../../Images'
+import { useSortable } from '../../UI'
 
 interface EditPostImagesProps {
   images: ImageData[]
