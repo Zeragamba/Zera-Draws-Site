@@ -17,6 +17,7 @@ const styles = {
   height: '100dvh',
   position: 'fixed',
   color: grey[50],
+  maxWidth: 260,
 
   '&.isSmallScreen.open': {
     backgroundColor: 'hsla(0deg, 0%, 10%, 95%)',
