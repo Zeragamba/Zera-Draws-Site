@@ -2,7 +2,7 @@ import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
 import { cachePostData, getPostUrl } from './GetPost'
 import { postsQueryKeys } from './PostsQueryKeys'
-import { usePageContext } from '../../PageContext'
+import { usePageContext } from '../../../App/PageContext'
 import { ModelResponse, ServerClient } from '../../ServerApi'
 import { PostData } from '../PostData'
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { App } from './App'
+import { zeraDarkTheme } from '././Themes/ZeraDark/ZeraDarkTheme'
+import { App } from './App/App'
 import reportWebVitals from './report-web-vitals'
-import { zeraDarkTheme } from './Theme/ZeraDark/ZeraDarkTheme'
 
 const rootEle = document.getElementById('root') as Element
 const root = createRoot(rootEle)
