@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { PostData } from './PostData'
 import { useNextPost, usePrevPost } from './PostsApi'
 import { usePostPreloader } from './UsePostPreloader'
+import { useIsMobile } from '../Hooks/UseIsMobile'
 import { ImageData } from '../Images/ImageData'
-import { useIsMobile } from '../UI/ScreenSize'
 import { useRecordView } from '../Views/ViewHooks'
 
 export type UseViewPostOptions = {

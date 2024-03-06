@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 
 import * as Actions from './Actions'
-import { reorderItems } from '../../UI/UseSortable'
+import { reorderItems } from '../../Hooks/UseSortable'
 import { ImageData } from '../ImageData'
 
 export const imagesReducer = createReducer<ImageData[]>([], ({ addCase }) => {

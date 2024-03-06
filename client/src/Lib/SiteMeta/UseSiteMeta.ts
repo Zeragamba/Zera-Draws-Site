@@ -6,6 +6,7 @@ import { SiteMetaQueries } from './SiteMetaQueries'
 export const useSiteMeta = (group: string): UseQueryResult<SiteMetaData> => {
   return useQuery({
     ...SiteMetaQueries.get(group),
+    staleTime: Infinity,
   })
 }
 
