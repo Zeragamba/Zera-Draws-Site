@@ -2,7 +2,8 @@ import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { useViewPostPage } from '../../../../Lib'
-import { ViewPost } from '../../Components/Posts/ViewPost'
+import { ViewPost } from '../../Components'
+import { PostProvider } from '../../Components/Posts/PostProvider'
 import { LoadingPage } from '../LoadingPage'
 
 export const ViewPostPage: FC = () => {
@@ -12,6 +13,8 @@ export const ViewPostPage: FC = () => {
   if (!ctrl.post) return <Navigate to="/" />
 
   return (
-    <ViewPost post={ctrl.post} onPostChange={ctrl.onPostChange} />
+    <PostProvider post={ctrl.post} tag={ctrl.tag} gallery={ctrl.gallery}>
+      <ViewPost post={ctrl.post} onPostChange={ctrl.onPostChange} />
+    </PostProvider>
   )
 }

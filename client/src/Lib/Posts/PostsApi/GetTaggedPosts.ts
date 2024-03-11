@@ -7,7 +7,7 @@ import { tagQueryKeys } from '../../Tags/TagQueryKeys'
 import { PostData } from '../PostData'
 
 type Params = {
-  tag: string
+  tagId: string
   page?: number
   limit?: number
 }
@@ -15,18 +15,18 @@ type Params = {
 type ResponseBody = PagedModelResponse<'posts', PostData>
 
 export const getTaggedPosts = (params: Params): Promise<ResponseBody> => {
-  const { page = 0, tag } = params
-  return ServerClient.get<ResponseBody>(`/tag/${tag}/posts`, { params: { page } })
+  const { page = 0, tagId } = params
+  return ServerClient.get<ResponseBody>(`/tag/${tagId}/posts`, { params: { page } })
 }
 
-export const useTaggedPosts$ = ({ tag, limit = 100 }: Omit<Params, 'page'>): UseInfiniteQueryResult<PostData[]> => {
+export const useTaggedPosts$ = ({ tagId, limit = 100 }: Omit<Params, 'page'>): UseInfiniteQueryResult<PostData[]> => {
   const queryClient = useQueryClient()
 
   return useInfiniteQuery<ResponseBody, Error, PostData[], QueryKey, number>({
-    ...tagQueryKeys.get(tag)._ctx.posts,
+    ...tagQueryKeys.get(tagId)._ctx.posts,
     initialPageParam: 0,
     queryFn: async (ctx) => {
-      const res = await getTaggedPosts({ page: ctx.pageParam, tag, limit })
+      const res = await getTaggedPosts({ page: ctx.pageParam, tagId, limit })
       res.posts.forEach((post) => cachePostData(queryClient, post))
       return res
     },
