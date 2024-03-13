@@ -1,9 +1,8 @@
 import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { useViewPostPage } from '../../../../Lib'
+import { PostProvider, useViewPostPage } from '../../../../Lib'
 import { ViewPost } from '../../Components'
-import { PostProvider } from '../../Components/Posts/PostProvider'
 import { LoadingPage } from '../LoadingPage'
 
 export const ViewPostPage: FC = () => {

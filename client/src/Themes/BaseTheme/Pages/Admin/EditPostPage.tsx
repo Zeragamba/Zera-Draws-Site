@@ -1,9 +1,8 @@
 import React, { FC } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
+import { PostProvider , isNotFoundError, useCurrentUser, useIsAdmin, usePost$ } from '../../../../Lib'
 import { EditPostForm, ErrorAlert, QueryGate } from '../../Components'
-import { PostProvider } from '../../Components/Posts/PostProvider'
-import { isNotFoundError, useCurrentUser, useIsAdmin, usePost$ } from '../../Lib'
 import { AuthorizingPage, LoginPage } from '../Users'
 
 export const EditPostPage: FC = () => {

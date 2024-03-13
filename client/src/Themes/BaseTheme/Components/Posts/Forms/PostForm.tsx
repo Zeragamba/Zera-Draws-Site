@@ -19,7 +19,7 @@ import {
   parseFilename,
   PostData,
   TagData,
-} from '../../../Lib'
+} from '../../../../../Lib'
 import { PostTagsField, SelectedTagList } from '../../Tags'
 
 import styles from './PostForm.module.scss'

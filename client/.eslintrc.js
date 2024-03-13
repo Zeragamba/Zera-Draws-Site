@@ -51,6 +51,7 @@ module.exports = {
       argsIgnorePattern: '^_',
       varsIgnorePattern: '^_',
     }],
+    'react/no-children-prop': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'import/order': ['error', {

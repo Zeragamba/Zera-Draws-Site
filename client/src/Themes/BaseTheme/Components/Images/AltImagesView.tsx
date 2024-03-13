@@ -3,13 +3,7 @@ import classnames from 'classnames'
 import { FC } from 'react'
 
 import { AsyncImg } from './AsyncImg'
-import { ImageData } from '../../../../Lib'
-
-interface AltImagesViewProps {
-  onImageClick: (index: number) => void
-  activeIndex: number
-  images: ImageData[]
-}
+import { usePostImageCtrl } from '../../../../Lib'
 
 const styles: Record<string, SxProps> = {
   row: {
@@ -41,20 +35,23 @@ const styles: Record<string, SxProps> = {
   },
 }
 
-export const AltImagesView: FC<AltImagesViewProps> = ({
-  images,
-  activeIndex,
-  onImageClick,
-}) => {
+export const AltImagesView: FC = () => {
+  const ctrl = usePostImageCtrl()
+
+  if (ctrl.totalImages === 1) return null
+
   return (
     <Stack direction={'row'} gap={1} sx={styles.row}>
-      {images.map((image, index) => (
+      {ctrl.images.map((image, index) => (
         <Box
           key={image.id}
           sx={styles.imageWrapper}
-          onClick={() => onImageClick(index)}
+          onClick={(event) => {
+            event.preventDefault()
+            ctrl.onChangeImage(index)
+          }}
           className={classnames({
-            'active': index === activeIndex,
+            'active': index === ctrl.currentIndex,
           })}
         >
           <AsyncImg src={image.srcs.gallery || image.srcs.full} />

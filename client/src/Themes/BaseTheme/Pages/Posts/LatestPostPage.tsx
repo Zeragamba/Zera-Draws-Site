@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { ArchivePage } from './ArchivePage'
 import { useLatestPost$ } from '../../../../Lib'
+import { PostProvider } from '../../../../Lib/Posts/PostContext'
 import { ViewPost } from '../../Components'
-import { PostProvider } from '../../Components/Posts/PostProvider'
 import { LoadingPage } from '../LoadingPage'
 
 export const LatestPostPage: FC = () => {
