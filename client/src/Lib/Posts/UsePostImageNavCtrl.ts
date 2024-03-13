@@ -25,10 +25,10 @@ export const usePostImageCtrl = (): PostImageCtrl => {
 
   useEffect(() => setImageIndex(0), [ post ])
 
-  const currentImage = images[imageIndex]
+  const totalImages = images.length
+  const currentImage = images[MathUtils.clamp(imageIndex, 0, totalImages - 1)]
   const currentImageNum = imageIndex + 1
   const currentImageSrc = currentImage.srcs.high || currentImage.srcs.full
-  const totalImages = images.length
   const hasNextImage = imageIndex < totalImages - 1
   const hasPrevImage = imageIndex > 0
 

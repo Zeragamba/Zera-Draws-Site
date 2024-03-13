@@ -1,6 +1,6 @@
 import { Box, Stack, SxProps } from '@mui/material'
 import classnames from 'classnames'
-import { FC } from 'react'
+import { FC, useEffect, useRef } from 'react'
 
 import { AsyncImg } from './AsyncImg'
 import { usePostImageCtrl } from '../../../../Lib'
@@ -37,6 +37,13 @@ const styles: Record<string, SxProps> = {
 
 export const AltImagesView: FC = () => {
   const ctrl = usePostImageCtrl()
+  const activeImgRef = useRef<HTMLElement>()
+
+  useEffect(() => {
+    if (!activeImgRef.current) return
+    const element = activeImgRef.current
+    element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+  }, [ activeImgRef, ctrl.currentIndex ])
 
   if (ctrl.totalImages === 1) return null
 
@@ -53,6 +60,7 @@ export const AltImagesView: FC = () => {
           className={classnames({
             'active': index === ctrl.currentIndex,
           })}
+          ref={index === ctrl.currentIndex ? activeImgRef : undefined}
         >
           <AsyncImg src={image.srcs.gallery || image.srcs.full} />
         </Box>
