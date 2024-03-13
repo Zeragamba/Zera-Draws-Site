@@ -90,7 +90,8 @@
     "webpack": "^5.64.4",
     "webpack-dev-server": "^4.6.0",
     "webpack-manifest-plugin": "^5.0.0",
-    "yarn": "^1.22.19"
+    "yarn": "^1.22.19",
+    "zod": "^3.22.4"
   },
   "scripts": {
     "start": "dotenv -e ../.env node scripts/start.js",
