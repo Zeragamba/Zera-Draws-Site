@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { ArchivePage } from './ArchivePage'
 import { useLatestPost$ } from '../../../../Lib'
+import { PostProvider } from '../../../../Lib/Posts/PostContext'
 import { ViewPost } from '../../Components'
 import { LoadingPage } from '../LoadingPage'
 
@@ -16,6 +17,8 @@ export const LatestPostPage: FC = () => {
   const latestPost = latestPost$.data
 
   return (
-    <ViewPost post={latestPost} onPostChange={(post) => navigate(`/post/${post.slug}`)} />
+    <PostProvider post={latestPost}>
+      <ViewPost post={latestPost} onPostChange={(post) => navigate(`/post/${post.slug}`)} />
+    </PostProvider>
   )
 }

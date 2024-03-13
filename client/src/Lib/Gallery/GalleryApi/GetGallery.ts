@@ -4,7 +4,7 @@ import { ModelResponse, ServerClient } from '../../ServerApi'
 import { GalleryData } from '../GalleryData'
 import { galleryQueryKeys } from '../GalleryQueryKeys'
 
-type GetGalleryPrams = { galleryId: string }
+type GetGalleryPrams = { galleryId?: string }
 type GetGalleryRes = ModelResponse<'gallery', GalleryData>
 
 export const getGallery = ({ galleryId }: GetGalleryPrams): Promise<GalleryData> => {
@@ -12,7 +12,7 @@ export const getGallery = ({ galleryId }: GetGalleryPrams): Promise<GalleryData>
     .then(res => res.gallery)
 }
 
-export const useGallery = (params: GetGalleryPrams): UseQueryResult<GalleryData> => {
+export const useGallery$ = (params: GetGalleryPrams): UseQueryResult<GalleryData> => {
   const queryClient = useQueryClient()
 
   return useQuery({

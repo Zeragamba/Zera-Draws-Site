@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { DeleteTagButton } from './DeleteTagButton'
 import { MergeTagButton } from './MergeTagsButton'
 import { TagForm } from './TagForm'
-import { FontAwesomeIcon, TagData, useTag } from '../../../../../Lib'
+import { FontAwesomeIcon, TagData, useTag$ } from '../../../../../Lib'
 import { useEditTag } from '../../../../../Lib/Tags/TagsApi/EditTag'
 
 interface EditTagDialogProps {
@@ -37,7 +37,7 @@ const EditTagDialogContent: FC<EditTagDialogContentProps> = ({
   tagId,
   onClose,
 }) => {
-  const tag$ = useTag({ tag: tagId })
+  const tag$ = useTag$({ tagId })
   const editTag$ = useEditTag()
 
   const formData = tag$.data ? {

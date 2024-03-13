@@ -15,5 +15,5 @@ export const TagQueryKeys = {
       return tags
     },
   }),
-  getTag: (id: string) => [ 'tags', { id } ],
+  getTag: (id?: string) => [ 'tags', id ],
 }
