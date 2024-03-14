@@ -1,14 +1,20 @@
-import axios, { AxiosRequestConfig, Method } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
 import { isServerApiError } from './Errors'
 import { Config } from '../Config'
 
-export abstract class ServerClient {
-  static axios = axios.create({ baseURL: Config.SERVER_URL })
+export interface RequestConfig<Data> extends AxiosRequestConfig {
+  parseData: (data: object) => Data
+}
 
-  static _authToken: string | null
+class ServerApiAuthStore {
+  private _authToken: string | null = null
 
-  public static set authToken(newToken: string | null) {
+  get authToken(): string {
+    return this._authToken ||= localStorage.getItem('authToken') as string
+  }
+
+  set authToken(newToken: string | null) {
     if (newToken === null) {
       localStorage.removeItem('authToken')
     } else {
@@ -17,56 +23,63 @@ export abstract class ServerClient {
 
     this._authToken = newToken
   }
+}
 
-  public static get authToken(): string {
-    return this._authToken ||= localStorage.getItem('authToken') as string
+export const serverApiAuthStore = new ServerApiAuthStore()
+
+export abstract class ServerClient {
+  private readonly axios: AxiosInstance
+
+  constructor() {
+    this.axios = axios.create({ baseURL: Config.SERVER_URL })
   }
 
-  private static async request(method: Method, path: string, config: AxiosRequestConfig = {}): Promise<unknown> {
+  protected async request<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
+    const authToken = serverApiAuthStore.authToken
+
     try {
       let { headers } = config
 
-      if (this.authToken) {
+      if (authToken) {
         headers = {
           ...headers,
-          'Authorization': `Bearer ${this.authToken}`,
+          'Authorization': `Bearer ${authToken}`,
         }
       }
 
-      const res = await this.axios.request<unknown>({
+      const res = await this.axios.request<object>({
         ...config,
-        headers: headers,
-        method: method,
         url: path,
+        headers: headers,
       })
 
-      return res.data
+      return config.parseData(res.data)
     } catch (error) {
       if (isServerApiError(error) && error.response.data.error === 'Invalid token') {
-        this.authToken = null
+        serverApiAuthStore.authToken = null
       }
 
       throw error
     }
   }
 
-  protected static async get(path: string, config: AxiosRequestConfig = {}): Promise<unknown> {
-    return this.request('GET', path, config)
+  protected async get<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
+    return this.request<Data>(path, { method: 'GET', ...config })
   }
 
-  protected static async post<Data = {}>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<unknown> {
-    return this.request('POST', path, { data, ...config })
+  protected async post<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
+    return this.request<Data>(path, { method: 'POST', ...config })
   }
 
-  protected static async put<Data = {}>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<unknown> {
-    return this.request('PUT', path, { data, ...config })
+  protected async put<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
+    return this.request<Data>(path, { method: 'PUT', ...config })
   }
 
-  protected static async patch<Data = {}>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<unknown> {
-    return this.request('PATCH', path, { data, ...config })
+  protected async patch<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
+    return this.request<Data>(path, { method: 'PATCH', ...config })
   }
 
-  protected static async delete<Data = {}>(path: string, data?: Data, config: AxiosRequestConfig = {}): Promise<unknown> {
-    return this.request('DELETE', path, { data, ...config })
+  protected async delete<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
+    return this.request<Data>(path, { method: 'DELETE', ...config })
   }
 }

@@ -1,6 +1,6 @@
 import z from 'zod'
 
-export const tagDataSchema = z.object({
+export const TagDataSchema = z.object({
   id: z.string(),
   name: z.string(),
   slug: z.string(),

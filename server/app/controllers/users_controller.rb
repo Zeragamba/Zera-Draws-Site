@@ -6,6 +6,11 @@ class UsersController < ApplicationController
     render json: UserView.render(Current.user, auth_token: auth_token)
   end
 
+  def logout
+    logout_user
+    render json: { success: true }
+  end
+
   def view_current
     render json: UserView.render(Current.user)
   end

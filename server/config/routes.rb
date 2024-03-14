@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get '/status' => 'home#index'
 
   post '/login' => 'users#login'
+  post '/logout' => 'users#logout'
   get '/user/me' => 'users#view_current'
 
   get '/meta/:group' => 'meta#list'

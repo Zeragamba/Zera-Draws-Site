@@ -10,6 +10,10 @@ module Authentication
     return AuthToken.encode(user)
   end
 
+  def logout_user
+    Current.user = nil
+  end
+
   def authenticate_user
     auth_header = request.headers["AUTHORIZATION"] ||= "None"
     auth_type, auth_value = auth_header.split(' ')
