@@ -1,5 +1,5 @@
 import { PostData, ViewsData } from '../../Lib'
-import { postViewsResSchema } from '../Schemas/PostViewsDataSchema'
+import { PostViewsResSchema } from '../Schemas/PostViewsDataSchema'
 import { ServerClient } from '../ServerClient'
 
 class PostViewsApiClient extends ServerClient {
@@ -7,9 +7,7 @@ class PostViewsApiClient extends ServerClient {
     postId: PostData['id']
   }): Promise<ViewsData> {
     return this.delete(`/post/${params.postId}/views`, {
-      parseData: (data) => postViewsResSchema
-        .transform(data => data.views)
-        .parse(data),
+      parseData: (data) => PostViewsResSchema.parse(data),
     })
   }
 
@@ -19,9 +17,7 @@ class PostViewsApiClient extends ServerClient {
   }): Promise<ViewsData> {
     return this.post(`/post/${params.postId}/views`, {
       data: { viewer_id: params.viewerId },
-      parseData: (data) => postViewsResSchema
-        .transform(data => data.views)
-        .parse(data),
+      parseData: (data) => PostViewsResSchema.parse(data),
     })
   }
 }

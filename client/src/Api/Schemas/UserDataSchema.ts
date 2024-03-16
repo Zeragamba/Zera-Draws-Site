@@ -7,3 +7,7 @@ export const UserDataSchema = z.object({
   updated_at: z.string().datetime(),
   admin: z.boolean(),
 })
+
+export const UserResSchema = z.object({
+  user: UserDataSchema,
+}).transform((data) => data.user)

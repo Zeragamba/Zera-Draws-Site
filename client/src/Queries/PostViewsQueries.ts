@@ -1,6 +1,6 @@
 import { useMutation, UseMutationResult, useQuery, UseQueryResult } from '@tanstack/react-query'
 
-import { postViewsApiClient } from '../Api/Endpoints/PostViewsApiClient'
+import { postViewsApiClient } from '../Api'
 import { PostData, ViewsData } from '../Lib'
 
 export const usePostViews$ = (params: {

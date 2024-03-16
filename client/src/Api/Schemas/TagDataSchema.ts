@@ -1,7 +1,7 @@
 import z from 'zod'
 
 export const TagDataSchema = z.object({
-  id: z.string(),
+  id: z.string().uuid(),
   name: z.string(),
   slug: z.string(),
   num_posts: z.number(),

@@ -1,31 +1,12 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
+import { authTokenStore } from './AuthTokenStore'
 import { isServerApiError } from './Errors'
 import { Config } from '../Config'
 
 export interface RequestConfig<Data> extends AxiosRequestConfig {
   parseData: (data: object) => Data
 }
-
-class ServerApiAuthStore {
-  private _authToken: string | null = null
-
-  get authToken(): string {
-    return this._authToken ||= localStorage.getItem('authToken') as string
-  }
-
-  set authToken(newToken: string | null) {
-    if (newToken === null) {
-      localStorage.removeItem('authToken')
-    } else {
-      localStorage.setItem('authToken', newToken)
-    }
-
-    this._authToken = newToken
-  }
-}
-
-export const serverApiAuthStore = new ServerApiAuthStore()
 
 export abstract class ServerClient {
   private readonly axios: AxiosInstance
@@ -35,7 +16,7 @@ export abstract class ServerClient {
   }
 
   protected async request<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
-    const authToken = serverApiAuthStore.authToken
+    const authToken = authTokenStore.authToken
 
     try {
       let { headers } = config
@@ -56,7 +37,7 @@ export abstract class ServerClient {
       return config.parseData(res.data)
     } catch (error) {
       if (isServerApiError(error) && error.response.data.error === 'Invalid token') {
-        serverApiAuthStore.authToken = null
+        authTokenStore.authToken = null
       }
 
       throw error
