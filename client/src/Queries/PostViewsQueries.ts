@@ -1,14 +1,15 @@
 import { useMutation, UseMutationResult, useQuery, UseQueryResult } from '@tanstack/react-query'
 
-import { postViewsApiClient } from '../Api'
+import { queryKeys } from './QueryKeys'
+import { postViewsApi } from '../Api'
 import { PostData, ViewsData } from '../Lib'
 
 export const usePostViews$ = (params: {
   postId: PostData['id']
 }): UseQueryResult<ViewsData> => {
   return useQuery({
-    queryKey: [ 'posts', params, 'views' ],
-    queryFn: () => postViewsApiClient.fetchViews(params),
+    ...queryKeys.posts.forPost(params)._ctx.views,
+    queryFn: () => postViewsApi.fetchViews(params),
   })
 }
 
@@ -17,6 +18,6 @@ export const useAddView$ = (): UseMutationResult<ViewsData, unknown, {
   viewerId: string
 }> => {
   return useMutation({
-    mutationFn: (params) => postViewsApiClient.addView(params),
+    mutationFn: (params) => postViewsApi.addView(params),
   })
 }

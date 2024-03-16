@@ -8,7 +8,7 @@ export interface RequestConfig<Data> extends AxiosRequestConfig {
   parseData: (data: object) => Data
 }
 
-export abstract class ServerClient {
+export abstract class ServerApi {
   private readonly axios: AxiosInstance
 
   constructor() {

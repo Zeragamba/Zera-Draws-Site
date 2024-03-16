@@ -1,8 +1,8 @@
 import { PostData, ViewsData } from '../../Lib'
 import { PostViewsResSchema } from '../Schemas/PostViewsDataSchema'
-import { ServerClient } from '../ServerClient'
+import { ServerApi } from '../ServerApi'
 
-class PostViewsApiClient extends ServerClient {
+class PostViewsApi extends ServerApi {
   public async fetchViews(params: {
     postId: PostData['id']
   }): Promise<ViewsData> {
@@ -22,4 +22,4 @@ class PostViewsApiClient extends ServerClient {
   }
 }
 
-export const postViewsApiClient = new PostViewsApiClient()
+export const postViewsApi = new PostViewsApi()

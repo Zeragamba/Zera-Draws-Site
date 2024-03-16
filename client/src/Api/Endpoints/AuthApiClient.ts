@@ -3,10 +3,10 @@ import z from 'zod'
 import { isServerApiError, UserData } from '../../Lib'
 import { authTokenStore } from '../AuthTokenStore'
 import { UserDataSchema, UserResSchema } from '../Schemas/UserDataSchema'
-import { ServerClient } from '../ServerClient'
+import { ServerApi } from '../ServerApi'
 
 
-class AuthApiClient extends ServerClient {
+class AuthApiClient extends ServerApi {
   public async logout(): Promise<void> {
     await this.post('/logout', {
       parseData: (data) => {

@@ -1,5 +1,6 @@
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
+import { queryKeys } from './QueryKeys'
 import { authApiClient } from '../Api'
 import { ServerApiError, UserData } from '../Lib'
 
@@ -26,7 +27,7 @@ export const useLogout$ = (): UseMutationResult<void> => {
 
 export const useCurrentUser$ = (): UseQueryResult<UserData | null> => {
   return useQuery({
-    queryKey: [ 'users', 'current' ],
+    ...queryKeys.auth.currentUser,
     queryFn: () => authApiClient.fetchCurrentUser(),
   })
 }

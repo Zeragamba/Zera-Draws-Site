@@ -7,8 +7,9 @@ import {
   UseQueryResult,
 } from '@tanstack/react-query'
 
+import { queryKeys } from './QueryKeys'
 import { pagedQueryOptions } from './QueryUtils'
-import { postApiClient } from '../Api'
+import { postsApi } from '../Api'
 import { PagedPostData } from '../Api/Schemas'
 import { EditableImage, EditablePost, ImageChangeRecord, PostData } from '../Lib'
 
@@ -25,7 +26,7 @@ export const useCreatePost$ = (): UseMutationResult<PostData, unknown, {
   onUploadProgress: (progress: number) => void
 }> => {
   return useMutation({
-    mutationFn: (params) => postApiClient.createPost(params),
+    mutationFn: (params) => postsApi.createPost(params),
   })
 }
 
@@ -33,7 +34,7 @@ export const useDeletePost$ = (): UseMutationResult<PostData, unknown, {
   postId: PostData['id']
 }> => {
   return useMutation({
-    mutationFn: (params) => postApiClient.deletePost(params),
+    mutationFn: (params) => postsApi.deletePost(params),
   })
 }
 
@@ -44,57 +45,57 @@ export const useUpdatePost$ = (): UseMutationResult<PostData, unknown, {
   onUploadProgress: (progress: number) => void
 }> => {
   return useMutation({
-    mutationFn: (params) => postApiClient.updatePost(params),
+    mutationFn: (params) => postsApi.updatePost(params),
   })
 }
 
 export const useAllPosts$ = (): UseInfiniteQueryResult<PostData[]> => {
   return useInfiniteQuery({
     ...pagedPostDataQueryOptions,
-    queryKey: [ 'posts', 'all' ],
-    queryFn: ({ pageParam }) => postApiClient.fetchPosts({ page: pageParam }),
+    ...queryKeys.posts.all,
+    queryFn: ({ pageParam }) => postsApi.fetchPosts({ page: pageParam }),
   })
 }
 
 export const useRecentPosts$ = (): UseInfiniteQueryResult<PostData[]> => {
   return useInfiniteQuery({
     ...pagedPostDataQueryOptions,
-    queryKey: [ 'posts', 'recent' ],
-    queryFn: ({ pageParam }) => postApiClient.fetchRecentPosts({ page: pageParam }),
+    ...queryKeys.posts.recent,
+    queryFn: ({ pageParam }) => postsApi.fetchRecentPosts({ page: pageParam }),
   })
 }
 
 export const useLatestPost$ = (): UseQueryResult<PostData> => {
   return useQuery({
-    queryKey: [ 'posts', 'latest' ],
-    queryFn: () => postApiClient.fetchLatestPost(),
+    ...queryKeys.posts.latest,
+    queryFn: () => postsApi.fetchLatestPost(),
   })
 }
 
 export const useFirstPost$ = (): UseQueryResult<PostData> => {
   return useQuery({
-    queryKey: [ 'posts', 'first' ],
-    queryFn: () => postApiClient.fetchFirstPost(),
+    ...queryKeys.posts.first,
+    queryFn: () => postsApi.fetchFirstPost(),
   })
 }
 
 export const usePost$ = (params: PostParams): UseQueryResult<PostData> => {
   return useQuery({
-    queryKey: [ 'posts', params ],
-    queryFn: () => postApiClient.fetchPost(params),
+    ...queryKeys.posts.forPost(params)._ctx.data,
+    queryFn: () => postsApi.fetchPost(params),
   })
 }
 
 export const useNextPost$ = (params: PostParams): UseQueryResult<PostData> => {
   return useQuery({
-    queryKey: [ 'posts', params, 'next' ],
-    queryFn: () => postApiClient.fetchNextPost(params),
+    ...queryKeys.posts.forPost(params)._ctx.next,
+    queryFn: () => postsApi.fetchNextPost(params),
   })
 }
 
 export const usePrevPost$ = (params: PostParams): UseQueryResult<PostData> => {
   return useQuery({
-    queryKey: [ 'posts', params, 'prev' ],
-    queryFn: () => postApiClient.fetchPrevPost(params),
+    ...queryKeys.posts.forPost(params)._ctx.prev,
+    queryFn: () => postsApi.fetchPrevPost(params),
   })
 }

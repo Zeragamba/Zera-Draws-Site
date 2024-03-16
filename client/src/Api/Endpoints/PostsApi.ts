@@ -2,9 +2,9 @@ import { AxiosProgressEvent } from 'axios'
 
 import { EditableImage, EditablePost, getPostUrl, ImageChangeRecord, PostData, postToFormData } from '../../Lib'
 import { PagedPostData, PagedPostDataResSchema, PostDataResSchema } from '../Schemas'
-import { ServerClient } from '../ServerClient'
+import { ServerApi } from '../ServerApi'
 
-class PostApiClient extends ServerClient {
+class PostsApi extends ServerApi {
   public async deletePost(params: {
     postId: PostData['id']
   }): Promise<PostData> {
@@ -139,4 +139,4 @@ class PostApiClient extends ServerClient {
   }
 }
 
-export const postApiClient = new PostApiClient()
+export const postsApi = new PostsApi()

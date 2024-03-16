@@ -1,8 +1,8 @@
 import { GalleryData } from '../../Lib'
 import { GalleryResSchema } from '../Schemas/GalleryDataSchema'
-import { ServerClient } from '../ServerClient'
+import { ServerApi } from '../ServerApi'
 
-class GalleryApiClient extends ServerClient {
+class GalleryApiClient extends ServerApi {
   public async fetchGallery(params: {
     galleryId: GalleryData['id']
   }): Promise<GalleryData> {

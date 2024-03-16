@@ -9,3 +9,11 @@ export const TagDataSchema = z.object({
   updated_at: z.string(),
   featured: z.boolean(),
 })
+
+export const TagResSchema = z.object({
+  tag: TagDataSchema,
+}).transform((data) => data.tag)
+
+export const TagListResSchema = z.object({
+  tags: z.array(TagDataSchema),
+}).transform((data) => data.tags)

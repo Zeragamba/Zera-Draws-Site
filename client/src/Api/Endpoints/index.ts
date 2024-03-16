@@ -1,4 +1,4 @@
 export * from './GalleryApiClient'
-export * from './PostApiClient'
-export * from './PostViewsApiClient'
+export * from './PostsApi'
+export * from './PostViewsApi'
 export * from './AuthApiClient'
