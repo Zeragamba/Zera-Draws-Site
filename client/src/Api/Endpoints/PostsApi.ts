@@ -35,7 +35,7 @@ class PostsApi extends ServerApi {
     postId: PostData['id']
     post?: Partial<EditablePost>
     changes?: ImageChangeRecord[]
-    onUploadProgress: (progress: number) => void
+    onUploadProgress?: (progress: number) => void
   }): Promise<PostData> {
     return this.patch(`/post/${params.postId}`, {
       data: postToFormData({

@@ -1,12 +1,14 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 
 import { ViewsData } from './ViewsData'
+import { postViewsApi } from '../../Api'
+import { queryKeys } from '../../Queries/QueryKeys'
 import { PostData } from '../Posts/PostData'
-import { postsQueryKeys } from '../Posts/PostsApi/PostsQueryKeys'
 
 
 export function usePostViews$(postId: PostData['id']): UseQueryResult<ViewsData> {
   return useQuery({
-    ...postsQueryKeys.get(postId)._ctx.views,
+    ...queryKeys.posts.forPost({ postId })._ctx.views,
+    queryFn: () => postViewsApi.fetchViews({ postId }),
   })
 }

@@ -1,7 +1,6 @@
 export * from './PostData'
 export * from './PostSorters'
 export * from './PostUtil'
-export * from './PostsApi'
 export * from './UsePostImageNavCtrl'
 export * from './UsePostNavCtrl'
 export * from './UsePostPreloader'

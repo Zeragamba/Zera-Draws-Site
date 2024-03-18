@@ -11,7 +11,7 @@ import { queryKeys } from './QueryKeys'
 import { pagedQueryOptions } from './QueryUtils'
 import { postsApi } from '../Api'
 import { PagedPostData } from '../Api/Schemas'
-import { EditableImage, EditablePost, ImageChangeRecord, PostData } from '../Lib'
+import { EditableImage, EditablePost, GalleryData, ImageChangeRecord, PostData, TagData } from '../Lib'
 
 type PostParams = { postId: string; galleryId?: string; tagId?: string }
 
@@ -42,7 +42,7 @@ export const useUpdatePost$ = (): UseMutationResult<PostData, unknown, {
   postId: PostData['id']
   post?: Partial<EditablePost>
   changes?: ImageChangeRecord[]
-  onUploadProgress: (progress: number) => void
+  onUploadProgress?: (progress: number) => void
 }> => {
   return useMutation({
     mutationFn: (params) => postsApi.updatePost(params),
@@ -97,5 +97,26 @@ export const usePrevPost$ = (params: PostParams): UseQueryResult<PostData> => {
   return useQuery({
     ...queryKeys.posts.forPost(params)._ctx.prev,
     queryFn: () => postsApi.fetchPrevPost(params),
+  })
+}
+
+
+export const useGalleryPosts$ = (params: {
+  galleryId: GalleryData['id']
+}): UseInfiniteQueryResult<PostData[]> => {
+  return useInfiniteQuery({
+    ...pagedQueryOptions,
+    ...queryKeys.posts.inGallery(params)._ctx.data,
+    select: (data) => data.pages.map(page => page.posts).flat(),
+  })
+}
+
+export const useTaggedPosts$ = (params: {
+  tagId: TagData['id']
+}): UseInfiniteQueryResult<PostData[]> => {
+  return useInfiniteQuery({
+    ...pagedQueryOptions,
+    ...queryKeys.posts.withTag(params)._ctx.data,
+    select: (data) => data.pages.map(page => page.posts).flat(),
   })
 }

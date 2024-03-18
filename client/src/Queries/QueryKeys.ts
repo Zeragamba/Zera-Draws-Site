@@ -28,6 +28,18 @@ export const queryKeys = createQueryKeyStore({
     first: null,
     latest: null,
     recent: null,
+    inGallery: (params: { galleryId: GalleryData['id'] }) => ({
+      queryKey: [ params ],
+      contextQueries: {
+        data: null,
+      },
+    }),
+    withTag: (params: { tagId: TagData['id'] }) => ({
+      queryKey: [ params ],
+      contextQueries: {
+        data: null,
+      },
+    }),
     forPost: (params: { postId: string | null; galleryId?: string | null; tagId?: string | null }) => ({
       queryKey: [ params ],
       contextQueries: {

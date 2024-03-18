@@ -1,7 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material'
 import React, { FC, useState } from 'react'
 
-import { noop, PostData, useDeletePost } from '../../../../../Lib'
+import { noop, PostData } from '../../../../../Lib'
+import { useDeletePost$ } from '../../../../../Queries'
 
 interface DeletePostButtonProps {
   post: PostData
@@ -16,7 +17,7 @@ export const DeletePostButton: FC<DeletePostButtonProps> = ({
   onDeleted = noop,
   disabled,
 }) => {
-  const deletePostQuery = useDeletePost()
+  const deletePostQuery = useDeletePost$()
   const [ promptOpen, setPromptOpen ] = useState<boolean>(false)
 
   const onDelete = async () => {

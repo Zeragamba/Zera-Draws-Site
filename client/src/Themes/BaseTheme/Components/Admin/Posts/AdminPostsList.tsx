@@ -4,7 +4,8 @@ import React, { FC, MouseEventHandler, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { useHref, useNavigate } from 'react-router-dom'
 
-import { PostData, useEditPost$, useSortable } from '../../../../../Lib'
+import { PostData, useSortable } from '../../../../../Lib'
+import { useUpdatePost$ } from '../../../../../Queries'
 import { FontAwesomeIcon } from '../../Icons'
 import { AsyncImg } from '../../Images'
 import { EditPostForm, PostTags, Styles } from '../../Posts'
@@ -16,7 +17,7 @@ interface AdminPostsListProps {
 export const AdminPostsList: FC<AdminPostsListProps> = ({
   posts,
 }) => {
-  const editPost$ = useEditPost$()
+  const editPost$ = useUpdatePost$()
   const [ orderedPosts, reorderPost ] = useSortable(posts)
 
   const onOrderDrop = (postId: PostData['id'], newPosition: number) => {

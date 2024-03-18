@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { ArchivePage } from './ArchivePage'
-import { useFirstPost$ } from '../../../../Lib'
+import { useFirstPost$ } from '../../../../Queries'
 import { LoadingPage } from '../LoadingPage'
 
 export const FirstPostPage: FC = () => {

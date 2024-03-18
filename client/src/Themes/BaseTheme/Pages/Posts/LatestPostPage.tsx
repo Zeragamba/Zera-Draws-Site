@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { ArchivePage } from './ArchivePage'
 import { PostProvider } from '../../../../Contexts'
-import { useLatestPost$ } from '../../../../Lib'
+import { useLatestPost$ } from '../../../../Queries'
 import { ViewPost } from '../../Components'
 import { LoadingPage } from '../LoadingPage'
 

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { PostData } from './PostData'
-import { getPostUrl } from './PostsApi'
+import { getPostUrl } from './PostUtil'
 import { useOptionalGallery$, useOptionalTag$, usePost$ } from '../../Queries'
 import { GalleryData } from '../Gallery'
 import { TagData } from '../Tags'

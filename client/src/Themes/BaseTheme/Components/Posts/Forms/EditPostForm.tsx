@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form'
 
 import { DeletePostButton } from './DeletePostButton'
 import { PostForm } from './PostForm'
-import { noop, PostData, useEditPost$, useImageManager } from '../../../../../Lib'
+import { noop, PostData, useImageManager } from '../../../../../Lib'
+import { useUpdatePost$ } from '../../../../../Queries'
 import { ErrorAlert, UploadProgress } from '../../Shared'
 
 export interface EditPostFormProps {
@@ -24,7 +25,7 @@ export const EditPostForm: FC<EditPostFormProps> = ({
   const imageManager = useImageManager({ images: post?.images || [] })
   const [ uploadProgress, setUploadProgress ] = useState<number>(0)
 
-  const editPost$ = useEditPost$()
+  const editPost$ = useUpdatePost$()
 
   const onPostSave = form.handleSubmit(async (post) => {
     const saved = await editPost$.mutateAsync({

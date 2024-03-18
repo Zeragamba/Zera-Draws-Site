@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { LoadingPage } from './LoadingPage'
 import { ArchivePage } from './Posts'
-import { useLatestPost$ } from '../../../Lib'
+import { useLatestPost$ } from '../../../Queries'
 import { ViewPost } from '../Components'
 
 export const HomePage: FC = () => {

@@ -2,9 +2,10 @@ import { MouseEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { PostData } from './PostData'
-import { getPostUrl, useNextPost, usePrevPost } from './PostsApi'
+import { getPostUrl } from './PostUtil'
 import { usePostPreloader } from './UsePostPreloader'
 import { usePostContext } from '../../Contexts'
+import { useNextPost$, usePrevPost$ } from '../../Queries'
 import { useIsMobile } from '../Hooks'
 import { useIsAdmin } from '../User'
 
@@ -34,8 +35,8 @@ export const usePostNavCtrl = (): PostNavCtrl => {
   const { post, tag, gallery } = usePostContext()
   const preloadPost = usePostPreloader()
 
-  const { data: nextPost } = useNextPost(post.id)
-  const { data: prevPost } = usePrevPost(post.id)
+  const { data: nextPost } = useNextPost$({ postId: post.id })
+  const { data: prevPost } = usePrevPost$({ postId: post.id })
 
   const hasNextPost = !!nextPost
   const onNextPost = () => nextPost && onChangePost(nextPost)
