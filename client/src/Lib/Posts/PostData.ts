@@ -1,6 +1,6 @@
 import { addDays, setHours, setMinutes } from 'date-fns'
 
-import { ImageChangeRecord } from '../Images/ImageApi/ImageChangeRecord'
+import { ImageChangeRecord } from '../Images/ImageChangeRecord'
 import { EditableImage, ImageData } from '../Images/ImageData'
 import { TagData } from '../Tags/TagData'
 

@@ -18,7 +18,7 @@ import {
   EditImageChangeRecord,
   ImageChangeRecord,
   RemoveImageChangeRecord,
-} from '../ImageApi/ImageChangeRecord'
+} from '../ImageChangeRecord'
 import { ImageData } from '../ImageData'
 
 describe('ChangesReducer', () => {

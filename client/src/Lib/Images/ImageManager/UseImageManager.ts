@@ -2,7 +2,7 @@ import { useReducer } from 'react'
 
 import * as Actions from './Actions'
 import { rootReducer } from './rootReducer'
-import { ImageChangeRecord } from '../ImageApi/ImageChangeRecord'
+import { ImageChangeRecord } from '../ImageChangeRecord'
 import { ImageData } from '../ImageData'
 
 export type UseImageManagerProps = {

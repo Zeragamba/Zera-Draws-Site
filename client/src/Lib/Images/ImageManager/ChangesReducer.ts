@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 
 import * as Actions from './Actions'
-import { ImageChangeRecord } from '../ImageApi/ImageChangeRecord'
+import { ImageChangeRecord } from '../ImageChangeRecord'
 
 export const changesReducer = createReducer<ImageChangeRecord[]>([], ({ addCase }) => {
   addCase(Actions.setImages, () => {

@@ -4,9 +4,9 @@ import { DatePicker } from '@mui/x-date-pickers'
 import * as DateFns from 'date-fns'
 import { FC, useState } from 'react'
 
-import { useViewMetrics$, ViewMetricsData } from '../../../../Lib'
-import { MetricsExportBtn } from '../../Components/Admin/Metrics/MetricsExportBtn'
-import { Spinner } from '../../Components/Shared/Spinner/Spinner'
+import { ViewMetricsData } from '../../../../Lib'
+import { useViewMetrics$ } from '../../../../Queries'
+import { MetricsExportBtn, Spinner } from '../../Components'
 
 type TimeWindow = { label: string; start: Date | null; end: Date | null }
 
