@@ -3,7 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Stack,
 import React, { FC, useState } from 'react'
 
 import { FontAwesomeIcon, noop, TagData } from '../../../../../Lib'
-import { useDeleteEmptyTags$ } from '../../../../../Lib/Tags/TagsApi/DeleteEmptyTags'
+import { useDeleteEmptyTags$ } from '../../../../../Queries'
 
 interface DeleteTagButtonProps {
   fullWidth?: boolean

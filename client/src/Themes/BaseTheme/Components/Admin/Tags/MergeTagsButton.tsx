@@ -13,9 +13,9 @@ import {
 } from '@mui/material'
 import React, { FC, useState } from 'react'
 
-import { FontAwesomeIcon, noop, TagData, useAllTags$ } from '../../../../../Lib'
-import { useMergeTags$ } from '../../../../../Lib/Tags/TagsApi/MergeTags'
-import { Spinner } from '../../Shared/Spinner/Spinner'
+import { FontAwesomeIcon, noop, TagData } from '../../../../../Lib'
+import { useAllTags$, useMergeTags$ } from '../../../../../Queries'
+import { Spinner } from '../../Shared'
 
 interface MergeTagButtonProps {
   srcTag: TagData

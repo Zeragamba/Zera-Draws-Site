@@ -3,7 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Stack,
 import React, { FC, useState } from 'react'
 
 import { FontAwesomeIcon, noop, TagData } from '../../../../../Lib'
-import { useDeleteTag$ } from '../../../../../Lib/Tags/TagsApi/DeleteTag'
+import { useDeleteTag$ } from '../../../../../Queries'
 
 interface DeleteTagButtonProps {
   tag: TagData

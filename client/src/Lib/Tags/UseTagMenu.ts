@@ -3,8 +3,8 @@ import { useState } from 'react'
 
 import { TagData } from './TagData'
 import { filterTags, TagFilter } from './TagFilter'
-import { useAllTags$ } from './TagsApi'
 import { byFeatured, byTagName } from './TagSorters'
+import { useAllTags$ } from '../../Queries'
 
 export type UseTagMenuReturn = {
   isPending: boolean

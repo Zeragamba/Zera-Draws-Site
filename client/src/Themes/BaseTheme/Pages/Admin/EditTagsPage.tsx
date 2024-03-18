@@ -1,21 +1,19 @@
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faEdit, faStar as faFilledStar } from '@fortawesome/free-solid-svg-icons'
 import { Button, IconButton, Paper, Stack, Typography } from '@mui/material'
-import { useQueryClient } from '@tanstack/react-query'
 import { sortArray } from 'dyna-sort'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { byTagName, FontAwesomeIcon, setTagCache, TagData, useAllTags$ } from '../../../../Lib'
-import { useEditTag } from '../../../../Lib/Tags/TagsApi/EditTag'
+import { byTagName, FontAwesomeIcon, TagData } from '../../../../Lib'
+import { useAllTags$, useUpdateTag$ } from '../../../../Queries'
 import { AddTagButton, DeleteEmptyTagsButton, EditTagDialog } from '../../Components'
 
 export const EditTagsPage: FC = () => {
   const navigate = useNavigate()
   const tagsQuery = useAllTags$()
   const [ activeTag, setActiveTag ] = useState<TagData | null>(null)
-  const editTag$ = useEditTag()
-  const queryClient = useQueryClient()
+  const editTag$ = useUpdateTag$()
 
   if (tagsQuery.isPending) return <div>Loading...</div>
   if (tagsQuery.isError) return <div>Error: {String(tagsQuery.error)}</div>
@@ -25,7 +23,6 @@ export const EditTagsPage: FC = () => {
 
   const onToggleFeatured = (tag: TagData) => {
     const updatedTag = { ...tag, featured: !tag.featured }
-    setTagCache(queryClient, updatedTag)
     editTag$.mutateAsync({ tagId: tag.id, tag: { featured: updatedTag.featured } })
   }
 
