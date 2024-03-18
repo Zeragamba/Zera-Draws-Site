@@ -43,6 +43,7 @@ export const PostGallery: FC<PostGalleryProps> = ({
 
   let content: ReactNode
   if (postsQuery.isError) {
+    console.error(postsQuery.error)
     content = <Paper>Error loading gallery. :(</Paper>
   } else if (postsQuery.isPending) {
     content = <Paper>Loading...</Paper>

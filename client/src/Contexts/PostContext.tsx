@@ -2,7 +2,7 @@ import { createContext, FC, PropsWithChildren, ReactNode, useContext, useEffect,
 import { useParams } from 'react-router-dom'
 
 import { GalleryData, PostData, TagData } from '../Lib'
-import { useOptionalGallery$, useOptionalTag$, usePost$ } from '../Queries'
+import { useLatestPost$, useOptionalGallery$, useOptionalTag$, usePost$ } from '../Queries'
 
 type PostContextState = {
   post: PostData
@@ -15,10 +15,31 @@ type PostContextState = {
 const PostContext = createContext<null | PostContextState>(null)
 
 export type PostProviderProps = PropsWithChildren<{
-  renderPending: ReactNode
+  post: PostData
+  tag?: TagData | null
+  gallery?: GalleryData | null
 }>
 
 export const PostProvider: FC<PostProviderProps> = ({
+  post,
+  tag,
+  gallery,
+  children,
+}) => {
+  const [ imageIndex, setImageIndex ] = useState<number>(0)
+  useEffect(() => setImageIndex(0), [ post ])
+
+  return <PostContext.Provider
+    value={{ post, tag, gallery, imageIndex, setImageIndex }}
+    children={children}
+  />
+}
+
+export type ParamsPostProviderProps = PropsWithChildren<{
+  renderPending: ReactNode
+}>
+
+export const ParamsPostProvider: FC<ParamsPostProviderProps> = ({
   renderPending,
   children,
 }) => {
@@ -34,22 +55,31 @@ export const PostProvider: FC<PostProviderProps> = ({
   const gallery$ = useOptionalGallery$({ galleryId })
   const gallery = gallery$.data
 
-  const [ imageIndex, setImageIndex ] = useState<number>(0)
-  useEffect(() => setImageIndex(0), [ post ])
-
   if (post$.isLoading) return renderPending
   if (!post) throw new Error('Post not found')
 
-  return <PostContext.Provider
-    value={{
-      post,
-      tag,
-      gallery,
-      imageIndex,
-      setImageIndex,
-    }}
+  return <PostProvider
+    post={post}
+    tag={tag}
+    gallery={gallery}
     children={children}
   />
+}
+export type LatestPostProviderProps = PropsWithChildren<{
+  renderPending: ReactNode
+}>
+
+export const LatestPostProvider: FC<LatestPostProviderProps> = ({
+  renderPending,
+  children,
+}) => {
+  const latestPost$ = useLatestPost$()
+  const latestPost = latestPost$.data
+
+  if (latestPost$.isPending) return renderPending
+  if (!latestPost) throw new Error('No latest post found')
+
+  return <PostProvider post={latestPost} children={children} />
 }
 
 export const usePostContext = () => {

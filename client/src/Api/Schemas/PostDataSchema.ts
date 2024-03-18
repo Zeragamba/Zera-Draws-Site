@@ -10,7 +10,7 @@ export const PostDataSchema = z.object({
   position: z.number().int(),
   title: z.string(),
   slug: z.string(),
-  description: z.string().trim().default(''),
+  description: z.string().trim().default('').nullable(),
   tags: z.array(TagDataSchema).default([]),
   images: z.array(ImageDataSchema).default([]),
   released: z.boolean().default(false),

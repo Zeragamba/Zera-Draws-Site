@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ArchivePage } from './ArchivePage'
-import { PostProvider } from '../../../../Contexts'
+import { LatestPostProvider } from '../../../../Contexts'
 import { useLatestPost$ } from '../../../../Queries'
 import { ViewPost } from '../../Components'
 import { LoadingPage } from '../LoadingPage'
@@ -17,8 +17,8 @@ export const LatestPostPage: FC = () => {
   const latestPost = latestPost$.data
 
   return (
-    <PostProvider renderPending={<LoadingPage />}>
+    <LatestPostProvider renderPending={<LoadingPage />}>
       <ViewPost post={latestPost} onPostChange={(post) => navigate(`/post/${post.slug}`)} />
-    </PostProvider>
+    </LatestPostProvider>
   )
 }

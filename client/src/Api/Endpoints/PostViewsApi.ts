@@ -6,7 +6,7 @@ class PostViewsApi extends ServerApi {
   public async fetchViews(params: {
     postId: PostData['id']
   }): Promise<ViewsData> {
-    return this.delete(`/post/${params.postId}/views`, {
+    return this.get(`/post/${params.postId}/views`, {
       parseData: (data) => PostViewsResSchema.parse(data),
     })
   }

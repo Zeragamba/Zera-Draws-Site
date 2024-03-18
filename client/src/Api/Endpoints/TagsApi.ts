@@ -45,7 +45,7 @@ export class TagsApi extends ServerApi {
   async fetchTag(params: {
     tagId: TagData['id']
   }): Promise<TagData> {
-    return this.get(`/tags/${params.tagId}`, {
+    return this.get(`/tag/${params.tagId}`, {
       parseData: data => TagResSchema.parse(data),
     })
   }

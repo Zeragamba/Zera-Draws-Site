@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { PostProvider } from '../../../../Contexts'
+import { ParamsPostProvider } from '../../../../Contexts'
 import { useViewPostPage } from '../../../../Lib'
 import { ViewPost } from '../../Components'
 import { LoadingPage } from '../LoadingPage'
@@ -13,8 +13,8 @@ export const ViewPostPage: FC = () => {
   if (!ctrl.post) return <Navigate to="/" />
 
   return (
-    <PostProvider renderPending={<LoadingPage />}>
+    <ParamsPostProvider renderPending={<LoadingPage />}>
       <ViewPost post={ctrl.post} onPostChange={ctrl.onPostChange} />
-    </PostProvider>
+    </ParamsPostProvider>
   )
 }

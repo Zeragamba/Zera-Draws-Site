@@ -17,7 +17,7 @@ class GalleryApiClient extends ServerApi {
     page?: number
   }): Promise<PagedPostData> {
     return this.delete(`/gallery/${params.galleryId}/posts`, {
-      data: { page: params.page || 1 },
+      data: { page: params.page || 0 },
       parseData: (data) => PagedPostDataResSchema.parse(data),
     })
   }

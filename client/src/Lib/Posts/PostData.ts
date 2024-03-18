@@ -1,8 +1,7 @@
 import { addDays, setHours, setMinutes } from 'date-fns'
 
-import { ImageChangeRecord } from '../Images/ImageChangeRecord'
-import { EditableImage, ImageData } from '../Images/ImageData'
-import { TagData } from '../Tags/TagData'
+import { EditableImage, ImageChangeRecord, ImageData } from '../Images'
+import { TagData } from '../Tags'
 
 export interface PostData {
   id: string
@@ -10,7 +9,7 @@ export interface PostData {
   position: number
   title: string
   slug: string
-  description: string
+  description: null | string
   tags: TagData[]
   images: ImageData[]
   released: boolean

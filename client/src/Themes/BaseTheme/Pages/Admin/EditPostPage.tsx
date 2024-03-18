@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
-import { PostProvider } from '../../../../Contexts'
+import { ParamsPostProvider } from '../../../../Contexts'
 import { isNotFoundError, useIsAdmin } from '../../../../Lib'
 import { useCurrentUser$, usePost$ } from '../../../../Queries'
 import { EditPostForm, ErrorAlert, QueryGate } from '../../Components'
@@ -31,14 +31,14 @@ export const EditPostPage: FC = () => {
         }
       }}
       renderData={(post) => (
-        <PostProvider renderPending={<LoadingPage />}>
+        <ParamsPostProvider renderPending={<LoadingPage />}>
           <EditPostForm
             post={post}
             onSaved={(post) => navigate(`/post/${post.slug}`)}
             onCancel={() => navigate(-1)}
             onDelete={() => navigate('/archive')}
           />
-        </PostProvider>
+        </ParamsPostProvider>
       )}
     />
   )

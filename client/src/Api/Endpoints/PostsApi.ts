@@ -54,7 +54,7 @@ class PostsApi extends ServerApi {
     page?: number
   }): Promise<PagedPostData> {
     return this.get('/posts', {
-      params: { page: params?.page || 1 },
+      params: { page: params?.page || 0 },
       parseData: (data) => PagedPostDataResSchema.parse(data),
     })
   }
@@ -64,7 +64,7 @@ class PostsApi extends ServerApi {
     page?: number
   }): Promise<PagedPostData> {
     return this.get(`/gallery/${params.galleryId}/posts`, {
-      params: { page: params.page || 1 },
+      params: { page: params.page || 0 },
       parseData: (data) => PagedPostDataResSchema.parse(data),
     })
   }
@@ -74,7 +74,7 @@ class PostsApi extends ServerApi {
     page?: number
   }): Promise<PagedPostData> {
     return this.get(`/tag/${params.tagId}/posts`, {
-      params: { page: params.page || 1 },
+      params: { page: params.page || 0 },
       parseData: (data) => PagedPostDataResSchema.parse(data),
     })
   }
@@ -83,7 +83,7 @@ class PostsApi extends ServerApi {
     page?: number
   }): Promise<PagedPostData> {
     return this.get('/posts/recent', {
-      params: { page: params?.page || 1 },
+      params: { page: params?.page || 0 },
       parseData: (data) => PagedPostDataResSchema.parse(data),
     })
   }
