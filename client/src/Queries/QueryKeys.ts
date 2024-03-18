@@ -50,6 +50,11 @@ export const queryKeys = createQueryKeyStore({
       },
     }),
   },
+  images: {
+    get: (params: { src: string }) => ({
+      queryKey: [ params ],
+    }),
+  },
   metrics: {
     postViews: null,
   },

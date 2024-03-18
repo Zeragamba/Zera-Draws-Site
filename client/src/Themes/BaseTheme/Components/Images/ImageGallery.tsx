@@ -1,9 +1,8 @@
 import React, { FC } from 'react'
 
-import { useImagePreloader } from './ImagePreloader'
 import { ImageData } from '../../../../Lib'
-import { GalleryItem } from '../Galleries/GalleryItem'
-import { GalleryWrapper } from '../Galleries/GalleryWrapper'
+import { useImagePreloader } from '../../../../Queries'
+import { GalleryItem, GalleryWrapper } from '../Galleries'
 
 interface ImageGalleryProps {
   images: ImageData[]
