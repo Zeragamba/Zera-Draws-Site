@@ -38,8 +38,8 @@ export const cachePostData = (queryClient: QueryClient, post: PostData) => {
 
 type PostUrlParams = {
   postId: string
-  tagId?: string
-  galleryId?: string
+  tagId?: string | null
+  galleryId?: string | null
 }
 
 export const getPostUrl = ({ postId, tagId, galleryId }: PostUrlParams) => {

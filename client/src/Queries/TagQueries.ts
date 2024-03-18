@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, UseQueryResult } from '@tanstack/react-query'
 
 import { queryKeys } from './QueryKeys'
 import { tagsApi } from '../Api/Endpoints/TagsApi'
@@ -11,13 +11,27 @@ export const useAllTags$ = () => {
   })
 }
 
-export const useTags$ = (params: {
-  tagId: TagData['id']
-}) => {
+export const useOptionalTag$ = (params: {
+  tagId?: TagData['id']
+}): UseQueryResult<TagData | null> => {
+  const { tagId = null } = params
+
   return useQuery({
-    ...queryKeys.tags.forTag(params)._ctx.data,
-    queryFn: () => tagsApi.fetchTag(params),
+    ...queryKeys.tags.forTag({ tagId })._ctx.data,
+    enabled: !!tagId,
+    queryFn: () => {
+      if (!tagId) return null
+      return tagsApi.fetchTag({ tagId })
+    },
   })
+}
+
+export const useTag$ = (params: {
+  tagId: TagData['id']
+}): UseQueryResult<TagData> => {
+  const tag$ = useOptionalTag$(params)
+  if (tag$.data === null) throw new Error('Tag not found')
+  return tag$ as UseQueryResult<TagData>
 }
 
 export const useCreateTag$ = () => {

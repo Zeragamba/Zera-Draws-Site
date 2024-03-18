@@ -27,6 +27,7 @@ module.exports = {
     },
   },
   ignorePatterns: [
+    '.eslintrc.js',
     'scripts/**',
     'config/**',
   ],

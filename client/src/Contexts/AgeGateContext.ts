@@ -1,7 +1,6 @@
 import { createContext, useContext } from 'react'
 
-import { noop } from '../Noop'
-
+import { noop } from '../Lib'
 
 export type AgeGateState = {
   verified: boolean

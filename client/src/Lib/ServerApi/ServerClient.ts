@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, isAxiosError, Method } from 'axios'
 
-import { authTokenStore } from '../../Api'
+import { authTokenStore } from '../../Api/AuthTokenStore'
 import { Config } from '../../Config'
 
 export interface ErrorResponse extends AxiosResponse {
@@ -37,12 +37,12 @@ export function isNotFoundError(error: unknown): error is ServerApiError {
 export class ServerClient {
   static axios = axios.create({ baseURL: Config.SERVER_URL })
 
-  public static set authToken(newToken: string | null) {
-    authTokenStore.authToken = newToken
-  }
-
   public static get authToken(): string {
     return authTokenStore.authToken
+  }
+
+  public static set authToken(newToken: string | null) {
+    authTokenStore.authToken = newToken
   }
 
   public static async request<Res>(method: Method, path: string, config: AxiosRequestConfig = {}): Promise<Res> {

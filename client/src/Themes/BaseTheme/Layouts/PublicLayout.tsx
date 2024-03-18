@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 import { Header } from './Header'
 import { Layout, LayoutStyles } from './Layout'
 import { PageContextProvider } from './PageContext'
-import { useAgeGate } from '../../../Lib'
+import { useAgeGate } from '../../../Contexts'
 import { AgeGatePage } from '../Pages'
 
 interface PublicLayoutProps {

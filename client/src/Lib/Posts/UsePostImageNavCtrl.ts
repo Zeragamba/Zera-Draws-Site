@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { usePostContext } from './PostContext'
+import { usePostContext } from '../../Contexts'
 import { ImageData } from '../Images'
 import { MathUtils } from '../MathUtils'
 

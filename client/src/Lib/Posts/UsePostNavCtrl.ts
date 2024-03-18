@@ -1,10 +1,10 @@
 import { MouseEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { usePostContext } from './PostContext'
 import { PostData } from './PostData'
 import { getPostUrl, useNextPost, usePrevPost } from './PostsApi'
 import { usePostPreloader } from './UsePostPreloader'
+import { usePostContext } from '../../Contexts'
 import { useIsMobile } from '../Hooks'
 import { useIsAdmin } from '../User'
 

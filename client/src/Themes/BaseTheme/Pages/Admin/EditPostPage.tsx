@@ -1,8 +1,10 @@
 import React, { FC } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
-import { PostProvider , isNotFoundError, useCurrentUser, useIsAdmin, usePost$ } from '../../../../Lib'
+import { PostProvider } from '../../../../Contexts'
+import { isNotFoundError, useCurrentUser, useIsAdmin, usePost$ } from '../../../../Lib'
 import { EditPostForm, ErrorAlert, QueryGate } from '../../Components'
+import { LoadingPage } from '../LoadingPage'
 import { AuthorizingPage, LoginPage } from '../Users'
 
 export const EditPostPage: FC = () => {
@@ -28,7 +30,7 @@ export const EditPostPage: FC = () => {
         }
       }}
       renderData={(post) => (
-        <PostProvider post={post}>
+        <PostProvider renderPending={<LoadingPage />}>
           <EditPostForm
             post={post}
             onSaved={(post) => navigate(`/post/${post.slug}`)}

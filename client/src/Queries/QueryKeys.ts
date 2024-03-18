@@ -8,7 +8,7 @@ export const queryKeys = createQueryKeyStore({
   },
   tags: {
     all: null,
-    forTag: (params: { tagId: TagData['id'] }) => ({
+    forTag: (params: { tagId: TagData['id'] | null }) => ({
       queryKey: [ params ],
       contextQueries: {
         data: null,
@@ -16,7 +16,7 @@ export const queryKeys = createQueryKeyStore({
     }),
   },
   galleries: {
-    forGallery: (params: { galleryId: GalleryData['id'] }) => ({
+    forGallery: (params: { galleryId: GalleryData['id'] | null }) => ({
       queryKey: [ params ],
       contextQueries: {
         data: null,
@@ -28,7 +28,7 @@ export const queryKeys = createQueryKeyStore({
     first: null,
     latest: null,
     recent: null,
-    forPost: (params: { postId: string; galleryId?: string; tagId?: string }) => ({
+    forPost: (params: { postId: string | null; galleryId?: string | null; tagId?: string | null }) => ({
       queryKey: [ params ],
       contextQueries: {
         data: null,

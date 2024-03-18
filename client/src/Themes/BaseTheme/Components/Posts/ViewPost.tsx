@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown'
 
 import { PostNav } from './PostNav'
 import { PostTags } from './PostTags'
+import { usePostContext } from '../../../../Contexts'
 import { FontAwesomeIcon, PostData, useViewPostCtrl } from '../../../../Lib'
 import { AsyncImg } from '../Images'
 
@@ -16,9 +17,10 @@ interface ViewPostProps {
 }
 
 export const ViewPost: FC<ViewPostProps> = ({
-  post,
+  // post,
   onPostChange,
 }) => {
+  const { post } = usePostContext()
   const ctrl = useViewPostCtrl()
   const description = post.description || ''
 

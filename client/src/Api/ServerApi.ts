@@ -52,10 +52,6 @@ export abstract class ServerApi {
     return this.request<Data>(path, { method: 'POST', ...config })
   }
 
-  protected async put<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
-    return this.request<Data>(path, { method: 'PUT', ...config })
-  }
-
   protected async patch<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
     return this.request<Data>(path, { method: 'PATCH', ...config })
   }

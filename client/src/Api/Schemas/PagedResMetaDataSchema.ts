@@ -8,7 +8,3 @@ export const PagedResMetaDataSchema = z.object({
 })
 
 export type PagedResMetaData = z.infer<typeof PagedResMetaDataSchema>
-
-export type PagedModelResData<Field extends string, Model> =
-  & PagedResMetaData
-  & { [field in Field]: Model[] }
