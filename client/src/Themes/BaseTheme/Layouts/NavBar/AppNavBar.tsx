@@ -3,7 +3,8 @@ import React, { FC, useRef, useState } from 'react'
 
 import { NavBarLink } from './NavBarLink'
 import { TagsMenu } from './TagsMenu'
-import { SocialPlatform, useCurrentUser, useFeatureFlags, useIsMobile, useLogout, useSocials } from '../../../../Lib'
+import { SocialPlatform, useFeatureFlags, useIsMobile, useSocials } from '../../../../Lib'
+import { useCurrentUser$, useLogout$ } from '../../../../Queries'
 import { SocialsNav } from '../SocalsNav'
 
 export const AppNavBar: FC = () => {
@@ -46,9 +47,9 @@ export const LeftNavLinks: FC = () => {
 }
 
 export const RightNavLinks: FC = () => {
-  const { data: currentUser } = useCurrentUser()
+  const { data: currentUser } = useCurrentUser$()
   const isAdmin = currentUser?.admin || false
-  const logoutQuery = useLogout()
+  const logoutQuery = useLogout$()
   const socials = useSocials()
   const featureFlags = useFeatureFlags()
 

@@ -2,14 +2,14 @@ import React, { FC } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
 import { PostProvider } from '../../../../Contexts'
-import { isNotFoundError, useCurrentUser, useIsAdmin } from '../../../../Lib'
-import { usePost$ } from '../../../../Queries'
+import { isNotFoundError, useIsAdmin } from '../../../../Lib'
+import { useCurrentUser$, usePost$ } from '../../../../Queries'
 import { EditPostForm, ErrorAlert, QueryGate } from '../../Components'
 import { LoadingPage } from '../LoadingPage'
 import { AuthorizingPage, LoginPage } from '../Users'
 
 export const EditPostPage: FC = () => {
-  const userQuery = useCurrentUser()
+  const userQuery = useCurrentUser$()
   const isAdmin = useIsAdmin()
 
   const navigate = useNavigate()

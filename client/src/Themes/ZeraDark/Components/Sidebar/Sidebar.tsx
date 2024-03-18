@@ -9,7 +9,8 @@ import { NavItem } from './NavItem'
 import { SidebarGroup } from './SidebarGroup'
 import { SidebarTags } from './SidebarTags'
 import { SocialsGroup } from './SocialsGroup'
-import { FeatureFlag, FontAwesomeIcon, useFeatureFlag, useIsAdmin, useLogout } from '../../../../Lib'
+import { FeatureFlag, FontAwesomeIcon, useFeatureFlag, useIsAdmin } from '../../../../Lib'
+import { useLogout$ } from '../../../../Queries'
 
 const styles = {
   backgroundColor: 'hsla(0deg, 0%, 40%, 25%)',
@@ -42,7 +43,7 @@ export const Sidebar: FC<SidebarProps> = ({
   const commissionsEnabled = useFeatureFlag(FeatureFlag.Commissions)
   const requestsEnabled = useFeatureFlag(FeatureFlag.Requests)
   const isAdmin = useIsAdmin()
-  const logout$ = useLogout()
+  const logout$ = useLogout$()
 
   return (
     <Stack sx={styles} className={classnames({ open, isSmallScreen })}>

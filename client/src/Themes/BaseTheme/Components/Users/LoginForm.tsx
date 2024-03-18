@@ -1,7 +1,8 @@
 import { Button, Paper, Stack, TextField, Typography } from '@mui/material'
 import React, { ChangeEvent, FC, FormEvent, useState } from 'react'
 
-import { isServerApiError, useLogin } from '../../../../Lib'
+import { isServerApiError } from '../../../../Lib'
+import { useLogin$ } from '../../../../Queries'
 
 type LoginFormState = {
   username: string
@@ -10,7 +11,7 @@ type LoginFormState = {
 }
 
 export const LoginForm: FC = () => {
-  const loginQuery = useLogin()
+  const loginQuery = useLogin$()
   const [ form, setForm ] = useState<LoginFormState>({ username: '', password: '', error: null })
 
   const handleChange = (field: keyof LoginFormState) => {

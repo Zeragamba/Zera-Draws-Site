@@ -2,13 +2,14 @@ import { Box, Paper, Stack } from '@mui/material'
 import React, { FC } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useCurrentUser, useIsAdmin } from '../../../Lib'
-import { AdminNavItem } from '../Components/Admin/AdminNavItem'
+import { useIsAdmin } from '../../../Lib'
+import { useCurrentUser$ } from '../../../Queries'
+import { AdminNavItem } from '../Components'
 import { AuthorizingPage, LoginPage } from '../Pages'
 
 
 export const AdminLayout: FC = () => {
-  const userQuery = useCurrentUser()
+  const userQuery = useCurrentUser$()
   const isAdmin = useIsAdmin()
 
   if (userQuery.isFetching) return <AuthorizingPage />
