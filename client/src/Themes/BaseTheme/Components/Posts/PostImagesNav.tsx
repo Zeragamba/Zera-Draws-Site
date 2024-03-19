@@ -2,8 +2,8 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { Button, Paper, SxProps, Typography } from '@mui/material'
 import React, { FC } from 'react'
 
+import { usePostImageCtrl } from '../../../../Controllers'
 import { FontAwesomeIcon, useHotkey, useIsMobile } from '../../../../Lib'
-import { usePostImageCtrl } from '../../../../Lib/Posts/UsePostImageNavCtrl'
 
 export const ImagesNav: FC = () => {
   const isMobile = useIsMobile()

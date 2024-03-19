@@ -28,10 +28,8 @@ export const MetricsExportBtn: FC<MetricsExportBtnProps> = ({
   if (export$.isSuccess) icon = <FontAwesomeIcon icon={faCheck} />
 
   return (
-    <Button
-      variant={'contained'}
-      startIcon={icon}
-      onClick={() => export$.mutate()}
-    >Export</Button>
+    <Button variant={'contained'} startIcon={icon} onClick={() => export$.mutate()}>
+      Export
+    </Button>
   )
 }

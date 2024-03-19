@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { GalleryData, PostData, TagData } from '../Lib'
 import { useLatestPost$, useOptionalGallery$, useOptionalTag$, usePost$ } from '../Queries'
 
-type PostContextState = {
+export type PostContextState = {
   post: PostData
   tag?: TagData | null
   gallery?: GalleryData | null
@@ -86,12 +86,4 @@ export const usePostContext = () => {
   const context = useContext(PostContext)
   if (!context) throw new Error('Not within a PostProvider')
   return context
-}
-
-export const usePost = () => usePostContext().post
-export const useTag = () => usePostContext().tag
-export const useGallery = () => usePostContext().gallery
-export const usePostImageIndex = () => {
-  const { imageIndex, setImageIndex } = usePostContext()
-  return [ imageIndex, setImageIndex ]
 }

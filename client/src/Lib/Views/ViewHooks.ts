@@ -2,7 +2,7 @@ import * as uuid from 'uuid'
 
 import { ViewsApi } from './ViewsApi'
 import { noop } from '../Noop'
-import { PostData } from '../Posts/PostData'
+import { PostData } from '../Posts'
 
 const VIEWER_ID_KEY = 'viewerId'
 const SESSION_VIEWS_KEY = (postId: string) => `viewed.${postId}`
@@ -32,5 +32,7 @@ async function addView(postId: PostData['id']): Promise<void> {
 export type UseRecordViewReturn = (postId: PostData['id']) => void
 
 export function useRecordView(): UseRecordViewReturn {
-  return (postId) => addView(postId).catch(noop)
+  return (postId) => {
+    addView(postId).catch(noop)
+  }
 }

@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
 import { usePostContext } from '../../Contexts'
-import { ImageData } from '../Images'
-import { MathUtils } from '../MathUtils'
+import { ImageData } from '../../Lib/Images'
+import { MathUtils } from '../../Lib/MathUtils'
 
 
 export interface PostImageCtrl {

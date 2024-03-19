@@ -5,8 +5,8 @@ import React, { FC } from 'react'
 
 
 import { ImagesNav } from './PostImagesNav'
+import { usePostNavCtrl } from '../../../../Controllers'
 import { FontAwesomeIcon, ImageData, PostData, useHotkey, useIsMobile } from '../../../../Lib'
-import { usePostNavCtrl } from '../../../../Lib/Posts/UsePostNavCtrl'
 import { AltImagesView } from '../Images'
 
 import styles from './ViewPost.module.scss'

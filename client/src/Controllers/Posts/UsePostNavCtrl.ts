@@ -1,13 +1,13 @@
 import { MouseEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { PostData } from './PostData'
-import { getPostUrl } from './PostUtil'
-import { usePostPreloader } from './UsePostPreloader'
 import { usePostContext } from '../../Contexts'
+import { useIsMobile } from '../../Lib/Hooks'
+import { PostData } from '../../Lib/Posts/PostData'
+import { getPostUrl } from '../../Lib/Posts/PostUtil'
+import { usePostPreloader } from '../../Lib/Posts/UsePostPreloader'
+import { useIsAdmin } from '../../Lib/User'
 import { useNextPost$, usePrevPost$ } from '../../Queries'
-import { useIsMobile } from '../Hooks'
-import { useIsAdmin } from '../User'
 
 export interface PostNavCtrl {
   onPostImageClick: MouseEventHandler<HTMLElement>
