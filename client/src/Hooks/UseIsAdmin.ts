@@ -1,4 +1,4 @@
-import { useCurrentUser$ } from '../../Queries'
+import { useCurrentUser$ } from '../Queries'
 
 export const useIsAdmin = (): boolean => {
   const { data: currentUser } = useCurrentUser$()

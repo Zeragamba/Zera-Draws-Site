@@ -1,4 +1,4 @@
-import { ViewMetricsData } from '../../Lib'
+import { ViewMetricsData } from '../../Models'
 import { ViewMetricsResSchema } from '../Schemas/ViewMetricsDataSchema'
 import { ServerApi } from '../ServerApi'
 

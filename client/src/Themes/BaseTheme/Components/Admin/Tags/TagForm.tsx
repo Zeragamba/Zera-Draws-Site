@@ -2,7 +2,9 @@ import { FormControlLabel, FormGroup, Stack, Switch, TextField } from '@mui/mate
 import React, { ChangeEventHandler, FC } from 'react'
 import { Control, useController } from 'react-hook-form'
 
-import { formatSlug, TagData } from '../../../../../Lib'
+import { formatSlug } from '../../../../../Lib'
+import { TagData } from '../../../../../Models'
+
 
 interface TagFormProps {
   control: Control<{ tag: TagData }>

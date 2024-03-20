@@ -1,7 +1,7 @@
 import { FC, ReactNode, useRef } from 'react'
 
 import { GalleryContextProvider } from './GalleryContext'
-import { useContainerDimensions } from '../../../../Lib'
+import { useContainerDimensions } from '../../../../Hooks'
 import { StyleProp } from '../../../ZeraDark/MuiTheme'
 
 import styles from './GalleryWrapper.module.scss'

@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form'
 import { DeleteTagButton } from './DeleteTagButton'
 import { MergeTagButton } from './MergeTagsButton'
 import { TagForm } from './TagForm'
-import { FontAwesomeIcon, TagData } from '../../../../../Lib'
+import { FontAwesomeIcon } from '../../../../../Lib'
+import { TagData } from '../../../../../Models'
 import { useTag$, useUpdateTag$ } from '../../../../../Queries'
 
 interface EditTagDialogProps {

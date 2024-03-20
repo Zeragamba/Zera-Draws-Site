@@ -12,14 +12,14 @@ import {
   SetImagesPayload,
 } from './Actions'
 import { changesReducer } from './ChangesReducer'
-import { freeze } from '../../TestHelpers'
+import { freeze } from '../../Lib/TestHelpers'
+import { ImageData } from '../../Models/ImageData'
 import {
   AddImageChangeRecord,
   EditImageChangeRecord,
   ImageChangeRecord,
   RemoveImageChangeRecord,
 } from '../ImageChangeRecord'
-import { ImageData } from '../ImageData'
 
 describe('ChangesReducer', () => {
   let oldState: ImageChangeRecord[]

@@ -4,7 +4,8 @@ import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { TagChip } from './TagChip'
-import { byTagName, FontAwesomeIcon, TagData } from '../../../../Lib'
+import { byTagName, FontAwesomeIcon } from '../../../../Lib'
+import { TagData } from '../../../../Models'
 
 interface TagListProps {
   tags: TagData[]

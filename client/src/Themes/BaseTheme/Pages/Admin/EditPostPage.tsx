@@ -1,8 +1,9 @@
 import React, { FC } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
+import { isNotFoundError } from '../../../../Api'
 import { ParamsPostProvider } from '../../../../Contexts'
-import { isNotFoundError, useIsAdmin } from '../../../../Lib'
+import { useIsAdmin } from '../../../../Hooks'
 import { useCurrentUser$, usePost$ } from '../../../../Queries'
 import { EditPostForm, ErrorAlert, QueryGate } from '../../Components'
 import { LoadingPage } from '../LoadingPage'

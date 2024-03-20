@@ -2,7 +2,8 @@ import { useMutation, UseMutationResult, useQuery, UseQueryResult } from '@tanst
 
 import { queryKeys } from './QueryKeys'
 import { postViewsApi } from '../Api'
-import { PostData, ViewsData } from '../Lib'
+import { PostData } from '../Models/PostData'
+import { ViewsData } from '../Models/ViewsData'
 
 export const usePostViews$ = (params: {
   postId: PostData['id']

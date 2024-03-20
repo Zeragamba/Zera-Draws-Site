@@ -1,7 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material'
 import React, { FC, useState } from 'react'
 
-import { noop, PostData } from '../../../../../Lib'
+import { noop } from '../../../../../Lib'
+import { PostData } from '../../../../../Models'
 import { useDeletePost$ } from '../../../../../Queries'
 
 interface DeletePostButtonProps {

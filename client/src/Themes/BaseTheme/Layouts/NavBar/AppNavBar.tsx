@@ -3,7 +3,8 @@ import React, { FC, useRef, useState } from 'react'
 
 import { NavBarLink } from './NavBarLink'
 import { TagsMenu } from './TagsMenu'
-import { FeatureFlag, SocialPlatform, useFeatureFlag, useIsMobile } from '../../../../Lib'
+import { useFeatureFlag, useIsMobile } from '../../../../Hooks'
+import { FeatureFlag, SocialPlatform } from '../../../../Models'
 import { useCurrentUser$, useLogout$, useSocialPlatforms$ } from '../../../../Queries'
 import { SocialsNav } from '../SocalsNav'
 

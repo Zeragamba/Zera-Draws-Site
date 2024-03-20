@@ -7,7 +7,7 @@ import { GalleryConfig } from './GalleryContext'
 import { GalleryItem } from './GalleryItem'
 import { GalleryTitle } from './GalleryTitle'
 import { GalleryWrapper } from './GalleryWrapper'
-import { PostData } from '../../../../Lib'
+import { PostData } from '../../../../Models'
 import { InfiniteScroll } from '../Shared'
 
 export interface PostGalleryProps extends Omit<GalleryConfig, 'rowHeight'> {

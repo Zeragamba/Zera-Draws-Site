@@ -1,10 +1,10 @@
 import { sortArray, sortBy } from 'dyna-sort'
 import { useState } from 'react'
 
-import { TagData } from './TagData'
-import { filterTags, TagFilter } from './TagFilter'
-import { byFeatured, byTagName } from './TagSorters'
-import { useAllTags$ } from '../../Queries'
+import { filterTags, TagFilter } from '../Lib/Tags/TagFilter'
+import { byFeatured, byTagName } from '../Lib/Tags/TagSorters'
+import { TagData } from '../Models/TagData'
+import { useAllTags$ } from '../Queries'
 
 export type UseTagMenuReturn = {
   isPending: boolean
@@ -15,7 +15,7 @@ export type UseTagMenuReturn = {
   filteredTags: TagData[]
 }
 
-export function useTagMenu(): UseTagMenuReturn {
+export function useTagMenuCtrl(): UseTagMenuReturn {
   const allTags$ = useAllTags$()
   const [ filterText, setFilterText ] = useState<string>('')
 

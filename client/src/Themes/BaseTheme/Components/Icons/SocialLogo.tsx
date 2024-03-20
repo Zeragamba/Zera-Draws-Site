@@ -12,7 +12,8 @@ import { FC, ReactElement } from 'react'
 
 import { IconBluesky } from './IconBluesky'
 import { IconGumroad } from './IconGumroad'
-import { FontAwesomeIcon, SocialPlatform } from '../../../../Lib'
+import { FontAwesomeIcon } from '../../../../Lib'
+import { SocialPlatform } from '../../../../Models'
 
 export const socialLogo: Record<SocialPlatform, ReactElement> = {
   [SocialPlatform.bluesky]: <IconBluesky />,

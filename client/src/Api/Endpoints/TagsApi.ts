@@ -1,4 +1,4 @@
-import { EditableTagData, TagData } from '../../Lib'
+import { EditableTagData, TagData } from '../../Models'
 import { TagListResSchema, TagResSchema } from '../Schemas'
 import { ServerApi } from '../ServerApi'
 

@@ -2,7 +2,8 @@ import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons'
 import { Autocomplete, createFilterOptions, Stack, TextField } from '@mui/material'
 import React, { FC } from 'react'
 
-import { byTagName, FontAwesomeIcon, formatSlug, TagData } from '../../../../Lib'
+import { byTagName, FontAwesomeIcon, formatSlug } from '../../../../Lib'
+import { TagData } from '../../../../Models'
 import { useAllTags$, useCreateTag$ } from '../../../../Queries'
 
 type NewTagData = { id: null; name: string }

@@ -1,8 +1,9 @@
 import z from 'zod'
 
-import { isServerApiError, UserData } from '../../Lib'
+import { UserData } from '../../Models'
 import { authTokenStore } from '../AuthTokenStore'
-import { UserDataSchema, UserResSchema } from '../Schemas/UserDataSchema'
+import { isServerApiError } from '../Errors'
+import { UserDataSchema, UserResSchema } from '../Schemas'
 import { ServerApi } from '../ServerApi'
 
 

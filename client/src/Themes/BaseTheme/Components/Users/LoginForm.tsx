@@ -1,7 +1,7 @@
 import { Button, Paper, Stack, TextField, Typography } from '@mui/material'
 import React, { ChangeEvent, FC, FormEvent, useState } from 'react'
 
-import { isServerApiError } from '../../../../Lib'
+import { isServerApiError } from '../../../../Api'
 import { useLogin$ } from '../../../../Queries'
 
 type LoginFormState = {

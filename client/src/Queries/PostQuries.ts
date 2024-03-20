@@ -11,7 +11,8 @@ import { queryKeys } from './QueryKeys'
 import { pagedQueryOptions } from './QueryUtils'
 import { postsApi } from '../Api'
 import { PagedPostData } from '../Api/Schemas'
-import { EditableImage, EditablePost, GalleryData, ImageChangeRecord, PostData, TagData } from '../Lib'
+import { ImageChangeRecord } from '../Images'
+import { EditableImage, EditablePost, GalleryData, PostData, TagData } from '../Models'
 
 type PostParams = { postId: string; galleryId?: string; tagId?: string }
 

@@ -13,7 +13,8 @@ import {
 } from '@mui/material'
 import React, { FC, useState } from 'react'
 
-import { FontAwesomeIcon, noop, TagData } from '../../../../../Lib'
+import { FontAwesomeIcon, noop } from '../../../../../Lib'
+import { TagData } from '../../../../../Models'
 import { useAllTags$, useMergeTags$ } from '../../../../../Queries'
 import { Spinner } from '../../Shared'
 

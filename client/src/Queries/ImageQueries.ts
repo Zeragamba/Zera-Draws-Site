@@ -1,7 +1,8 @@
 import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
 import { queryKeys } from './QueryKeys'
-import { errorHandler, ImageData } from '../Lib'
+import { errorHandler } from '../Errors/ErrorHandler'
+import { ImageData } from '../Models'
 
 function fetchImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve) => {

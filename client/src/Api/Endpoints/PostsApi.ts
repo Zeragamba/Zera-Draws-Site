@@ -1,6 +1,8 @@
 import { AxiosProgressEvent } from 'axios'
 
-import { EditableImage, EditablePost, getPostUrl, ImageChangeRecord, PostData, postToFormData } from '../../Lib'
+import { ImageChangeRecord } from '../../Images'
+import { getPostUrl } from '../../Lib/PostUtil'
+import { EditableImage, EditablePost, PostData, postToFormData } from '../../Models'
 import { PagedPostData, PagedPostDataResSchema, PostDataResSchema } from '../Schemas'
 import { ServerApi } from '../ServerApi'
 

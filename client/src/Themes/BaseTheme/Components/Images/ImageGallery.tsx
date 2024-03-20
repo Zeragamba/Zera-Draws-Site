@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import { ImageData } from '../../../../Lib'
+import { ImageData } from '../../../../Models'
 import { useImagePreloader } from '../../../../Queries'
 import { GalleryItem, GalleryWrapper } from '../Galleries'
 

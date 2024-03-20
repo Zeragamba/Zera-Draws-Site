@@ -1,4 +1,4 @@
-import { FeatureFlag } from './SiteMeta'
+import { FeatureFlag } from '../Models'
 import { useFeatureFlags$ } from '../Queries'
 
 export function useFeatureFlag(flag: FeatureFlag): boolean {

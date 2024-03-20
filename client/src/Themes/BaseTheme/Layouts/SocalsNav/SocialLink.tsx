@@ -1,10 +1,11 @@
 import { Box, Stack, SxProps } from '@mui/material'
 import { FC } from 'react'
 
-import { SocialPlatform, useIsMobile } from '../../../../Lib'
+import { useIsMobile } from '../../../../Hooks'
+import { SocialPlatform } from '../../../../Models'
 import { useSocialPlatforms$ } from '../../../../Queries'
 import { Colours } from '../../../ZeraDark/MuiTheme'
-import { SocialLogo } from '../../Components/Icons'
+import { SocialLogo } from '../../Components'
 
 interface SocialLinkProps {
   platform: SocialPlatform

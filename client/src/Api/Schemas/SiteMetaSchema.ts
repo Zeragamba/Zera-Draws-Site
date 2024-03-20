@@ -1,6 +1,6 @@
 import z from 'zod'
 
-import { ContentFields, FeatureFlag, MetaDataSet, SocialPlatform } from '../../Lib'
+import { ContentFields, FeatureFlag, MetaDataSet, SocialPlatform } from '../../Models'
 
 const stringValue = z.string().optional()
 const booleanValue = stringValue.transform((value) => value === 'true')

@@ -1,8 +1,8 @@
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
 import { queryKeys } from './QueryKeys'
-import { authApiClient } from '../Api'
-import { ServerApiError, UserData } from '../Lib'
+import { authApiClient, ServerApiError } from '../Api'
+import { UserData } from '../Models'
 
 export const useLogin$ = () => {
   const queryClient = useQueryClient()

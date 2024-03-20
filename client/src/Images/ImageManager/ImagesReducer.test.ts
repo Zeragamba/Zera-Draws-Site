@@ -3,8 +3,8 @@ import crypto from 'node:crypto'
 
 import { addImage, AddImagePayload, editImage, EditImagePayload, setImages, SetImagesPayload } from './Actions'
 import { imagesReducer } from './ImagesReducer'
-import { freeze } from '../../TestHelpers'
-import { ImageData } from '../ImageData'
+import { freeze } from '../../Lib/TestHelpers'
+import { ImageData } from '../../Models/ImageData'
 
 describe('ImageReducer', () => {
   let oldState: ImageData[]

@@ -15,7 +15,9 @@ import React, { FC, useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import ReactMarkdown from 'react-markdown'
 
-import { ContentMeta, FeatureFlag, FontAwesomeIcon, muiField } from '../../../../Lib'
+import { muiField } from '../../../../Forms'
+import { FontAwesomeIcon } from '../../../../Lib'
+import { ContentMeta, FeatureFlag } from '../../../../Models'
 import {
   useCustomContent$,
   useFeatureFlags$,

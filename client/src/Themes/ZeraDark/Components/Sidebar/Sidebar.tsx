@@ -9,8 +9,9 @@ import { NavItem } from './NavItem'
 import { SidebarGroup } from './SidebarGroup'
 import { SidebarTags } from './SidebarTags'
 import { SocialsGroup } from './SocialsGroup'
-import { FeatureFlag, FontAwesomeIcon, useIsAdmin } from '../../../../Lib'
-import { useFeatureFlag } from '../../../../Lib/FeatureFlags'
+import { useFeatureFlag, useIsAdmin } from '../../../../Hooks'
+import { FontAwesomeIcon } from '../../../../Lib'
+import { FeatureFlag } from '../../../../Models'
 import { useLogout$ } from '../../../../Queries'
 
 const styles = {

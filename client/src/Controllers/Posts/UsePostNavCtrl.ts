@@ -2,11 +2,9 @@ import { MouseEventHandler } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { usePostContext } from '../../Contexts'
-import { useIsMobile } from '../../Lib/Hooks'
-import { PostData } from '../../Lib/Posts/PostData'
-import { getPostUrl } from '../../Lib/Posts/PostUtil'
-import { usePostPreloader } from '../../Lib/Posts/UsePostPreloader'
-import { useIsAdmin } from '../../Lib/User'
+import { useIsAdmin, useIsMobile, usePostPreloader } from '../../Hooks'
+import { getPostUrl } from '../../Lib/PostUtil'
+import { PostData } from '../../Models'
 import { useNextPost$, usePrevPost$ } from '../../Queries'
 
 export interface PostNavCtrl {

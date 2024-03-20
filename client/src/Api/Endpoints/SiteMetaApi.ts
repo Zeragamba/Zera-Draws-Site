@@ -1,4 +1,4 @@
-import { ContentMeta, FeatureFlags, MetaDataGroup, SocialsMeta } from '../../Lib'
+import { ContentMeta, FeatureFlags, MetaDataGroup, SocialsMeta } from '../../Models'
 import { ContentSchema, FeatureFlagsSchema, SocialsSchema } from '../Schemas/SiteMetaSchema'
 import { ServerApi } from '../ServerApi'
 

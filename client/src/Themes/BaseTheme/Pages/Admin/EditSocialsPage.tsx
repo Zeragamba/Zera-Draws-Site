@@ -3,7 +3,8 @@ import TextField from '@mui/material/TextField'
 import React, { FC, useEffect } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
-import { muiField, SocialPlatform, SocialsMeta } from '../../../../Lib'
+import { muiField } from '../../../../Forms'
+import { SocialPlatform, SocialsMeta } from '../../../../Models'
 import { useSocialPlatforms$, useUpdateSocialPlatforms$ } from '../../../../Queries'
 import { SocialLogo } from '../../Components'
 

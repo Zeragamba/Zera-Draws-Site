@@ -5,7 +5,8 @@ import { sortArray } from 'dyna-sort'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { byTagName, FontAwesomeIcon, TagData } from '../../../../Lib'
+import { byTagName, FontAwesomeIcon } from '../../../../Lib'
+import { TagData } from '../../../../Models'
 import { useAllTags$, useUpdateTag$ } from '../../../../Queries'
 import { AddTagButton, DeleteEmptyTagsButton, EditTagDialog } from '../../Components'
 

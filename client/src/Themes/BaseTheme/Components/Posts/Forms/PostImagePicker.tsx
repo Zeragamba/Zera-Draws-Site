@@ -2,7 +2,7 @@ import { Box, Button, Paper } from '@mui/material'
 import classnames from 'classnames'
 import React, { FC, Ref } from 'react'
 
-import { ImageData } from '../../../../../Lib'
+import { ImageData } from '../../../../../Models'
 import { ImagePicker } from '../../Images'
 
 import styles from './PostImagePicker.module.scss'

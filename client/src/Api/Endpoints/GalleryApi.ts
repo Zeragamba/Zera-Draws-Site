@@ -1,4 +1,4 @@
-import { GalleryData } from '../../Lib'
+import { GalleryData } from '../../Models'
 import { PagedPostData, PagedPostDataResSchema } from '../Schemas'
 import { GalleryResSchema } from '../Schemas/GalleryDataSchema'
 import { ServerApi } from '../ServerApi'

@@ -3,7 +3,7 @@ import React, { FC, MouseEventHandler } from 'react'
 import { useHref, useNavigate } from 'react-router-dom'
 
 import { PostTags } from './PostTags'
-import { PostData } from '../../../../Lib'
+import { PostData } from '../../../../Models'
 import { AsyncImg } from '../Images'
 
 interface PostsListProps {

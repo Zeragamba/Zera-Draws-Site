@@ -3,7 +3,8 @@ import { Button, Paper, SxProps, Typography } from '@mui/material'
 import React, { FC } from 'react'
 
 import { usePostImageCtrl } from '../../../../Controllers'
-import { FontAwesomeIcon, useHotkey, useIsMobile } from '../../../../Lib'
+import { useHotkey, useIsMobile } from '../../../../Hooks'
+import { FontAwesomeIcon } from '../../../../Lib'
 
 export const ImagesNav: FC = () => {
   const isMobile = useIsMobile()

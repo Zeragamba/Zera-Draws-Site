@@ -1,7 +1,7 @@
 import { createContext, FC, PropsWithChildren, ReactNode, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { GalleryData, PostData, TagData } from '../Lib'
+import { GalleryData, PostData, TagData } from '../Models'
 import { useLatestPost$, useOptionalGallery$, useOptionalTag$, usePost$ } from '../Queries'
 
 export type PostContextState = {

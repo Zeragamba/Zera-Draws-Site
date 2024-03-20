@@ -1,4 +1,5 @@
-import { PostData, ViewsData } from '../../Lib'
+import { PostData } from '../../Models/PostData'
+import { ViewsData } from '../../Models/ViewsData'
 import { PostViewsResSchema } from '../Schemas/PostViewsDataSchema'
 import { ServerApi } from '../ServerApi'
 

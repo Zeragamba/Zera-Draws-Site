@@ -5,9 +5,10 @@ import React, { FC } from 'react'
 
 import { ScheduledChip } from './ScheduledChip'
 import { ViewCounter } from './ViewCounter'
-import { FontAwesomeIcon, PostData, useIsAdmin } from '../../../../Lib'
-import { TagChip } from '../Tags/TagChip'
-import { TagList } from '../Tags/TagList'
+import { useIsAdmin } from '../../../../Hooks'
+import { FontAwesomeIcon } from '../../../../Lib'
+import { PostData } from '../../../../Models'
+import { TagChip, TagList } from '../Tags'
 
 interface PostTagsProps {
   post: PostData

@@ -1,6 +1,6 @@
 import { createSorter } from 'dyna-sort'
 
-import { TagData } from './TagData'
+import { TagData } from '../../Models/TagData'
 
 export const byTagName = createSorter<TagData>((a, b) => a.name.localeCompare(b.name))
 export const byFeatured = createSorter<TagData>((a, b) => {
