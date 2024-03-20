@@ -8,18 +8,11 @@ import { Controller, UseFormReturn } from 'react-hook-form'
 
 import { EditPostImages } from './EditPostImages'
 import { PublishSettings } from './PublishSettings'
-import {
-  EditableImage,
-  FontAwesomeIcon,
-  formatPostSlug,
-  formatTitle,
-  ImageData,
-  ImageManager,
-  muiField,
-  parseFilename,
-  PostData,
-  TagData,
-} from '../../../../../Lib'
+import { muiField } from '../../../../../Forms'
+import { ImageManager } from '../../../../../Images'
+import { FontAwesomeIcon, formatTitle, parseFilename } from '../../../../../Lib'
+import { formatPostSlug } from '../../../../../Lib/PostUtil'
+import { EditableImage, ImageData, PostData, TagData } from '../../../../../Models'
 import { PostTagsField, SelectedTagList } from '../../Tags'
 
 import styles from './PostForm.module.scss'

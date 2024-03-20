@@ -1,12 +1,16 @@
 import React, { FC } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
-import { PostProvider , isNotFoundError, useCurrentUser, useIsAdmin, usePost$ } from '../../../../Lib'
+import { isNotFoundError } from '../../../../Api'
+import { ParamsPostProvider } from '../../../../Contexts'
+import { useIsAdmin } from '../../../../Hooks'
+import { useCurrentUser$, usePost$ } from '../../../../Queries'
 import { EditPostForm, ErrorAlert, QueryGate } from '../../Components'
+import { LoadingPage } from '../LoadingPage'
 import { AuthorizingPage, LoginPage } from '../Users'
 
 export const EditPostPage: FC = () => {
-  const userQuery = useCurrentUser()
+  const userQuery = useCurrentUser$()
   const isAdmin = useIsAdmin()
 
   const navigate = useNavigate()
@@ -28,14 +32,14 @@ export const EditPostPage: FC = () => {
         }
       }}
       renderData={(post) => (
-        <PostProvider post={post}>
+        <ParamsPostProvider renderPending={<LoadingPage />}>
           <EditPostForm
             post={post}
             onSaved={(post) => navigate(`/post/${post.slug}`)}
             onCancel={() => navigate(-1)}
             onDelete={() => navigate('/archive')}
           />
-        </PostProvider>
+        </ParamsPostProvider>
       )}
     />
   )

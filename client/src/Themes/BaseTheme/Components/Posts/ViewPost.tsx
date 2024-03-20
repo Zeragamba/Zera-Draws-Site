@@ -5,21 +5,14 @@ import ReactMarkdown from 'react-markdown'
 
 import { PostNav } from './PostNav'
 import { PostTags } from './PostTags'
-import { FontAwesomeIcon, PostData, useViewPostCtrl } from '../../../../Lib'
+import { useViewPostCtrl } from '../../../../Controllers'
+import { FontAwesomeIcon } from '../../../../Lib'
 import { AsyncImg } from '../Images'
 
 import styles from './ViewPost.module.scss'
 
-interface ViewPostProps {
-  post: PostData
-  onPostChange: (newPost: PostData) => void
-}
-
-export const ViewPost: FC<ViewPostProps> = ({
-  post,
-  onPostChange,
-}) => {
-  const ctrl = useViewPostCtrl()
+export const ViewPost: FC = () => {
+  const { post, ...ctrl } = useViewPostCtrl()
   const description = post.description || ''
 
   return (
@@ -58,7 +51,7 @@ export const ViewPost: FC<ViewPostProps> = ({
         post={post}
         nextPost={ctrl.nextPost}
         prevPost={ctrl.prevPost}
-        onPostChange={onPostChange}
+        onPostChange={ctrl.onChangePost}
         onImageChange={ctrl.onChangeImage}
       />
 

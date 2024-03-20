@@ -15,42 +15,43 @@ import React, { FC, useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import ReactMarkdown from 'react-markdown'
 
+import { muiField } from '../../../../Forms'
+import { FontAwesomeIcon } from '../../../../Lib'
+import { ContentMeta, FeatureFlag } from '../../../../Models'
 import {
-  ContentMeta,
-  FeatureFlag,
-  FontAwesomeIcon,
-  MetaDataGroup,
-  muiField,
-  useFeatureFlags,
-  useMetaContent,
-  useUpdateMeta,
-} from '../../../../Lib'
+  useCustomContent$,
+  useFeatureFlags$,
+  useUpdateCustomContent$,
+  useUpdateFeatureFlags$,
+} from '../../../../Queries'
 
 export const EditAboutPage: FC = () => {
-  const featureFlags = useFeatureFlags()
-  const aboutPageEnabled = featureFlags[FeatureFlag.AboutPage] === 'true'
+  const featureFlags$ = useFeatureFlags$()
+  const featureFlags = featureFlags$.data || {}
 
-  const contentMeta = useMetaContent()
-  const updateMeta = useUpdateMeta()
-  const updateFlags = useUpdateMeta()
+  const customContent$ = useCustomContent$()
+  const customContent = customContent$.data
 
-  const { handleSubmit, control, watch, formState } = useForm<ContentMeta>({ values: contentMeta })
+  const aboutPageEnabled = featureFlags[FeatureFlag.AboutPage] || false
+
+  const updateFlags$ = useUpdateFeatureFlags$()
+  const updateCustomContent$ = useUpdateCustomContent$()
+
+  const { handleSubmit, control, watch, formState } = useForm<ContentMeta>({ values: customContent })
   const [ mode, setMode ] = useState<'source' | 'split' | 'preview'>('split')
 
   useEffect(() => {
-    if (formState.isDirty) updateMeta.reset()
-  }, [ formState.isDirty, updateMeta ])
+    if (formState.isDirty) updateCustomContent$.reset()
+  }, [ formState.isDirty, updateCustomContent$ ])
 
   const onFormSave: SubmitHandler<ContentMeta> = (data) => {
-    updateMeta.mutate({ group: MetaDataGroup.Content, values: data })
+    updateCustomContent$.mutate(data)
   }
+
   const onEnabledToggle = () => {
-    updateFlags.mutate({
-      group: MetaDataGroup.Features,
-      values: {
-        ...featureFlags,
-        [FeatureFlag.AboutPage]: (!aboutPageEnabled).toString(),
-      },
+    updateFlags$.mutate({
+      ...featureFlags,
+      [FeatureFlag.AboutPage]: !aboutPageEnabled,
     })
   }
 
@@ -89,15 +90,15 @@ export const EditAboutPage: FC = () => {
             />
           </FormGroup>
 
-          {updateMeta.isIdle && (
+          {updateCustomContent$.isIdle && (
             <Button size="small" variant="contained" onClick={handleSubmit(onFormSave)}>Save</Button>
           )}
 
-          {updateMeta.isPending && (
+          {updateCustomContent$.isPending && (
             <Button size="small" variant="contained" disabled>Saving</Button>
           )}
 
-          {updateMeta.isSuccess && (
+          {updateCustomContent$.isSuccess && (
             <Button size="small" variant="outlined" onClick={handleSubmit(onFormSave)}>Saved</Button>
           )}
         </Stack>

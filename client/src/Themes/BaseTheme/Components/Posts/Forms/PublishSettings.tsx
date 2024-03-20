@@ -19,7 +19,8 @@ import {
 import React, { FC } from 'react'
 import { Control, useController } from 'react-hook-form'
 
-import { FontAwesomeIcon, PostData } from '../../../../../Lib'
+import { FontAwesomeIcon } from '../../../../../Lib'
+import { PostData } from '../../../../../Models'
 
 import styles from './PublishToggle.module.scss'
 

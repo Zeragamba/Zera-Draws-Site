@@ -4,8 +4,10 @@ import { FC, MouseEventHandler, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useGalleryContext } from './GalleryContext'
-import { AsyncImg } from '.././Images/AsyncImg'
-import { FontAwesomeIcon, ImageData, useInViewport } from '../../../../Lib'
+import { useInViewport } from '../../../../Hooks'
+import { FontAwesomeIcon } from '../../../../Lib'
+import { ImageData } from '../../../../Models'
+import { AsyncImg } from '../Images'
 
 interface GalleryItemProps {
   image: ImageData

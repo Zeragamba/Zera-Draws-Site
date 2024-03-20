@@ -1,7 +1,7 @@
 import { Button, Paper, Stack, Typography } from '@mui/material'
 import { FC } from 'react'
 
-import { useAgeGate } from '../../../../Lib'
+import { useAgeGate } from '../../../../Contexts'
 import { PublicLayout } from '../../Layouts'
 
 export const AgeGatePage: FC = () => {

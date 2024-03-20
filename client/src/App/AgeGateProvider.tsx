@@ -1,6 +1,6 @@
 import { FC, ReactNode, useState } from 'react'
 
-import { AgeGateContext } from '../Lib'
+import { AgeGateContext } from '../Contexts'
 
 interface AgeGateProviderProps {
   children: ReactNode

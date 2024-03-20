@@ -1,14 +1,13 @@
 import * as uuid from 'uuid'
 
-import { ViewsApi } from './ViewsApi'
+import { postViewsApi } from '../../Api'
+import { PostData } from '../../Models'
 import { noop } from '../Noop'
-import { PostData } from '../Posts/PostData'
 
 const VIEWER_ID_KEY = 'viewerId'
 const SESSION_VIEWS_KEY = (postId: string) => `viewed.${postId}`
 
 function getViewerId(): string {
-
   let viewerId = localStorage.getItem(VIEWER_ID_KEY)
 
   if (!viewerId) {
@@ -26,11 +25,13 @@ async function addView(postId: PostData['id']): Promise<void> {
   if (sessionStorage.getItem(sessionKey)) return
   sessionStorage.setItem(sessionKey, 'true')
 
-  await ViewsApi.addView({ postId, viewerId })
+  await postViewsApi.addView({ postId, viewerId })
 }
 
 export type UseRecordViewReturn = (postId: PostData['id']) => void
 
 export function useRecordView(): UseRecordViewReturn {
-  return (postId) => addView(postId).catch(noop)
+  return (postId) => {
+    addView(postId).catch(noop)
+  }
 }

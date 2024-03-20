@@ -3,13 +3,15 @@ import React, { FC, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { NavBarLink } from './NavBarLink'
-import { TagData, useIsMobile, useTagMenu } from '../../../../Lib'
+import { useTagMenuCtrl } from '../../../../Controllers'
+import { useIsMobile } from '../../../../Hooks'
+import { TagData } from '../../../../Models'
 
 const MIN_TAGS_FOR_SEARCH = 15
 
 export const TagsMenu: FC = () => {
   const navigate = useNavigate()
-  const tagMenu = useTagMenu()
+  const tagMenu = useTagMenuCtrl()
 
   const isMobile = useIsMobile()
   const [ menuOpen, setMenuOpen ] = useState<boolean>(false)

@@ -1,9 +1,11 @@
 import { Box, Stack, SxProps } from '@mui/material'
 import { FC } from 'react'
 
-import { SocialPlatform, useIsMobile, useSocials } from '../../../../Lib'
+import { useIsMobile } from '../../../../Hooks'
+import { SocialPlatform } from '../../../../Models'
+import { useSocialPlatforms$ } from '../../../../Queries'
 import { Colours } from '../../../ZeraDark/MuiTheme'
-import { SocialLogo } from '../../Components/Icons'
+import { SocialLogo } from '../../Components'
 
 interface SocialLinkProps {
   platform: SocialPlatform
@@ -12,7 +14,9 @@ interface SocialLinkProps {
 export const SocialLink: FC<SocialLinkProps> = ({
   platform,
 }) => {
-  const socials = useSocials()
+  const socials$ = useSocialPlatforms$()
+  const socials = socials$.data || {}
+
   const isMobile = useIsMobile()
 
   if (!socials[platform]) return null

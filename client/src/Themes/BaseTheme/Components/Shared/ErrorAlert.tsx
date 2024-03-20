@@ -1,7 +1,7 @@
 import { Alert } from '@mui/material'
 import React, { FC } from 'react'
 
-import { isServerApiError } from '../../../../Lib/ServerApi'
+import { isServerApiError } from '../../../../Api'
 
 interface ErrorAlertProps {
   error: unknown

@@ -4,7 +4,8 @@ import { useMutation } from '@tanstack/react-query'
 import { format as formatDate } from 'date-fns'
 import { FC } from 'react'
 
-import { createFile, downloadFile, FontAwesomeIcon, toCsv, ViewMetricsData } from '../../../../../Lib'
+import { createFile, downloadFile, FontAwesomeIcon, toCsv } from '../../../../../Lib'
+import { ViewMetricsData } from '../../../../../Models'
 
 interface MetricsExportBtnProps {
   metrics: ViewMetricsData[]
@@ -28,10 +29,8 @@ export const MetricsExportBtn: FC<MetricsExportBtnProps> = ({
   if (export$.isSuccess) icon = <FontAwesomeIcon icon={faCheck} />
 
   return (
-    <Button
-      variant={'contained'}
-      startIcon={icon}
-      onClick={() => export$.mutate()}
-    >Export</Button>
+    <Button variant={'contained'} startIcon={icon} onClick={() => export$.mutate()}>
+      Export
+    </Button>
   )
 }

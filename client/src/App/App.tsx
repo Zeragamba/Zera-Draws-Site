@@ -9,10 +9,10 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { RouterProvider } from 'react-router-dom'
 
 import { AgeGateProvider } from './AgeGateProvider'
+import { AppTheme } from './AppTheme'
 import { PreloadProvider } from './PreloadProvider'
+import { queryClient } from './QueryClient'
 import { Config } from '../Config'
-import { queryClient } from '../Lib'
-import { AppTheme } from '../Lib/AppTheme'
 
 interface AppProps {
   theme: AppTheme

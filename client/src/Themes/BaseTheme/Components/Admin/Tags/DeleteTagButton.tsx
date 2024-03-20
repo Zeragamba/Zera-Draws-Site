@@ -2,8 +2,9 @@ import { faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Stack, Typography } from '@mui/material'
 import React, { FC, useState } from 'react'
 
-import { FontAwesomeIcon, noop, TagData } from '../../../../../Lib'
-import { useDeleteTag$ } from '../../../../../Lib/Tags/TagsApi/DeleteTag'
+import { FontAwesomeIcon, noop } from '../../../../../Lib'
+import { TagData } from '../../../../../Models'
+import { useDeleteTag$ } from '../../../../../Queries'
 
 interface DeleteTagButtonProps {
   tag: TagData

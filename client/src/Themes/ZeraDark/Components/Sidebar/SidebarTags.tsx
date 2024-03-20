@@ -5,7 +5,8 @@ import React, { FC } from 'react'
 import { NavItem } from './NavItem'
 import { SidebarGroup } from './SidebarGroup'
 import { SidebarTextField } from './SidebarTextField'
-import { FontAwesomeIcon , useTagMenu } from '../../../../Lib'
+import { useTagMenuCtrl } from '../../../../Controllers'
+import { FontAwesomeIcon } from '../../../../Lib'
 
 interface SidebarTagsProps {
   onBack: () => void
@@ -14,7 +15,7 @@ interface SidebarTagsProps {
 export const SidebarTags: FC<SidebarTagsProps> = ({
   onBack,
 }) => {
-  const tagMenu = useTagMenu()
+  const tagMenu = useTagMenuCtrl()
 
   return (
     <>

@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import { FC, useEffect, useRef } from 'react'
 
 import { AsyncImg } from './AsyncImg'
-import { usePostImageCtrl } from '../../../../Lib'
+import { usePostImageCtrl } from '../../../../Controllers'
 
 const styles: Record<string, SxProps> = {
   row: {

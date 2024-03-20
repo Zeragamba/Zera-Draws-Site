@@ -1,24 +1,13 @@
 import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
 
-import { ArchivePage } from './ArchivePage'
-import { useLatestPost$ } from '../../../../Lib'
-import { PostProvider } from '../../../../Lib/Posts/PostContext'
+import { LatestPostProvider } from '../../../../Contexts'
 import { ViewPost } from '../../Components'
 import { LoadingPage } from '../LoadingPage'
 
 export const LatestPostPage: FC = () => {
-  const navigate = useNavigate()
-  const latestPost$ = useLatestPost$()
-
-  if (latestPost$.isPending) return <LoadingPage />
-  if (latestPost$.isError) return <ArchivePage />
-
-  const latestPost = latestPost$.data
-
   return (
-    <PostProvider post={latestPost}>
-      <ViewPost post={latestPost} onPostChange={(post) => navigate(`/post/${post.slug}`)} />
-    </PostProvider>
+    <LatestPostProvider renderPending={<LoadingPage />}>
+      <ViewPost />
+    </LatestPostProvider>
   )
 }
