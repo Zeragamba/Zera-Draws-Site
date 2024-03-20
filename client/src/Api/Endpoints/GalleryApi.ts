@@ -3,12 +3,12 @@ import { PagedPostData, PagedPostDataResSchema } from '../Schemas'
 import { GalleryResSchema } from '../Schemas/GalleryDataSchema'
 import { ServerApi } from '../ServerApi'
 
-class GalleryApiClient extends ServerApi {
+class GalleryApi extends ServerApi {
   public async fetchGallery(params: {
     galleryId: GalleryData['id']
   }): Promise<GalleryData> {
     return this.delete(`/gallery/${params.galleryId}`, {
-      parseData: (data) => GalleryResSchema.parse(data),
+      parseResData: (data) => GalleryResSchema.parse(data),
     })
   }
 
@@ -18,9 +18,9 @@ class GalleryApiClient extends ServerApi {
   }): Promise<PagedPostData> {
     return this.delete(`/gallery/${params.galleryId}/posts`, {
       data: { page: params.page || 0 },
-      parseData: (data) => PagedPostDataResSchema.parse(data),
+      parseResData: (data) => PagedPostDataResSchema.parse(data),
     })
   }
 }
 
-export const galleryApiClient = new GalleryApiClient()
+export const galleryApiClient = new GalleryApi()

@@ -6,13 +6,15 @@ export enum MetaDataGroup {
   Socials = 'socials',
 }
 
+export type MetaDataSet<Key extends string, Value = string> = Partial<Record<Key, Value>>
+
 export enum FeatureFlag {
   AboutPage = 'AboutPage',
   Commissions = 'Commissions',
   Requests = 'Requests',
 }
 
-export type FeatureFlags = Partial<Record<FeatureFlag, 'true' | 'false'>>
+export type FeatureFlags = MetaDataSet<FeatureFlag, boolean>
 
 export enum SocialPlatform {
   bluesky = 'Bluesky',
@@ -26,9 +28,10 @@ export enum SocialPlatform {
   twitter = 'Twitter',
 }
 
-export type SocialUrl = string
-export type SocialsMeta = Partial<Record<SocialPlatform, SocialUrl>>
+export type SocialsMeta = MetaDataSet<SocialPlatform>
 
-export type ContentMeta = {
-  about?: string
+export enum ContentFields {
+  about = 'about'
 }
+
+export type ContentMeta = MetaDataSet<ContentFields>

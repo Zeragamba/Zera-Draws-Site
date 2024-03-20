@@ -58,4 +58,9 @@ export const queryKeys = createQueryKeyStore({
   metrics: {
     postViews: null,
   },
+  siteMeta: {
+    features: null,
+    content: null,
+    socials: null,
+  },
 })

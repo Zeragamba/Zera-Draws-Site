@@ -5,7 +5,7 @@ import { isServerApiError } from './Errors'
 import { Config } from '../Config'
 
 export interface RequestConfig<Data> extends AxiosRequestConfig {
-  parseData: (data: object) => Data
+  parseResData: (data: object) => Data
 }
 
 export abstract class ServerApi {
@@ -34,7 +34,7 @@ export abstract class ServerApi {
         headers: headers,
       })
 
-      return config.parseData(res.data)
+      return config.parseResData(res.data)
     } catch (error) {
       if (isServerApiError(error) && error.response.data.error === 'Invalid token') {
         authTokenStore.authToken = null
@@ -50,6 +50,10 @@ export abstract class ServerApi {
 
   protected async post<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
     return this.request<Data>(path, { method: 'POST', ...config })
+  }
+
+  protected async put<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {
+    return this.request<Data>(path, { method: 'PUT', ...config })
   }
 
   protected async patch<Data>(path: string, config: RequestConfig<Data>): Promise<Data> {

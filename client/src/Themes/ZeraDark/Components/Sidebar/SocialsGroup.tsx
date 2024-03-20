@@ -2,7 +2,8 @@ import { FC, ReactNode } from 'react'
 
 import { NavItem } from './NavItem'
 import { SidebarGroup } from './SidebarGroup'
-import { SocialPlatform, useSocials } from '../../../../Lib'
+import { SocialPlatform } from '../../../../Lib'
+import { useSocialPlatforms$ } from '../../../../Queries'
 import { SocialLogo } from '../../../BaseTheme'
 
 interface SocialsGroupProps {
@@ -12,7 +13,7 @@ interface SocialsGroupProps {
 export const SocialsGroup: FC<SocialsGroupProps> = ({
   iconsOnly,
 }) => {
-  const socials = useSocials()
+  const socials = useSocialPlatforms$()
 
   return (
     <SidebarGroup>

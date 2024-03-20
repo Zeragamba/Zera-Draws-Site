@@ -1,7 +1,7 @@
 import { useMutation, useQuery, UseQueryResult } from '@tanstack/react-query'
 
 import { queryKeys } from './QueryKeys'
-import { tagsApi } from '../Api/Endpoints/TagsApi'
+import { tagsApi } from '../Api'
 import { EditableTagData, TagData } from '../Lib'
 
 export const useAllTags$ = () => {

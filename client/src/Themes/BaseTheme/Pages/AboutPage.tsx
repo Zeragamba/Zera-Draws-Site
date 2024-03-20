@@ -4,14 +4,14 @@ import ReactMarkdown from 'react-markdown'
 
 import { ErrorPage } from './ErrorPage'
 import { LoadingPage } from './LoadingPage'
-import { useSiteMeta } from '../../../Lib'
+import { useCustomContent$ } from '../../../Queries'
 
 export const AboutPage: FC = () => {
-  const contentMetaQuery = useSiteMeta('content')
+  const customContent$ = useCustomContent$()
 
-  if (contentMetaQuery.isPending) return <LoadingPage />
-  if (contentMetaQuery.isError) return <ErrorPage error={String(contentMetaQuery.error)} />
-  const contentMeta = contentMetaQuery.data
+  if (customContent$.isPending) return <LoadingPage />
+  if (customContent$.isError) return <ErrorPage error={String(customContent$.error)} />
+  const contentMeta = customContent$.data
 
   return (
     <Paper sx={{ padding: 2 }}>

@@ -3,8 +3,8 @@ import React, { FC, useRef, useState } from 'react'
 
 import { NavBarLink } from './NavBarLink'
 import { TagsMenu } from './TagsMenu'
-import { SocialPlatform, useFeatureFlags, useIsMobile, useSocials } from '../../../../Lib'
-import { useCurrentUser$, useLogout$ } from '../../../../Queries'
+import { FeatureFlag, SocialPlatform, useFeatureFlag, useIsMobile } from '../../../../Lib'
+import { useCurrentUser$, useLogout$, useSocialPlatforms$ } from '../../../../Queries'
 import { SocialsNav } from '../SocalsNav'
 
 export const AppNavBar: FC = () => {
@@ -50,12 +50,14 @@ export const RightNavLinks: FC = () => {
   const { data: currentUser } = useCurrentUser$()
   const isAdmin = currentUser?.admin || false
   const logoutQuery = useLogout$()
-  const socials = useSocials()
-  const featureFlags = useFeatureFlags()
+  const socials$ = useSocialPlatforms$()
+  const socials = socials$.data || {}
+
+  const aboutPageEnabled = useFeatureFlag(FeatureFlag.AboutPage)
 
   return (
     <>
-      {featureFlags.AboutPage === 'true' && (
+      {aboutPageEnabled && (
         <NavBarLink to="/about" label="About" />
       )}
 
@@ -76,6 +78,7 @@ export const RightNavLinks: FC = () => {
     </>
   )
 }
+
 const MobileNav: FC = () => {
   const [ menuOpen, setMenuOpen ] = useState<boolean>(false)
 

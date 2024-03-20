@@ -6,10 +6,10 @@ import { UserDataSchema, UserResSchema } from '../Schemas/UserDataSchema'
 import { ServerApi } from '../ServerApi'
 
 
-class AuthApiClient extends ServerApi {
+class AuthApi extends ServerApi {
   public async logout(): Promise<void> {
     await this.post('/logout', {
-      parseData: (data) => {
+      parseResData: (data) => {
         return z.object({ success: z.boolean() })
           .parse(data)
       },
@@ -27,7 +27,7 @@ class AuthApiClient extends ServerApi {
         username: params.username,
         password: params.password,
       },
-      parseData: (data) => {
+      parseResData: (data) => {
         return z.object({ user: UserDataSchema, auth_token: z.string() })
           .parse(data)
       },
@@ -43,7 +43,7 @@ class AuthApiClient extends ServerApi {
 
     try {
       return this.get('/user/me', {
-        parseData: (data) => UserResSchema.parse(data),
+        parseResData: (data) => UserResSchema.parse(data),
       })
     } catch (error) {
       if (isServerApiError(error)) {
@@ -56,4 +56,4 @@ class AuthApiClient extends ServerApi {
   }
 }
 
-export const authApiClient = new AuthApiClient()
+export const authApiClient = new AuthApi()

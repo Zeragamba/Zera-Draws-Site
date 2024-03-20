@@ -3,22 +3,22 @@ import TextField from '@mui/material/TextField'
 import React, { FC, useEffect } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
-import { muiField, SocialPlatform, SocialsMeta, useSocials, useUpdateMeta } from '../../../../Lib'
+import { muiField, SocialPlatform, SocialsMeta } from '../../../../Lib'
+import { useSocialPlatforms$, useUpdateSocialPlatforms$ } from '../../../../Queries'
 import { SocialLogo } from '../../Components'
 
 export const EditSocialsPage: FC = () => {
+  const socials$ = useSocialPlatforms$()
+  const updateSocials$ = useUpdateSocialPlatforms$()
 
-  const socials = useSocials()
-  const updateMeta = useUpdateMeta()
-
-  const { handleSubmit, control, formState } = useForm<SocialsMeta>({ values: socials })
+  const { handleSubmit, control, formState } = useForm<SocialsMeta>({ values: socials$.data })
 
   useEffect(() => {
-    if (formState.isDirty) updateMeta.reset()
-  }, [ formState.isDirty, updateMeta ])
+    if (formState.isDirty) updateSocials$.reset()
+  }, [ formState.isDirty, updateSocials$ ])
 
   const onFormSave: SubmitHandler<SocialsMeta> = (data) => {
-    updateMeta.mutate({ group: 'socials', values: data })
+    updateSocials$.mutate(data)
   }
 
   return (
@@ -30,15 +30,15 @@ export const EditSocialsPage: FC = () => {
           </Box>
 
           <Stack direction="row" justifyContent="flex-end" alignItems="center" sx={{ flexGrow: 1 }}>
-            {updateMeta.isIdle && (
+            {updateSocials$.isIdle && (
               <Button size="small" variant="contained" onClick={handleSubmit(onFormSave)}>Save</Button>
             )}
 
-            {updateMeta.isPending && (
+            {updateSocials$.isPending && (
               <Button size="small" variant="contained" disabled>Saving</Button>
             )}
 
-            {updateMeta.isSuccess && (
+            {updateSocials$.isSuccess && (
               <Button size="small" variant="outlined" onClick={handleSubmit(onFormSave)}>Saved</Button>
             )}
           </Stack>

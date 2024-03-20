@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from './QueryKeys'
-import { metricsApiClient } from '../Api/Endpoints/MetricsApiClient'
+import { metricsApiClient } from '../Api/Endpoints/MetricsApi'
 
 
 export const useViewMetrics$ = (params: {

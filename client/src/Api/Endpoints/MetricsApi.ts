@@ -2,7 +2,7 @@ import { ViewMetricsData } from '../../Lib'
 import { ViewMetricsResSchema } from '../Schemas/ViewMetricsDataSchema'
 import { ServerApi } from '../ServerApi'
 
-export class MetricsApiClient extends ServerApi {
+export class MetricsApi extends ServerApi {
   fetchViews(params: {
     startDate?: Date | null
     endDate?: Date | null
@@ -14,9 +14,9 @@ export class MetricsApiClient extends ServerApi {
         start_date: startDate?.toDateString(),
         end_date: endDate?.toDateString(),
       },
-      parseData: (data) => ViewMetricsResSchema.parse(data),
+      parseResData: (data) => ViewMetricsResSchema.parse(data),
     })
   }
 }
 
-export const metricsApiClient = new MetricsApiClient()
+export const metricsApiClient = new MetricsApi()

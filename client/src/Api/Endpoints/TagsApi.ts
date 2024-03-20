@@ -8,7 +8,7 @@ export class TagsApi extends ServerApi {
   }): Promise<TagData> {
     return this.post('/tags', {
       data: params,
-      parseData: data => TagResSchema.parse(data),
+      parseResData: data => TagResSchema.parse(data),
     })
   }
 
@@ -16,13 +16,13 @@ export class TagsApi extends ServerApi {
     tagId: TagData['id']
   }): Promise<TagData> {
     return this.delete(`/tags/${params.tagId}`, {
-      parseData: data => TagResSchema.parse(data),
+      parseResData: data => TagResSchema.parse(data),
     })
   }
 
   async deleteEmptyTags(): Promise<TagData[]> {
     return this.delete('/tags/empty', {
-      parseData: data => TagListResSchema.parse(data),
+      parseResData: data => TagListResSchema.parse(data),
     })
   }
 
@@ -32,13 +32,13 @@ export class TagsApi extends ServerApi {
   }): Promise<TagData> {
     return this.patch(`/tags/${params.tagId}`, {
       data: { tag: params.tag },
-      parseData: data => TagResSchema.parse(data),
+      parseResData: data => TagResSchema.parse(data),
     })
   }
 
   async fetchAllTags(): Promise<TagData[]> {
     return this.get('/tags', {
-      parseData: data => TagListResSchema.parse(data),
+      parseResData: data => TagListResSchema.parse(data),
     })
   }
 
@@ -46,7 +46,7 @@ export class TagsApi extends ServerApi {
     tagId: TagData['id']
   }): Promise<TagData> {
     return this.get(`/tag/${params.tagId}`, {
-      parseData: data => TagResSchema.parse(data),
+      parseResData: data => TagResSchema.parse(data),
     })
   }
 
@@ -55,7 +55,7 @@ export class TagsApi extends ServerApi {
     destTagId: TagData['id']
   }): Promise<TagData> {
     return this.post(`/tag/${params.srcTagId}/merge/${params.destTagId}`, {
-      parseData: data => TagResSchema.parse(data),
+      parseResData: data => TagResSchema.parse(data),
     })
   }
 }

@@ -7,7 +7,7 @@ class PostViewsApi extends ServerApi {
     postId: PostData['id']
   }): Promise<ViewsData> {
     return this.get(`/post/${params.postId}/views`, {
-      parseData: (data) => PostViewsResSchema.parse(data),
+      parseResData: (data) => PostViewsResSchema.parse(data),
     })
   }
 
@@ -17,7 +17,7 @@ class PostViewsApi extends ServerApi {
   }): Promise<ViewsData> {
     return this.post(`/post/${params.postId}/views`, {
       data: { viewer_id: params.viewerId },
-      parseData: (data) => PostViewsResSchema.parse(data),
+      parseResData: (data) => PostViewsResSchema.parse(data),
     })
   }
 }
