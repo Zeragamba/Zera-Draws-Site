@@ -1,10 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { FC, useEffect, useState } from 'react'
+import { FC, PropsWithChildren, useEffect, useState } from 'react'
 
-import { tagsApi } from '../Api/Endpoints/TagsApi'
 import { queryKeys } from '../Queries/QueryKeys'
 
-export const PreloadProvider: FC = () => {
+export const PreloadProvider: FC<PropsWithChildren> = ({
+  children,
+}) => {
   const [ preloaded, setPreloaded ] = useState<boolean>(false)
   const queryClient = useQueryClient()
 
@@ -12,12 +13,9 @@ export const PreloadProvider: FC = () => {
     if (preloaded) return
     setPreloaded(true)
 
-    queryClient.prefetchQuery({
-      ...queryKeys.tags.all,
-      queryFn: () => tagsApi.fetchAllTags(),
-    })
+    queryClient.prefetchQuery({ ...queryKeys.tags.all })
       .catch(error => console.error(error))
   }, [ preloaded ])
 
-  return null
+  return children
 }
