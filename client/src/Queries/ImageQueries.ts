@@ -1,21 +1,14 @@
 import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
 import { queryKeys } from './QueryKeys'
+import { imageApi } from '../Api/Endpoints/ImageApi'
 import { errorHandler } from '../Errors/ErrorHandler'
 import { ImageData } from '../Models'
-
-function fetchImage(src: string): Promise<HTMLImageElement> {
-  return new Promise((resolve) => {
-    const image = new Image()
-    image.src = src
-    image.onload = () => resolve(image)
-  })
-}
 
 export const useImage$ = (src: string): UseQueryResult<HTMLImageElement> => {
   return useQuery({
     ...queryKeys.images.get({ src }),
-    queryFn: () => fetchImage(src),
+    queryFn: () => imageApi.fetchImage({ src }),
   })
 }
 
@@ -31,7 +24,7 @@ export const useImagePreloader = (): ImagePreloader => {
     const src = image.srcs[size] || image.srcs.full
     queryClient.prefetchQuery({
       ...queryKeys.images.get({ src }),
-      queryFn: () => fetchImage(src),
+      queryFn: () => imageApi.fetchImage({ src }),
     }).catch(errorHandler)
   }
 }
