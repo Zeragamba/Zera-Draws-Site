@@ -36,8 +36,14 @@ export abstract class ServerApi {
 
       return config.parseResData(res.data)
     } catch (error) {
-      if (isServerApiError(error) && error.response.data.error === 'Invalid token') {
-        authTokenStore.authToken = null
+      if (isServerApiError(error)) {
+        if (error.response.status === 401) {
+          authTokenStore.authToken = null
+        }
+
+        if (error.response.data.error === 'Invalid token') {
+          authTokenStore.authToken = null
+        }
       }
 
       throw error
