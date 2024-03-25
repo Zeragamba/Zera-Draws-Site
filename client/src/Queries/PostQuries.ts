@@ -106,7 +106,7 @@ export const useGalleryPosts$ = (params: {
 }): UseInfiniteQueryResult<PostData[]> => {
   return useInfiniteQuery({
     ...queryKeys.posts.inGallery(params)._ctx.data,
-    queryFn: () => postsApi.fetchGalleryPosts(params),
+    queryFn: ({ pageParam }) => postsApi.fetchGalleryPosts({...params, page: pageParam }),
     select: (data) => data.pages.map(page => page.posts).flat(),
     ...pagedQueryOptions,
   })
@@ -117,7 +117,7 @@ export const useTaggedPosts$ = (params: {
 }): UseInfiniteQueryResult<PostData[]> => {
   return useInfiniteQuery({
     ...queryKeys.posts.withTag(params)._ctx.data,
-    queryFn: () => postsApi.fetchTaggedPosts(params),
+    queryFn: ({ pageParam }) => postsApi.fetchTaggedPosts({...params, page: pageParam }),
     select: (data) => data.pages.map(page => page.posts).flat(),
     ...pagedQueryOptions,
   })
