@@ -51,11 +51,8 @@ export const useCreatePost$ = (): UseMutationResult<PostData, unknown, {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (params) => {
-      const post = await postsApi.createPost(params)
-      updateCache(queryClient, post)
-      return post
-    },
+    mutationFn: (params) => postsApi.createPost(params),
+    onSuccess: (post) => updateCache(queryClient, post),
   })
 }
 
@@ -65,17 +62,15 @@ export const useDeletePost$ = (): UseMutationResult<PostData, unknown, {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (params) => {
-      const post = await postsApi.deletePost(params)
-
+    mutationFn: (params) => postsApi.deletePost(params),
+    onSuccess: (post) => {
       queryClient.removeQueries({
         queryKey: queryKeys.posts.forPost({ postId: post.id }).queryKey,
       })
+
       queryClient.removeQueries({
         queryKey: queryKeys.posts.forPost({ postId: post.slug }).queryKey,
       })
-
-      return post
     },
   })
 }
@@ -89,11 +84,8 @@ export const useUpdatePost$ = (): UseMutationResult<PostData, unknown, {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (params) => {
-      const post = await postsApi.updatePost(params)
-      updateCache(queryClient, post)
-      return post
-    },
+    mutationFn: (params) => postsApi.updatePost(params),
+    onSuccess: (post) => updateCache(queryClient, post),
   })
 }
 
@@ -126,67 +118,37 @@ export const useRecentPosts$ = (): UseInfiniteQueryResult<PostData[]> => {
 }
 
 export const useLatestPost$ = (): UseQueryResult<PostData> => {
-  const queryClient = useQueryClient()
-
   return useQuery({
     ...queryKeys.posts.latest,
-    queryFn: async () => {
-      const post = await postsApi.fetchLatestPost()
-      updateCache(queryClient, post)
-      return post
-    },
+    queryFn: () => postsApi.fetchLatestPost(),
   })
 }
 
 export const useFirstPost$ = (): UseQueryResult<PostData> => {
-  const queryClient = useQueryClient()
-
   return useQuery({
     ...queryKeys.posts.first,
-    queryFn: async () => {
-      const post = await postsApi.fetchFirstPost()
-      updateCache(queryClient, post)
-      return post
-    },
+    queryFn: () => postsApi.fetchFirstPost(),
   })
 }
 
 export const usePost$ = (params: PostParams): UseQueryResult<PostData> => {
-  const queryClient = useQueryClient()
-
   return useQuery({
     ...queryKeys.posts.forPost(params)._ctx.data,
-    queryFn: async () => {
-      const post = await postsApi.fetchPost(params)
-      updateCache(queryClient, post)
-      return post
-    },
+    queryFn: () => postsApi.fetchPost(params),
   })
 }
 
 export const useNextPost$ = (params: PostParams): UseQueryResult<PostData> => {
-  const queryClient = useQueryClient()
-
   return useQuery({
     ...queryKeys.posts.forPost(params)._ctx.next,
-    queryFn: async () => {
-      const post = await postsApi.fetchNextPost(params)
-      updateCache(queryClient, post)
-      return post
-    },
+    queryFn: () => postsApi.fetchNextPost(params),
   })
 }
 
 export const usePrevPost$ = (params: PostParams): UseQueryResult<PostData> => {
-  const queryClient = useQueryClient()
-
   return useQuery({
     ...queryKeys.posts.forPost(params)._ctx.prev,
-    queryFn: async () => {
-      const post = await postsApi.fetchPrevPost(params)
-      updateCache(queryClient, post)
-      return post
-    },
+    queryFn: () => postsApi.fetchPrevPost(params),
   })
 }
 
@@ -199,7 +161,7 @@ export const useGalleryPosts$ = (params: {
     ...queryKeys.posts.inGallery(params)._ctx.data,
     ...pagedQueryOptions,
     queryFn: async ({ pageParam }) => {
-      const page = await postsApi.fetchGalleryPosts({...params, page: pageParam })
+      const page = await postsApi.fetchGalleryPosts({ ...params, page: pageParam })
       page.posts.forEach((post) => updateCache(queryClient, post))
       return page
     },
@@ -216,7 +178,7 @@ export const useTaggedPosts$ = (params: {
     ...queryKeys.posts.withTag(params)._ctx.data,
     ...pagedQueryOptions,
     queryFn: async ({ pageParam }) => {
-      const page = await postsApi.fetchTaggedPosts({...params, page: pageParam })
+      const page = await postsApi.fetchTaggedPosts({ ...params, page: pageParam })
       page.posts.forEach((post) => updateCache(queryClient, post))
       return page
     },
