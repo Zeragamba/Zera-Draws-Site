@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Spinner } from '../Components/Shared/Spinner/Spinner'
+import { Spinner } from '../Components'
 
 export const LoadingPage: FC = () => {
   return (

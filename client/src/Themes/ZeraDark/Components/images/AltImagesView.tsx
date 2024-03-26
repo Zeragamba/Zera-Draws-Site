@@ -2,14 +2,17 @@ import { Box, Stack, SxProps } from '@mui/material'
 import classnames from 'classnames'
 import { FC, useEffect, useRef } from 'react'
 
-import { AsyncImg } from './AsyncImg'
 import { usePostImageCtrl } from '../../../../Controllers'
+import { useIsMobile } from '../../../../Hooks'
+import { AsyncImg } from '../../../BaseTheme'
+
 
 const styles: Record<string, SxProps> = {
   row: {
     overflow: 'hidden',
     overflowX: 'auto',
-    paddingBottom: 1,
+    overflowY: 'auto',
+    scrollbarWidth: 'none',
   },
 
   imageWrapper: {
@@ -31,12 +34,13 @@ const styles: Record<string, SxProps> = {
     '&.active img': {
       borderStyle: 'solid',
       borderWidth: '4px',
-      borderColor: 'secondary.main',
+      borderColor: 'primary.main',
     },
   },
 }
 
 export const AltImagesView: FC = () => {
+  const isMobile = useIsMobile()
   const ctrl = usePostImageCtrl()
   const activeImgRef = useRef<HTMLElement>()
 
@@ -49,7 +53,7 @@ export const AltImagesView: FC = () => {
   if (ctrl.totalImages === 1) return null
 
   return (
-    <Stack direction={'row'} gap={1} sx={styles.row}>
+    <Stack direction={isMobile ? 'row' : 'column'} gap={1} sx={styles.row}>
       {ctrl.images.map((image, index) => (
         <Box
           key={image.id}

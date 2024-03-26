@@ -6,7 +6,7 @@ export const Colours = {
   secondary: 'hsl(34, 79%, 61%)',
   dark: 'hsl(0, 0%, 10%)',
   grey: 'hsl(0, 0%, 40%)',
-  light: 'hsl(15,44%,93%)',
+  light: 'hsl(0,0%,85%)',
 }
 
 export const DisplayFontFamily = [
@@ -22,6 +22,7 @@ export const BodyFontFamily = [
 export const muiTheme = createTheme({
   spacing: 4,
   palette: {
+    mode: 'dark',
     primary: {
       main: Colours.primary,
     },
@@ -29,10 +30,10 @@ export const muiTheme = createTheme({
       main: Colours.secondary,
     },
     text: {
-      primary: Colours.dark,
+      primary: Colours.light,
     },
     background: {
-      paper: Colours.light,
+      paper: Colours.dark,
     },
   },
   typography: {

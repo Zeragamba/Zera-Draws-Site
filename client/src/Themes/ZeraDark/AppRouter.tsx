@@ -2,22 +2,21 @@ import React from 'react'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 
 import { MainLayout } from './Layouts'
+import { LatestPostPage, ViewPostPage } from './Posts'
 import {
   AboutPage,
+  AdminLayout,
   AllPostsGalleryPage,
+  ArchivePage,
   EditAboutPage,
+  EditPostPage,
   EditPostsPage,
   EditSocialsPage,
   EditTagsPage,
+  LoginPage,
   MetricsPage,
-  AdminLayout,
-  LatestPostPage,
-  ViewPostPage,
-  EditPostPage,
-  ArchivePage,
   NewPostPage,
   ViewTagPage,
-  LoginPage,
 } from '../BaseTheme'
 
 export const appRouter = createBrowserRouter([

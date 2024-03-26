@@ -19,7 +19,7 @@ const styles = {
   padding: 2,
   height: '100dvh',
   position: 'fixed',
-  color: grey[50],
+  color: 'text.primary',
   maxWidth: 260,
 
   '&.isSmallScreen.open': {
