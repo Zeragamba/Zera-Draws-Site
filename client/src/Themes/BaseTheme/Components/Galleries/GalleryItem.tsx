@@ -1,6 +1,6 @@
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { Box, SxProps, Typography } from '@mui/material'
-import { FC, MouseEventHandler, ReactNode } from 'react'
+import { FC, MouseEvent, MouseEventHandler, ReactNode, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useGalleryContext } from './GalleryContext'
@@ -28,8 +28,8 @@ export const GalleryItem: FC<GalleryItemProps> = ({
   const galleryConfig = useGalleryContext()
   const [ wrapperRef, inViewport ] = useInViewport()
 
-  const ItemStyles: SxProps = {
-    height: galleryConfig.rowHeight,
+  const ItemStyles: SxProps = useMemo(() => ({
+    aspectRatio: '1/1',
     position: 'relative',
     display: 'inline-flex',
     overflow: 'hidden',
@@ -59,6 +59,12 @@ export const GalleryItem: FC<GalleryItemProps> = ({
       objectPosition: 'top',
       background: 'gray',
     },
+  }), [ galleryConfig, onClick ])
+
+  const onItemClick = (event: MouseEvent<HTMLElement>) => {
+    if (!onClick) return
+    event.preventDefault()
+    onClick(event)
   }
 
   const imgEle = (
@@ -70,12 +76,13 @@ export const GalleryItem: FC<GalleryItemProps> = ({
   )
 
   return (
-    <Box sx={ItemStyles} ref={wrapperRef}>
+    <Box sx={ItemStyles} ref={wrapperRef} onClick={onItemClick}>
       {linkTo ? (
-        <Link to={linkTo} className="image" onClick={onClick}>{imgEle}</Link>
+        <Link to={linkTo} className="image" onClick={onItemClick}>{imgEle}</Link>
       ) : (
-        <div className="image" onClick={onClick}>{imgEle}</div>
+        <div className="image">{imgEle}</div>
       )}
+
       {!released && <PrivateMarker />}
 
       {title && (

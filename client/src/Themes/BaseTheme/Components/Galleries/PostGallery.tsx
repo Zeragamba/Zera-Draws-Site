@@ -19,7 +19,7 @@ export interface PostGalleryProps extends Omit<GalleryConfig, 'rowHeight'> {
 export const PostGallery: FC<PostGalleryProps> = ({
   title,
   postsQuery,
-  rowHeight = 175,
+  rowHeight = 250,
   ...galleryConfig
 }) => {
   const navigate = useNavigate()

@@ -3,7 +3,6 @@
 .row {
   display: grid;
   grid-template-columns: repeat(var(--gallery-cols), 1fr);
-  grid-template-rows: repeat(auto-fill, var(--gallery-row-height));
 }
 
 .metadata {

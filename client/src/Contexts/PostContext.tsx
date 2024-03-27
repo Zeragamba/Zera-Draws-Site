@@ -55,8 +55,6 @@ export const ParamsPostProvider: FC<ParamsPostProviderProps> = ({
   const gallery$ = useOptionalGallery$({ galleryId })
   const gallery = gallery$.data
 
-  console.log({ isPending: post$.isPending })
-
   if (post$.isPending) return renderPending
   if (!post) throw new Error('Post not found')
 

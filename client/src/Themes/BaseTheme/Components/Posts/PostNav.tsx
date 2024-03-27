@@ -4,12 +4,12 @@ import classnames from 'classnames'
 import React, { FC } from 'react'
 
 
+import { AltImagesView } from './AltImagesView'
 import { ImagesNav } from './PostImagesNav'
 import { usePostNavCtrl } from '../../../../Controllers'
 import { useHotkey, useIsMobile } from '../../../../Hooks'
 import { FontAwesomeIcon } from '../../../../Lib'
 import { ImageData, PostData } from '../../../../Models'
-import { AltImagesView } from '../Images'
 
 import styles from './ViewPost.module.scss'
 
