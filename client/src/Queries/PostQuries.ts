@@ -93,17 +93,19 @@ export const useUpdatePost$ = (): UseMutationResult<PostData, unknown, {
     onSuccess: (post) => {
       queryClient.setQueryData(
         queryKeys.posts.all.queryKey,
-        ({ pages }: InfiniteData<PagedPostData>) => {
-          console.log(pages)
-          return pages.map((page) => {
-            return {
-              ...page,
-              posts: page.posts.map((cachedPost) => {
-                if (cachedPost.id === post.id) return post
-                return cachedPost
-              }),
-            }
-          })
+        (data: InfiniteData<PagedPostData>) => {
+          return {
+            ...data,
+            pages: data.pages.map((page) => {
+              return {
+                ...page,
+                posts: page.posts.map((cachedPost) => {
+                  if (cachedPost.id === post.id) return post
+                  return cachedPost
+                }),
+              }
+            }),
+          }
         },
       )
 
