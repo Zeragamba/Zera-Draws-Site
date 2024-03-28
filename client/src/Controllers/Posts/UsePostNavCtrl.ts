@@ -33,24 +33,17 @@ export const usePostNavCtrl = (): PostNavCtrl => {
   const { post, tag, gallery } = usePostContext()
   const preloadPost = usePostPreloader()
 
-  const { data: nextPost } = useNextPost$({ postId: post.id })
-  const { data: prevPost } = usePrevPost$({ postId: post.id })
+  const urlContext = { postId: post.slug, tagId: tag?.slug, galleryId: gallery?.slug }
+  const { data: nextPost } = useNextPost$(urlContext)
+  const { data: prevPost } = usePrevPost$(urlContext)
 
   const hasNextPost = !!nextPost
   const onNextPost = () => nextPost && onChangePost(nextPost)
-  const nextPostUrl = hasNextPost ? getPostUrl({
-    postId: post.slug,
-    tagId: tag?.slug,
-    galleryId: gallery?.slug,
-  }) : undefined
+  const nextPostUrl = hasNextPost ? getPostUrl(urlContext) : undefined
 
   const hasPrevPost = !!prevPost
   const onPrevPost = () => prevPost && onChangePost(prevPost)
-  const prevPostUrl = hasPrevPost ? getPostUrl({
-    postId: post.slug,
-    tagId: tag?.slug,
-    galleryId: gallery?.slug,
-  }) : undefined
+  const prevPostUrl = hasPrevPost ? getPostUrl(urlContext) : undefined
 
   const onEditPost = () => isAdmin && navigate(`/post/${post.id}/edit`)
 
