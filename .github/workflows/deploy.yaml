@@ -16,4 +16,11 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
-          script: bash -l -c "./deploy.sh"
+          script: |
+            export NVM_DIR="$HOME/.nvm"
+            source $NVM_DIR/nvm.sh
+            cd /opt/apps/zeragamba.art
+            
+            nvm install
+            git pull
+            ./deploy.sh
