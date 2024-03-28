@@ -18,7 +18,7 @@ jobs:
           script_stop: true
           request_pty: true
           script: |
-            source $HOME/.bashrc
+            . $HOME/.bashrc
             cd $APP_ROOT
             echo $(pwd)
             git pull
