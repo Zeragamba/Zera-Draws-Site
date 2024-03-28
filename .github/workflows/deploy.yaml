@@ -16,9 +16,8 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
-          request_pty: true
           script: |
-            . $HOME/.bashrc
+            source $HOME/.bashrc
             cd $APP_ROOT
             echo $(pwd)
             git pull
