@@ -16,4 +16,4 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
-          script: bash /opt/app/zeragamba.art/deploy.sh
+          script: bash /opt/apps/zeragamba.art/deploy.sh
