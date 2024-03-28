@@ -4,23 +4,19 @@ on:
     branches:
       - main
 jobs:
-  deploy:
-    name: Deploy
+  deploy-prod:
+    name: Deploy to production
     runs-on: ubuntu-latest
     steps:
       - name: Run remote script
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          port: ${{ secrets.DEPLOY_PORT }}
-          username: ${{ secrets.DEPLOY_USER }}
+          host: zeragamba.art
+          port: 22
+          username: zeradraws
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
           script: |
-            export NVM_DIR="$HOME/.nvm"
-            source $NVM_DIR/nvm.sh
             cd /opt/apps/zeragamba.art
-            
-            nvm install
             git pull
             ./deploy.sh

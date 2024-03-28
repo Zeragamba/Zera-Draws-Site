@@ -11,9 +11,11 @@ cp ./assets/web/deploy.html ./offline.html
 echo "=== Updating repo ==="
 git pull
 
+echo "=== Updating node ==="
+
 cd og-injector
   echo "=== Updating OG Injector ==="
-  nvm use
+  nvm install
   yarn install
 cd ..
 
@@ -33,7 +35,7 @@ cd ..
 
 cd client
   echo "=== Updating client ==="
-  nvm use
+  nvm install
   yarn install
 
   echo "=== Building client ==="
