@@ -17,7 +17,7 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
           script: |
-            source $HOME/.bashrc
+            source ~/.bashrc
             cd $APP_ROOT
             echo $(pwd)
             git pull
