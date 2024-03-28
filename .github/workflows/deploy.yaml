@@ -16,10 +16,4 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script_stop: true
-          script: |
-            source ~/.bashrc
-            cd $APP_ROOT
-            echo $(pwd)
-            git pull
-            nvm install
-            ./deploy.sh
+          script: bash /opt/app/zeragamba.art/deploy.sh
