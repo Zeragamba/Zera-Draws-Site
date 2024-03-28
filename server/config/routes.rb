@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   delete '/tags/empty' => 'tags#destroy_empty'
   get '/tag/:tag_id' => 'tags#view'
   get '/tag/:tag_id/posts' => 'posts#view_tagged'
-  post '/tag/:tag_id/merge/:dest_id' => 'tags#merge'
+  post '/tag/:tag_id/merge_into/:dest_id' => 'tags#merge'
   patch '/tag/:tag_id' => 'tags#update'
   delete '/tag/:tag_id' => 'tags#destroy'
 

@@ -30,7 +30,7 @@ export class TagsApi extends ServerApi {
     tagId: TagData['id']
     tag: Partial<EditableTagData>
   }): Promise<TagData> {
-    return this.patch(`/tags/${params.tagId}`, {
+    return this.patch(`/tag/${params.tagId}`, {
       data: { tag: params.tag },
       parseResData: data => TagResSchema.parse(data),
     })
@@ -54,7 +54,7 @@ export class TagsApi extends ServerApi {
     srcTagId: TagData['id']
     destTagId: TagData['id']
   }): Promise<TagData> {
-    return this.post(`/tag/${params.srcTagId}/merge/${params.destTagId}`, {
+    return this.post(`/tag/${params.srcTagId}/merge_into/${params.destTagId}`, {
       parseResData: data => TagResSchema.parse(data),
     })
   }
