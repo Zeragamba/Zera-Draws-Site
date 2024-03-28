@@ -65,6 +65,10 @@ export const useDeletePost$ = (): UseMutationResult<PostData, unknown, {
     mutationFn: (params) => postsApi.deletePost(params),
     onSuccess: (post) => {
       queryClient.removeQueries({
+        queryKey: queryKeys.posts.all.queryKey,
+      })
+
+      queryClient.removeQueries({
         queryKey: queryKeys.posts.forPost({ postId: post.id }).queryKey,
       })
 
@@ -85,7 +89,22 @@ export const useUpdatePost$ = (): UseMutationResult<PostData, unknown, {
 
   return useMutation({
     mutationFn: (params) => postsApi.updatePost(params),
-    onSuccess: (post) => updateCache(queryClient, post),
+    onSuccess: (post) => {
+      queryClient.setQueryData(
+        queryKeys.posts.all.queryKey,
+        (pages: PagedPostData[]) => pages.map((page) => {
+          return {
+            ...page,
+            posts: page.posts.map((cachedPost) => {
+              if (cachedPost.id === post.id) return post
+              return cachedPost
+            }),
+          }
+        }),
+      )
+
+      updateCache(queryClient, post)
+    },
   })
 }
 
