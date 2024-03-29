@@ -19,6 +19,8 @@ const styles = {
   padding: 2,
   height: '100dvh',
   position: 'fixed',
+  top: 0,
+  left: 0,
   color: 'text.primary',
   maxWidth: 260,
 

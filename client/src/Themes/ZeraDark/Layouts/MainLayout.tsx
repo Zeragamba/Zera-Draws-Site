@@ -3,38 +3,40 @@ import classnames from 'classnames'
 import { FC, useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
-import { Sidebar } from '../Components/Sidebar'
+import { Sidebar } from '../Components'
 
 const styles = {
-  '.Sidebar': {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: 260,
-    zIndex: 100,
-  },
-  '.Main': {
-    paddingLeft: '260px',
-  },
-  '.Overlay': {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'hsla(0deg, 0%, 0%, 15%)',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    zIndex: 90,
+  Layout: {
+    minHeight: '100vh',
+    maxWidth: '100vw',
+    display: 'flex',
+
+    '.Main': {
+      minWidth: 0,
+      flexShrink: 1,
+      flexGrow: 1,
+    },
+
+    '.Sidebar': {
+      width: '260px',
+      flexShrink: 0,
+      zIndex: 100,
+    },
+
+    '&.isSmallScreen': {
+      '.Sidebar': {
+        width: '56px',
+      },
+    },
   },
 
-  '&.mobile': {
-    '.Main': { paddingLeft: '56px' },
-    '.Sidebar': { width: '56px' },
-  },
   Overlay: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'hsla(0deg, 0%, 0%, 15%)',
     position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    backgroundColor: 'hsla(0deg, 0%, 0%, 25%)',
     zIndex: 90,
   },
 } satisfies Record<string, SxProps>
@@ -60,21 +62,21 @@ export const MainLayout: FC<MainLayoutProps> = () => {
   }, [ isSmallScreen ])
 
   return (
-    <Box className={classnames({ Layout: true, mobile: isSmallScreen })} sx={styles}>
-      <Box className={classnames('Sidebar', { mobile: isSmallScreen })}>
+    <Box className={classnames('Layout', { isSmallScreen })} sx={styles.Layout}>
+      {isSmallScreen && sidebarOpen && (
+        <Box className={'Overlay'} onClick={() => setSidebarOpen(false)} />
+      )}
+
+      <Box className={'Sidebar'}>
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
       </Box>
-      <Box className={'Main'}>
+
+      <Box className={'Main'} sx={{ padding: isSmallScreen ? 2 : 4 }}>
         {isSmallScreen && sidebarOpen && (
-          <Box className={'Overlay'} onClick={() => setSidebarOpen(false)} />
+          <Box sx={styles.Overlay} onClick={() => setSidebarOpen(false)} />
         )}
 
-        <Box sx={{ padding: isSmallScreen ? 2 : 4 }}>
-          {isSmallScreen && sidebarOpen && (
-            <Box sx={styles.Overlay} onClick={() => setSidebarOpen(false)} />
-          )}
-          <Outlet />
-        </Box>
+        <Outlet />
       </Box>
     </Box>
   )

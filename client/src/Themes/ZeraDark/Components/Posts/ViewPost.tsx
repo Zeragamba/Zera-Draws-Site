@@ -21,9 +21,11 @@ export const ViewPost: FC = () => {
     <Stack gap={2}>
       <PostTitle />
 
-      <Box className={classnames(styles.imgWrapper, { [styles.isMobile]: isMobile })}>
+      <Box className={classnames(styles.postImage, { [styles.isMobile]: isMobile })}>
         <ImagesNav />
-        <AsyncImg key={ctrl.currentImage.id} src={ctrl.currentImageSrc} onClick={ctrl.onPostImageClick} />
+        <Box className={styles.imgWrapper}>
+          <AsyncImg key={ctrl.currentImage.id} src={ctrl.currentImageSrc} onClick={ctrl.onPostImageClick} />
+        </Box>
       </Box>
 
       <PostNav
