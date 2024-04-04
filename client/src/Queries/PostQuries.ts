@@ -1,5 +1,4 @@
 import {
-  InfiniteData,
   QueryClient,
   useInfiniteQuery,
   UseInfiniteQueryResult,
@@ -91,24 +90,7 @@ export const useUpdatePost$ = (): UseMutationResult<PostData, unknown, {
   return useMutation({
     mutationFn: (params) => postsApi.updatePost(params),
     onSuccess: (post) => {
-      queryClient.setQueryData(
-        queryKeys.posts.all.queryKey,
-        (data: InfiniteData<PagedPostData>) => {
-          return {
-            ...data,
-            pages: data.pages.map((page) => {
-              return {
-                ...page,
-                posts: page.posts.map((cachedPost) => {
-                  if (cachedPost.id === post.id) return post
-                  return cachedPost
-                }),
-              }
-            }),
-          }
-        },
-      )
-
+      queryClient.invalidateQueries({ queryKey: queryKeys.posts.all.queryKey })
       updateCache(queryClient, post)
     },
   })

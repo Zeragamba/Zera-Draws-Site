@@ -1,10 +1,10 @@
 import { Paper } from '@mui/material'
 import React, { FC } from 'react'
-import ReactMarkdown from 'react-markdown'
 
 import { ErrorPage } from './ErrorPage'
 import { LoadingPage } from './LoadingPage'
 import { useCustomContent$ } from '../../../Queries'
+import { Markdown } from '../Components'
 
 export const AboutPage: FC = () => {
   const customContent$ = useCustomContent$()
@@ -15,7 +15,7 @@ export const AboutPage: FC = () => {
 
   return (
     <Paper sx={{ padding: 2 }}>
-      <ReactMarkdown>{contentMeta.about}</ReactMarkdown>
+      <Markdown>{contentMeta.about}</Markdown>
     </Paper>
   )
 }

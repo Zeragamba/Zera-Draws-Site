@@ -1,14 +1,13 @@
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import classnames from 'classnames'
 import React, { FC } from 'react'
-import ReactMarkdown from 'react-markdown'
 
 import { ImagesNav } from './PostImagesNav'
 import { PostNav } from './PostNav'
 import { PostTitle } from './PostTitle'
 import { useViewPostCtrl } from '../../../../Controllers'
 import { useIsMobile } from '../../../../Hooks'
-import { AsyncImg, PostTags } from '../../../BaseTheme'
+import { AsyncImg, Markdown, PostTags } from '../../../BaseTheme'
 
 import styles from './ViewPost.module.scss'
 
@@ -45,7 +44,7 @@ export const ViewPost: FC = () => {
 
       {description?.trim() !== '' && (
         <Paper sx={{ padding: 2 }}>
-          <ReactMarkdown>{post.description}</ReactMarkdown>
+          <Markdown>{post.description}</Markdown>
         </Paper>
       )}
     </Stack>

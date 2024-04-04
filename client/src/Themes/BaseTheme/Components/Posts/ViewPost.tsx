@@ -1,13 +1,13 @@
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import React, { FC } from 'react'
-import ReactMarkdown from 'react-markdown'
 
 import { PostNav } from './PostNav'
 import { PostTags } from './PostTags'
 import { useViewPostCtrl } from '../../../../Controllers'
 import { FontAwesomeIcon } from '../../../../Lib'
 import { AsyncImg } from '../Images'
+import { Markdown } from '../Markdown'
 
 import styles from './ViewPost.module.scss'
 
@@ -64,7 +64,7 @@ export const ViewPost: FC = () => {
 
       {description?.trim() !== '' && (
         <Paper sx={{ padding: 2 }}>
-          <ReactMarkdown>{post.description}</ReactMarkdown>
+          <Markdown>{post.description}</Markdown>
         </Paper>
       )}
     </Stack>

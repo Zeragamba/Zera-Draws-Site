@@ -13,7 +13,6 @@ import {
 import TextField from '@mui/material/TextField'
 import React, { FC, useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import ReactMarkdown from 'react-markdown'
 
 import { muiField } from '../../../../Forms'
 import { FontAwesomeIcon } from '../../../../Lib'
@@ -24,6 +23,7 @@ import {
   useUpdateCustomContent$,
   useUpdateFeatureFlags$,
 } from '../../../../Queries'
+import { Markdown } from '../../Components'
 
 export const EditAboutPage: FC = () => {
   const featureFlags$ = useFeatureFlags$()
@@ -137,7 +137,7 @@ export const EditAboutPage: FC = () => {
 
         {[ 'split', 'preview' ].includes(mode) && (
           <Paper sx={{ padding: 2, flexGrow: 1 }}>
-            <ReactMarkdown>{watch('about') || ''}</ReactMarkdown>
+            <Markdown>{watch('about') || ''}</Markdown>
           </Paper>
         )}
       </Stack>
