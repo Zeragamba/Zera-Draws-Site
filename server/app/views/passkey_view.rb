@@ -1,6 +1,7 @@
 class PasskeyView < ApplicationView
   def self.as_json(passkey)
     return {
+      id: passkey.webauthn_id,
       name: passkey.name,
       createdAt: passkey.created_at,
     }

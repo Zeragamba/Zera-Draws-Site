@@ -1,11 +1,14 @@
+import { Dialog } from '@mui/material'
+import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import formatDate from 'date-fns/format'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
+import { PasskeyForm } from './PasskeyForm'
 import { PasskeyData } from '../../../../../Api/Schemas'
-import { useUserPasskeys$ } from '../../../../../Queries'
+import { useRemovePasskey$, useUserPasskeys$ } from '../../../../../Queries'
 import { ErrorAlert, LoadingSpinner } from '../../Shared'
 
 interface PasskeysListSlots {
@@ -30,22 +33,67 @@ export const PasskeysList: FC<PasskeysListProps> = ({
   return (
     <Stack gap={1}>
       {passkeys.length === 0 && <NoPasskeys />}
-      {passkeys.map((passkey) => <PasskeyListItem key={passkey.name} passkey={passkey} />)}
+      {passkeys.map((passkey) => <PasskeyListItem key={passkey.id} passkey={passkey} />)}
     </Stack>
   )
 }
 
 interface PasskeyListItemProps {
+  onEdit?: (passkey: PasskeyData) => void
   passkey: PasskeyData
 }
 
 export const PasskeyListItem: FC<PasskeyListItemProps> = ({
   passkey,
 }) => {
+  const removePasskey = useRemovePasskey$()
+  const [ isRemoving, setIsRemoving ] = useState<boolean>(false)
+  const [ isEditing, setIsEditing ] = useState<boolean>(false)
+
   return (
-    <Paper sx={{ padding: 1 }}>
-      <Typography>{passkey.name}</Typography>
-      {passkey.createdAt && <Typography>Created at: {formatDate(passkey.createdAt, 'PPPP')}</Typography>}
+    <Paper sx={{ padding: 2 }}>
+      <Stack direction="row" gap={2}>
+        <Stack flexGrow={1}>
+          <Typography>{passkey.name}</Typography>
+          {passkey.createdAt && (
+            <Typography variant={'caption'}>Created: {formatDate(passkey.createdAt, 'PPP')}</Typography>
+          )}
+        </Stack>
+
+        <Button variant={'contained'} onClick={() => setIsRemoving(true)}>Remove</Button>
+        <Button variant={'contained'} onClick={() => setIsEditing(true)}>Edit</Button>
+      </Stack>
+
+      <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
+        <PasskeyForm
+          mode={'edit'}
+          passkey={passkey}
+          onSaved={() => setIsEditing(false)}
+        />
+      </Dialog>
+
+      <Dialog open={isRemoving} onClose={() => setIsRemoving(false)}>
+        <Stack gap={2} padding={2}>
+          <Typography>Are you sure you want to remove the passkey {passkey.name}?</Typography>
+
+          <Stack direction="row" gap={2}>
+            <Button
+              fullWidth
+              variant={'contained'}
+              onClick={() => removePasskey.mutate(passkey)}
+            >
+              Remove
+            </Button>
+            <Button
+              fullWidth
+              variant={'contained'}
+              onClick={() => setIsRemoving(false)}
+            >
+              Cancel
+            </Button>
+          </Stack>
+        </Stack>
+      </Dialog>
     </Paper>
   )
 }

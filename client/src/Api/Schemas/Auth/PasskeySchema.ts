@@ -2,6 +2,7 @@ import { parseISO } from 'date-fns'
 import z from 'zod'
 
 export const PasskeyDataSchema = z.object({
+  id: z.string(),
   name: z.string().min(1),
   createdAt: z.string().datetime()
     .transform((timestamp) => parseISO(timestamp))

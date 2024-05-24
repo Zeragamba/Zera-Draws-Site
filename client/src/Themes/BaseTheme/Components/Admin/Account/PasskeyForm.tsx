@@ -1,42 +1,68 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import { FC } from 'react'
-import { Controller, SubmitHandler } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
-import { PasskeyData } from '../../../../../Api/Schemas'
-import { usePasskeyForm } from '../../../../../Controllers/Auth/UsePasskeyForm'
+import { PasskeyData, PasskeyDataSchema } from '../../../../../Api/Schemas'
 import { muiField } from '../../../../../Forms'
-import { useRegisterPasskey$ } from '../../../../../Queries'
+import { useRegisterPasskey$, useUpdatePasskey$ } from '../../../../../Queries'
 import { ErrorAlert } from '../../Shared'
 
-interface PasskeyFormProps {
-  mode: 'edit' | 'create'
+type EditPasskeyFormProps = {
+  mode: 'edit'
+  passkey: PasskeyData
   onSaved: (passkey: PasskeyData) => void
 }
 
+type CreatePasskeyFormProps = {
+  mode: 'create'
+  passkey?: never
+  onSaved: (passkey: PasskeyData) => void
+}
+
+export type PasskeyFormProps =
+  | EditPasskeyFormProps
+  | CreatePasskeyFormProps
+
 export const PasskeyForm: FC<PasskeyFormProps> = ({
   mode,
+  passkey,
   onSaved,
 }) => {
   const registerPasskey$ = useRegisterPasskey$()
+  const updatePasskey$ = useUpdatePasskey$()
 
-  const { control, handleSubmit, formState: { errors } } = usePasskeyForm()
-  const onSubmit: SubmitHandler<PasskeyData> = async (passkey) => {
+  const { control, handleSubmit, formState: { errors } } = useForm<PasskeyData>({
+    resolver: zodResolver(PasskeyDataSchema.omit({ createdAt: true })),
+    defaultValues: {
+      id: '(NEW)',
+      name: '',
+      ...passkey,
+    },
+  })
+
+  const onSubmit = handleSubmit(async (passkey) => {
+    console.log({ mode })
     try {
       switch (mode) {
+        case 'edit':
+          console.log(`Updating passkey ${passkey.name}`)
+          return onSaved(await updatePasskey$.mutateAsync(passkey))
         case 'create':
+          console.log(`Creating passkey ${passkey.name}`)
           return onSaved(await registerPasskey$.mutateAsync(passkey))
       }
     } catch (e) {
       console.error(e)
     }
-  }
+  })
 
   return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <Stack gap={2} padding={2}>
+        {errors.root && <ErrorAlert error={errors.root.message} />}
         <Controller
           control={control}
           name={'name'}
@@ -53,12 +79,21 @@ export const PasskeyForm: FC<PasskeyFormProps> = ({
           )}
         />
 
-        {errors.name?.message && <span>{errors.name?.message}</span>}
+        {errors.name?.message && <span>{errors.name.message}</span>}
 
-        {mode === 'edit' && <Button variant="contained" type="submit">Save Key</Button>}
-        {mode === 'create' && <Button variant="contained" type="submit">Create Key</Button>}
+        {mode === 'edit' && (
+          <>
+            <Button variant="contained" type="submit" onClick={onSubmit}>Save Key</Button>
+            {updatePasskey$.isError && <ErrorAlert error={updatePasskey$.error} />}
+          </>
+        )}
 
-        {registerPasskey$.isError && <ErrorAlert error={registerPasskey$.error} />}
+        {mode === 'create' && (
+          <>
+            <Button variant="contained" type="submit" onClick={onSubmit}>Create Key</Button>
+            {registerPasskey$.isError && <ErrorAlert error={registerPasskey$.error} />}
+          </>
+        )}
       </Stack>
     </form>
   )

@@ -48,8 +48,39 @@ export const usePasskeyLogin$ = () => {
   })
 }
 
-export const useRegisterPasskey$ = (): UseMutationResult<PasskeyData, unknown, PasskeyData> => {
+export const useRegisterPasskey$ = (): UseMutationResult<PasskeyData, unknown, Omit<PasskeyData, 'id'>> => {
+  const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: async (passkey) => authApiClient.passkeys.register(passkey),
+    onSuccess: (savedPasskey) => {
+      queryClient.setQueryData(queryKeys.auth.passkeys.queryKey, (passkeys: PasskeyData[] = []) => {
+        return [ ...passkeys, savedPasskey ]
+      })
+    },
+  })
+}
+
+export const useUpdatePasskey$ = (): UseMutationResult<PasskeyData, unknown, PasskeyData> => {
+  return useMutation({
+    mutationFn: async (passkey) => authApiClient.passkeys.update(passkey),
+    onSuccess: (savedPasskey) => {
+      queryClient.setQueryData(queryKeys.auth.passkeys.queryKey, (passkeys: PasskeyData[] = []) => {
+        return passkeys.map((passkey) => {
+          return passkey.id === savedPasskey.id ? savedPasskey : passkey
+        })
+      })
+    },
+  })
+}
+
+export const useRemovePasskey$ = (): UseMutationResult<PasskeyData, unknown, PasskeyData> => {
+  return useMutation({
+    mutationFn: async (passkey) => authApiClient.passkeys.remove(passkey),
+    onSuccess: (savedPasskey) => {
+      queryClient.setQueryData(queryKeys.auth.passkeys.queryKey, (passkeys: PasskeyData[] = []) => {
+        return passkeys.filter((key) => key.id !== savedPasskey.id)
+      })
+    },
   })
 }

@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get '/user/me/passkey' => 'auth#list_passkeys'
   get '/user/me/passkey/new' => 'auth#register_passkey_challenge'
   post '/user/me/passkey' => 'auth#register_passkey_validate'
+  put '/user/me/passkey/:passkey_id' => 'auth#update_passkey'
+  delete '/user/me/passkey/:passkey_id' => 'auth#remove_passkey'
 
   get '/meta/:group' => 'meta#list'
   put '/meta/:group' => 'meta#save'

@@ -71,6 +71,8 @@ class AuthController < ApplicationController
 
     Rails.logger.info("attempting login for public key #{webauthn_credential.id}")
     stored_credential = UserPasskey.find_by(webauthn_id: webauthn_credential.id)
+    raise BadRequestError, "Passkey not found" if stored_credential.nil?
+
     webauthn_credential.verify(
       params[:challenge],
       public_key: stored_credential.public_key,
@@ -92,6 +94,26 @@ class AuthController < ApplicationController
   rescue WebAuthn::Error => e
     Rails.logger.error (["#{self.class} - #{e.class}: #{e.message}"] + e.backtrace).join("\n")
     raise AuthError, "Unable to validate passkey"
+  end
+
+  def update_passkey
+    Rails.logger.info("Starting update of passkey for user")
+    user = Current.user
+
+    passkey = user.passkeys.find(params[:passkey_id])
+    passkey.update!(passkey_params)
+
+    render json: PasskeyView.render(passkey)
+  end
+
+  def remove_passkey
+    Rails.logger.info("Starting removal of passkey for user")
+    user = Current.user
+
+    passkey = user.passkeys.find(params[:passkey_id])
+    passkey.destroy!
+
+    render json: PasskeyView.render(passkey)
   end
 
   def login_success(user)

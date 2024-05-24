@@ -45,7 +45,7 @@ class AuthApi extends ServerApi {
       return user
     },
 
-    register: async (passkey: PasskeyData): Promise<PasskeyData> => {
+    register: async (passkey: Omit<PasskeyData, 'id'>): Promise<PasskeyData> => {
       const challengeData = await this.get('/user/me/passkey/new', {
         params: { passkey },
         parseResData: (data) => PasskeyCreateChallengeSchema.parse(data),
@@ -69,6 +69,23 @@ class AuthApi extends ServerApi {
       return this.get('/user/me/passkey', {
         parseResData: (data) => PasskeyListResSchema
           .transform((data) => data.passkeys)
+          .parse(data),
+      })
+    },
+
+    update: (passkey: PasskeyData) => {
+      return this.put(`/user/me/passkey/${passkey.id}`, {
+        data: { passkey },
+        parseResData: (data) => PasskeyResSchema
+          .transform((data) => data.passkey)
+          .parse(data),
+      })
+    },
+
+    remove: (passkey: PasskeyData) => {
+      return this.delete(`/user/me/passkey/${passkey.id}`, {
+        parseResData: (data) => PasskeyResSchema
+          .transform((data) => data.passkey)
           .parse(data),
       })
     },
