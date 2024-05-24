@@ -1,13 +1,14 @@
-import { RegistrationPublicKeyCredential } from '@github/webauthn-json/browser-ponyfill'
+import * as webauthn from '@github/webauthn-json/browser-ponyfill'
 import z from 'zod'
 
 import { UserData } from '../../Models'
 import { authTokenStore } from '../AuthTokenStore'
 import { isServerApiError } from '../Errors'
 import {
-  NewPasskeyChallengeSchema,
+  PasskeyCreateChallengeSchema,
   PasskeyData,
   PasskeyListResSchema,
+  PasskeyLoginChallengeSchema,
   PasskeyResSchema,
   UserDataSchema,
   UserResSchema,
@@ -17,26 +18,51 @@ import { ServerApi } from '../ServerApi'
 
 class AuthApi extends ServerApi {
   public passkeys = {
-    register: {
-      challenge: (passkey: PasskeyData) => {
-        return this.get('/user/me/passkey/new', {
-          params: { passkey },
-          parseResData: (data) => NewPasskeyChallengeSchema.parse(data),
-        })
-      },
+    login: async (): Promise<UserData> => {
+      console.info('Starting passkey login')
+      const challengeData = await this.get('/login/passkey', {
+        parseResData: (data) => PasskeyLoginChallengeSchema.parse(data),
+      })
 
-      validate: (passkeyData: PasskeyData, challenge: string, key: RegistrationPublicKeyCredential) => {
-        return this.post('/user/me/passkey', {
-          data: {
-            passkey: passkeyData,
-            challenge: challenge,
-            publicKeyCredential: key,
-          },
-          parseResData: (data) => PasskeyResSchema
-            .transform((data) => data.passkey)
-            .parse(data),
-        })
-      },
+      console.debug('Received challenge from server')
+      const options = webauthn.parseRequestOptionsFromJSON({ publicKey: challengeData })
+
+      console.info('Requesting passkey login')
+      const publicKeyCredential = await webauthn.get(options)
+
+      const { user, auth_token } = await this.post('/login/passkey', {
+        data: {
+          challenge: challengeData.challenge,
+          publicKeyCredential: publicKeyCredential,
+        },
+        parseResData: (data) => {
+          return z.object({ user: UserDataSchema, auth_token: z.string() }).parse(data)
+        },
+      })
+
+      authTokenStore.authToken = auth_token
+
+      return user
+    },
+
+    register: async (passkey: PasskeyData): Promise<PasskeyData> => {
+      const challengeData = await this.get('/user/me/passkey/new', {
+        params: { passkey },
+        parseResData: (data) => PasskeyCreateChallengeSchema.parse(data),
+      })
+
+      const options = webauthn.parseCreationOptionsFromJSON({ publicKey: challengeData })
+
+      return this.post('/user/me/passkey', {
+        data: {
+          passkey: passkey,
+          challenge: challengeData.challenge,
+          publicKeyCredential: await webauthn.create(options),
+        },
+        parseResData: (data) => PasskeyResSchema
+          .transform((data) => data.passkey)
+          .parse(data),
+      })
     },
 
     list: () => {

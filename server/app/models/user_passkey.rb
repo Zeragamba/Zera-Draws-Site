@@ -1,4 +1,6 @@
 class UserPasskey < ApplicationRecord
+  self.primary_key = :webauthn_id
+
   belongs_to :user
 
   validates :name, uniqueness: {

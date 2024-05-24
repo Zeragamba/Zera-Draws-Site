@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2024_04_28_212530) do
   end
 
   create_table "user_passkeys", id: false, force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.uuid "user_id", null: false
     t.string "webauthn_id"
     t.string "public_key", null: false
     t.decimal "sign_count", default: "0.0", null: false

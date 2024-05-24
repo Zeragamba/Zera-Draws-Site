@@ -18,7 +18,12 @@ export const PasskeyListResSchema = z.object({
   passkeys: PasskeyDataSchema.array(),
 })
 
-export const NewPasskeyChallengeSchema = z.object({
+export const PasskeyLoginChallengeSchema = z.object({
+  challenge: z.string(),
+  timeout: z.number(),
+})
+
+export const PasskeyCreateChallengeSchema = z.object({
   challenge: z.string(),
   excludeCredentials: z.object({
     type: z.literal('public-key'),

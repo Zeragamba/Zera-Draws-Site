@@ -1,12 +1,12 @@
-import * as webauthn from '@github/webauthn-json/browser-ponyfill'
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
 import { queryKeys } from './QueryKeys'
 import { authApiClient, ServerApiError } from '../Api'
 import { PasskeyData } from '../Api/Schemas'
+import { queryClient } from '../App/QueryClient'
 import { UserData } from '../Models'
 
-export const useLogin$ = () => {
+export const usePasswordLogin$ = () => {
   const queryClient = useQueryClient()
 
   return useMutation<UserData, ServerApiError, {
@@ -41,18 +41,15 @@ export const useUserPasskeys$ = (): UseQueryResult<PasskeyData[] | null> => {
   })
 }
 
+export const usePasskeyLogin$ = () => {
+  return useMutation<UserData, ServerApiError, {}>({
+    mutationFn: async () => authApiClient.passkeys.login(),
+    onSuccess: () => queryClient.invalidateQueries(),
+  })
+}
+
 export const useRegisterPasskey$ = (): UseMutationResult<PasskeyData, unknown, PasskeyData> => {
   return useMutation({
-    mutationFn: async (passkey) => {
-      const createOptions = await authApiClient.passkeys.register.challenge(passkey)
-
-      const options = webauthn.parseCreationOptionsFromJSON({ publicKey: createOptions })
-
-      return await authApiClient.passkeys.register.validate(
-        passkey,
-        createOptions.challenge,
-        await webauthn.create(options),
-      )
-    },
+    mutationFn: async (passkey) => authApiClient.passkeys.register(passkey),
   })
 }

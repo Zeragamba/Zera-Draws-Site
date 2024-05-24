@@ -67,22 +67,23 @@ class AuthController < ApplicationController
 
   def login_passkey_validate
     Rails.logger.info("Starting validate of passkey for login")
-    user = User.find_by(id: params[:user_id])
-
     webauthn_credential = WebAuthn::Credential.from_get(params[:publicKeyCredential])
-    stored_credential = user.passkeys.find_by(webauthn_id: webauthn_credential.id)
 
+    Rails.logger.info("attempting login for public key #{webauthn_credential.id}")
+    stored_credential = UserPasskey.find_by(webauthn_id: webauthn_credential.id)
     webauthn_credential.verify(
       params[:challenge],
       public_key: stored_credential.public_key,
       sign_count: stored_credential.sign_count
     )
+    user = stored_credential.user
+    Rails.logger.info("Challenge passed for user #{user.username}")
 
-    stored_credential.update!(
-      sign_count: webauthn_credential.sign_count
-    )
+    Rails.logger.debug("Updating sign count for passkey")
+    stored_credential.update!(sign_count: webauthn_credential.sign_count)
 
-    self.login_success(user)
+    Rails.logger.debug("Passkey login success")
+    self.login_success(stored_credential.user)
   rescue WebAuthn::SignCountVerificationError
     # Cryptographic verification of the authenticator data succeeded, but the signature counter was less then or equal
     # to the stored value. This can have several reasons and depending on your risk tolerance you can choose to fail or

@@ -3,7 +3,7 @@ class AddWebAuthnLogins < ActiveRecord::Migration[6.1]
     add_column :users, :webauthn_id, :string, :unique => true
 
     create_table(:user_passkeys, :id => nil) do |t|
-      t.belongs_to :user, :null => false
+      t.belongs_to :user, :type => :uuid, :null => false
 
       t.string :webauthn_id, :primary => true
       t.string :public_key, :null => false
