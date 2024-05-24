@@ -2,9 +2,17 @@ Rails.application.routes.draw do
   get '/' => 'home#index'
   get '/status' => 'home#index'
 
-  post '/login' => 'users#login'
-  post '/logout' => 'users#logout'
+  post '/login' => 'auth#login_password'
+  post '/login/password' => 'auth#login_password'
+  get '/login/passkey' => 'auth#login_passkey_challenge'
+  post '/login/passkey' => 'auth#login_passkey_validate'
+
+  post '/logout' => 'auth#logout'
+
   get '/user/me' => 'users#view_current'
+  get '/user/me/passkey' => 'auth#list_passkeys'
+  get '/user/me/passkey/new' => 'auth#register_passkey_challenge'
+  post '/user/me/passkey' => 'auth#register_passkey_validate'
 
   get '/meta/:group' => 'meta#list'
   put '/meta/:group' => 'meta#save'

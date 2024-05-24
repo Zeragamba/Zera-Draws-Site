@@ -22,6 +22,7 @@ export abstract class ServerApi {
       let { headers } = config
 
       if (authToken) {
+        console.debug('User logged in, adding AuthToken')
         headers = {
           ...headers,
           'Authorization': `Bearer ${authToken}`,
@@ -38,10 +39,12 @@ export abstract class ServerApi {
     } catch (error) {
       if (isServerApiError(error)) {
         if (error.response.status === 401) {
+          console.warn('401 error received, removing authToken')
           authTokenStore.authToken = null
         }
 
         if (error.response.data.error === 'Invalid token') {
+          console.warn('Invalid token error received, removing authToken')
           authTokenStore.authToken = null
         }
       }

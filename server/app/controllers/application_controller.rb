@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::API
   include Authentication
+  include ApplicationErrors
   before_action :authenticate
+
+  rescue_from 'ApplicationErrors::BadRequestError' do |error|
+    render_error(message: error.message, status: 400)
+  end
 
   rescue_from 'Authentication::AuthError' do |error|
     render_error(message: error.message, status: 401)

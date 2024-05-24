@@ -1,13 +1,53 @@
+import { RegistrationPublicKeyCredential } from '@github/webauthn-json/browser-ponyfill'
 import z from 'zod'
 
 import { UserData } from '../../Models'
 import { authTokenStore } from '../AuthTokenStore'
 import { isServerApiError } from '../Errors'
-import { UserDataSchema, UserResSchema } from '../Schemas'
+import {
+  NewPasskeyChallengeSchema,
+  PasskeyData,
+  PasskeyListResSchema,
+  PasskeyResSchema,
+  UserDataSchema,
+  UserResSchema,
+} from '../Schemas'
 import { ServerApi } from '../ServerApi'
 
 
 class AuthApi extends ServerApi {
+  public passkeys = {
+    register: {
+      challenge: (passkey: PasskeyData) => {
+        return this.get('/user/me/passkey/new', {
+          params: { passkey },
+          parseResData: (data) => NewPasskeyChallengeSchema.parse(data),
+        })
+      },
+
+      validate: (passkeyData: PasskeyData, challenge: string, key: RegistrationPublicKeyCredential) => {
+        return this.post('/user/me/passkey', {
+          data: {
+            passkey: passkeyData,
+            challenge: challenge,
+            publicKeyCredential: key,
+          },
+          parseResData: (data) => PasskeyResSchema
+            .transform((data) => data.passkey)
+            .parse(data),
+        })
+      },
+    },
+
+    list: () => {
+      return this.get('/user/me/passkey', {
+        parseResData: (data) => PasskeyListResSchema
+          .transform((data) => data.passkeys)
+          .parse(data),
+      })
+    },
+  }
+
   public async logout(): Promise<void> {
     await this.post('/logout', {
       parseResData: (data) => {

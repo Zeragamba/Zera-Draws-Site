@@ -18,6 +18,7 @@ import {
   NewPostPage,
   ViewTagPage,
 } from '../BaseTheme'
+import { AccountPage } from '../BaseTheme/Pages/Admin/AccountPage'
 
 export const appRouter = createBrowserRouter([
   {
@@ -44,13 +45,14 @@ export const appRouter = createBrowserRouter([
         path: 'admin',
         element: <AdminLayout />,
         children: [
-          { index: true, element: <Navigate to={'about'} /> },
+          { index: true, element: <Navigate to={'account'} /> },
+          { path: 'account', element: <AccountPage /> },
           { path: 'about', element: <EditAboutPage /> },
           { path: 'socials', element: <EditSocialsPage /> },
           { path: 'tags', element: <EditTagsPage /> },
           { path: 'posts', element: <EditPostsPage /> },
           { path: 'metrics', element: <MetricsPage /> },
-          { path: '*', element: <Navigate to={'about'} /> },
+          { path: '*', element: <Navigate to={'account'} /> },
         ],
       },
 

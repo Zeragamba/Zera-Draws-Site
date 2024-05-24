@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_22_192115) do
+ActiveRecord::Schema.define(version: 2024_04_28_212530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -82,6 +82,18 @@ ActiveRecord::Schema.define(version: 2023_12_22_192115) do
     t.index ["slug"], name: "index_tags_on_slug", unique: true
   end
 
+  create_table "user_passkeys", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "webauthn_id"
+    t.string "public_key", null: false
+    t.decimal "sign_count", default: "0.0", null: false
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "name"], name: "index_user_passkeys_on_user_id_and_name", unique: true
+    t.index ["user_id"], name: "index_user_passkeys_on_user_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", null: false
     t.string "username", null: false
@@ -89,6 +101,7 @@ ActiveRecord::Schema.define(version: 2023_12_22_192115) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "admin", default: false, null: false
+    t.string "webauthn_id"
     t.index "lower((email)::text)", name: "index_users_email", unique: true
     t.index "lower((username)::text)", name: "index_users_username", unique: true
   end
