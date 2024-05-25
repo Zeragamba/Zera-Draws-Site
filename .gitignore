@@ -8,4 +8,6 @@ vendor/
 
 .env
 
+router/ssl/prod/
+
 !/**/.keep
