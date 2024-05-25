@@ -15,8 +15,6 @@ services:
       - ./.certs:/opt/ssl:ro
       - vol-images:/opt/images:ro
       - vol-client:/opt/client:ro
-    ports:
-      - "${NGINX_PORT}:443"
 
   server:
     build: ./server
@@ -28,9 +26,9 @@ services:
     environment:
       RAILS_ENV: "${APP_ENV}"
 
-      CLIENT_URL: "${CLIENT_URL}"
-      SERVER_URL: "${NGINX_URL}/api"
-      IMAGES_URL: "${NGINX_URL}/images"
+      CLIENT_URL: "${APP_URL}"
+      SERVER_URL: "${APP_URL}/api"
+      IMAGES_URL: "${APP_URL}/images"
 
       DB_HOST: db # internal docker host
       DB_PORT: 5432
@@ -47,9 +45,9 @@ services:
     volumes:
       - vol-client:/opt/client/build:rw
     environment:
-      NODE_ENV: ${APP_ENV}
-      REACT_APP_ENV: ${APP_ENV}
-      REACT_APP_SERVER_URL: "${NGINX_URL}/api"
+      NODE_ENV: "${APP_ENV}"
+      REACT_APP_ENV: "${APP_ENV}"
+      REACT_APP_SERVER_URL: "${APP_URL}/api"
     command: yarn build
 
   og-injector:
@@ -57,9 +55,9 @@ services:
     volumes:
       - vol-client:/opt/client:ro
     environment:
-      NODE_ENV: ${APP_ENV}
+      NODE_ENV: "${APP_ENV}"
       SERVER_URL: "http://server:3000" # internal docker url
-      CLIENT_URL: "${CLIENT_URL}"
+      CLIENT_URL: "${APP_URL}"
       CLIENT_DIR: "/opt/client"
 
   db:

@@ -10,36 +10,25 @@ services:
     extends:
       file: docker-compose.shared.yml
       service: router
+    ports:
+      - "${APP_PORT}:443"
     restart: always
 
   server:
     extends:
       file: docker-compose.shared.yml
       service: server
-    environment:
-      RAILS_ENV: production
-
-      CLIENT_URL: "${APP_URL}"
-      SERVER_URL: "${APP_URL}/api"
-      IMAGES_URL: "${APP_URL}/images"
     restart: always
 
   client:
     extends:
       file: docker-compose.shared.yml
       service: client
-    environment:
-      NODE_ENV: production
-      REACT_APP_ENV: production
-      REACT_APP_SERVER_URL: "${APP_URL}/api"
 
   og-injector:
     extends:
       file: docker-compose.shared.yml
       service: og-injector
-    environment:
-      NODE_ENV: production
-      CLIENT_URL: "${APP_URL}"
     restart: always
 
   db:

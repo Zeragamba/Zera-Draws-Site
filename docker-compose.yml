@@ -10,6 +10,8 @@ services:
     extends:
       file: docker-compose.shared.yml
       service: router
+    ports:
+      - "${DEV_SERVER_PORT}:443"
 
   server:
     extends:
@@ -19,7 +21,9 @@ services:
       - ./server:/opt/server:rw
       - vol-images:/opt/images:rw
     environment:
-      CLIENT_URL: "${CLIENT_URL}"
+      CLIENT_URL: "${DEV_CLIENT_URL}"
+      SERVER_URL: "${DEV_SERVER_URL}/api"
+      IMAGES_URL: "${DEV_SERVER_URL}/images"
 
   client:
     extends:
@@ -33,9 +37,10 @@ services:
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt
       SSL_KEY_FILE: /opt/ssl/current.key
+      REACT_APP_SERVER_URL: "${DEV_SERVER_URL}/api"
     command: yarn start
     ports:
-      - "${CLIENT_PORT}:3000"
+      - "${DEV_CLIENT_PORT}:3000"
 
   og-injector:
     extends:
@@ -51,4 +56,4 @@ services:
       file: docker-compose.shared.yml
       service: db
     ports:
-      - "${DB_PORT}:5432"
+      - "${DEV_DB_PORT}:5432"
