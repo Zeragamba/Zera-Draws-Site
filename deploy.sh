@@ -1,8 +1,52 @@
 #!/bin/bash -l
+set -e
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Load NVM
 
-docker compose -f docker-compose.production.yml build
-docker compose -f docker-compose.production.yml up client
-docker compose -f docker-compose.production.yml down
-docker compose -f docker-compose.production.yml up router -d
+set -o allexport
+source .env
 
+echo "=== Entering maintenance mode ==="
+cp ./assets/web/deploy.html ./offline.html
+
+echo "=== Updating repo ==="
+git pull
+
+echo "=== Updating node ==="
+
+cd og-injector
+  echo "=== Updating OG Injector ==="
+  nvm install
+  corepack enable
+  yarn install --immutable
+cd ..
+
+cd server
+  echo "=== Updating server ==="
+  rvm use
+
+  bundle config set --local deployment 'true'
+  bundle config set --local without 'development test'
+  bundle install
+
+  echo "=== Migrating Database ==="
+  rails db:migrate
+
+  bundle exec whenever --update-crontab
+cd ..
+
+cd client
+  echo "=== Updating client ==="
+  nvm install
+  corepack enable
+  yarn install --immutable
+
+  echo "=== Building client ==="
+  yarn build
+cd ..
+
+echo "=== Restarting Passenger ==="
+passenger-config restart-app $(pwd)
+
+rm ./offline.html
 echo "=== All Done ==="
