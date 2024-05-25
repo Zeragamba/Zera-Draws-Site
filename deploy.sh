@@ -17,7 +17,8 @@ echo "=== Updating node ==="
 cd og-injector
   echo "=== Updating OG Injector ==="
   nvm install
-  yarn install
+  corepack enable
+  yarn install --immutable
 cd ..
 
 cd server
@@ -37,7 +38,8 @@ cd ..
 cd client
   echo "=== Updating client ==="
   nvm install
-  yarn install
+  corepack enable
+  yarn install --immutable
 
   echo "=== Building client ==="
   yarn build

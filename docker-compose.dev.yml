@@ -25,6 +25,8 @@ services:
     volumes:
       - ./og-injector:/opt/og-injector
     command: yarn watch
+    ports:
+      - "${INJECTOR_PORT}:3000"
     environment:
       CLIENT_URL: "https://${HOSTNAME}:${CLIENT_PORT}"
 
