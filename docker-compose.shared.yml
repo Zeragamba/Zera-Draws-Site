@@ -10,6 +10,8 @@ services:
       - server
       - og-injector
     volumes:
+      - "${SSL_CRT}:/opt/ssl/current.crt:ro"
+      - "${SSL_KEY}:/opt/ssl/current.key:ro"
       - vol-images:/opt/images:ro
       - vol-client:/opt/client:ro
 

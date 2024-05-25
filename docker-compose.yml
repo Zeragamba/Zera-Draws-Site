@@ -9,7 +9,6 @@ services:
       file: docker-compose.shared.yml
       service: router
     ports:
-      - "${APP_PORT}:80"
       - "${DEV_SERVER_PORT}:443"
 
   server:
@@ -30,7 +29,8 @@ services:
       service: client
     volumes:
       - ./client:/opt/client:rw
-      - ./router/ssl:/opt/ssl:ro
+      - "${SSL_CRT}:/opt/ssl/current.crt:ro"
+      - "${SSL_KEY}:/opt/ssl/current.key:ro"
       - vol-client:/opt/client/build:rw
     environment:
       HTTPS: true

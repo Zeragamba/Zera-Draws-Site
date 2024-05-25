@@ -9,7 +9,7 @@ services:
       file: docker-compose.shared.yml
       service: router
     ports:
-      - "${APP_PORT}:80"
+      - "${APP_PORT}:443"
     restart: always
 
   server:
