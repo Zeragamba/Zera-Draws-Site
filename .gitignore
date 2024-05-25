@@ -2,6 +2,7 @@
 
 .volumes/
 import/
+node_modules/
 
 vendor/
 
