@@ -10,6 +10,10 @@ services:
     extends:
       file: docker-compose.shared.yml
       service: router
+    volumes:
+      - ./router/ssl/dev:/opt/ssl:ro
+      - vol-images:/opt/images:ro
+      - vol-client:/opt/client:ro
     ports:
       - "${DEV_SERVER_PORT}:443"
 
@@ -31,7 +35,7 @@ services:
       service: client
     volumes:
       - ./client:/opt/client:rw
-      - ./.certs:/opt/ssl:ro
+      - ./router/ssl/dev:/opt/ssl:ro
       - vol-client:/opt/client/build:rw
     environment:
       HTTPS: true

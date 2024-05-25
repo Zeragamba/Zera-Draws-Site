@@ -11,10 +11,6 @@ services:
     depends_on:
       - server
       - og-injector
-    volumes:
-      - ./.certs:/opt/ssl:ro
-      - vol-images:/opt/images:ro
-      - vol-client:/opt/client:ro
 
   server:
     build: ./server
