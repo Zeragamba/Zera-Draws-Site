@@ -31,7 +31,7 @@ services:
       - ./client:/opt/client:rw
       - "${SSL_CRT}:/opt/ssl/current.crt:ro"
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
-      - vol-client:/opt/client/build:rw
+      - vol-client:/opt/client/dist:rw
     environment:
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt

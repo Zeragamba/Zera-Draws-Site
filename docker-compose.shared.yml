@@ -42,7 +42,7 @@ services:
   client:
     build: ./client
     volumes:
-      - vol-client:/opt/client/build:rw
+      - vol-client:/opt/client/dist:rw
     environment:
       NODE_ENV: "${APP_ENV}"
       REACT_APP_ENV: "${APP_ENV}"
