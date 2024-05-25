@@ -10,7 +10,7 @@ interface ErrorAlertProps {
 export const ErrorAlert: FC<ErrorAlertProps> = ({
   error,
 }) => {
-  return <Alert color={'error'}>{getMessage(error)}</Alert>
+  return <Alert severity="error">{getMessage(error)}</Alert>
 }
 
 export function getMessage(error: unknown): string {

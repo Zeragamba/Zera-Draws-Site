@@ -18,3 +18,5 @@ export const Spinner: FC<SpinnerProps> = ({
     </div>
   )
 }
+
+export const LoadingSpinner = Spinner

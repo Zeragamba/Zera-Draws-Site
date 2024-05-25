@@ -20,7 +20,7 @@ require "rails/test_unit/railtie"
 Bundler.require(*Rails.groups)
 
 Dotenv.load('../.env')
-Dotenv::Railtie.load
+Dotenv::Rails
 
 module ZeraDraws
   class Application < Rails::Application

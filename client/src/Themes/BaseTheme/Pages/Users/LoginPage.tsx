@@ -2,15 +2,30 @@ import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { useCurrentUser$ } from '../../../../Queries'
-import { LoginForm } from '../../Components'
+import { LoadingSpinner, LoginForm } from '../../Components'
 
-export const LoginPage: FC = () => {
-  const userQuery = useCurrentUser$()
+type LoginPageProps = {
+  slots?: Partial<LoginPageSlots>
+}
 
-  if (userQuery.isFetching) return <div>Loading...</div>
-  if (userQuery.data) return <Navigate to={'/'} />
+type LoginPageSlots = {
+  LoginForm: FC
+  LoadingSpinner: FC
+}
 
-  return (
-    <LoginForm />
-  )
+const defaultSlots: LoginPageSlots = {
+  LoginForm,
+  LoadingSpinner,
+}
+
+export const LoginPage: FC<LoginPageProps> = ({
+  slots = {},
+}) => {
+  const { LoginForm, LoadingSpinner } = { ...defaultSlots, ...slots }
+
+  const user$ = useCurrentUser$()
+  if (user$.isFetching) return <LoadingSpinner />
+  if (user$.data) return <Navigate to={'/'} />
+
+  return <LoginForm />
 }

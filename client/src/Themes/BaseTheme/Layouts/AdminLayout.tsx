@@ -19,6 +19,7 @@ export const AdminLayout: FC = () => {
   return (
     <Stack gap={2} direction={'row'} sx={{ flexGrow: 1, height: '100%' }}>
       <Paper>
+        <AdminNavItem to="account" label="Account" />
         <AdminNavItem to="about" label="About Page" />
         <AdminNavItem to="socials" label="Socials" />
         <AdminNavItem to="tags" label="Tags" />

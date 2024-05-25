@@ -1,8 +1,9 @@
-import { Button, Paper, Stack, TextField, Typography } from '@mui/material'
-import React, { ChangeEvent, FC, FormEvent, useState } from 'react'
+import { Button, Divider, Paper, Stack, TextField, Typography } from '@mui/material'
+import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 
 import { isServerApiError } from '../../../../Api'
-import { useLogin$ } from '../../../../Queries'
+import { usePasskeyLogin$, usePasswordLogin$ } from '../../../../Queries'
+import { ErrorAlert } from '../Shared'
 
 type LoginFormState = {
   username: string
@@ -11,8 +12,13 @@ type LoginFormState = {
 }
 
 export const LoginForm: FC = () => {
-  const loginQuery = useLogin$()
+  const passkeyLogin$ = usePasskeyLogin$()
+  const passwordLogin$ = usePasswordLogin$()
   const [ form, setForm ] = useState<LoginFormState>({ username: '', password: '', error: null })
+
+  useEffect(() => {
+    passkeyLogin$.mutate({})
+  }, [])
 
   const handleChange = (field: keyof LoginFormState) => {
     return (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,16 +29,16 @@ export const LoginForm: FC = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     const { username, password } = form
-    loginQuery.mutate({ username, password })
+    passwordLogin$.mutate({ username, password })
   }
 
   let error: string | null = null
-  if (loginQuery.error) {
-    if (isServerApiError(loginQuery.error)) {
-      const serverError = loginQuery.error
+  if (passwordLogin$.error) {
+    if (isServerApiError(passwordLogin$.error)) {
+      const serverError = passwordLogin$.error
       error = serverError.response.data.error
     }
-    error = loginQuery.error.toString()
+    error = passwordLogin$.error.toString()
   }
 
   return (
@@ -52,6 +58,7 @@ export const LoginForm: FC = () => {
           variant="filled"
           value={form.username}
           onChange={handleChange('username')}
+          autoComplete="username"
           fullWidth
         />
 
@@ -62,6 +69,7 @@ export const LoginForm: FC = () => {
           type="password"
           value={form.password}
           onChange={handleChange('password')}
+          autoComplete="current-password"
           fullWidth
         />
 
@@ -72,6 +80,14 @@ export const LoginForm: FC = () => {
         <Button variant="contained" type="submit" fullWidth>
           Login
         </Button>
+
+        <Divider />
+
+        <Button variant="contained" fullWidth onClick={() => passkeyLogin$.mutate({})}>
+          Login with Passkey
+        </Button>
+
+        {passkeyLogin$.isError && <ErrorAlert error={passkeyLogin$.error} />}
       </Stack>
     </form>
   )

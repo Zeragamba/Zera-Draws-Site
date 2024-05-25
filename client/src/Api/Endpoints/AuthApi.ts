@@ -1,13 +1,96 @@
+import * as webauthn from '@github/webauthn-json/browser-ponyfill'
 import z from 'zod'
 
 import { UserData } from '../../Models'
 import { authTokenStore } from '../AuthTokenStore'
 import { isServerApiError } from '../Errors'
-import { UserDataSchema, UserResSchema } from '../Schemas'
+import {
+  PasskeyCreateChallengeSchema,
+  PasskeyData,
+  PasskeyListResSchema,
+  PasskeyLoginChallengeSchema,
+  PasskeyResSchema,
+  UserDataSchema,
+  UserResSchema,
+} from '../Schemas'
 import { ServerApi } from '../ServerApi'
 
 
 class AuthApi extends ServerApi {
+  public passkeys = {
+    login: async (): Promise<UserData> => {
+      console.info('Starting passkey login')
+      const challengeData = await this.get('/login/passkey', {
+        parseResData: (data) => PasskeyLoginChallengeSchema.parse(data),
+      })
+
+      console.debug('Received challenge from server')
+      const options = webauthn.parseRequestOptionsFromJSON({ publicKey: challengeData })
+
+      console.info('Requesting passkey login')
+      const publicKeyCredential = await webauthn.get(options)
+
+      const { user, auth_token } = await this.post('/login/passkey', {
+        data: {
+          challenge: challengeData.challenge,
+          publicKeyCredential: publicKeyCredential,
+        },
+        parseResData: (data) => {
+          return z.object({ user: UserDataSchema, auth_token: z.string() }).parse(data)
+        },
+      })
+
+      authTokenStore.authToken = auth_token
+
+      return user
+    },
+
+    register: async (passkey: Omit<PasskeyData, 'id'>): Promise<PasskeyData> => {
+      const challengeData = await this.get('/user/me/passkey/new', {
+        params: { passkey },
+        parseResData: (data) => PasskeyCreateChallengeSchema.parse(data),
+      })
+
+      const options = webauthn.parseCreationOptionsFromJSON({ publicKey: challengeData })
+
+      return this.post('/user/me/passkey', {
+        data: {
+          passkey: passkey,
+          challenge: challengeData.challenge,
+          publicKeyCredential: await webauthn.create(options),
+        },
+        parseResData: (data) => PasskeyResSchema
+          .transform((data) => data.passkey)
+          .parse(data),
+      })
+    },
+
+    list: () => {
+      return this.get('/user/me/passkey', {
+        parseResData: (data) => PasskeyListResSchema
+          .transform((data) => data.passkeys)
+          .parse(data),
+      })
+    },
+
+    update: (passkey: PasskeyData) => {
+      return this.put(`/user/me/passkey/${passkey.id}`, {
+        data: { passkey },
+        parseResData: (data) => PasskeyResSchema
+          .transform((data) => data.passkey)
+          .parse(data),
+      })
+    },
+
+    remove: (passkey: PasskeyData) => {
+      return this.delete(`/user/me/passkey/${passkey.id}`, {
+        parseResData: (data) => PasskeyResSchema
+          .transform((data) => data.passkey)
+          .parse(data),
+      })
+    },
+  }
+
   public async logout(): Promise<void> {
     await this.post('/logout', {
       parseResData: (data) => {

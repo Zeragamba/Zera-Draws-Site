@@ -5,6 +5,7 @@ import { GalleryData, TagData } from '../Models'
 export const queryKeys = createQueryKeyStore({
   auth: {
     currentUser: null,
+    passkeys: null,
   },
   tags: {
     all: null,
