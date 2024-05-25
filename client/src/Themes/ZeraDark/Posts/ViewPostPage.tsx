@@ -1,13 +1,12 @@
 import { FC } from 'react'
 
-import { ParamsPostProvider } from '../../../Contexts'
-import { LoadingPage } from '../../BaseTheme'
+import { DefaultViewPostPage } from '../../BaseTheme'
 import { ViewPost } from '../Components'
 
-export const ViewPostPage: FC = () => {
-  return (
-    <ParamsPostProvider renderPending={<LoadingPage />}>
-      <ViewPost />
-    </ParamsPostProvider>
-  )
-}
+export const ViewPostPage: FC = () => (
+  <DefaultViewPostPage
+    slots={{
+      ViewPost,
+    }}
+  />
+)

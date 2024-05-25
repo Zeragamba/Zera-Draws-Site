@@ -22,7 +22,6 @@ export abstract class ServerApi {
       let { headers } = config
 
       if (authToken) {
-        console.debug('User logged in, adding AuthToken')
         headers = {
           ...headers,
           'Authorization': `Bearer ${authToken}`,

@@ -1,7 +1,6 @@
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { Box, SxProps, Typography } from '@mui/material'
 import { FC, MouseEvent, MouseEventHandler, ReactNode, useMemo } from 'react'
-import { Link } from 'react-router-dom'
 
 import { useGalleryContext } from './GalleryContext'
 import { useInViewport } from '../../../../Hooks'
@@ -76,12 +75,14 @@ export const GalleryItem: FC<GalleryItemProps> = ({
   )
 
   return (
-    <Box sx={ItemStyles} ref={wrapperRef} onClick={onItemClick}>
-      {linkTo ? (
-        <Link to={linkTo} className="image" onClick={onItemClick}>{imgEle}</Link>
-      ) : (
-        <div className="image">{imgEle}</div>
-      )}
+    <Box
+      component={linkTo ? 'a' : 'div'}
+      href={linkTo}
+      sx={ItemStyles}
+      ref={wrapperRef}
+      onClick={onItemClick}
+    >
+      <div className="image">{imgEle}</div>
 
       {!released && <PrivateMarker />}
 
