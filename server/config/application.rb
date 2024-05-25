@@ -41,9 +41,8 @@ module ZeraDraws
     config.api_only = true
 
     config.hosts << "server"
+    # config.hosts << "router"
     config.hosts << "localhost"
-    config.hosts << /(.*\.)?zeragamba\.(ca|com|art)/
-    config.hosts << /.*\.ngrok\.io/
 
     config.autoload_paths << 'app/views'
     config.autoload_paths << 'app/lib'
