@@ -25,9 +25,9 @@ services:
     environment:
       RAILS_ENV: "${APP_ENV}"
 
-      CLIENT_URL: "${APP_URL}"
-      SERVER_URL: "${APP_URL}/api"
-      IMAGES_URL: "${APP_URL}/images"
+      APP_HOST: "${APP_HOST}"
+      APP_URL: "${APP_URL}"
+      APP_NAME: "${APP_NAME}"
 
       DB_HOST: db # internal docker host
       DB_PORT: 5432
