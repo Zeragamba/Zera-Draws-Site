@@ -14,11 +14,12 @@ export const SocialsGroup: FC<SocialsGroupProps> = ({
   iconsOnly,
 }) => {
   const socials$ = useSocialPlatforms$()
-  const socials = socials$.data || {}
+  const socials = Object.entries(socials$.data || {})
+    .filter(([ _, url ]) => url.trim() !== '')
 
   return (
     <SidebarGroup>
-      {Object.entries(socials).map(([ name, url ]) => (
+      {socials.map(([ name, url ]) => (
         <NavItem
           key={name}
           adornments={{ left: <SocialLogo platform={name as SocialPlatform} /> }}
