@@ -9,7 +9,7 @@ CUR_DEPLOY_SHA=$(git rev-parse HEAD)
 echo "Deploying: $LAST_DEPLOY_SHA -> $CUR_DEPLOY_SHA"
 
 echo "--- Rebuilding containers ---"
-#docker compose -f docker-compose.production.yml build
+docker compose -f docker-compose.production.yml build
 
 CLIENT_CHANGED=$(git diff --quiet $LAST_DEPLOY_SHA $CUR_DEPLOY_SHA -- client && echo false || echo true)
 echo "client changed: $CLIENT_CHANGED"
