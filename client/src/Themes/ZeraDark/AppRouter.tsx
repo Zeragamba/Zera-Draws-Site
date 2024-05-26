@@ -5,14 +5,14 @@ import { MainLayout } from './Layouts'
 import { LatestPostPage, ViewPostPage } from './Posts'
 import {
   AboutPage,
-  AdminLayout,
-  AllPostsGalleryPage,
+  AdminLayout, AllPostsGalleryPage,
   ArchivePage,
   EditAboutPage,
   EditPostPage,
   EditPostsPage,
   EditSocialsPage,
   EditTagsPage,
+  FeaturedPostsGallery,
   LoginPage,
   MetricsPage,
   NewPostPage,
@@ -25,8 +25,9 @@ export const appRouter = createBrowserRouter([
     path: '/',
     element: <MainLayout />,
     children: [
-      { path: '/', element: <AllPostsGalleryPage /> },
+      { path: '/', element: <FeaturedPostsGallery /> },
 
+      { path: 'all', element: <AllPostsGalleryPage /> },
       { path: 'latest', element: <LatestPostPage /> },
       { path: 'archive', element: <ArchivePage /> },
 

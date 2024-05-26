@@ -130,12 +130,12 @@ export const Sidebar: FC<SidebarProps> = ({
             <>
               <SidebarGroup>
                 <NavItem
-                  label={'All'}
+                  label={'Featured'}
                   to={'/'}
                 />
                 <NavItem
-                  label={'Featured'}
-                  to={'/tag/featured'}
+                  label={'All'}
+                  to={'/all'}
                 />
                 <NavItem
                   label={'Latest'}
