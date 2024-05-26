@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig, Method } from 'axios'
 import { SERVER_URL } from '../config'
 import { PostData } from './models/PostData'
 import { logger } from './Logger'
+import { TagData } from './models/TagData'
 
 const apiClient = axios.create({
   baseURL: SERVER_URL,
@@ -21,6 +22,19 @@ export function getPost(postId: string): Promise<PostData> {
     .then(res => res.post)
 }
 
+export function getTag(tagId: string): Promise<TagData> {
+  type Response = { tag: TagData }
+
+  return request<Response>('GET', `/tag/${tagId}`)
+    .then(res => res.tag)
+}
+
+export function getTaggedPosts(tagId: string): Promise<PostData[]> {
+  type Response = { posts: PostData[] }
+
+  return request<Response>('GET', `/tag/${tagId}/posts`)
+    .then(res => res.posts)
+}
 
 export function getFirstPost(): Promise<PostData> {
   type Response = { post: PostData }
@@ -29,11 +43,9 @@ export function getFirstPost(): Promise<PostData> {
     .then(res => res.post)
 }
 
-
 export function getLatestPost(): Promise<PostData> {
   type Response = { post: PostData }
 
   return request<Response>('GET', `/post/latest`)
     .then(res => res.post)
 }
-

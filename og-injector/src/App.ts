@@ -3,7 +3,7 @@ import 'express-async-errors'
 
 import { CLIENT_DIR, CLIENT_URL, LOG_DIR, NODE_ENV, PORT, SERVER_URL } from '../config'
 import { getIndexHtml } from './Client'
-import { injectMeta, injectPostMeta } from './Injector'
+import { injectMeta, injectPostMeta, injectTagMeta } from './Injector'
 import { getLatestPost } from './ServerApi'
 import { logger } from './Logger'
 
@@ -29,6 +29,15 @@ app.get([
   logger.info('Request received for post')
   const indexHtml = await getIndexHtml()
   const updatedHtml = await injectPostMeta(indexHtml, req.params.postId)
+  res.send(updatedHtml)
+})
+
+app.get([
+  '/tag/:tagId',
+], async (req, res) => {
+  logger.info('Request received for tag')
+  const indexHtml = await getIndexHtml()
+  const updatedHtml = await injectTagMeta(indexHtml, req.params.tagId)
   res.send(updatedHtml)
 })
 
