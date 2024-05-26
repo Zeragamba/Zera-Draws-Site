@@ -1,8 +1,3 @@
-volumes:
-  vol-database:
-  vol-images:
-  vol-client:
-
 services:
   router:
     extends:
@@ -17,7 +12,7 @@ services:
       service: server
     volumes:
       - ./server:/opt/server:rw
-      - vol-images:/opt/images:rw
+      - ./.volumes/images:/opt/images:rw
     environment:
       CLIENT_URL: "${DEV_CLIENT_URL}"
       SERVER_URL: "${DEV_SERVER_URL}/api"
@@ -29,9 +24,9 @@ services:
       service: client
     volumes:
       - ./client:/opt/client:rw
+      - ./.volumes/client:/opt/client/dist:rw
       - "${SSL_CRT}:/opt/ssl/current.crt:ro"
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
-      - vol-client:/opt/client/dist:rw
     environment:
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt
@@ -47,7 +42,7 @@ services:
       service: og-injector
     volumes:
       - ./og-injector:/opt/og-injector:rw
-      - vol-client:/opt/client:ro
+      - ./.volumes/client:/opt/client:ro
     command: yarn watch
 
   db:
