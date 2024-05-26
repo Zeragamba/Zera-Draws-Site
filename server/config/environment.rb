@@ -16,6 +16,7 @@ PROJECT_ROOT = Rails.root.join('..')
 IMAGES_DIR = PROJECT_ROOT.join(ENV.fetch("IMAGES_DIR"))
 
 Rails.application.config.hosts << APP_HOST
+Rails.application.config.hosts << "server" # docker hostname used by OG-Injector
 
 # Initialize the Rails application.
 Rails.application.initialize!
