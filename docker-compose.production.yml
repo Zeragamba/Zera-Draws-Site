@@ -11,6 +11,7 @@ services:
     extends:
       file: docker-compose.shared.yml
       service: server
+    restart: always
 
   client:
     extends:
@@ -21,8 +22,10 @@ services:
     extends:
       file: docker-compose.shared.yml
       service: og-injector
+    restart: always
 
   db:
     extends:
       file: docker-compose.shared.yml
       service: db
+    restart: always
