@@ -1,72 +1,53 @@
-version: "3.9"
-
 services:
   router:
-    build: ./router
-    depends_on:
-      - server
-      - og-injector
-    volumes:
-      - ./router/conf.d:/etc/nginx/conf.d
-      - ./.volumes/ssl:/opt/ssl
-      - ./.volumes/images:/opt/images
-      - ./.volumes/client:/opt/client
+    extends:
+      file: docker-compose.shared.yml
+      service: router
     ports:
-      - "${NGINX_PORT}:443"
+      - "${DEV_SERVER_PORT}:443"
 
   server:
-    build: ./server
-    command: bin/rails s -p 3000 -b 0.0.0.0
+    extends:
+      file: docker-compose.shared.yml
+      service: server
     volumes:
-      - ./.volumes/client:/opt/client
-      - ./.volumes/images:/opt/images
-    depends_on:
-      - db
+      - ./server:/opt/server:rw
+      - ./.volumes/images:/opt/images:rw
     environment:
-      RAILS_ENV: ${RAILS_ENV}
-      SERVER_URL: "https://${NGINX_HOST}/api"
-      IMAGES_URL: "https://${NGINX_HOST}/images"
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: "${DB_NAME}"
-      DB_USER: "${DB_USER}"
-      DB_PASS: "${DB_PASS}"
-      ADMIN_USER: "${ADMIN_USER}"
-      ADMIN_EMAIL: "${ADMIN_EMAIL}"
-      ADMIN_PASS: "${ADMIN_PASS}"
-      TOKEN_SECRET: "${TOKEN_SECRET}"
-      IMAGES_DIR: "/opt/images"
-      CLIENT_DIR: "/opt/client"
+      CLIENT_URL: "${DEV_CLIENT_URL}"
+      SERVER_URL: "${DEV_SERVER_URL}/api"
+      IMAGES_URL: "${DEV_SERVER_URL}/images"
 
   client:
-    profiles: [ "build" ]
-    build: ./client
-    working_dir: /opt/client
+    extends:
+      file: docker-compose.shared.yml
+      service: client
     volumes:
-      - ./.volumes/client:/opt/client/build
+      - ./client:/opt/client:rw
+      - ./.volumes/client:/opt/client/dist:rw
+      - "${SSL_CRT}:/opt/ssl/current.crt:ro"
+      - "${SSL_KEY}:/opt/ssl/current.key:ro"
     environment:
-      NODE_ENV: ${NODE_ENV}
-      REACT_APP_ENV: ${REACT_APP_ENV}
-      REACT_APP_SERVER_URL: "https://${NGINX_HOST}/api"
-    command: yarn build
+      HTTPS: true
+      SSL_CRT_FILE: /opt/ssl/current.crt
+      SSL_KEY_FILE: /opt/ssl/current.key
+      REACT_APP_SERVER_URL: "${DEV_SERVER_URL}/api"
+    command: yarn start
+    ports:
+      - "${DEV_CLIENT_PORT}:3000"
 
   og-injector:
-    build: ./og-injector
-    working_dir: /opt/og-injector
+    extends:
+      file: docker-compose.shared.yml
+      service: og-injector
     volumes:
-      - ./og-injector:/opt/og-injector
-      - ./.volumes/client:/opt/client
-    environment:
-      NODE_ENV: ${NODE_ENV}
-      SERVER_URL: "http://server:3000"
-      CLIENT_URL: "https://${NGINX_HOST}"
-      CLIENT_DIR: "/opt/client"
+      - ./og-injector:/opt/og-injector:rw
+      - ./.volumes/client:/opt/client:ro
+    command: yarn watch
 
   db:
-    image: postgres:15
-    volumes:
-      - ./.volumes/db:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: "${DB_NAME}"
-      POSTGRES_USER: "${DB_USER}"
-      POSTGRES_PASSWORD: "${DB_PASS}"
+    extends:
+      file: docker-compose.shared.yml
+      service: db
+    ports:
+      - "${DEV_DB_PORT}:5432"

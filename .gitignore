@@ -1,10 +1,12 @@
 .idea/**/*.iml
 
-.volumes/
+.yarn/
 import/
+node_modules/
 
 vendor/
 
 .env
+.volumes/
 
 !/**/.keep

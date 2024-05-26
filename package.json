@@ -1,0 +1,13 @@
+{
+  "name": "zera-draws-site",
+  "packageManager": "yarn@4.2.2",
+  "private": true,
+  "scripts": {
+    "start": "docker compose up",
+    "start:prod": "docker compose -f docker-compose.production.yml up",
+    "build": "docker compose build",
+    "db:create": "docker compose run server rails db:create db:schema:load",
+    "db:migrate": "docker compose run server rails db:migrate",
+    "db:rollback": "docker compose run server rails db:rollback"
+  }
+}

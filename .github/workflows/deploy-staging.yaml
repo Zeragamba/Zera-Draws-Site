@@ -1,0 +1,22 @@
+name: Deploy - Prod
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy-prod:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run remote script
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: zeragamba.art
+          port: 22
+          username: zeradraws
+          key: ${{ secrets.DEPLOY_KEY }}
+          script_stop: true
+          script: |
+            cd /opt/apps/staging.zeragamba.art
+            git pull
+            ./deploy.sh

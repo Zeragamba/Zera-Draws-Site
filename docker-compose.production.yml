@@ -1,0 +1,28 @@
+services:
+  router:
+    extends:
+      file: docker-compose.shared.yml
+      service: router
+    ports:
+      - "127.0.0.1:${APP_PORT}:443"
+    restart: always
+
+  server:
+    extends:
+      file: docker-compose.shared.yml
+      service: server
+
+  client:
+    extends:
+      file: docker-compose.shared.yml
+      service: client
+
+  og-injector:
+    extends:
+      file: docker-compose.shared.yml
+      service: og-injector
+
+  db:
+    extends:
+      file: docker-compose.shared.yml
+      service: db
