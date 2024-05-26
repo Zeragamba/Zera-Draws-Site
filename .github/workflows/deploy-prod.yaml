@@ -19,5 +19,6 @@ jobs:
           script_stop: true
           script: |
             cd /opt/apps/zeragamba.art
-            git pull
+            git fetch
+            git checkout $GITHUB_SHA
             ./deploy.sh
