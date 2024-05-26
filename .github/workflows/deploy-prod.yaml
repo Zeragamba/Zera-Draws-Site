@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Run remote script
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
         with:
           host: zeragamba.art
           port: 22
@@ -20,5 +22,5 @@ jobs:
           script: |
             cd /opt/apps/zeragamba.art
             git fetch
-            git checkout $GITHUB_SHA
+            git checkout $DEPLOY_SHA
             ./deploy.sh
