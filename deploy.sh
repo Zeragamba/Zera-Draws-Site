@@ -18,8 +18,13 @@ if [[ $CLIENT_CHANGED == "true" ]]; then
   docker compose -f docker-compose.production.yml up client
 fi
 
-echo "--- Restarting containers ---"
+echo "--- Stopping containers ---"
 docker compose -f docker-compose.production.yml down
+
+echo "--- Migrating data ---"
+.migrations/001_upgrade-postgres-16_up.sh
+
+echo "--- Starting containers ---"
 docker compose -f docker-compose.production.yml up router -d
 
 echo "=== All Done ==="

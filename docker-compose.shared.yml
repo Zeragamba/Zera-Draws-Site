@@ -55,9 +55,9 @@ services:
       CLIENT_DIR: "/opt/client"
 
   db:
-    image: postgres:15
+    image: postgres:16
     volumes:
-      - ./.volumes/database:/var/lib/postgresql/data:rw
+      - ./.volumes/db/pg16:/var/lib/postgresql/data:rw
     environment:
       POSTGRES_DB: "${DB_NAME}"
       POSTGRES_USER: "${DB_USER}"
