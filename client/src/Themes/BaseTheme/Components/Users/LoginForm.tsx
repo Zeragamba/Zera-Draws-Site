@@ -1,5 +1,5 @@
 import { Button, Divider, Paper, Stack, TextField, Typography } from '@mui/material'
-import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, FC, FormEvent, useState } from 'react'
 
 import { isServerApiError } from '../../../../Api'
 import { usePasskeyLogin$, usePasswordLogin$ } from '../../../../Queries'
@@ -15,10 +15,6 @@ export const LoginForm: FC = () => {
   const passkeyLogin$ = usePasskeyLogin$()
   const passwordLogin$ = usePasswordLogin$()
   const [ form, setForm ] = useState<LoginFormState>({ username: '', password: '', error: null })
-
-  useEffect(() => {
-    passkeyLogin$.mutate({})
-  }, [])
 
   const handleChange = (field: keyof LoginFormState) => {
     return (event: ChangeEvent<HTMLInputElement>) => {
