@@ -1,7 +1,7 @@
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
 
 import { queryKeys } from './QueryKeys'
-import { authApiClient, ServerApiError } from '../Api'
+import { authApiClient, RegisterPassKeyParams, ServerApiError } from '../Api'
 import { PasskeyData } from '../Api/Schemas'
 import { queryClient } from '../App/QueryClient'
 import { UserData } from '../Models'
@@ -48,11 +48,17 @@ export const usePasskeyLogin$ = () => {
   })
 }
 
-export const useRegisterPasskey$ = (): UseMutationResult<PasskeyData, unknown, Omit<PasskeyData, 'id'>> => {
+export const useCreatePasskey$ = (): UseMutationResult<Omit<RegisterPassKeyParams, 'passkey'>, unknown, object> => {
+  return useMutation({
+    mutationFn: async () => authApiClient.passkeys.create(),
+  })
+}
+
+export const useRegisterPasskey$ = (): UseMutationResult<PasskeyData, unknown, RegisterPassKeyParams> => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (passkey) => authApiClient.passkeys.register(passkey),
+    mutationFn: async (params) => authApiClient.passkeys.register(params),
     onSuccess: (savedPasskey) => {
       queryClient.setQueryData(queryKeys.auth.passkeys.queryKey, (passkeys: PasskeyData[] = []) => {
         return [ ...passkeys, savedPasskey ]

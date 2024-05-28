@@ -1,3 +1,4 @@
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
@@ -7,61 +8,30 @@ import { Controller, useForm } from 'react-hook-form'
 
 import { PasskeyData, PasskeyDataSchema } from '../../../../../Api/Schemas'
 import { muiField } from '../../../../../Forms'
-import { useRegisterPasskey$, useUpdatePasskey$ } from '../../../../../Queries'
+import { FontAwesomeIcon } from '../../../../../Lib'
 import { ErrorAlert } from '../../Shared'
 
-type EditPasskeyFormProps = {
-  mode: 'edit'
+type PasskeyFormProps = {
+  loading?: boolean
   passkey: PasskeyData
-  onSaved: (passkey: PasskeyData) => void
+  onSubmit: (passkey: PasskeyData) => (void | Promise<void>)
 }
-
-type CreatePasskeyFormProps = {
-  mode: 'create'
-  passkey?: never
-  onSaved: (passkey: PasskeyData) => void
-}
-
-export type PasskeyFormProps =
-  | EditPasskeyFormProps
-  | CreatePasskeyFormProps
 
 export const PasskeyForm: FC<PasskeyFormProps> = ({
-  mode,
+  loading,
   passkey,
-  onSaved,
+  onSubmit,
 }) => {
-  const registerPasskey$ = useRegisterPasskey$()
-  const updatePasskey$ = useUpdatePasskey$()
-
   const { control, handleSubmit, formState: { errors } } = useForm<PasskeyData>({
     resolver: zodResolver(PasskeyDataSchema.omit({ createdAt: true })),
-    defaultValues: {
-      id: '(NEW)',
-      name: '',
-      ...passkey,
-    },
+    defaultValues: { ...passkey },
   })
 
-  const onSubmit = handleSubmit(async (passkey) => {
-    console.log({ mode })
-    try {
-      switch (mode) {
-        case 'edit':
-          console.log(`Updating passkey ${passkey.name}`)
-          return onSaved(await updatePasskey$.mutateAsync(passkey))
-        case 'create':
-          console.log(`Creating passkey ${passkey.name}`)
-          return onSaved(await registerPasskey$.mutateAsync(passkey))
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  })
+  const onFormSubmit = handleSubmit(onSubmit)
 
   return (
-    <form onSubmit={onSubmit}>
-      <Stack gap={2} padding={2}>
+    <form onSubmit={onFormSubmit}>
+      <Stack gap={2} paddingTop={2}>
         {errors.root && <ErrorAlert error={errors.root.message} />}
         <Controller
           control={control}
@@ -75,25 +45,21 @@ export const PasskeyForm: FC<PasskeyFormProps> = ({
               label="Passkey Name"
               name="passkey-name"
               autoComplete="off"
+              disabled={loading}
             />
           )}
         />
 
         {errors.name?.message && <span>{errors.name.message}</span>}
 
-        {mode === 'edit' && (
-          <>
-            <Button variant="contained" type="submit" onClick={onSubmit}>Save Key</Button>
-            {updatePasskey$.isError && <ErrorAlert error={updatePasskey$.error} />}
-          </>
-        )}
-
-        {mode === 'create' && (
-          <>
-            <Button variant="contained" type="submit" onClick={onSubmit}>Create Key</Button>
-            {registerPasskey$.isError && <ErrorAlert error={registerPasskey$.error} />}
-          </>
-        )}
+        <Button
+          disabled={loading}
+          startIcon={loading && <FontAwesomeIcon icon={faSpinner} spin />}
+          variant="contained"
+          type="submit"
+        >
+          Save Key
+        </Button>
       </Stack>
     </form>
   )

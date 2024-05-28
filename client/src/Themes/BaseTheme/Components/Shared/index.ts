@@ -1,4 +1,3 @@
-export * from './Dialog'
 export * from './Spinner'
 export * from './ErrorAlert'
 export * from './InfiniteScroll'

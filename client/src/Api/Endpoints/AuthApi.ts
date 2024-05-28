@@ -1,4 +1,5 @@
 import * as webauthn from '@github/webauthn-json/browser-ponyfill'
+import { RegistrationPublicKeyCredential } from '@github/webauthn-json/browser-ponyfill'
 import z from 'zod'
 
 import { UserData } from '../../Models'
@@ -15,6 +16,11 @@ import {
 } from '../Schemas'
 import { ServerApi } from '../ServerApi'
 
+export interface RegisterPassKeyParams {
+  passkey: PasskeyData
+  challenge: string
+  publicKeyCredential: RegistrationPublicKeyCredential
+}
 
 class AuthApi extends ServerApi {
   public passkeys = {
@@ -45,20 +51,21 @@ class AuthApi extends ServerApi {
       return user
     },
 
-    register: async (passkey: Omit<PasskeyData, 'id'>): Promise<PasskeyData> => {
+    create: async (): Promise<Omit<RegisterPassKeyParams, 'passkey'>> => {
       const challengeData = await this.get('/user/me/passkey/new', {
-        params: { passkey },
         parseResData: (data) => PasskeyCreateChallengeSchema.parse(data),
       })
 
       const options = webauthn.parseCreationOptionsFromJSON({ publicKey: challengeData })
+      return {
+        challenge: challengeData.challenge,
+        publicKeyCredential: await webauthn.create(options),
+      }
+    },
 
+    register: async ({ passkey, challenge, publicKeyCredential }: RegisterPassKeyParams): Promise<PasskeyData> => {
       return this.post('/user/me/passkey', {
-        data: {
-          passkey: passkey,
-          challenge: challengeData.challenge,
-          publicKeyCredential: await webauthn.create(options),
-        },
+        data: { passkey, challenge, publicKeyCredential },
         parseResData: (data) => PasskeyResSchema
           .transform((data) => data.passkey)
           .parse(data),

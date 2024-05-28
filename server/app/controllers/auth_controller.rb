@@ -25,9 +25,6 @@ class AuthController < ApplicationController
     Rails.logger.info("Starting challenge of passkey for user")
     user = Current.user
 
-    passkey = UserPasskey.new(name: passkey_params[:name], user: user)
-    raise ActiveRecord::RecordInvalid.new(passkey) if passkey.invalid?
-
     if !user.webauthn_id
       user.update!(webauthn_id: WebAuthn.generate_user_id)
     end

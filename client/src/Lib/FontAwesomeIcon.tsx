@@ -1,5 +1,5 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { SvgIcon } from '@mui/material'
+import { keyframes, SvgIcon } from '@mui/material'
 import { forwardRef } from 'react'
 
 type FontAwesomeSvgIconProps = {
@@ -9,16 +9,28 @@ type FontAwesomeSvgIconProps = {
   fixedWidth?: boolean
 };
 
+const spinKeyframes = keyframes`
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`
+
 export const FontAwesomeIcon = forwardRef<SVGSVGElement, FontAwesomeSvgIconProps>(
   function FontAwesomeIcon(props, ref) {
-    const { className, icon } = props
+    const { className, icon, spin = false } = props
 
     const {
-      icon: [ width, height, , , svgPathData ],
+      icon: [ width, height, _ligatures, _unicode, svgPathData ],
     } = icon
 
     return (
-      <SvgIcon ref={ref} viewBox={`0 0 ${width} ${height}`} className={className}>
+      <SvgIcon
+        ref={ref}
+        viewBox={`0 0 ${width} ${height}`}
+        className={className}
+        sx={[
+          spin && { animation: `${spinKeyframes} 1s infinite linear` },
+        ]}
+      >
         {typeof svgPathData === 'string' ? (
           <path d={svgPathData} />
         ) : (

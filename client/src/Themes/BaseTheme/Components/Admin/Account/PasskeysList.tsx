@@ -8,7 +8,7 @@ import { FC, useState } from 'react'
 
 import { PasskeyForm } from './PasskeyForm'
 import { PasskeyData } from '../../../../../Api/Schemas'
-import { useRemovePasskey$, useUserPasskeys$ } from '../../../../../Queries'
+import { useRemovePasskey$, useUpdatePasskey$, useUserPasskeys$ } from '../../../../../Queries'
 import { ErrorAlert, LoadingSpinner } from '../../Shared'
 
 interface PasskeysListSlots {
@@ -46,12 +46,26 @@ interface PasskeyListItemProps {
 export const PasskeyListItem: FC<PasskeyListItemProps> = ({
   passkey,
 }) => {
-  const removePasskey = useRemovePasskey$()
+  const removePasskey$ = useRemovePasskey$()
   const [ isRemoving, setIsRemoving ] = useState<boolean>(false)
+
+  const updatePasskey$ = useUpdatePasskey$()
   const [ isEditing, setIsEditing ] = useState<boolean>(false)
 
+  const onRemoveClick = () => {
+    removePasskey$.mutateAsync(passkey)
+      .then(() => setIsEditing(false))
+      .catch((e) => console.error(e))
+  }
+
+  const onFormSubmit = (updatedPasskey: PasskeyData) => {
+    updatePasskey$.mutateAsync(updatedPasskey)
+      .then(() => setIsEditing(false))
+      .catch((e) => console.error(e))
+  }
+
   return (
-    <Paper sx={{ padding: 2 }}>
+    <Paper sx={{ padding: 2 }} variant={'outlined'}>
       <Stack direction="row" gap={2}>
         <Stack flexGrow={1}>
           <Typography>{passkey.name}</Typography>
@@ -65,25 +79,27 @@ export const PasskeyListItem: FC<PasskeyListItemProps> = ({
       </Stack>
 
       <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
-        <PasskeyForm
-          mode={'edit'}
-          passkey={passkey}
-          onSaved={() => setIsEditing(false)}
-        />
+        <Stack gap={2}>
+          <PasskeyForm passkey={passkey} onSubmit={onFormSubmit} />
+          {updatePasskey$.isError && <ErrorAlert error={updatePasskey$.error} />}
+        </Stack>
       </Dialog>
 
       <Dialog open={isRemoving} onClose={() => setIsRemoving(false)}>
         <Stack gap={2} padding={2}>
           <Typography>Are you sure you want to remove the passkey {passkey.name}?</Typography>
 
+          {removePasskey$.isError && <ErrorAlert error={removePasskey$.error} />}
+
           <Stack direction="row" gap={2}>
             <Button
               fullWidth
               variant={'contained'}
-              onClick={() => removePasskey.mutate(passkey)}
+              onClick={onRemoveClick}
             >
               Remove
             </Button>
+
             <Button
               fullWidth
               variant={'contained'}
