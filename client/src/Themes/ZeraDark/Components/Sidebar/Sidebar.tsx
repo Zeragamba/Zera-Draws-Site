@@ -131,7 +131,7 @@ export const Sidebar: FC<SidebarProps> = ({
               <SidebarGroup>
                 <NavItem
                   label={'Featured'}
-                  to={'/'}
+                  to={'/featured'}
                 />
                 <NavItem
                   label={'All'}

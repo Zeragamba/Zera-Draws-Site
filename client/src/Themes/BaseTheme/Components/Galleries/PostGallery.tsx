@@ -13,6 +13,8 @@ import { InfiniteScroll } from '../Shared'
 export interface PostGalleryProps extends Omit<GalleryConfig, 'rowHeight'> {
   title?: string
   rowHeight?: number
+  maxItems?: number
+  maxRows?: number
   postsQuery: UseInfiniteQueryResult<PostData[]>
 }
 
@@ -20,6 +22,8 @@ export const PostGallery: FC<PostGalleryProps> = ({
   title,
   postsQuery,
   rowHeight = 250,
+  maxItems = Infinity,
+  maxRows,
   ...galleryConfig
 }) => {
   const navigate = useNavigate()
@@ -41,6 +45,7 @@ export const PostGallery: FC<PostGalleryProps> = ({
     navigate(getPostPath(post))
   }
 
+
   let content: ReactNode
   if (postsQuery.isError) {
     console.error(postsQuery.error)
@@ -49,15 +54,16 @@ export const PostGallery: FC<PostGalleryProps> = ({
     content = <Paper>Loading...</Paper>
   } else {
     const posts = postsQuery.data
+    const hasNextPage = (posts.length <= maxItems && postsQuery.hasNextPage)
 
     content = (
       <InfiniteScroll
         fetchingNextPage={postsQuery.isFetchingNextPage}
-        hasNextPage={postsQuery.hasNextPage || false}
+        hasNextPage={hasNextPage}
         fetchNextPage={onFetchNextPage}
       >
-        <GalleryWrapper rowHeight={rowHeight} {...galleryConfig}>
-          {posts.map(post => (
+        <GalleryWrapper rowHeight={rowHeight} {...galleryConfig} maxRows={maxRows}>
+          {posts.slice(0, maxItems).map(post => (
             <GalleryItem
               key={post.id}
               image={post.images[0]}

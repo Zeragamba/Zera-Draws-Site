@@ -2,10 +2,12 @@ import React from 'react'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 
 import { MainLayout } from './Layouts'
+import { HomePage } from './Pages/HomePage'
 import { LatestPostPage, ViewPostPage } from './Posts'
 import {
   AboutPage,
-  AdminLayout, AllPostsGalleryPage,
+  AdminLayout,
+  AllPostsGalleryPage,
   ArchivePage,
   EditAboutPage,
   EditPostPage,
@@ -25,9 +27,10 @@ export const appRouter = createBrowserRouter([
     path: '/',
     element: <MainLayout />,
     children: [
-      { path: '/', element: <FeaturedPostsGallery /> },
+      { path: '/', element: <HomePage /> },
 
       { path: 'all', element: <AllPostsGalleryPage /> },
+      { path: 'featured', element: <FeaturedPostsGallery /> },
       { path: 'latest', element: <LatestPostPage /> },
       { path: 'archive', element: <ArchivePage /> },
 

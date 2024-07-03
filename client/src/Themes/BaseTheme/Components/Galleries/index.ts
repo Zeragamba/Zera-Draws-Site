@@ -1,3 +1,4 @@
+export * from './AllPostsGallery'
 export * from './FeaturedPostsGallery'
 export * from './GalleryContext'
 export * from './GalleryItem'
