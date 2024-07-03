@@ -1,8 +1,7 @@
 name: Deploy - Prod
 on:
-  push:
-    branches:
-      - stable
+  release:
+    types: [ published ]
 jobs:
   deploy-prod:
     name: Deploy to production
