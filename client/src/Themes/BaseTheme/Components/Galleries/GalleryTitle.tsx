@@ -2,6 +2,7 @@ import { Typography } from '@mui/material'
 import { FC, ReactNode } from 'react'
 
 interface GalleryTitleProps {
+  linkTo?: string
   children: ReactNode
 }
 

@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 
+import { GalleryTitle } from './GalleryTitle'
 import { PostGallery } from './PostGallery'
 import { useTag$, useTaggedPosts$ } from '../../../../Queries'
 
@@ -12,5 +13,11 @@ export const TaggedPostsGallery: FC<TagGalleryDisplayProps> = ({
 }) => {
   const { data: tag } = useTag$({ tagId })
   const posts$ = useTaggedPosts$({ tagId })
-  return <PostGallery postsQuery={posts$} title={tag?.name || '...'} tagSlug={tag?.slug} />
+  
+  return (
+    <>
+      <GalleryTitle>{tag?.name || '...'}</GalleryTitle>
+      <PostGallery postsQuery={posts$} tagSlug={tag?.slug} />
+    </>
+  )
 }

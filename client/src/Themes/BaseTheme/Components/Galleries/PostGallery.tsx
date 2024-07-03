@@ -1,17 +1,15 @@
-import { Paper } from '@mui/material'
+import { Alert, LinearProgress, Paper } from '@mui/material'
 import { UseInfiniteQueryResult } from '@tanstack/react-query'
-import { FC, MouseEvent, ReactNode } from 'react'
+import { FC, MouseEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { GalleryConfig } from './GalleryContext'
 import { GalleryItem } from './GalleryItem'
-import { GalleryTitle } from './GalleryTitle'
 import { GalleryWrapper } from './GalleryWrapper'
 import { PostData } from '../../../../Models'
 import { InfiniteScroll } from '../Shared'
 
 export interface PostGalleryProps extends Omit<GalleryConfig, 'rowHeight'> {
-  title?: string
   rowHeight?: number
   maxItems?: number
   maxRows?: number
@@ -19,7 +17,6 @@ export interface PostGalleryProps extends Omit<GalleryConfig, 'rowHeight'> {
 }
 
 export const PostGallery: FC<PostGalleryProps> = ({
-  title,
   postsQuery,
   rowHeight = 250,
   maxItems = Infinity,
@@ -45,44 +42,34 @@ export const PostGallery: FC<PostGalleryProps> = ({
     navigate(getPostPath(post))
   }
 
-
-  let content: ReactNode
   if (postsQuery.isError) {
     console.error(postsQuery.error)
-    content = <Paper>Error loading gallery. :(</Paper>
+    return <Alert severity={'error'}>Error loading gallery. :(</Alert>
   } else if (postsQuery.isPending) {
-    content = <Paper>Loading...</Paper>
-  } else {
-    const posts = postsQuery.data
-    const hasNextPage = (posts.length <= maxItems && postsQuery.hasNextPage)
-
-    content = (
-      <InfiniteScroll
-        fetchingNextPage={postsQuery.isFetchingNextPage}
-        hasNextPage={hasNextPage}
-        fetchNextPage={onFetchNextPage}
-      >
-        <GalleryWrapper rowHeight={rowHeight} {...galleryConfig} maxRows={maxRows}>
-          {posts.slice(0, maxItems).map(post => (
-            <GalleryItem
-              key={post.id}
-              image={post.images[0]}
-              date={post.date}
-              title={post.title}
-              released={post.released}
-              linkTo={getPostPath(post)}
-              onClick={(event) => onPostClick(event, post)}
-            />
-          ))}
-        </GalleryWrapper>
-      </InfiniteScroll>
-    )
+    return <Paper><LinearProgress /></Paper>
   }
+  const posts = postsQuery.data
+  const hasNextPage = (posts.length <= maxItems && postsQuery.hasNextPage)
 
   return (
-    <Paper>
-      {title && <GalleryTitle>{title}</GalleryTitle>}
-      {content}
-    </Paper>
+    <InfiniteScroll
+      fetchingNextPage={postsQuery.isFetchingNextPage}
+      hasNextPage={hasNextPage}
+      fetchNextPage={onFetchNextPage}
+    >
+      <GalleryWrapper rowHeight={rowHeight} {...galleryConfig} maxRows={maxRows}>
+        {posts.slice(0, maxItems).map(post => (
+          <GalleryItem
+            key={post.id}
+            image={post.images[0]}
+            date={post.date}
+            title={post.title}
+            released={post.released}
+            linkTo={getPostPath(post)}
+            onClick={(event) => onPostClick(event, post)}
+          />
+        ))}
+      </GalleryWrapper>
+    </InfiniteScroll>
   )
 }

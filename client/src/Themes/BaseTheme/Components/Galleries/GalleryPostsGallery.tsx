@@ -1,5 +1,6 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 
+import { GalleryTitle } from './GalleryTitle'
 import { PostGallery } from './PostGallery'
 import { useGallery$, useGalleryPosts$ } from '../../../../Queries'
 
@@ -12,5 +13,11 @@ export const GalleryPostsGallery: FC<GalleryDisplayProps> = ({
 }) => {
   const { data: gallery } = useGallery$({ galleryId: galleryId })
   const postsQuery = useGalleryPosts$({ galleryId: galleryId })
-  return <PostGallery postsQuery={postsQuery} title={gallery?.name || '...'} />
+
+  return (
+    <>
+      <GalleryTitle>{gallery?.name || '...'}</GalleryTitle>
+      <PostGallery postsQuery={postsQuery} />
+    </>
+  )
 }

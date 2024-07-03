@@ -5,5 +5,5 @@ import { useTaggedPosts$ } from '../../../../Queries'
 
 export const FeaturedPostsGallery: FC<Omit<PostGalleryProps, 'postsQuery'>> = (galleryProps) => {
   const posts$ = useTaggedPosts$({ tagId: 'featured' })
-  return <PostGallery postsQuery={posts$} title="Featured" {...galleryProps} />
+  return <PostGallery postsQuery={posts$} {...galleryProps} />
 }

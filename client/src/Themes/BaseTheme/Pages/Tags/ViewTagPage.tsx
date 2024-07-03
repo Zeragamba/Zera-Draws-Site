@@ -1,3 +1,4 @@
+import { Paper } from '@mui/material'
 import { FC } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
@@ -8,6 +9,8 @@ export const ViewTagPage: FC = () => {
   if (!params.tagId) return <Navigate to="/" />
 
   return (
-    <TaggedPostsGallery tagId={params.tagId} />
+    <Paper>
+      <TaggedPostsGallery tagId={params.tagId} />
+    </Paper>
   )
 }
