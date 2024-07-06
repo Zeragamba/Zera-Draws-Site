@@ -21,7 +21,6 @@ async fn main() {
         .fallback(get(get_fallback));
 
     let addr = config::get_app_socket();
-    println!("listening on {}", addr);
 
     match config::is_https_enabled() {
         Enabled => {
@@ -32,6 +31,7 @@ async fn main() {
                 .await
                 .unwrap();
 
+            println!("listening on https://{}", addr);
             axum_server::bind_rustls(addr, config)
                 .serve(app.into_make_service())
                 .await
@@ -39,6 +39,7 @@ async fn main() {
         }
 
         Disabled => {
+            println!("listening on http://{}", addr);
             axum_server::bind(addr)
                 .serve(app.into_make_service())
                 .await
@@ -48,10 +49,11 @@ async fn main() {
 }
 
 async fn get_fallback(req: Request<Body>) -> Response {
-    println!("-> GET {}", req.uri());
+    let uri = req.uri();
+    println!("-> GET {}", uri);
 
     Response::builder()
-        .status(StatusCode::INTERNAL_SERVER_ERROR)
-        .body(Body::from("Unexpected request"))
+        .status(StatusCode::NOT_FOUND)
+        .body(Body::from("Not Found"))
         .unwrap()
 }
