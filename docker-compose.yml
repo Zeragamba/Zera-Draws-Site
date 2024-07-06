@@ -45,6 +45,18 @@ services:
       - ./.volumes/client:/opt/client:ro
     command: yarn watch
 
+  og-injector-rust:
+    extends:
+      file: docker-compose.shared.yml
+      service: og-injector-rust
+    volumes:
+      - ./packages/og-injector-rust:/opt/og-injector:rw
+      - ./.volumes/client:/opt/client:ro
+    environment:
+      SSL_CRT: /opt/ssl/current.crt
+      SSL_KEY: /opt/ssl/current.key
+    command: yarn watch
+
   db:
     extends:
       file: docker-compose.shared.yml

@@ -3,12 +3,16 @@ services:
     build: ./router
     depends_on:
       - server
-      - og-injector
+      - og-injector-rust
     volumes:
       - ./.volumes/images:/opt/images:ro
       - ./.volumes/client:/opt/client:ro
       - "${SSL_CRT}:/opt/ssl/current.crt:ro"
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
+    develop:
+      watch:
+        - action: rebuild
+          path: ./router/nginx.conf
 
   server:
     build: ./server
@@ -53,6 +57,20 @@ services:
       SERVER_URL: "http://server:3000" # internal docker url
       CLIENT_URL: "${APP_URL}"
       CLIENT_DIR: "/opt/client"
+
+  og-injector-rust:
+    build: packages/og-injector-rust
+    volumes:
+      - ./.volumes/client:/opt/client:ro
+    environment:
+      NODE_ENV: "${APP_ENV}"
+      SERVER_URL: "http://server:3000" # internal docker url
+      CLIENT_URL: "${APP_URL}"
+      CLIENT_DIR: "/opt/client"
+    develop:
+      watch:
+        - action: rebuild
+          path: ./packages/og-injector-rust/src
 
   db:
     image: postgres:16
