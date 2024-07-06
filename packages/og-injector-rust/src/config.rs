@@ -39,9 +39,8 @@ pub fn get_injector_host() -> IpAddr {
     }
 }
 
-pub fn get_app_port() -> u16 {
-    let port = load_env_num("INJECTOR_PORT")
-        .unwrap_or(3000);
+pub fn get_injector_port() -> u16 {
+    let port = load_env_num("INJECTOR_PORT").unwrap_or(3000);
 
     println!("INJECTOR_PORT: {}", port);
 
@@ -51,8 +50,8 @@ pub fn get_app_port() -> u16 {
     }
 }
 
-pub fn get_app_socket() -> SocketAddr {
-    SocketAddr::new(get_injector_host(), get_app_port())
+pub fn get_injector_socket() -> SocketAddr {
+    SocketAddr::new(get_injector_host(), get_injector_port())
 }
 
 pub fn is_https_enabled() -> FeatureFlag {
@@ -67,34 +66,18 @@ pub fn is_https_enabled() -> FeatureFlag {
         .unwrap_or(FeatureFlag::Disabled)
 }
 
-pub fn get_certs_dir() -> PathBuf {
-    load_env_path("CERTS_DIR").unwrap_or_else(|| {
-        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-            .join("../../.certs")
-            .canonicalize()
-            .unwrap()
-            .join(".certs")
-    })
-}
-
 pub fn get_ssl_cert_path() -> PathBuf {
-    load_env_path("SSL_CRT").unwrap_or_else(|| get_certs_dir().join("current.crt"))
+    load_env_path("SSL_CRT").expect("The environment variable 'SSL_CRT' should be set")
 }
 
 pub fn get_ssl_key_path() -> PathBuf {
-    load_env_path("SSL_KEY").unwrap_or_else(|| get_certs_dir().join("current.crt"))
+    load_env_path("SSL_KEY").expect("The environment variable 'SSL_KEY' should be set")
 }
 
 pub fn client_dir() -> PathBuf {
-    load_env_path("CLIENT_DIR")
-        .expect("The environment variable 'CLIENT_DIR' should be set in '.env'")
+    load_env_path("CLIENT_DIR").expect("The environment variable 'CLIENT_DIR' should be set")
 }
 
-// pub fn client_url() -> Result<Url, ClientError> {
-//     let client_url = match env::var_os("CLIENT_INDEX_URL") {
-//         Some(value) => value.into_string().unwrap(),
-//         None => "https://localhost:3001/index.html".to_owned(),
-//     };
-//
-//     Url::parse(&client_url).map_err(|e| ClientError { msg: e.to_string() })
-// }
+pub fn app_url() -> String {
+    load_env_str("APP_URL").expect("The environment variable 'APP_URL' should be set")
+}
