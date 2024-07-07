@@ -1,7 +1,7 @@
 use std::fmt;
 use std::fmt::Formatter;
 
-use crate::config;
+use crate::client::ClientConfig;
 use crate::open_graph::OpenGraphImageData;
 
 #[derive(Debug)]
@@ -20,8 +20,8 @@ impl fmt::Display for OpenGraphData {
 }
 
 impl OpenGraphData {
-    pub fn builder() -> OpenGraphDataBuilder {
-        OpenGraphDataBuilder::new()
+    pub fn builder(client_config: &ClientConfig) -> OpenGraphDataBuilder {
+        OpenGraphDataBuilder::new(client_config)
     }
 }
 
@@ -35,12 +35,12 @@ pub struct OpenGraphDataBuilder {
 }
 
 impl OpenGraphDataBuilder {
-    pub fn new() -> OpenGraphDataBuilder {
+    pub fn new(client_config: &ClientConfig) -> OpenGraphDataBuilder {
         OpenGraphDataBuilder {
             og_type: None,
             title: None,
             description: None,
-            url: Some(config::app_url()),
+            url: Some(client_config.url.clone()),
             image: None,
         }
     }

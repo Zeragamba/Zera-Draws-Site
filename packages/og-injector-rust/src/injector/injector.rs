@@ -1,16 +1,14 @@
 use crate::client::{ClientFiles, ClientManifest};
-use crate::injector::InjectorError;
 use crate::injector::InjectorError::{HeadNotFoundError, IndexReadError, ManifestReadError};
+use crate::injector::Result;
 use crate::open_graph::OpenGraphData;
-
-pub type Result<T> = std::result::Result<T, InjectorError>;
 
 pub async fn inject_meta(meta: &OpenGraphData) -> Result<String> {
     println!("Injecting OG Data: {}", meta);
 
     let html = ClientFiles::index_html()
         .await
-        .map_err(|e| IndexReadError { msg: e.to_string() })?;
+        .map_err(|e| IndexReadError(e.to_string()))?;
 
     if !html.contains("</head>") {
         return Err(HeadNotFoundError);
@@ -18,7 +16,7 @@ pub async fn inject_meta(meta: &OpenGraphData) -> Result<String> {
 
     let app_manifest = ClientManifest::load()
         .await
-        .map_err(|e| ManifestReadError { msg: e.to_string() })?;
+        .map_err(|e| ManifestReadError(e.to_string()))?;
 
     let mut meta_tags = MetaTags::new();
     meta_tags.add("og:type", meta.og_type.as_deref().unwrap_or("website"));

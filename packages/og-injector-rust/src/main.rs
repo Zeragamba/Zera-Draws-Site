@@ -5,36 +5,47 @@ use axum::response::Response;
 use axum_server::tls_rustls::RustlsConfig;
 use dotenv::dotenv;
 
-use config::FeatureFlag::{Disabled, Enabled};
 use injector::inject_meta;
 use open_graph::OpenGraphData;
+
+use crate::client::ClientConfig;
+use crate::config::FeatureFlag::{Disabled, Enabled};
+use crate::injector::InjectorConfig;
 
 mod client;
 mod config;
 mod injector;
 mod open_graph;
+mod server;
 
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init();
     dotenv().ok();
 
+    let config = InjectorConfig::new();
+
     let app = Router::new()
         .route("/", get(get_index_html))
         .fallback(get(get_fallback));
 
-    let addr = config::get_injector_socket();
+    let addr = config.addr;
+    let url = config.url;
 
-    match config::is_https_enabled() {
+    match config.https {
         Enabled => {
-            let ssl_cert = config::get_ssl_cert_path();
-            let ssl_key = config::get_ssl_key_path();
+            let ssl_cert = config.ssl_crt.as_ref().expect(
+                "The environment variable 'INJECTOR_SSL_CRT' should be set when using HTTPS",
+            );
+            let ssl_key = config.ssl_key.as_ref().expect(
+                "The environment variable 'INJECTOR_SSL_KEY' should be set when using HTTPS",
+            );
 
             let config = RustlsConfig::from_pem_file(ssl_cert, ssl_key)
                 .await
                 .unwrap();
 
-            println!("listening on https://{}", addr);
+            println!("listening on {url}");
             axum_server::bind_rustls(addr, config)
                 .serve(app.into_make_service())
                 .await
@@ -42,7 +53,7 @@ async fn main() {
         }
 
         Disabled => {
-            println!("listening on http://{}", addr);
+            println!("listening on {url}");
             axum_server::bind(addr)
                 .serve(app.into_make_service())
                 .await
@@ -54,7 +65,8 @@ async fn main() {
 async fn get_index_html(req: Request<Body>) -> Response {
     println!("-> GET {}", req.uri());
 
-    let meta_data = OpenGraphData::builder().build();
+    let client_config = ClientConfig::new();
+    let meta_data = OpenGraphData::builder(&client_config).build();
 
     match inject_meta(&meta_data).await {
         Err(error) => Response::builder()
