@@ -6,9 +6,9 @@ module WithSlug
   class_methods do
     def find(id_or_slug)
       if UUID.is_uuid?(id_or_slug)
-        self.find_by_id(id_or_slug)
+        self.find_by_id!(id_or_slug)
       else
-        self.find_by_slug(id_or_slug)
+        self.find_by_slug!(id_or_slug)
       end
     end
   end
