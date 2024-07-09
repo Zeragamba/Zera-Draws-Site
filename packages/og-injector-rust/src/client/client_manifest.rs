@@ -1,12 +1,14 @@
-use serde::{Deserialize, Serialize};
+use url::Url;
+use serde::Deserialize;
 
 use crate::client::{ClientError, ClientFiles, Result};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Deserialize)]
 pub struct ClientManifest {
     pub name: Option<String>,
     pub description: Option<String>,
-    pub start_url: Option<String>,
+    #[serde(with = "url_serde")]
+    pub start_url: Option<Url>,
 }
 
 impl ClientManifest {

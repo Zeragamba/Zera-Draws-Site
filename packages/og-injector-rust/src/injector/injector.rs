@@ -19,7 +19,12 @@ pub async fn inject_meta(meta: &OpenGraphData) -> Result<String> {
         .map_err(|e| ManifestReadError(e.to_string()))?;
 
     let mut meta_tags = MetaTags::new();
-    meta_tags.add("og:type", meta.og_type.as_deref().unwrap_or("website"));
+
+    let canonical_url = meta.canonical_url.as_ref().map(|u| u.as_str());
+    meta_tags.add_link_optional("canonical", canonical_url);
+
+    let og_type = meta.og_type.as_deref().unwrap_or("website");
+    meta_tags.add("og:type", og_type);
 
     let title = meta
         .title
@@ -31,9 +36,9 @@ pub async fn inject_meta(meta: &OpenGraphData) -> Result<String> {
 
     let url = meta
         .url
-        .as_deref()
-        .or(app_manifest.start_url.as_deref())
-        .map(str::trim);
+        .as_ref()
+        .or(app_manifest.start_url.as_ref())
+        .map(|url| url.as_str());
     meta_tags.add_optional("og:url", url);
     meta_tags.add_optional("twitter:url", url);
 
@@ -77,8 +82,8 @@ impl MetaTags {
     }
 
     fn add_optional(&mut self, name: &str, content: Option<&str>) {
-        if content.is_some() {
-            let tag = self.create_meta_tag(name, content.unwrap());
+        if let Some(content) = content {
+            let tag = self.create_meta_tag(name, content);
             self.tags.push(tag);
         }
     }
@@ -89,5 +94,12 @@ impl MetaTags {
 
     fn to_string(&self) -> String {
         self.tags.join("")
+    }
+
+    fn add_link_optional(&mut self, rel: &str, href: Option<&str>) {
+        if let Some(href) = href {
+            let tag = format!("<link rel=\"{rel}\" href=\"{href}\" />");
+            self.tags.push(tag);
+        }
     }
 }

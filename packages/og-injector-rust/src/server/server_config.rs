@@ -3,12 +3,13 @@ use std::io::Read;
 use std::path::PathBuf;
 
 use reqwest::Certificate;
+use url::Url;
 
 use crate::config::{Environment, FeatureFlag};
 use crate::config::FeatureFlag::{Disabled, Enabled};
 
 pub struct ServerConfig {
-    pub url: String,
+    pub url: Url,
     pub https: FeatureFlag,
     pub ssl_crt: Option<PathBuf>,
 }
@@ -16,11 +17,11 @@ pub struct ServerConfig {
 impl ServerConfig {
     pub fn new() -> Self {
         let env = Environment::new();
-        let url = env.server_url.starts_with("https://");
+        let is_https = env.server_url.scheme() == "https";
 
         Self {
             url: env.server_url,
-            https: match url {
+            https: match is_https {
                 true => Enabled,
                 false => Disabled,
             },

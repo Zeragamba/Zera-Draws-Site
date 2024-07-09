@@ -1,9 +1,9 @@
 use std::path::PathBuf;
-
+use url::Url;
 use crate::config::Environment;
 
 pub struct ClientConfig {
-    pub url: String,
+    pub url: Url,
     pub dir: PathBuf,
 }
 

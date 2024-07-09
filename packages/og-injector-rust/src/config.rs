@@ -3,6 +3,8 @@ use std::env;
 use std::net::IpAddr;
 use std::path::PathBuf;
 
+use url::Url;
+
 use crate::config::FeatureFlag::*;
 
 pub enum FeatureFlag {
@@ -17,10 +19,10 @@ pub struct Environment {
     pub injector_ssl_crt: Option<PathBuf>,
     pub injector_ssl_key: Option<PathBuf>,
 
-    pub client_url: String,
+    pub client_url: Url,
     pub client_dir: PathBuf,
 
-    pub server_url: String,
+    pub server_url: Url,
     pub server_ssl_crt: Option<PathBuf>,
 }
 
@@ -33,10 +35,10 @@ impl Environment {
             injector_ssl_crt: env_path("INJECTOR_SSL_CRT"),
             injector_ssl_key: env_path("INJECTOR_SSL_KEY"),
 
-            client_url: env_str_req("CLIENT_URL"),
+            client_url: env_url_req("CLIENT_URL"),
             client_dir: env_path_req("CLIENT_DIR"),
 
-            server_url: env_str_req("SERVER_URL"),
+            server_url: env_url_req("SERVER_URL"),
             server_ssl_crt: env_path("SERVER_SSL_CRT"),
         }
     }
@@ -79,6 +81,18 @@ fn env_port(key: &str) -> Option<u16> {
 
 fn env_port_or(key: &str, default: u16) -> u16 {
     env_port(key).unwrap_or(default)
+}
+
+fn env_url(key: &str) -> Option<Url> {
+    env_str(key).map(|value| {
+        value
+            .parse()
+            .expect(&format!("The environment variable '{key}' should be a URL"))
+    })
+}
+
+fn env_url_req(key: &str) -> Url {
+    env_url(key).expect(&format!("The environment variable '{key}' should be set"))
 }
 
 fn env_bool(key: &str) -> Option<bool> {
