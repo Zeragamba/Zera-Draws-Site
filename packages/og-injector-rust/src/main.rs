@@ -35,10 +35,10 @@ async fn main() {
     match config.https {
         Enabled => {
             let ssl_cert = config.ssl_crt.as_ref().expect(
-                "The environment variable 'INJECTOR_SSL_CRT' should be set when using HTTPS",
+                "The environment variable 'injector_ssl_crt' should be set when using HTTPS",
             );
             let ssl_key = config.ssl_key.as_ref().expect(
-                "The environment variable 'INJECTOR_SSL_KEY' should be set when using HTTPS",
+                "The environment variable 'injector_ssl_key' should be set when using HTTPS",
             );
 
             let config = RustlsConfig::from_pem_file(ssl_cert, ssl_key)

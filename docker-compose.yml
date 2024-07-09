@@ -4,7 +4,11 @@ services:
       file: docker-compose.shared.yml
       service: router
     ports:
-      - "${DEV_SERVER_PORT}:443"
+      - "${DEV_ROUTER_PORT}:443"
+    develop:
+      watch:
+        - action: rebuild
+          path: ./router/nginx.conf
 
   server:
     extends:
@@ -15,8 +19,10 @@ services:
       - ./.volumes/images:/opt/images:rw
     environment:
       CLIENT_URL: "${DEV_CLIENT_URL}"
-      SERVER_URL: "${DEV_SERVER_URL}/api"
-      IMAGES_URL: "${DEV_SERVER_URL}/images"
+      SERVER_URL: "${DEV_ROUTER_URL}/api"
+      IMAGES_URL: "${DEV_ROUTER_URL}/images"
+    ports:
+      - "${DEV_SERVER_PORT}:3000"
 
   client:
     extends:
@@ -31,7 +37,7 @@ services:
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt
       SSL_KEY_FILE: /opt/ssl/current.key
-      REACT_APP_SERVER_URL: "${DEV_SERVER_URL}/api"
+      REACT_APP_SERVER_URL: "${DEV_ROUTER_URL}/api"
     command: yarn start
     ports:
       - "${DEV_CLIENT_PORT}:3000"
@@ -40,22 +46,15 @@ services:
     extends:
       file: docker-compose.shared.yml
       service: og-injector
+    ports:
+      - "${DEV_INJECTOR_PORT}:3000"
     volumes:
-      - ./og-injector:/opt/og-injector:rw
+      - ./packages/og-injector-rust/target/debug/og-injector:/usr/bin/og-injector:ro
       - ./.volumes/client:/opt/client:ro
-    command: yarn watch
-
-  og-injector-rust:
-    extends:
-      file: docker-compose.shared.yml
-      service: og-injector-rust
-    volumes:
-      - ./packages/og-injector-rust:/opt/og-injector:rw
-      - ./.volumes/client:/opt/client:ro
-    environment:
-      SSL_CRT: /opt/ssl/current.crt
-      SSL_KEY: /opt/ssl/current.key
-    command: yarn watch
+    develop:
+      watch:
+        - action: rebuild
+          path: ./packages/og-injector/src
 
   db:
     extends:

@@ -4,45 +4,32 @@ use std::path::PathBuf;
 
 use reqwest::Certificate;
 
-use crate::config::Config;
-use crate::server::Result;
+use crate::config::{Environment, FeatureFlag};
+use crate::config::FeatureFlag::{Disabled, Enabled};
 
 pub struct ServerConfig {
-    pub host: String,
-    pub port: i16,
     pub url: String,
-    pub https: bool,
-    pub cert: Option<PathBuf>,
+    pub https: FeatureFlag,
+    pub ssl_crt: Option<PathBuf>,
 }
 
 impl ServerConfig {
-    pub fn new() -> ServerConfig {
-        let host = Config::env_str("SERVER_HOST")
-            .expect("The environment variable 'SERVER_HOST' should be set");
+    pub fn new() -> Self {
+        let env = Environment::new();
+        let url = env.server_url.starts_with("https://");
 
-        let port = Config::env_str("SERVER_PORT")
-            .expect("The environment variable 'SERVER_PORT' should be set")
-            .parse()
-            .expect("The environment variable 'SERVER_PORT' should be a valid port");
-
-        let https = Config::env_bool("SERVER_HTTPS").unwrap_or(false);
-
-        let protocol = if https { "https" } else { "http" };
-        let url = format!("{protocol}://{host}:{port}");
-
-        let cert = Config::env_path("SERVER_SSL_CRT");
-
-        ServerConfig {
-            host,
-            port,
-            https,
-            cert,
-            url,
+        Self {
+            url: env.server_url,
+            https: match url {
+                true => Enabled,
+                false => Disabled,
+            },
+            ssl_crt: env.server_ssl_crt,
         }
     }
 
-    pub async fn load_cert(&self) -> Result<Option<Certificate>> {
-        let cert_path = match self.cert.as_ref() {
+    pub async fn load_cert(&self) -> crate::server::Result<Option<Certificate>> {
+        let cert_path = match self.ssl_crt.as_ref() {
             None => return Ok(None),
             Some(path) => path,
         };
