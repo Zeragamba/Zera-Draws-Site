@@ -1,22 +1,41 @@
+use std::fmt::{Display, Formatter};
+
 use axum::{http::StatusCode, Router, routing::get};
 use axum::body::Body;
+use axum::extract::Path;
 use axum::http::{header, Request};
 use axum::response::Response;
 use axum_server::tls_rustls::RustlsConfig;
 use dotenv::dotenv;
 
-use injector::inject_meta;
-use open_graph::OpenGraphData;
+use post_controller::PostCtrl;
 
-use crate::client::ClientConfig;
 use crate::config::FeatureFlag::{Disabled, Enabled};
-use crate::injector::InjectorConfig;
+use crate::injector::{inject_default_meta, InjectorConfig};
 
 mod client;
 mod config;
 mod injector;
 mod open_graph;
+mod post_controller;
+mod serde;
 mod server;
+
+pub enum Error {
+    InternalServerError(String),
+    NotFoundError(String),
+}
+
+impl Display for Error {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::InternalServerError(msg) => write!(f, "Internal Server Error: {}", msg),
+            Self::NotFoundError(msg) => write!(f, "Not Found: {}", msg),
+        }
+    }
+}
+
+pub type Result<T> = std::result::Result<T, Error>;
 
 #[tokio::main]
 async fn main() {
@@ -27,6 +46,7 @@ async fn main() {
 
     let app = Router::new()
         .route("/", get(get_index_html))
+        .route("/post/:post_id", get(get_post))
         .fallback(get(get_fallback));
 
     let addr = config.addr;
@@ -65,15 +85,31 @@ async fn main() {
 async fn get_index_html(req: Request<Body>) -> Response {
     println!("-> GET {}", req.uri());
 
-    let client_config = ClientConfig::new();
-    let meta_data = OpenGraphData::builder(&client_config).build();
+    match inject_default_meta(req.uri()).await {
+        Err(error) => {
+            eprintln!("{}", error);
 
-    match inject_meta(&meta_data).await {
-        Err(error) => Response::builder()
-            .status(StatusCode::INTERNAL_SERVER_ERROR)
-            .body(Body::from(error.to_string()))
+            Response::builder()
+                .status(StatusCode::INTERNAL_SERVER_ERROR)
+                .body(Body::from(error.to_string()))
+                .unwrap()
+        }
+
+        Ok(body) => Response::builder()
+            .status(StatusCode::OK)
+            .header(header::CONTENT_TYPE, "text/html")
+            .header("x-generated-by", "rust")
+            .body(Body::from(body))
             .unwrap(),
+    }
+}
 
+async fn get_post(Path(post_id): Path<String>, req: Request<Body>) -> Response {
+    let uri = req.uri();
+    println!("-> GET {}", uri);
+
+    match PostCtrl::view(&post_id).await {
+        Err(error) => error_handler(error),
         Ok(body) => Response::builder()
             .status(StatusCode::OK)
             .header(header::CONTENT_TYPE, "text/html")
@@ -90,5 +126,19 @@ async fn get_fallback(req: Request<Body>) -> Response {
     Response::builder()
         .status(StatusCode::NOT_FOUND)
         .body(Body::from("Not Found"))
+        .unwrap()
+}
+
+fn error_handler(error: Error) -> Response {
+    println!("{}", error);
+
+    let status = match error {
+        Error::InternalServerError(_) => StatusCode::INTERNAL_SERVER_ERROR,
+        Error::NotFoundError(_) => StatusCode::NOT_FOUND,
+    };
+
+    Response::builder()
+        .status(status)
+        .body(Body::from(error.to_string()))
         .unwrap()
 }

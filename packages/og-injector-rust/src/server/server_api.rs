@@ -1,10 +1,15 @@
 use reqwest::{Client, ClientBuilder};
+use url::Url;
 
 use crate::config::FeatureFlag::Enabled;
-use crate::server::Result;
-use crate::server::ServerConfig;
+use crate::server::models::PostData;
+use crate::server::responses::GetPostRes;
 
-struct ServerApi {
+use super::Result;
+use super::ServerConfig;
+
+pub struct ServerApi {
+    api_url: Url,
     config: ServerConfig,
     client: Client,
 }
@@ -21,7 +26,29 @@ impl ServerApi {
         }
 
         let client = client.build()?;
+        let api_url = config.url.to_owned();
+        Ok(ServerApi {
+            config,
+            client,
+            api_url,
+        })
+    }
 
-        Ok(ServerApi { config, client })
+    fn build_url(&self, path: &str) -> String {
+        let mut url = self.api_url.clone();
+        url.set_path(path);
+        url.to_string()
+    }
+
+    pub async fn get_post(&self, post_id: &str) -> Result<PostData> {
+        let url = self.build_url(&format!("/post/{post_id}"));
+
+        let res = self.client.get(url).send().await?;
+        let body = res.text().await?;
+
+        println!("{}", body);
+
+        let res: GetPostRes = serde_json::from_str(&body)?;
+        Ok(res.post)
     }
 }

@@ -1,7 +1,7 @@
 use std::fmt;
 use std::fmt::Formatter;
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Clone)]
 pub struct OpenGraphImageData {
     pub url: String,
     pub mime_type: String,

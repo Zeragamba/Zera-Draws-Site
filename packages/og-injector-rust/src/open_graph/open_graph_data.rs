@@ -3,16 +3,14 @@ use std::fmt::Formatter;
 
 use url::Url;
 
-use crate::client::ClientConfig;
-use crate::open_graph::OpenGraphImageData;
+use super::OpenGraphImageData;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct OpenGraphData {
     pub og_type: Option<String>,
     pub title: Option<String>,
-    pub description: Option<String>,
+    pub desc: Option<String>,
     pub url: Option<Url>,
-    pub canonical_url: Option<Url>,
     pub image: Option<OpenGraphImageData>,
 }
 
@@ -23,60 +21,49 @@ impl fmt::Display for OpenGraphData {
 }
 
 impl OpenGraphData {
-    pub fn builder(client_config: &ClientConfig) -> OpenGraphDataBuilder {
-        OpenGraphDataBuilder::new(client_config)
-    }
-}
-
-pub struct OpenGraphDataBuilder {
-    data: OpenGraphData,
-}
-
-impl OpenGraphDataBuilder {
-    pub fn new(client_config: &ClientConfig) -> OpenGraphDataBuilder {
-        OpenGraphDataBuilder {
-            data: OpenGraphData {
-                og_type: None,
-                title: None,
-                description: None,
-                url: Some(client_config.url.clone()),
-                canonical_url: None,
-                image: None,
-            },
+    pub fn new() -> OpenGraphData {
+        OpenGraphData {
+            og_type: None,
+            title: None,
+            desc: None,
+            url: None,
+            image: None,
         }
     }
 
-    pub fn title(mut self, title: &str) -> OpenGraphDataBuilder {
-        self.data.title = Some(title.to_string());
+    pub fn title(&mut self, title: &str) -> &mut OpenGraphData {
+        self.title = Some(title.to_string());
         self
     }
 
-    pub fn og_type(mut self, og_type: &str) -> OpenGraphDataBuilder {
-        self.data.og_type = Some(og_type.to_string());
+    pub fn og_type(&mut self, og_type: &str) -> &mut OpenGraphData {
+        self.og_type = Some(og_type.to_string());
         self
     }
 
-    pub fn description(mut self, description: &str) -> OpenGraphDataBuilder {
-        self.data.description = Some(description.to_string());
+    pub fn description(&mut self, description: Option<&str>) -> &mut OpenGraphData {
+        self.desc = description.map(|v| v.to_string());
         self
     }
 
-    pub fn url(mut self, url: Url) -> OpenGraphDataBuilder {
-        self.data.url = Some(url);
+    pub fn url(&mut self, url: Option<Url>) -> &mut OpenGraphData {
+        self.url = url;
         self
     }
 
-    pub fn canonical_url(mut self, url: Url) -> OpenGraphDataBuilder {
-        self.data.canonical_url = Some(url);
-        self
+    pub fn url_path(&mut self, path: &str) -> &mut OpenGraphData {
+        match self.url.as_ref() {
+            None => self,
+            Some(url) => {
+                let mut url = url.clone();
+                url.set_path(path);
+                self.url(Some(url))
+            }
+        }
     }
 
-    pub fn image(mut self, image: OpenGraphImageData) -> OpenGraphDataBuilder {
-        self.data.image = Some(image);
+    pub fn image(&mut self, image: Option<OpenGraphImageData>) -> &mut OpenGraphData {
+        self.image = image;
         self
-    }
-
-    pub fn build(self) -> OpenGraphData {
-        self.data
     }
 }
