@@ -16,6 +16,7 @@ pub fn build_router() -> Router {
         .route("/", get(get_index))
         .route("/latest", get(get_latest))
         .route("/post/:post_id", get(get_post))
+        .route("/tag/:tag_id/:post_id", get(get_post))
         .route("/tag/:tag_id", get(get_tag))
         .fallback(get(get_fallback))
 }
