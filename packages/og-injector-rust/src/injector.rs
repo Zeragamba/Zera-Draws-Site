@@ -60,10 +60,7 @@ pub async fn inject_tag_meta(tag: &TagData) -> AppResult<String> {
 }
 
 pub async fn inject_meta(meta: &OpenGraphData) -> AppResult<String> {
-    println!("Injecting OG Data: {}", meta);
-
     let html = ClientFiles::index_html().await?;
     let html = MetaTags::new(meta).inject(html);
-
     Ok(html)
 }
