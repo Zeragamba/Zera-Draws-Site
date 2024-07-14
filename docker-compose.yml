@@ -3,17 +3,12 @@ services:
     extends:
       file: docker-compose.production.yml
       service: router
-    develop:
-      watch:
-        - action: rebuild
-          path: ./router/nginx.conf
-
   server:
     extends:
       file: docker-compose.production.yml
       service: server
     volumes:
-      - ./server:/opt/server:rw
+      - ./packages/server:/opt/server:rw
       - ./.volumes/images:/opt/images:rw
     environment:
       CLIENT_URL: "${DEV_CLIENT_URL}"
@@ -27,7 +22,7 @@ services:
       file: docker-compose.production.yml
       service: client
     volumes:
-      - ./client:/opt/client:rw
+      - ./packages/client:/opt/client:rw
       - ./.volumes/client:/opt/client/dist:rw
       - "${SSL_CRT}:/opt/ssl/current.crt:ro"
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
@@ -48,12 +43,8 @@ services:
     ports:
       - "${DEV_INJECTOR_PORT}:3000"
     volumes:
-      - ./packages/og-injector-rust/target/debug/og-injector:/usr/bin/og-injector:ro
+      - ./packages/og-injector-rust/target/debug/og-injector-rust:/usr/bin/og-injector-rust:ro
       - ./.volumes/client:/opt/client:ro
-    develop:
-      watch:
-        - action: rebuild
-          path: ./packages/og-injector/src
 
   db:
     extends:

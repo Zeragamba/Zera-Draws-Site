@@ -1,6 +1,6 @@
 services:
   router:
-    build: ./router
+    build: packages/router
     depends_on:
       - server
       - og-injector
@@ -13,7 +13,7 @@ services:
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
 
   server:
-    build: ./server
+    build: packages/server
     command: bin/rails s -p 3000 -b 0.0.0.0
     volumes:
       - ./.volumes/images:/opt/images:rw
@@ -37,7 +37,7 @@ services:
       IMAGES_DIR: "/opt/images"
 
   client:
-    build: ./client
+    build: packages/client
     volumes:
       - ./.volumes/client:/opt/client/dist:rw
     environment:
