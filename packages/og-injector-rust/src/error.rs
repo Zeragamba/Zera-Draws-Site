@@ -3,7 +3,7 @@ use std::fmt;
 
 use axum::body::Body;
 use axum::http::StatusCode;
-use axum::response::Response;
+use axum::response::{IntoResponse, Response};
 
 use crate::open_graph::open_graph_data::OpenGraphDataBuilderError;
 
@@ -19,18 +19,6 @@ impl AppError {
     pub fn new(msg: String) -> AppError {
         AppError::InternalServerError(msg)
     }
-
-    pub fn as_response(&self) -> Response {
-        let status_code = match self {
-            AppError::InternalServerError(_) => StatusCode::INTERNAL_SERVER_ERROR,
-            AppError::NotFoundError(_) => StatusCode::NOT_FOUND,
-        };
-
-        Response::builder()
-            .status(status_code)
-            .body(Body::from(self.to_string()))
-            .unwrap()
-    }
 }
 
 impl Error for AppError {}
@@ -41,6 +29,20 @@ impl fmt::Display for AppError {
             AppError::InternalServerError(msg) => write!(f, "InternalServerError: {}", msg),
             AppError::NotFoundError(msg) => write!(f, "NotFoundError: {}", msg),
         }
+    }
+}
+
+impl IntoResponse for AppError {
+    fn into_response(self) -> Response {
+        let status_code = match self {
+            AppError::InternalServerError(_) => StatusCode::INTERNAL_SERVER_ERROR,
+            AppError::NotFoundError(_) => StatusCode::NOT_FOUND,
+        };
+
+        Response::builder()
+            .status(status_code)
+            .body(Body::from(self.to_string()))
+            .unwrap()
     }
 }
 

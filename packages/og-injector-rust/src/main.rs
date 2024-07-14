@@ -8,19 +8,17 @@ use axum::response::Response;
 use axum_server::tls_rustls::RustlsConfig;
 use dotenv::dotenv;
 
-use post_controller::PostCtrl;
-
 use crate::client::ClientFiles;
 use crate::config::Environment;
 use crate::config::FeatureFlag::{Disabled, Enabled};
-use crate::injector::{inject_default_meta, InjectorConfig};
+use crate::injector::{inject_default_meta, inject_post_meta, InjectorConfig};
+use crate::server::{ServerApi, ServerConfig};
 
 mod client;
 mod config;
 mod error;
 mod injector;
 mod open_graph;
-mod post_controller;
 mod serde;
 mod server;
 
@@ -71,47 +69,54 @@ async fn main() {
     };
 }
 
-async fn get_index_html(req: Request<Body>) -> Response {
+async fn get_index_html(req: Request<Body>) -> axum::response::Result<Response> {
     println!("-> GET {}", req.uri());
 
-    match inject_default_meta(req.uri()).await {
-        Err(error) => error.as_response(),
-        Ok(body) => Response::builder()
-            .status(StatusCode::OK)
-            .header(header::CONTENT_TYPE, "text/html")
-            .header("x-generated-by", "rust")
-            .body(Body::from(body))
-            .unwrap(),
-    }
+    let body = inject_default_meta(req.uri()).await?;
+    let res = Response::builder()
+        .status(StatusCode::OK)
+        .header(header::CONTENT_TYPE, "text/html")
+        .header("x-generated-by", "rust")
+        .body(Body::from(body))
+        .unwrap();
+
+    Ok(res)
 }
 
-async fn get_post(Path(post_id): Path<String>, req: Request<Body>) -> Response {
+async fn get_post(
+    Path(post_id): Path<String>,
+    req: Request<Body>,
+) -> axum::response::Result<Response> {
     let uri = req.uri();
     println!("-> GET {}", uri);
 
-    match PostCtrl::view(&post_id).await {
-        Err(error) => error.as_response(),
-        Ok(body) => Response::builder()
-            .status(StatusCode::OK)
-            .header(header::CONTENT_TYPE, "text/html")
-            .header("x-generated-by", "rust")
-            .body(Body::from(body))
-            .unwrap(),
-    }
+    let server_api = ServerApi::new(ServerConfig::new()).await?;
+    let post_data = server_api.get_post(&post_id).await?;
+
+    let body = inject_post_meta(&post_data).await?;
+    let res = Response::builder()
+        .status(StatusCode::OK)
+        .header(header::CONTENT_TYPE, "text/html")
+        .header("x-generated-by", "rust")
+        .body(Body::from(body))
+        .unwrap();
+
+    Ok(res)
 }
 
-async fn get_fallback(req: Request<Body>) -> Response {
+async fn get_fallback(req: Request<Body>) -> axum::response::Result<Response> {
     let uri = req.uri();
     println!("-> GET FALLBACK: {}", uri);
 
     let file_path = uri.path().strip_prefix('/').unwrap_or("");
 
-    match ClientFiles::read(file_path).await {
-        Err(error) => error.as_response(),
-        Ok(body) => Response::builder()
-            .status(StatusCode::OK)
-            .header("x-generated-by", "rust")
-            .body(Body::from(body))
-            .unwrap(),
-    }
+    let body = ClientFiles::read(file_path).await?;
+    let res = Response::builder()
+        .status(StatusCode::OK)
+        .header("x-generated-by", "rust")
+        .body(Body::from(body))
+        .unwrap();
+
+    Ok(res)
 }
+
