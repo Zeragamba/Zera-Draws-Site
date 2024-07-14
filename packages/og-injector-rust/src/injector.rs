@@ -6,7 +6,7 @@ use crate::client::{ClientFiles, ClientManifest};
 use crate::error::AppResult;
 use crate::open_graph::open_graph_data::OpenGraphDataBuilder;
 use crate::open_graph::OpenGraphData;
-use crate::server_api::models::PostData;
+use crate::server_api::models::{PostData, TagData};
 
 use self::meta_tags::MetaTags;
 
@@ -17,20 +17,18 @@ mod router_response;
 
 pub async fn inject_default_meta(uri: &Uri) -> AppResult<String> {
     let meta = OpenGraphDataBuilder::default()
-        .url_path(&uri.to_string())
+        .url_path(uri.to_string())
         .build()?;
 
     return inject_meta(&meta).await;
 }
 
 pub async fn inject_post_meta(post: &PostData) -> AppResult<String> {
-    let path = format!("/post/{}", post.slug);
-
     let mut meta = OpenGraphDataBuilder::default();
 
     meta.manifest(&ClientManifest::load().await?)
         .title(post.title.to_string())
-        .url_path(&path);
+        .url_path(format!("/post/{}", post.slug));
 
     if let Some(description) = post.description.as_ref() {
         meta.description(description.to_string());
@@ -38,6 +36,24 @@ pub async fn inject_post_meta(post: &PostData) -> AppResult<String> {
 
     if let Some(img) = post.images.first().as_deref() {
         meta.image(img.into());
+    }
+
+    return inject_meta(&meta.build()?).await;
+}
+
+pub async fn inject_tag_meta(tag: &TagData) -> AppResult<String> {
+    let mut meta = OpenGraphDataBuilder::default();
+
+    meta.manifest(&ClientManifest::load().await?)
+        .title(tag.name.to_string())
+        .description(format!("Posts tagged {}", tag.name))
+        .url_path(format!("/tag/{}", tag.slug));
+
+    let posts = tag.posts().await?;
+    if let Some(post) = posts.first().as_deref() {
+        if let Some(img) = post.images.first().as_deref() {
+            meta.image(img.into());
+        }
     }
 
     return inject_meta(&meta.build()?).await;

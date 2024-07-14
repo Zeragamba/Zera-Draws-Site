@@ -1,7 +1,7 @@
 use std::fmt;
 use std::fmt::Formatter;
 
-use crate::server_api::models::image_data::ImageData;
+use crate::server_api::models::ImageData;
 
 #[derive(Default, Debug, Clone)]
 pub struct OpenGraphImageData {

@@ -2,16 +2,33 @@ use iso8601::DateTime;
 use serde::Deserialize;
 use uuid::Uuid;
 
+use crate::error::AppResult;
+use crate::server_api::{ServerApi, ServerConfig};
+use crate::server_api::models::PostData;
+
 #[derive(Deserialize)]
-#[allow(dead_code)]
 pub struct TagData {
-    id: Uuid,
-    name: String,
-    slug: String,
-    num_posts: u64,
+    pub id: Uuid,
+
+    pub name: String,
+
+    pub slug: String,
+
+    pub num_posts: u64,
+
     #[serde(with = "crate::serde::date_time")]
-    created_at: DateTime,
+    pub created_at: DateTime,
+
     #[serde(with = "crate::serde::date_time")]
-    updated_at: DateTime,
-    featured: bool,
+    pub updated_at: DateTime,
+
+    pub featured: bool,
+}
+
+impl TagData {
+    pub async fn posts(&self) -> AppResult<Vec<PostData>> {
+        let config = ServerConfig::new();
+        let server_api = ServerApi::new(config).await?;
+        server_api.get_tagged_posts(&self.slug).await
+    }
 }

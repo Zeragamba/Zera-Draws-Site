@@ -4,7 +4,8 @@ use url::Url;
 use crate::config::FeatureFlag::Enabled;
 use crate::error::AppResult;
 use crate::server_api::models::PostData;
-use crate::server_api::responses::GetPostRes;
+use crate::server_api::models::TagData;
+use crate::server_api::responses::{GetPostRes, GetTaggedPostsRes, GetTagRes};
 
 use super::ServerConfig;
 
@@ -58,5 +59,31 @@ impl ServerApi {
 
         let res: GetPostRes = serde_json::from_str(&body)?;
         Ok(res.post)
+    }
+
+    pub async fn get_tag(&self, tag_id: &str) -> AppResult<TagData> {
+        let path = format!("/tag/{tag_id}");
+        let url = self.build_url(&path);
+
+        let res = self.client.get(url).send().await?;
+        let body = res.text().await?;
+
+        println!("{}", body);
+
+        let res: GetTagRes = serde_json::from_str(&body)?;
+        Ok(res.tag)
+    }
+
+    pub async fn get_tagged_posts(&self, tag_id: &str) -> AppResult<Vec<PostData>> {
+        let path = format!("/tag/{tag_id}/posts");
+        let url = self.build_url(&path);
+
+        let res = self.client.get(url).send().await?;
+        let body = res.text().await?;
+
+        println!("{}", body);
+
+        let res: GetTaggedPostsRes = serde_json::from_str(&body)?;
+        Ok(res.posts)
     }
 }

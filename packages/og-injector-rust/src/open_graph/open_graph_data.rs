@@ -37,7 +37,7 @@ impl OpenGraphDataBuilder {
         if let Some(title) = manifest.name.as_ref() {
             self.title(title.to_string());
         }
-        
+
         if let Some(description) = manifest.desc.as_ref() {
             self.description(description.to_string());
         }
@@ -57,10 +57,15 @@ impl OpenGraphDataBuilder {
         ClientConfig::new().url
     }
 
-    pub fn url_path(&mut self, path: &str) -> &mut OpenGraphDataBuilder {
+    pub fn url_path(&mut self, path: String) -> &mut OpenGraphDataBuilder {
+        if self.url.is_none() {
+            let default_url = self.default_url();
+            self.url(default_url);
+        }
+
         if let Some(url) = &self.url {
             let mut url = url.clone();
-            url.set_path(path);
+            url.set_path(path.as_str());
             self.url(url);
         }
 
