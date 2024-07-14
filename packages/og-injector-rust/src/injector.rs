@@ -6,7 +6,7 @@ use crate::client::{ClientFiles, ClientManifest};
 use crate::error::AppResult;
 use crate::open_graph::open_graph_data::OpenGraphDataBuilder;
 use crate::open_graph::OpenGraphData;
-use crate::server::models::PostData;
+use crate::server_api::models::PostData;
 
 use self::meta_tags::MetaTags;
 

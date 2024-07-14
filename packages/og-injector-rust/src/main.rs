@@ -14,7 +14,7 @@ mod error;
 mod injector;
 mod open_graph;
 mod serde;
-mod server;
+mod server_api;
 
 #[tokio::main]
 async fn main() {

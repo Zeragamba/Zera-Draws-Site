@@ -3,8 +3,8 @@ use url::Url;
 
 use crate::config::FeatureFlag::Enabled;
 use crate::error::AppResult;
-use crate::server::models::PostData;
-use crate::server::responses::GetPostRes;
+use crate::server_api::models::PostData;
+use crate::server_api::responses::GetPostRes;
 
 use super::ServerConfig;
 

@@ -7,7 +7,7 @@ use axum::routing::get;
 
 use crate::client::ClientFiles;
 use crate::injector::{inject_default_meta, inject_post_meta};
-use crate::server::{ServerApi, ServerConfig};
+use crate::server_api::{ServerApi, ServerConfig};
 
 pub fn build_router() -> Router {
     Router::new()
