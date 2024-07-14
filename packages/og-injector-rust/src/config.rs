@@ -12,6 +12,15 @@ pub enum FeatureFlag {
     Disabled,
 }
 
+impl From<bool> for FeatureFlag {
+    fn from(value: bool) -> Self {
+        match value {
+            true => Enabled,
+            false => Disabled,
+        }
+    }
+}
+
 pub struct Environment {
     pub app_name: String,
     pub app_url: Url,
@@ -110,7 +119,7 @@ fn env_bool(key: &str) -> Option<bool> {
 }
 
 fn env_flag(key: &str) -> Option<FeatureFlag> {
-    env_bool(key).map(|value| if value { Enabled } else { Disabled })
+    env_bool(key).map(|value| value.into())
 }
 
 fn env_path(key: &str) -> Option<PathBuf> {
