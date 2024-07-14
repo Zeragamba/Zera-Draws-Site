@@ -8,6 +8,12 @@ pub struct ClientFiles;
 
 impl ClientFiles {
     pub async fn read(file: &str) -> AppResult<String> {
+        let raw = Self::read_raw(file).await?;
+        let contents = std::str::from_utf8(&raw)?;
+        Ok(contents.to_string())
+    }
+
+    pub async fn read_raw(file: &str) -> AppResult<Vec<u8>> {
         let config = ClientConfig::new();
         let file_path = config.dir.join(file);
 
@@ -16,10 +22,10 @@ impl ClientFiles {
             return Err(AppError::NotFoundError(path.to_string()));
         }
 
-        let mut contents = String::new();
+        let mut contents = vec![];
 
         let mut file = File::open(file_path)?;
-        file.read_to_string(&mut contents)?;
+        file.read_to_end(&mut contents)?;
 
         Ok(contents)
     }

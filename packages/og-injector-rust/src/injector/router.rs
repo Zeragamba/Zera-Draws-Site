@@ -3,6 +3,7 @@ use axum::extract::Path;
 use axum::http::Request;
 use axum::Router;
 use axum::routing::get;
+use mime_guess::mime;
 
 use crate::client::ClientFiles;
 use crate::injector::{inject_default_meta, inject_post_meta, inject_tag_meta};
@@ -67,6 +68,10 @@ async fn get_fallback(req: Request<Body>) -> Result {
 
     let file_path = uri.path().strip_prefix('/').unwrap_or("");
 
-    let body = ClientFiles::read(file_path).await?;
-    Ok(RouterResponse::Html(body))
+    let body = ClientFiles::read_raw(file_path).await?;
+    let mime_type = mime_guess::from_path(uri.to_string())
+        .first()
+        .unwrap_or(mime::APPLICATION_OCTET_STREAM);
+
+    Ok(RouterResponse::Raw { body, mime_type })
 }

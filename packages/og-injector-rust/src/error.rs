@@ -1,5 +1,6 @@
 use std::error::Error;
 use std::fmt;
+use std::str::Utf8Error;
 
 use axum::body::Body;
 use axum::http::StatusCode;
@@ -66,6 +67,12 @@ impl From<reqwest::Error> for AppError {
 
 impl From<OpenGraphDataBuilderError> for AppError {
     fn from(error: OpenGraphDataBuilderError) -> Self {
+        AppError::new(error.to_string())
+    }
+}
+
+impl From<Utf8Error> for AppError {
+    fn from(error: Utf8Error) -> Self {
         AppError::new(error.to_string())
     }
 }

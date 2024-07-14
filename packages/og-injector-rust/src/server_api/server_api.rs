@@ -43,8 +43,6 @@ impl ServerApi {
         let res = self.client.get(url).send().await?;
         let body = res.text().await?;
 
-        println!("{}", body);
-
         let res: GetPostRes = serde_json::from_str(&body)?;
         Ok(res.post)
     }
@@ -54,8 +52,6 @@ impl ServerApi {
 
         let res = self.client.get(url).send().await?;
         let body = res.text().await?;
-
-        println!("{}", body);
 
         let res: GetPostRes = serde_json::from_str(&body)?;
         Ok(res.post)
@@ -68,8 +64,6 @@ impl ServerApi {
         let res = self.client.get(url).send().await?;
         let body = res.text().await?;
 
-        println!("{}", body);
-
         let res: GetTagRes = serde_json::from_str(&body)?;
         Ok(res.tag)
     }
@@ -80,8 +74,6 @@ impl ServerApi {
 
         let res = self.client.get(url).send().await?;
         let body = res.text().await?;
-
-        println!("{}", body);
 
         let res: GetTaggedPostsRes = serde_json::from_str(&body)?;
         Ok(res.posts)
