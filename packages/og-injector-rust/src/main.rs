@@ -13,7 +13,6 @@ mod config;
 mod error;
 mod injector;
 mod open_graph;
-mod serde;
 mod server_api;
 
 #[tokio::main]
