@@ -1,4 +1,4 @@
-use std::fmt::{Display, Formatter};
+extern crate derive_builder;
 
 use axum::{http::StatusCode, Router, routing::get};
 use axum::body::Body;
@@ -10,37 +10,26 @@ use dotenv::dotenv;
 
 use post_controller::PostCtrl;
 
+use crate::client::ClientFiles;
+use crate::config::Environment;
 use crate::config::FeatureFlag::{Disabled, Enabled};
 use crate::injector::{inject_default_meta, InjectorConfig};
 
 mod client;
 mod config;
+mod error;
 mod injector;
 mod open_graph;
 mod post_controller;
 mod serde;
 mod server;
 
-pub enum Error {
-    InternalServerError(String),
-    NotFoundError(String),
-}
-
-impl Display for Error {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::InternalServerError(msg) => write!(f, "Internal Server Error: {}", msg),
-            Self::NotFoundError(msg) => write!(f, "Not Found: {}", msg),
-        }
-    }
-}
-
-pub type Result<T> = std::result::Result<T, Error>;
-
 #[tokio::main]
 async fn main() {
-    tracing_subscriber::fmt::init();
     dotenv().ok();
+    tracing_subscriber::fmt::init();
+
+    Environment::check();
 
     let config = InjectorConfig::new();
 
@@ -86,15 +75,7 @@ async fn get_index_html(req: Request<Body>) -> Response {
     println!("-> GET {}", req.uri());
 
     match inject_default_meta(req.uri()).await {
-        Err(error) => {
-            eprintln!("{}", error);
-
-            Response::builder()
-                .status(StatusCode::INTERNAL_SERVER_ERROR)
-                .body(Body::from(error.to_string()))
-                .unwrap()
-        }
-
+        Err(error) => error.as_response(),
         Ok(body) => Response::builder()
             .status(StatusCode::OK)
             .header(header::CONTENT_TYPE, "text/html")
@@ -109,7 +90,7 @@ async fn get_post(Path(post_id): Path<String>, req: Request<Body>) -> Response {
     println!("-> GET {}", uri);
 
     match PostCtrl::view(&post_id).await {
-        Err(error) => error_handler(error),
+        Err(error) => error.as_response(),
         Ok(body) => Response::builder()
             .status(StatusCode::OK)
             .header(header::CONTENT_TYPE, "text/html")
@@ -121,24 +102,16 @@ async fn get_post(Path(post_id): Path<String>, req: Request<Body>) -> Response {
 
 async fn get_fallback(req: Request<Body>) -> Response {
     let uri = req.uri();
-    println!("-> GET {}", uri);
+    println!("-> GET FALLBACK: {}", uri);
 
-    Response::builder()
-        .status(StatusCode::NOT_FOUND)
-        .body(Body::from("Not Found"))
-        .unwrap()
-}
+    let file_path = uri.path().strip_prefix('/').unwrap_or("");
 
-fn error_handler(error: Error) -> Response {
-    println!("{}", error);
-
-    let status = match error {
-        Error::InternalServerError(_) => StatusCode::INTERNAL_SERVER_ERROR,
-        Error::NotFoundError(_) => StatusCode::NOT_FOUND,
-    };
-
-    Response::builder()
-        .status(status)
-        .body(Body::from(error.to_string()))
-        .unwrap()
+    match ClientFiles::read(file_path).await {
+        Err(error) => error.as_response(),
+        Ok(body) => Response::builder()
+            .status(StatusCode::OK)
+            .header("x-generated-by", "rust")
+            .body(Body::from(body))
+            .unwrap(),
+    }
 }

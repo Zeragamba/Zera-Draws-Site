@@ -7,6 +7,7 @@ use url::Url;
 
 use crate::config::{Environment, FeatureFlag};
 use crate::config::FeatureFlag::{Disabled, Enabled};
+use crate::error::AppResult;
 
 pub struct ServerConfig {
     pub url: Url,
@@ -29,7 +30,7 @@ impl ServerConfig {
         }
     }
 
-    pub async fn load_cert(&self) -> crate::server::Result<Option<Certificate>> {
+    pub async fn load_cert(&self) -> AppResult<Option<Certificate>> {
         let cert_path = match self.ssl_crt.as_ref() {
             None => return Ok(None),
             Some(path) => path,

@@ -1,16 +1,28 @@
 use std::fmt;
 use std::fmt::Formatter;
 
+use derive_builder::Builder;
 use url::Url;
+
+use crate::client::{ClientConfig, ClientManifest};
 
 use super::OpenGraphImageData;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Builder)]
 pub struct OpenGraphData {
-    pub og_type: Option<String>,
-    pub title: Option<String>,
-    pub desc: Option<String>,
-    pub url: Option<Url>,
+    #[builder(default = "self.default_og_type()")]
+    pub og_type: String,
+
+    #[builder(default = "self.default_title()")]
+    pub title: String,
+
+    #[builder(setter(strip_option), default)]
+    pub description: Option<String>,
+
+    #[builder(default = "self.default_url()")]
+    pub url: Url,
+
+    #[builder(setter(strip_option), default)]
     pub image: Option<OpenGraphImageData>,
 }
 
@@ -20,50 +32,38 @@ impl fmt::Display for OpenGraphData {
     }
 }
 
-impl OpenGraphData {
-    pub fn new() -> OpenGraphData {
-        OpenGraphData {
-            og_type: None,
-            title: None,
-            desc: None,
-            url: None,
-            image: None,
+impl OpenGraphDataBuilder {
+    pub fn manifest(&mut self, manifest: &ClientManifest) -> &mut OpenGraphDataBuilder {
+        if let Some(title) = manifest.name.as_ref() {
+            self.title(title.to_string());
         }
-    }
-
-    pub fn title(&mut self, title: &str) -> &mut OpenGraphData {
-        self.title = Some(title.to_string());
-        self
-    }
-
-    pub fn og_type(&mut self, og_type: &str) -> &mut OpenGraphData {
-        self.og_type = Some(og_type.to_string());
-        self
-    }
-
-    pub fn description(&mut self, description: Option<&str>) -> &mut OpenGraphData {
-        self.desc = description.map(|v| v.to_string());
-        self
-    }
-
-    pub fn url(&mut self, url: Option<Url>) -> &mut OpenGraphData {
-        self.url = url;
-        self
-    }
-
-    pub fn url_path(&mut self, path: &str) -> &mut OpenGraphData {
-        match self.url.as_ref() {
-            None => self,
-            Some(url) => {
-                let mut url = url.clone();
-                url.set_path(path);
-                self.url(Some(url))
-            }
+        
+        if let Some(description) = manifest.desc.as_ref() {
+            self.description(description.to_string());
         }
+
+        self
     }
 
-    pub fn image(&mut self, image: Option<OpenGraphImageData>) -> &mut OpenGraphData {
-        self.image = image;
+    fn default_og_type(&self) -> String {
+        "website".to_string()
+    }
+
+    fn default_title(&self) -> String {
+        ClientConfig::new().title
+    }
+
+    fn default_url(&self) -> Url {
+        ClientConfig::new().url
+    }
+
+    pub fn url_path(&mut self, path: &str) -> &mut OpenGraphDataBuilder {
+        if let Some(url) = &self.url {
+            let mut url = url.clone();
+            url.set_path(path);
+            self.url(url);
+        }
+
         self
     }
 }

@@ -3,6 +3,7 @@ use serde::Deserialize;
 use uuid::Uuid;
 
 #[derive(Deserialize)]
+#[allow(dead_code)]
 pub struct TagData {
     id: Uuid,
     name: String,

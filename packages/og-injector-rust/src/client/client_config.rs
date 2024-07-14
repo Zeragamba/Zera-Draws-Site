@@ -3,6 +3,7 @@ use url::Url;
 use crate::config::Environment;
 
 pub struct ClientConfig {
+    pub title: String,
     pub url: Url,
     pub dir: PathBuf,
 }
@@ -12,7 +13,8 @@ impl ClientConfig {
         let env = Environment::new();
 
         Self {
-            url: env.client_url,
+            title: env.app_name,
+            url: env.app_url,
             dir: env.client_dir,
         }
     }

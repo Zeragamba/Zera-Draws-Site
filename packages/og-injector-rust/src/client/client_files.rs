@@ -2,30 +2,33 @@ use std::fs::File;
 use std::io::Read;
 
 use crate::client::ClientConfig;
-use crate::client::ClientError;
-use crate::client::Result;
+use crate::error::{AppError, AppResult};
 
 pub struct ClientFiles;
 
 impl ClientFiles {
-    async fn read(file: &str) -> Result<String> {
+    pub async fn read(file: &str) -> AppResult<String> {
         let config = ClientConfig::new();
-        let index_file = config.dir.join(file);
+        let file_path = config.dir.join(file);
 
-        File::open(index_file)
-            .and_then(|mut file| {
-                let mut contents = String::new();
-                file.read_to_string(&mut contents)?;
-                Ok(contents)
-            })
-            .map_err(|e| ClientError { msg: e.to_string() })
+        if !file_path.exists() {
+            let path = file_path.to_string_lossy();
+            return Err(AppError::NotFoundError(path.to_string()));
+        }
+
+        let mut contents = String::new();
+
+        let mut file = File::open(file_path)?;
+        file.read_to_string(&mut contents)?;
+
+        Ok(contents)
     }
 
-    pub async fn index_html() -> Result<String> {
+    pub async fn index_html() -> AppResult<String> {
         Self::read("index.html").await
     }
 
-    pub async fn app_manifest() -> Result<String> {
+    pub async fn app_manifest() -> AppResult<String> {
         Self::read("manifest.json").await
     }
 }

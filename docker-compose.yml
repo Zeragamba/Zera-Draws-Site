@@ -1,10 +1,8 @@
 services:
   router:
     extends:
-      file: docker-compose.shared.yml
+      file: docker-compose.production.yml
       service: router
-    ports:
-      - "${DEV_ROUTER_PORT}:443"
     develop:
       watch:
         - action: rebuild
@@ -12,7 +10,7 @@ services:
 
   server:
     extends:
-      file: docker-compose.shared.yml
+      file: docker-compose.production.yml
       service: server
     volumes:
       - ./server:/opt/server:rw
@@ -26,7 +24,7 @@ services:
 
   client:
     extends:
-      file: docker-compose.shared.yml
+      file: docker-compose.production.yml
       service: client
     volumes:
       - ./client:/opt/client:rw
@@ -34,17 +32,18 @@ services:
       - "${SSL_CRT}:/opt/ssl/current.crt:ro"
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
     environment:
+      PORT: "${DEV_CLIENT_PORT}"
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt
       SSL_KEY_FILE: /opt/ssl/current.key
       REACT_APP_SERVER_URL: "${DEV_ROUTER_URL}/api"
     command: yarn start
     ports:
-      - "${DEV_CLIENT_PORT}:3000"
+      - "${DEV_CLIENT_PORT}:${DEV_CLIENT_PORT}"
 
   og-injector:
     extends:
-      file: docker-compose.shared.yml
+      file: docker-compose.production.yml
       service: og-injector
     ports:
       - "${DEV_INJECTOR_PORT}:3000"
@@ -58,7 +57,7 @@ services:
 
   db:
     extends:
-      file: docker-compose.shared.yml
+      file: docker-compose.production.yml
       service: db
     ports:
       - "${DEV_DB_PORT}:5432"

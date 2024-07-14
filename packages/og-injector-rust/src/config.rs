@@ -13,13 +13,15 @@ pub enum FeatureFlag {
 }
 
 pub struct Environment {
+    pub app_name: String,
+    pub app_url: Url,
+
     pub injector_host: IpAddr,
     pub injector_port: u16,
     pub injector_https: FeatureFlag,
     pub injector_ssl_crt: Option<PathBuf>,
     pub injector_ssl_key: Option<PathBuf>,
 
-    pub client_url: Url,
     pub client_dir: PathBuf,
 
     pub server_url: Url,
@@ -29,18 +31,24 @@ pub struct Environment {
 impl Environment {
     pub fn new() -> Self {
         Self {
+            app_name: env_str_req("APP_NAME"),
+            app_url: env_url_req("APP_URL"),
+
             injector_host: env_ipaddr("INJECTOR_HOST").unwrap_or("0.0.0.0".parse().unwrap()),
             injector_port: env_port("INJECTOR_PORT").unwrap_or(3000),
             injector_https: env_flag("INJECTOR_HTTPS").unwrap_or(Disabled),
             injector_ssl_crt: env_path("INJECTOR_SSL_CRT"),
             injector_ssl_key: env_path("INJECTOR_SSL_KEY"),
 
-            client_url: env_url_req("CLIENT_URL"),
             client_dir: env_path_req("CLIENT_DIR"),
 
             server_url: env_url_req("SERVER_URL"),
             server_ssl_crt: env_path("SERVER_SSL_CRT"),
         }
+    }
+
+    pub fn check() {
+        Self::new();
     }
 }
 
@@ -55,10 +63,20 @@ fn env_str(key: &str) -> Option<String> {
     })
 }
 
+/// Reads a string value from the Environment
+///
+/// # Panics
+///
+/// Panics if the variable isn't set
 fn env_str_req(key: &str) -> String {
     env_str(key).expect(&format!("The environment variable '{key}' should be set"))
 }
 
+/// Reads an IPv4 or IPv6 address value from the Environment
+///
+/// # Panics
+///
+/// Panics if the variable isn't set
 fn env_ipaddr(key: &str) -> Option<IpAddr> {
     env_str(key).map(|value| {
         value.parse().expect(&format!(
@@ -67,20 +85,12 @@ fn env_ipaddr(key: &str) -> Option<IpAddr> {
     })
 }
 
-fn env_ipaddr_or(key: &str, default: IpAddr) -> IpAddr {
-    env_ipaddr(key).unwrap_or(default)
-}
-
 fn env_port(key: &str) -> Option<u16> {
     env_str(key).map(|value| {
         value.parse().expect(&format!(
             "The environment variable '{key}' should be a port"
         ))
     })
-}
-
-fn env_port_or(key: &str, default: u16) -> u16 {
-    env_port(key).unwrap_or(default)
 }
 
 fn env_url(key: &str) -> Option<Url> {

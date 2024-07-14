@@ -2,20 +2,19 @@ use reqwest::{Client, ClientBuilder};
 use url::Url;
 
 use crate::config::FeatureFlag::Enabled;
+use crate::error::AppResult;
 use crate::server::models::PostData;
 use crate::server::responses::GetPostRes;
 
-use super::Result;
 use super::ServerConfig;
 
 pub struct ServerApi {
     api_url: Url,
-    config: ServerConfig,
     client: Client,
 }
 
 impl ServerApi {
-    pub async fn new(config: ServerConfig) -> Result<ServerApi> {
+    pub async fn new(config: ServerConfig) -> AppResult<ServerApi> {
         let mut client = ClientBuilder::new();
 
         if matches!(config.https, Enabled) && config.ssl_crt.is_some() {
@@ -27,11 +26,7 @@ impl ServerApi {
 
         let client = client.build()?;
         let api_url = config.url.to_owned();
-        Ok(ServerApi {
-            config,
-            client,
-            api_url,
-        })
+        Ok(ServerApi { client, api_url })
     }
 
     fn build_url(&self, path: &str) -> String {
@@ -40,7 +35,7 @@ impl ServerApi {
         url.to_string()
     }
 
-    pub async fn get_post(&self, post_id: &str) -> Result<PostData> {
+    pub async fn get_post(&self, post_id: &str) -> AppResult<PostData> {
         let url = self.build_url(&format!("/post/{post_id}"));
 
         let res = self.client.get(url).send().await?;

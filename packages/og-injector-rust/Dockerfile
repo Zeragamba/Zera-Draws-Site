@@ -1,13 +1,15 @@
-FROM rust as builder
+FROM rust AS builder
 
-WORKDIR /usr/src/app
+WORKDIR /opt/build
+
 COPY . .
 RUN --mount=type=cache,target=/usr/local/cargo/registry \
-    --mount=type=cache,target=/home/root/app/target \
-    cargo build --release
+    --mount=type=cache,target=./target \
+    cargo build --release \
+    && mkdir /opt/dist \
+    && cp ./target/release/og-injector-rust /opt/dist
 
 FROM ubuntu
-
-COPY --from=builder /usr/src/app/target/release/og-injector-rust /usr/bin
+COPY --from=builder /opt/dist/og-injector-rust /usr/bin
 
 CMD ["og-injector-rust"]
