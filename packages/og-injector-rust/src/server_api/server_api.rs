@@ -36,7 +36,20 @@ impl ServerApi {
     }
 
     pub async fn get_post(&self, post_id: &str) -> AppResult<PostData> {
-        let url = self.build_url(&format!("/post/{post_id}"));
+        let path = format!("/post/{post_id}");
+        let url = self.build_url(&path);
+
+        let res = self.client.get(url).send().await?;
+        let body = res.text().await?;
+
+        println!("{}", body);
+
+        let res: GetPostRes = serde_json::from_str(&body)?;
+        Ok(res.post)
+    }
+
+    pub async fn get_latest(&self) -> AppResult<PostData> {
+        let url = self.build_url("/post/latest");
 
         let res = self.client.get(url).send().await?;
         let body = res.text().await?;

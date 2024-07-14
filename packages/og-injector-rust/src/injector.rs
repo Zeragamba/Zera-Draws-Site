@@ -13,6 +13,7 @@ use self::meta_tags::MetaTags;
 mod injector_config;
 mod meta_tags;
 pub mod router;
+mod router_response;
 
 pub async fn inject_default_meta(uri: &Uri) -> AppResult<String> {
     let meta = OpenGraphDataBuilder::default()

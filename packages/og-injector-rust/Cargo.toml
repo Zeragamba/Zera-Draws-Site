@@ -18,3 +18,6 @@ url = "1.7.2"
 uuid = { version = "1.10.0", features = ["v4", "serde"] }
 iso8601 = "0.6.1"
 derive_builder = "0.20.0"
+
+[profile.release]
+panic = "abort"
