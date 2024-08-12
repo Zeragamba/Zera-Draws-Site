@@ -37,9 +37,9 @@ services:
       IMAGES_DIR: "/opt/images"
 
   client:
-    build: packages/client-new
+    build: packages/website
     volumes:
-      - ./.volumes/client:/opt/client/dist:rw
+      - ./.volumes/client:/opt/app/dist:rw
     environment:
       NODE_ENV: production
       REACT_APP_ENV: "${APP_ENV}"
