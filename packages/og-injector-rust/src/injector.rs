@@ -1,9 +1,11 @@
 use axum::http::Uri;
-
+use axum::routing::IntoMakeService;
+use axum::Router;
 pub use injector_config::InjectorConfig;
 
 use crate::client::{ClientFiles, ClientManifest};
 use crate::error::AppResult;
+use crate::injector::router::build_router;
 use crate::open_graph::open_graph_data::OpenGraphDataBuilder;
 use crate::open_graph::OpenGraphData;
 use crate::server_api::models::{PostData, TagData};
@@ -15,12 +17,20 @@ mod meta_tags;
 pub mod router;
 mod router_response;
 
+pub struct Injector {}
+
+impl Injector {
+    pub fn build_service() -> IntoMakeService<Router> {
+        build_router().into_make_service()
+    }
+}
+
 pub async fn inject_default_meta(uri: &Uri) -> AppResult<String> {
     let meta = OpenGraphDataBuilder::default()
         .url_path(uri.to_string())
         .build()?;
 
-    return inject_meta(&meta).await;
+    inject_meta(&meta).await
 }
 
 pub async fn inject_post_meta(post: &PostData) -> AppResult<String> {
@@ -38,7 +48,7 @@ pub async fn inject_post_meta(post: &PostData) -> AppResult<String> {
         meta.image(img.into());
     }
 
-    return inject_meta(&meta.build()?).await;
+    inject_meta(&meta.build()?).await
 }
 
 pub async fn inject_tag_meta(tag: &TagData) -> AppResult<String> {
@@ -56,7 +66,7 @@ pub async fn inject_tag_meta(tag: &TagData) -> AppResult<String> {
         }
     }
 
-    return inject_meta(&meta.build()?).await;
+    inject_meta(&meta.build()?).await
 }
 
 pub async fn inject_meta(meta: &OpenGraphData) -> AppResult<String> {

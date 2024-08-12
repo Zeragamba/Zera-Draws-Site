@@ -5,8 +5,7 @@ use dotenv::dotenv;
 
 use crate::config::Environment;
 use crate::config::FeatureFlag::{Disabled, Enabled};
-use crate::injector::InjectorConfig;
-use crate::injector::router::build_router;
+use crate::injector::{Injector, InjectorConfig};
 
 mod client;
 mod config;
@@ -24,7 +23,7 @@ async fn main() {
 
     let config = InjectorConfig::new();
 
-    let app = build_router().into_make_service();
+    let app = Injector::build_service();
     let addr = config.addr;
     let url = config.url;
 

@@ -35,6 +35,9 @@ impl fmt::Display for AppError {
 
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
+        let body = self.to_string();
+        eprintln!("{}", body);
+
         let status_code = match self {
             AppError::InternalServerError(_) => StatusCode::INTERNAL_SERVER_ERROR,
             AppError::NotFoundError(_) => StatusCode::NOT_FOUND,
@@ -42,7 +45,7 @@ impl IntoResponse for AppError {
 
         Response::builder()
             .status(status_code)
-            .body(Body::from(self.to_string()))
+            .body(Body::from(body))
             .unwrap()
     }
 }

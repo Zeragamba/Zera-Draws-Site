@@ -1,20 +1,19 @@
 use axum::body::Body;
 use axum::extract::Path;
 use axum::http::Request;
-use axum::Router;
 use axum::routing::get;
+use axum::Router;
 use mime_guess::mime;
 
 use crate::client::ClientFiles;
-use crate::injector::{inject_default_meta, inject_post_meta, inject_tag_meta};
 use crate::injector::router_response::RouterResponse;
+use crate::injector::{inject_default_meta, inject_post_meta, inject_tag_meta};
 use crate::server_api::{ServerApi, ServerConfig};
 
 type Result = axum::response::Result<RouterResponse>;
 
 pub fn build_router() -> Router {
     Router::new()
-        .route("/", get(get_index))
         .route("/latest", get(get_latest))
         .route("/post/:post_id", get(get_post))
         .route("/tag/:tag_id/:post_id", get(get_post))
@@ -66,12 +65,21 @@ async fn get_fallback(req: Request<Body>) -> Result {
     let uri = req.uri();
     println!("-> GET FALLBACK: {}", uri);
 
+    if let Some(_) = req.headers().get("X-No-Try-Files") {
+        return get_index(req).await;
+    }
+
     let file_path = uri.path().strip_prefix('/').unwrap_or("");
 
-    let body = ClientFiles::read_raw(file_path).await?;
-    let mime_type = mime_guess::from_path(uri.to_string())
-        .first()
-        .unwrap_or(mime::APPLICATION_OCTET_STREAM);
+    let client_file = ClientFiles::read_raw(file_path).await;
+    match client_file {
+        Err(_) => get_index(req).await,
+        Ok(body) => {
+            let mime_type = mime_guess::from_path(uri.to_string())
+                .first()
+                .unwrap_or(mime::APPLICATION_OCTET_STREAM);
 
-    Ok(RouterResponse::Raw { body, mime_type })
+            Ok(RouterResponse::Raw { body, mime_type })
+        }
+    }
 }
