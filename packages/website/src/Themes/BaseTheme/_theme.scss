@@ -1,0 +1,24 @@
+$bp-mobile: 800px;
+
+$padding-9: calc(var(--spacing) * 9);
+$padding-8: calc(var(--spacing) * 8);
+$padding-7: calc(var(--spacing) * 7);
+$padding-6: calc(var(--spacing) * 6);
+$padding-5: calc(var(--spacing) * 5);
+$padding-4: calc(var(--spacing) * 4);
+$padding-3: calc(var(--spacing) * 4);
+$padding-2: calc(var(--spacing) * 2);
+$padding-1: calc(var(--spacing) * 1);
+
+$padding-lg: $padding-8;
+$padding-md: $padding-4;
+$padding-sm: $padding-2;
+$padding-xs: $padding-1;
+
+$colour-primary: hsl(10, 100%, 70%);
+$colour-primary-light: lighten($colour-primary, 20%);
+$colour-primary-dark: darken($colour-primary, 10%);
+
+$colour-dark: hsl(0, 0%, 10%);
+$colour-grey: hsl(0, 0%, 40%);
+$colour-light: hsl(0, 0%, 95%);

@@ -28,11 +28,12 @@ services:
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
     environment:
       NODE_ENV: "${APP_ENV}"
+      VITE_ENV: "${APP_ENV}"
       PORT: 3000
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt
       SSL_KEY_FILE: /opt/ssl/current.key
-      REACT_APP_SERVER_URL: "${DEV_ROUTER_URL}/api"
+      VITE_SERVER_URL: "${DEV_ROUTER_URL}/api"
     command: yarn dev
     ports:
       - "${DEV_CLIENT_PORT}:3000"
