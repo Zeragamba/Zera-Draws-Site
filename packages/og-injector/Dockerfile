@@ -1,13 +1,15 @@
-FROM node:22.2.0
-RUN corepack enable
+FROM rust AS builder
 
-WORKDIR /opt/og-injector
-
-COPY ["package.json", "yarn.lock", ".yarnrc.yml", "./"]
-RUN --mount=type=cache,target=/root/.yarn \
-    YARN_CACHE_FOLDER=/root/.yarn \
-    yarn install --immutable
+WORKDIR /opt/build
 
 COPY . .
+RUN --mount=type=cache,target=/usr/local/cargo/registry \
+    --mount=type=cache,target=./target \
+    cargo build --release \
+    && mkdir /opt/dist \
+    && cp ./target/release/og-injector /opt/dist/og-injector
 
-CMD [ "node", "passenger.js" ]
+FROM ubuntu
+COPY --from=builder /opt/dist/og-injector /usr/bin
+
+CMD ["og-injector"]

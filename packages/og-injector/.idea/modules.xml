@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/og-injector.iml" filepath="$PROJECT_DIR$/.idea/og-injector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/og-injector-rust.iml" filepath="$PROJECT_DIR$/.idea/og-injector-rust.iml" />
     </modules>
   </component>
 </project>

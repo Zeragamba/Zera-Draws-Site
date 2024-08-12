@@ -45,7 +45,7 @@ services:
     ports:
       - "${DEV_INJECTOR_PORT}:3000"
     volumes:
-      - ./packages/og-injector-rust/target/debug/og-injector-rust:/usr/bin/og-injector-rust:ro
+      - ./packages/og-injector/target/debug/og-injector:/usr/bin/og-injector:ro
       - ./.volumes/client:/opt/client:ro
 
   db:

@@ -47,7 +47,7 @@ services:
     command: yarn build
 
   og-injector:
-    build: packages/og-injector-rust
+    build: packages/og-injector
     volumes:
       - ./.volumes/client:/opt/client:ro
     environment:
