@@ -1,53 +1,54 @@
 services:
   router:
     extends:
-      file: docker-compose.shared.yml
+      file: docker-compose.production.yml
       service: router
-    ports:
-      - "${DEV_SERVER_PORT}:443"
-
   server:
     extends:
-      file: docker-compose.shared.yml
+      file: docker-compose.production.yml
       service: server
     volumes:
-      - ./server:/opt/server:rw
+      - ./packages/server:/opt/server:rw
       - ./.volumes/images:/opt/images:rw
     environment:
       CLIENT_URL: "${DEV_CLIENT_URL}"
-      SERVER_URL: "${DEV_SERVER_URL}/api"
-      IMAGES_URL: "${DEV_SERVER_URL}/images"
+      SERVER_URL: "${DEV_ROUTER_URL}/api"
+      IMAGES_URL: "${DEV_ROUTER_URL}/images"
+    ports:
+      - "${DEV_SERVER_PORT}:3000"
 
   client:
     extends:
-      file: docker-compose.shared.yml
+      file: docker-compose.production.yml
       service: client
     volumes:
-      - ./client:/opt/client:rw
+      - ./packages/client:/opt/client:rw
       - ./.volumes/client:/opt/client/dist:rw
       - "${SSL_CRT}:/opt/ssl/current.crt:ro"
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
     environment:
+      PORT: "${DEV_CLIENT_PORT}"
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt
       SSL_KEY_FILE: /opt/ssl/current.key
-      REACT_APP_SERVER_URL: "${DEV_SERVER_URL}/api"
+      REACT_APP_SERVER_URL: "${DEV_ROUTER_URL}/api"
     command: yarn start
     ports:
-      - "${DEV_CLIENT_PORT}:3000"
+      - "${DEV_CLIENT_PORT}:${DEV_CLIENT_PORT}"
 
   og-injector:
     extends:
-      file: docker-compose.shared.yml
+      file: docker-compose.production.yml
       service: og-injector
+    ports:
+      - "${DEV_INJECTOR_PORT}:3000"
     volumes:
-      - ./og-injector:/opt/og-injector:rw
+      - ./packages/og-injector-rust/target/debug/og-injector-rust:/usr/bin/og-injector-rust:ro
       - ./.volumes/client:/opt/client:ro
-    command: yarn watch
 
   db:
     extends:
-      file: docker-compose.shared.yml
+      file: docker-compose.production.yml
       service: db
     ports:
       - "${DEV_DB_PORT}:5432"

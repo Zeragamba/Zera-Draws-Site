@@ -1,31 +1,68 @@
 services:
   router:
-    extends:
-      file: docker-compose.shared.yml
-      service: router
+    build: packages/router
+    depends_on:
+      - server
+      - og-injector
     ports:
       - "127.0.0.1:${APP_PORT}:443"
-    restart: always
+    volumes:
+      - ./.volumes/images:/opt/images:ro
+      - ./.volumes/client:/opt/client:ro
+      - "${SSL_CRT}:/opt/ssl/current.crt:ro"
+      - "${SSL_KEY}:/opt/ssl/current.key:ro"
 
   server:
-    extends:
-      file: docker-compose.shared.yml
-      service: server
-    restart: always
+    build: packages/server
+    command: bin/rails s -p 3000 -b 0.0.0.0
+    volumes:
+      - ./.volumes/images:/opt/images:rw
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: "${APP_ENV}"
+
+      APP_HOST: "${APP_HOST}"
+      APP_URL: "${APP_URL}"
+      APP_NAME: "${APP_NAME}"
+
+      DB_HOST: db # internal docker host
+      DB_PORT: 5432
+      DB_NAME: "${DB_NAME}"
+      DB_USER: "${DB_USER}"
+      DB_PASS: "${DB_PASS}"
+
+      TOKEN_SECRET: "${TOKEN_SECRET}"
+
+      IMAGES_DIR: "/opt/images"
 
   client:
-    extends:
-      file: docker-compose.shared.yml
-      service: client
+    build: packages/client
+    volumes:
+      - ./.volumes/client:/opt/client/dist:rw
+    environment:
+      NODE_ENV: "${APP_ENV}"
+      REACT_APP_ENV: "${APP_ENV}"
+      REACT_APP_SERVER_URL: "${APP_URL}/api"
+    command: yarn build
 
   og-injector:
-    extends:
-      file: docker-compose.shared.yml
-      service: og-injector
-    restart: always
+    build: packages/og-injector-rust
+    volumes:
+      - ./.volumes/client:/opt/client:ro
+    environment:
+      APP_NAME: "${APP_NAME}"
+      APP_URL: "${APP_URL}"
+
+      SERVER_URL: "http://server:3000" # internal docker url
+
+      CLIENT_DIR: "/opt/client"
 
   db:
-    extends:
-      file: docker-compose.shared.yml
-      service: db
-    restart: always
+    image: postgres:16
+    volumes:
+      - ./.volumes/db/pg16:/var/lib/postgresql/data:rw
+    environment:
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASS}"
