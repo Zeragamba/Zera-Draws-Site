@@ -1,6 +1,7 @@
 import { defineConfig, ServerOptions } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import * as fs from 'node:fs'
+import checker from 'vite-plugin-checker'
 
 const server: ServerOptions = {
   host: true,
@@ -22,6 +23,13 @@ if (process.env.HTTPS === 'true') {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [ react() ],
+  plugins: [
+    react(),
+    checker({
+      typescript: {
+        buildMode: true,
+      },
+    }),
+  ],
   server: server,
 })
