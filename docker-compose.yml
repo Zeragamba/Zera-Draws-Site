@@ -11,6 +11,7 @@ services:
       - ./packages/server:/opt/server:rw
       - ./.volumes/images:/opt/images:rw
     environment:
+      RAILS_ENV: "${APP_ENV}"
       CLIENT_URL: "${DEV_CLIENT_URL}"
       SERVER_URL: "${DEV_ROUTER_URL}/api"
       IMAGES_URL: "${DEV_ROUTER_URL}/images"
@@ -27,6 +28,7 @@ services:
       - "${SSL_CRT}:/opt/ssl/current.crt:ro"
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
     environment:
+      RAILS_ENV: "${APP_ENV}"
       PORT: "${DEV_CLIENT_PORT}"
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt
