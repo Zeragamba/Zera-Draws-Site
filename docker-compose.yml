@@ -23,20 +23,20 @@ services:
       file: docker-compose.production.yml
       service: client
     volumes:
-      - ./packages/client:/opt/client:rw
+      - ./packages/client-new:/opt/client:rw
       - ./.volumes/client:/opt/client/dist:rw
       - "${SSL_CRT}:/opt/ssl/current.crt:ro"
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
     environment:
-      RAILS_ENV: "${APP_ENV}"
-      PORT: "${DEV_CLIENT_PORT}"
+      NODE_ENV: "${APP_ENV}"
+      PORT: 3000
       HTTPS: true
       SSL_CRT_FILE: /opt/ssl/current.crt
       SSL_KEY_FILE: /opt/ssl/current.key
       REACT_APP_SERVER_URL: "${DEV_ROUTER_URL}/api"
-    command: yarn start
+    command: yarn dev
     ports:
-      - "${DEV_CLIENT_PORT}:${DEV_CLIENT_PORT}"
+      - "${DEV_CLIENT_PORT}:3000"
 
   og-injector:
     extends:
