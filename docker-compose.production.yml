@@ -37,7 +37,7 @@ services:
       IMAGES_DIR: "/opt/images"
 
   client:
-    build: packages/website
+    build: packages/client
     volumes:
       - ./.volumes/client:/opt/app/dist:rw
     environment:

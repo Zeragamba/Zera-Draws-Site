@@ -23,7 +23,7 @@ services:
       file: docker-compose.production.yml
       service: client
     volumes:
-      - ./packages/website/src:/opt/app/src:rw
+      - ./packages/client/src:/opt/app/src:rw
       - "${SSL_CRT}:/opt/ssl/current.crt:ro"
       - "${SSL_KEY}:/opt/ssl/current.key:ro"
     environment:

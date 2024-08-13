@@ -11,10 +11,10 @@ echo "Deploying: $LAST_DEPLOY_SHA -> $CUR_DEPLOY_SHA"
 echo "--- Rebuilding containers ---"
 docker compose -f docker-compose.production.yml build
 
-CLIENT_CHANGED=$(git diff --quiet $LAST_DEPLOY_SHA $CUR_DEPLOY_SHA -- packages/website && echo false || echo true)
+CLIENT_CHANGED=$(git diff --quiet $LAST_DEPLOY_SHA $CUR_DEPLOY_SHA -- packages/client && echo false || echo true)
 echo "--- Rebuilding Client ---"
 if [[ $CLIENT_CHANGED == "true" ]]; then
-  docker compose -f docker-compose.production.yml up website
+  docker compose -f docker-compose.production.yml up client
 else
   echo "Skipped: client unchanged"
 fi
