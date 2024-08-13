@@ -1,5 +1,0 @@
-export * from './ArchivePage'
-export * from './FirstPostPage'
-export * from './LatestPostPage'
-export * from './NewPostPage'
-export * from './ViewPostPage'
