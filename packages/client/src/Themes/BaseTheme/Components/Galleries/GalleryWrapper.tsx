@@ -1,10 +1,10 @@
-import { FC, Fragment, ReactNode, useRef } from 'react'
+import { FC, Fragment, ReactNode, useRef } from "react"
 
-import { GalleryContextProvider } from './GalleryContext'
-import { useContainerDimensions } from '../../../../Hooks'
-import { StyleProp } from '../../../ZeraDark/MuiTheme'
+import { useContainerDimensions } from "../../../../Hooks"
+import { StyleProp } from "../../../ZeraDark/MuiTheme"
 
-import styles from './GalleryWrapper.module.scss'
+import styles from "./GalleryWrapper.module.scss"
+import { GalleryProvider } from "../../../../Contexts"
 
 export interface GalleryWrapperProps {
   children: ReactNode[]
@@ -24,19 +24,17 @@ export const GalleryWrapper: FC<GalleryWrapperProps> = ({
   const maxItems = numColumns * maxRows
 
   const gallerySize: StyleProp = {
-    '--gallery-cols': numColumns,
-    '--gallery-row-height': rowHeight + 'px',
+    "--gallery-cols": numColumns,
+    "--gallery-row-height": rowHeight + "px",
   }
 
   return (
-    <GalleryContextProvider config={{ rowHeight }}>
+    <GalleryProvider config={{ rowHeight }}>
       <div className={styles.row} ref={galleryRef} style={gallerySize}>
         {children.slice(0, maxItems).map((child, index) => (
-          <Fragment key={index}>
-            {child}
-          </Fragment>
+          <Fragment key={index}>{child}</Fragment>
         ))}
       </div>
-    </GalleryContextProvider>
+    </GalleryProvider>
   )
 }

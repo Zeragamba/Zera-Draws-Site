@@ -1,9 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect } from "react"
 
-import { usePostContext } from '../../Contexts'
-import { MathUtils } from '../../Lib/MathUtils'
-import { ImageData } from '../../Models'
-
+import { usePostContext } from "../../Contexts"
+import { MathUtils } from "../../Lib/MathUtils"
+import { ImageData } from "../../Models"
 
 export interface PostImageCtrl {
   images: ImageData[]
@@ -23,7 +22,7 @@ export const usePostImageCtrl = (): PostImageCtrl => {
   const { post, imageIndex, setImageIndex } = usePostContext()
   const images = post.images
 
-  useEffect(() => setImageIndex(0), [ post ])
+  useEffect(() => setImageIndex(0), [setImageIndex, post])
 
   const totalImages = images.length
   const currentImage = images[MathUtils.clamp(imageIndex, 0, totalImages - 1)]
@@ -33,7 +32,7 @@ export const usePostImageCtrl = (): PostImageCtrl => {
   const hasPrevImage = imageIndex > 0
 
   const onChangeImage = (newImage: ImageData | number) => {
-    if (typeof newImage === 'number') {
+    if (typeof newImage === "number") {
       setImageIndex(MathUtils.clamp(newImage, 0, totalImages - 1))
     } else {
       setImageIndex(images.findIndex((i) => i.id === newImage.id) || 0)

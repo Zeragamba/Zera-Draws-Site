@@ -1,12 +1,11 @@
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { Box, SxProps, Typography } from '@mui/material'
-import { FC, MouseEvent, MouseEventHandler, ReactNode, useMemo } from 'react'
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons"
+import { Box, SxProps, Typography } from "@mui/material"
+import { FC, MouseEvent, MouseEventHandler, ReactNode, useMemo } from "react"
 
-import { useGalleryContext } from './GalleryContext'
-import { useInViewport } from '../../../../Hooks'
-import { FontAwesomeIcon } from '../../../../Lib'
-import { ImageData } from '../../../../Models'
-import { AsyncImg } from '../Images'
+import { useInViewport } from "../../../../Hooks"
+import { FontAwesomeIcon } from "../../../../Lib"
+import { ImageData } from "../../../../Models"
+import { AsyncImg } from "../Images"
 
 interface GalleryItemProps {
   image: ImageData
@@ -24,41 +23,43 @@ export const GalleryItem: FC<GalleryItemProps> = ({
   linkTo,
   onClick,
 }) => {
-  const galleryConfig = useGalleryContext()
-  const [ wrapperRef, inViewport ] = useInViewport()
+  const [wrapperRef, inViewport] = useInViewport()
 
-  const ItemStyles: SxProps = useMemo(() => ({
-    aspectRatio: '1/1',
-    position: 'relative',
-    display: 'inline-flex',
-    overflow: 'hidden',
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'center',
-    cursor: onClick ? 'pointer' : undefined,
+  const ItemStyles: SxProps = useMemo(
+    () => ({
+      aspectRatio: "1/1",
+      position: "relative",
+      display: "inline-flex",
+      overflow: "hidden",
+      alignItems: "center",
+      flexGrow: 1,
+      justifyContent: "center",
+      cursor: onClick ? "pointer" : undefined,
 
-    '&:hover': {
-      '.image': { padding: 1 },
-      '.metadataTop': { top: 0 },
-      '.metadataBottom': { bottom: 0 },
-    },
+      "&:hover": {
+        ".image": { padding: 1 },
+        ".metadataTop": { top: 0 },
+        ".metadataBottom": { bottom: 0 },
+      },
 
-    '.image': {
-      width: '100%',
-      height: '100%',
-      padding: 0,
-      transition: 'padding 200ms',
-    },
+      ".image": {
+        width: "100%",
+        height: "100%",
+        padding: 0,
+        transition: "padding 200ms",
+      },
 
-    '.imgElement': {
-      width: '100%',
-      height: '100%',
+      ".imgElement": {
+        width: "100%",
+        height: "100%",
 
-      objectFit: 'cover',
-      objectPosition: 'top',
-      background: 'gray',
-    },
-  }), [ galleryConfig, onClick ])
+        objectFit: "cover",
+        objectPosition: "top",
+        background: "gray",
+      },
+    }),
+    [onClick],
+  )
 
   const onItemClick = (event: MouseEvent<HTMLElement>) => {
     if (!onClick) return
@@ -69,14 +70,18 @@ export const GalleryItem: FC<GalleryItemProps> = ({
   const imgEle = (
     <>
       {inViewport && (
-        <AsyncImg className="imgElement" src={image.srcs.gallery || image.srcs.full} alt={title} />
+        <AsyncImg
+          className="imgElement"
+          src={image.srcs.gallery || image.srcs.full}
+          alt={title}
+        />
       )}
     </>
   )
 
   return (
     <Box
-      component={linkTo ? 'a' : 'div'}
+      component={linkTo ? "a" : "div"}
       href={linkTo}
       sx={ItemStyles}
       ref={wrapperRef}
@@ -97,13 +102,13 @@ export const GalleryItem: FC<GalleryItemProps> = ({
 
 const PrivateMarker: FC = () => {
   const styles: SxProps = {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     padding: 1,
-    color: 'black',
-    backgroundColor: 'lightgrey',
-    borderTopRightRadius: '8px',
-    borderTopLeftRadius: '8px',
+    color: "black",
+    backgroundColor: "lightgrey",
+    borderTopRightRadius: "8px",
+    borderTopLeftRadius: "8px",
   }
 
   return (
@@ -114,29 +119,29 @@ const PrivateMarker: FC = () => {
 }
 
 interface ItemMetaDataProps {
-  location: 'top' | 'bottom'
+  location: "top" | "bottom"
   children: ReactNode
 }
 
-const ItemMetadata: FC<ItemMetaDataProps> = ({
-  location,
-  children,
-}) => {
+const ItemMetadata: FC<ItemMetaDataProps> = ({ location, children }) => {
   const styles: SxProps = {
-    zIndex: '10',
-    position: 'absolute',
-    width: '100%',
+    zIndex: "10",
+    position: "absolute",
+    width: "100%",
     padding: 1,
-    transition: 'top 250ms ease, bottom 250ms ease',
-    color: 'hsl(0, 0%, 10%)',
-    background: 'hsla(0, 100%, 100%, 0.75)',
+    transition: "top 250ms ease, bottom 250ms ease",
+    color: "hsl(0, 0%, 10%)",
+    background: "hsla(0, 100%, 100%, 0.75)",
 
-    '&.metadataTop': { top: '-100%' },
-    '&.metadataBottom': { bottom: '-100%' },
+    "&.metadataTop": { top: "-100%" },
+    "&.metadataBottom": { bottom: "-100%" },
   }
 
   return (
-    <Box sx={styles} className={location === 'top' ? 'metadataTop' : 'metadataBottom'}>
+    <Box
+      sx={styles}
+      className={location === "top" ? "metadataTop" : "metadataBottom"}
+    >
       {children}
     </Box>
   )

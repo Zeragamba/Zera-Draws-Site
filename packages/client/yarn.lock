@@ -3540,6 +3540,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier@npm:3.3.3":
+  version: 3.3.3
+  resolution: "prettier@npm:3.3.3"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 10c0/b85828b08e7505716324e4245549b9205c0cacb25342a030ba8885aba2039a115dbcf75a0b7ca3b37bc9d101ee61fab8113fc69ca3359f2a226f1ecc07ad2e26
+  languageName: node
+  linkType: hard
+
 "prism-react-renderer@npm:^2.0.3":
   version: 2.3.1
   resolution: "prism-react-renderer@npm:2.3.1"
@@ -4815,6 +4824,7 @@ __metadata:
     globals: "npm:^15.9.0"
     markdown-to-jsx: "npm:^7.4.5"
     mui-markdown: "npm:^1.1.13"
+    prettier: "npm:3.3.3"
     react: "npm:^18.1.0"
     react-dnd: "npm:^16.0.1"
     react-dnd-html5-backend: "npm:^16.0.1"

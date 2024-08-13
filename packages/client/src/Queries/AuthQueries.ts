@@ -1,19 +1,30 @@
-import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "@tanstack/react-query"
 
-import { queryKeys } from './QueryKeys'
-import { authApiClient, RegisterPassKeyParams, ServerApiError } from '../Api'
-import { PasskeyData } from '../Api/Schemas'
-import { queryClient } from '../App/QueryClient'
-import { UserData } from '../Models'
+import { queryKeys } from "./QueryKeys"
+import { authApiClient, RegisterPassKeyParams, ServerApiError } from "../Api"
+import { PasskeyData } from "../Api/Schemas"
+import { queryClient } from "../App/QueryClient"
+import { UserData } from "../Models"
 
 export const usePasswordLogin$ = () => {
   const queryClient = useQueryClient()
 
-  return useMutation<UserData, ServerApiError, {
-    username: string
-    password: string
-  }>({
-    mutationFn: ({ username, password }) => authApiClient.loginPassword({ username, password }),
+  return useMutation<
+    UserData,
+    ServerApiError,
+    {
+      username: string
+      password: string
+    }
+  >({
+    mutationFn: ({ username, password }) =>
+      authApiClient.loginPassword({ username, password }),
     onSuccess: () => queryClient.invalidateQueries(),
   })
 }
@@ -42,51 +53,76 @@ export const useUserPasskeys$ = (): UseQueryResult<PasskeyData[] | null> => {
 }
 
 export const usePasskeyLogin$ = () => {
-  return useMutation<UserData, ServerApiError, {}>({
+  return useMutation<UserData, ServerApiError, object>({
     mutationFn: async () => authApiClient.passkeys.login(),
     onSuccess: () => queryClient.invalidateQueries(),
   })
 }
 
-export const useCreatePasskey$ = (): UseMutationResult<Omit<RegisterPassKeyParams, 'passkey'>, unknown, object> => {
+export const useCreatePasskey$ = (): UseMutationResult<
+  Omit<RegisterPassKeyParams, "passkey">,
+  unknown,
+  object
+> => {
   return useMutation({
     mutationFn: async () => authApiClient.passkeys.create(),
   })
 }
 
-export const useRegisterPasskey$ = (): UseMutationResult<PasskeyData, unknown, RegisterPassKeyParams> => {
+export const useRegisterPasskey$ = (): UseMutationResult<
+  PasskeyData,
+  unknown,
+  RegisterPassKeyParams
+> => {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: async (params) => authApiClient.passkeys.register(params),
     onSuccess: (savedPasskey) => {
-      queryClient.setQueryData(queryKeys.auth.passkeys.queryKey, (passkeys: PasskeyData[] = []) => {
-        return [ ...passkeys, savedPasskey ]
-      })
+      queryClient.setQueryData(
+        queryKeys.auth.passkeys.queryKey,
+        (passkeys: PasskeyData[] = []) => {
+          return [...passkeys, savedPasskey]
+        },
+      )
     },
   })
 }
 
-export const useUpdatePasskey$ = (): UseMutationResult<PasskeyData, unknown, PasskeyData> => {
+export const useUpdatePasskey$ = (): UseMutationResult<
+  PasskeyData,
+  unknown,
+  PasskeyData
+> => {
   return useMutation({
     mutationFn: async (passkey) => authApiClient.passkeys.update(passkey),
     onSuccess: (savedPasskey) => {
-      queryClient.setQueryData(queryKeys.auth.passkeys.queryKey, (passkeys: PasskeyData[] = []) => {
-        return passkeys.map((passkey) => {
-          return passkey.id === savedPasskey.id ? savedPasskey : passkey
-        })
-      })
+      queryClient.setQueryData(
+        queryKeys.auth.passkeys.queryKey,
+        (passkeys: PasskeyData[] = []) => {
+          return passkeys.map((passkey) => {
+            return passkey.id === savedPasskey.id ? savedPasskey : passkey
+          })
+        },
+      )
     },
   })
 }
 
-export const useRemovePasskey$ = (): UseMutationResult<PasskeyData, unknown, PasskeyData> => {
+export const useRemovePasskey$ = (): UseMutationResult<
+  PasskeyData,
+  unknown,
+  PasskeyData
+> => {
   return useMutation({
     mutationFn: async (passkey) => authApiClient.passkeys.remove(passkey),
     onSuccess: (savedPasskey) => {
-      queryClient.setQueryData(queryKeys.auth.passkeys.queryKey, (passkeys: PasskeyData[] = []) => {
-        return passkeys.filter((key) => key.id !== savedPasskey.id)
-      })
+      queryClient.setQueryData(
+        queryKeys.auth.passkeys.queryKey,
+        (passkeys: PasskeyData[] = []) => {
+          return passkeys.filter((key) => key.id !== savedPasskey.id)
+        },
+      )
     },
   })
 }

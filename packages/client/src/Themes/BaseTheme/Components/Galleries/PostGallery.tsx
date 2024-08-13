@@ -1,15 +1,15 @@
-import { Alert, LinearProgress, Paper } from '@mui/material'
-import { UseInfiniteQueryResult } from '@tanstack/react-query'
-import { FC, MouseEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Alert, LinearProgress, Paper } from "@mui/material"
+import { UseInfiniteQueryResult } from "@tanstack/react-query"
+import { FC, MouseEvent } from "react"
+import { useNavigate } from "react-router-dom"
 
-import { GalleryConfig } from './GalleryContext'
-import { GalleryItem } from './GalleryItem'
-import { GalleryWrapper } from './GalleryWrapper'
-import { PostData } from '../../../../Models'
-import { InfiniteScroll } from '../Shared'
+import { GalleryItem } from "./GalleryItem"
+import { GalleryWrapper } from "./GalleryWrapper"
+import { PostData } from "../../../../Models"
+import { InfiniteScroll } from "../Shared"
+import { GalleryConfig } from "../../../../Contexts"
 
-export interface PostGalleryProps extends Omit<GalleryConfig, 'rowHeight'> {
+export interface PostGalleryProps extends Omit<GalleryConfig, "rowHeight"> {
   rowHeight?: number
   maxItems?: number
   maxRows?: number
@@ -44,12 +44,16 @@ export const PostGallery: FC<PostGalleryProps> = ({
 
   if (postsQuery.isError) {
     console.error(postsQuery.error)
-    return <Alert severity={'error'}>Error loading gallery. :(</Alert>
+    return <Alert severity={"error"}>Error loading gallery. :(</Alert>
   } else if (postsQuery.isPending) {
-    return <Paper><LinearProgress /></Paper>
+    return (
+      <Paper>
+        <LinearProgress />
+      </Paper>
+    )
   }
   const posts = postsQuery.data
-  const hasNextPage = (posts.length <= maxItems && postsQuery.hasNextPage)
+  const hasNextPage = posts.length <= maxItems && postsQuery.hasNextPage
 
   return (
     <InfiniteScroll
@@ -57,8 +61,12 @@ export const PostGallery: FC<PostGalleryProps> = ({
       hasNextPage={hasNextPage}
       fetchNextPage={onFetchNextPage}
     >
-      <GalleryWrapper rowHeight={rowHeight} {...galleryConfig} maxRows={maxRows}>
-        {posts.slice(0, maxItems).map(post => (
+      <GalleryWrapper
+        rowHeight={rowHeight}
+        {...galleryConfig}
+        maxRows={maxRows}
+      >
+        {posts.slice(0, maxItems).map((post) => (
           <GalleryItem
             key={post.id}
             image={post.images[0]}

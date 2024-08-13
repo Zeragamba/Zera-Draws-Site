@@ -6,16 +6,16 @@ import {
   faThreads,
   faTumblr,
   faTwitter,
-} from '@fortawesome/free-brands-svg-icons'
-import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
-import { FC, ReactElement } from 'react'
+} from "@fortawesome/free-brands-svg-icons"
+import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons"
+import { FC, ReactElement } from "react"
 
-import { IconBluesky } from './IconBluesky'
-import { IconGumroad } from './IconGumroad'
-import { FontAwesomeIcon } from '../../../../Lib'
-import { SocialPlatform } from '../../../../Models'
+import { IconBluesky } from "./IconBluesky"
+import { IconGumroad } from "./IconGumroad"
+import { FontAwesomeIcon } from "../../../../Lib"
+import { SocialPlatform } from "../../../../Models"
 
-export const socialLogo: Record<SocialPlatform, ReactElement> = {
+const socialLogoMap: Record<SocialPlatform, ReactElement> = {
   [SocialPlatform.bluesky]: <IconBluesky />,
   [SocialPlatform.deviantArt]: <FontAwesomeIcon icon={faDeviantart} />,
   [SocialPlatform.discord]: <FontAwesomeIcon icon={faDiscord} />,
@@ -32,5 +32,5 @@ interface SocialLogoProps {
 }
 
 export const SocialLogo: FC<SocialLogoProps> = ({ platform }) => {
-  return socialLogo[platform] || <FontAwesomeIcon icon={faCircleQuestion} />
+  return socialLogoMap[platform] || <FontAwesomeIcon icon={faCircleQuestion} />
 }

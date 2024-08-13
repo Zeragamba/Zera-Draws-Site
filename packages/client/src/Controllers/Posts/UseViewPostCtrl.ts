@@ -1,12 +1,9 @@
-import { PostImageCtrl, usePostImageCtrl } from './UsePostImageNavCtrl'
-import { PostNavCtrl, usePostNavCtrl } from './UsePostNavCtrl'
-import { PostContextState, usePostContext } from '../../Contexts'
-import { useRecordView } from '../../Lib'
+import { PostImageCtrl, usePostImageCtrl } from "./UsePostImageNavCtrl"
+import { PostNavCtrl, usePostNavCtrl } from "./UsePostNavCtrl"
+import { PostContextState, usePostContext } from "../../Contexts"
+import { useRecordView } from "../../Lib"
 
-export type UseViewPostCtrl =
-  & PostContextState
-  & PostNavCtrl
-  & PostImageCtrl
+export type UseViewPostCtrl = PostContextState & PostNavCtrl & PostImageCtrl
 
 export const useViewPostCtrl = (): UseViewPostCtrl => {
   const postContext = usePostContext()

@@ -1,11 +1,10 @@
-import { Box } from '@mui/material'
-import { Outlet } from 'react-router-dom'
+import { Box } from "@mui/material"
+import { Outlet } from "react-router-dom"
 
-import { Header } from './Header'
-import { Layout, LayoutStyles } from './Layout'
-import { PageContextProvider } from './PageContext'
-import { useAgeGate } from '../../../Contexts'
-import { AgeGatePage } from '../Pages'
+import { Header } from "./Header"
+import { Layout, LayoutStyles } from "./Layout"
+import { PageProvider, useAgeGate } from "../../../Contexts"
+import { AgeGatePage } from "../Pages"
 
 interface PublicLayoutProps {
   copyright?: string
@@ -31,13 +30,13 @@ export const PublicLayout: Layout<PublicLayoutProps> = ({
       </Box>
 
       <Box component="main" sx={LayoutStyles.main}>
-        <PageContextProvider tagId={tagId} galleryId={galleryId}>
+        <PageProvider tagId={tagId} galleryId={galleryId}>
           <Box sx={LayoutStyles.content}>
             <Outlet />
           </Box>
-        </PageContextProvider>
+        </PageProvider>
 
-        <Box sx={{ textAlign: 'center', padding: 2 }}>
+        <Box sx={{ textAlign: "center", padding: 2 }}>
           &copy; {copyright} {new Date().getFullYear()}
         </Box>
       </Box>

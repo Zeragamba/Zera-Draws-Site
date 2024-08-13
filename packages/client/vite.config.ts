@@ -30,6 +30,10 @@ export default defineConfig({
       typescript: {
         buildMode: true,
       },
+      eslint: {
+        lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
+        useFlatConfig: true,
+      },
     }),
   ],
   server: server,
