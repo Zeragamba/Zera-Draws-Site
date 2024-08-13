@@ -1,5 +1,9 @@
 /* DEVELOPER */
-Twitter: @ZeragambaDraws
-Developed with WebStorm, Node, Express, React, and Rails
+    Developer: Zeragamba
+    Twitter: @ZeragambaDraws
+    From: Ontario, Canada
 
 /* SITE */
+    IDE: WebStorm, RustRover, Intellij
+    Languages: Node, Rust, Ruby
+    Tools: Express, MUI, React, Rails, Vite
