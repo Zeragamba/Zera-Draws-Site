@@ -1,19 +1,17 @@
-import { Box, Stack, SxProps } from '@mui/material'
-import { FC } from 'react'
+import { Box, Stack, SxProps } from "@mui/material"
+import { FC } from "react"
 
-import { useIsMobile } from '../../../../Hooks'
-import { SocialPlatform } from '../../../../Models'
-import { useSocialPlatforms$ } from '../../../../Queries'
-import { Colours } from '../../../ZeraDark/MuiTheme'
-import { SocialLogo } from '../../Components'
+import { useIsMobile } from "../../../../Hooks"
+import { SocialPlatform } from "../../../../Models"
+import { useSocialPlatforms$ } from "../../../../Queries"
+import { Colours } from "../../../ZeraDark/MuiTheme"
+import { SocialLogo } from "../../Components"
 
 interface SocialLinkProps {
   platform: SocialPlatform
 }
 
-export const SocialLink: FC<SocialLinkProps> = ({
-  platform,
-}) => {
+export const SocialLink: FC<SocialLinkProps> = ({ platform }) => {
   const socials$ = useSocialPlatforms$()
   const socials = socials$.data || {}
 
@@ -22,33 +20,33 @@ export const SocialLink: FC<SocialLinkProps> = ({
   if (!socials[platform]) return null
 
   const styles: SxProps = {
-    textDecoration: 'none',
+    textDecoration: "none",
     color: Colours.light,
 
-    backgroundColor: 'primary.main',
-    transition: 'background-color 250ms',
-    alignItems: 'center',
+    backgroundColor: "primary.main",
+    transition: "background-color 250ms",
+    alignItems: "center",
 
-    '.logo': {
-      display: 'flex',
+    ".logo": {
+      display: "flex",
       width: 36,
       height: 36,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
     },
 
-    '.label': {
+    ".label": {
       width: 0,
-      overflow: 'hidden',
-      transition: 'width 250ms',
+      overflow: "hidden",
+      transition: "width 250ms",
     },
   }
 
   const hoverStyles: SxProps = {
-    '&:hover': {
-      backgroundColor: 'primary.light',
+    "&:hover": {
+      backgroundColor: "primary.light",
 
-      '.label': { width: 100 },
+      ".label": { width: 100 },
     },
   }
 
@@ -60,15 +58,13 @@ export const SocialLink: FC<SocialLinkProps> = ({
       href={socials[platform]}
       target="_blank"
       rel="noreferrer"
-      sx={[ styles, !isMobile && hoverStyles ]}
+      sx={[styles, !isMobile && hoverStyles]}
     >
       <Box className="logo">
         <SocialLogo platform={platform} />
       </Box>
       <Box className="label">
-        <Box sx={{ width: 100 }}>
-          {platform}
-        </Box>
+        <Box sx={{ width: 100 }}>{platform}</Box>
       </Box>
     </Stack>
   )

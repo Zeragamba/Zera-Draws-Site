@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState } from "react"
 
-import { byIsFeatured, byTagName, filterTags, TagFilter } from '../Lib'
-import { TagData } from '../Models'
-import { useAllTags$ } from '../Queries'
-import { sort } from 'fast-sort'
+import { byIsFeatured, byTagName, filterTags, TagFilter } from "../Lib"
+import { TagData } from "../Models"
+import { useAllTags$ } from "../Queries"
+import { sort } from "fast-sort"
 
 export type UseTagMenuReturn = {
   isPending: boolean
@@ -16,10 +16,10 @@ export type UseTagMenuReturn = {
 
 export function useTagMenuCtrl(): UseTagMenuReturn {
   const allTags$ = useAllTags$()
-  const [ filterText, setFilterText ] = useState<string>('')
+  const [filterText, setFilterText] = useState<string>("")
 
   const allTags = allTags$.data || []
-  const activeTags = allTags.filter(tag => tag.num_posts >= 1) ?? []
+  const activeTags = allTags.filter((tag) => tag.num_posts >= 1) ?? []
 
   const tagFilter: TagFilter = {}
   const numFeatured = activeTags.filter((tag) => tag.featured).length

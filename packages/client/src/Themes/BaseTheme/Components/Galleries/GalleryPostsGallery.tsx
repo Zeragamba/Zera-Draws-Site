@@ -1,22 +1,20 @@
-import { FC } from 'react'
+import { FC } from "react"
 
-import { GalleryTitle } from './GalleryTitle'
-import { PostGallery } from './PostGallery'
-import { useGallery$, useGalleryPosts$ } from '../../../../Queries'
+import { GalleryTitle } from "./GalleryTitle"
+import { PostGallery } from "./PostGallery"
+import { useGallery$, useGalleryPosts$ } from "../../../../Queries"
 
 interface GalleryDisplayProps {
   galleryId: string
 }
 
-export const GalleryPostsGallery: FC<GalleryDisplayProps> = ({
-  galleryId,
-}) => {
+export const GalleryPostsGallery: FC<GalleryDisplayProps> = ({ galleryId }) => {
   const { data: gallery } = useGallery$({ galleryId: galleryId })
   const postsQuery = useGalleryPosts$({ galleryId: galleryId })
 
   return (
     <>
-      <GalleryTitle>{gallery?.name || '...'}</GalleryTitle>
+      <GalleryTitle>{gallery?.name || "..."}</GalleryTitle>
       <PostGallery postsQuery={postsQuery} />
     </>
   )

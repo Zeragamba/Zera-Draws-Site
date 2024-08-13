@@ -1,6 +1,6 @@
-import { ChangeEvent, FC, ReactNode, useRef } from 'react'
+import { ChangeEvent, FC, ReactNode, useRef } from "react"
 
-import { useFilesDropped } from '../../../../Hooks'
+import { useFilesDropped } from "../../../../Hooks"
 
 type ImagePickerProps = {
   onFilesPicked: (files: File[]) => void
@@ -27,7 +27,7 @@ export const ImagePicker: FC<ImagePickerProps> = ({
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files as FileList
-    onFilesChanged([ ...files ])
+    onFilesChanged([...files])
   }
 
   const onButtonClick = () => {
@@ -43,7 +43,7 @@ export const ImagePicker: FC<ImagePickerProps> = ({
       </div>
 
       <input
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         type="file"
         accept="image/*"
         onChange={onInputChange}

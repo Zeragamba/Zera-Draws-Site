@@ -1,5 +1,5 @@
-import crypto from 'node:crypto'
-import { beforeEach, describe, expect, it } from 'vitest'
+import crypto from "node:crypto"
+import { beforeEach, describe, expect, it } from "vitest"
 
 import {
   addImage,
@@ -10,41 +10,39 @@ import {
   RemoveImagePayload,
   setImages,
   SetImagesPayload,
-} from './Actions'
-import { changesReducer } from './ChangesReducer'
-import { freeze } from '../../Lib'
-import { ImageData } from '../../Models'
+} from "./Actions"
+import { changesReducer } from "./ChangesReducer"
+import { freeze } from "../../Lib"
+import { ImageData } from "../../Models"
 import {
   AddImageChangeRecord,
   EditImageChangeRecord,
   ImageChangeRecord,
   RemoveImageChangeRecord,
-} from '../ImageChangeRecord'
+} from "../ImageChangeRecord"
 
-describe('ChangesReducer', () => {
+describe("ChangesReducer", () => {
   let oldState: ImageChangeRecord[]
 
   beforeEach(async () => {
     oldState = freeze([])
   })
 
-  describe('Action: SetImages', () => {
+  describe("Action: SetImages", () => {
     let payload: SetImagesPayload
 
     beforeEach(async () => {
-      payload = [
-        { id: crypto.randomUUID(), filename: 'new' } as ImageData,
-      ]
+      payload = [{ id: crypto.randomUUID(), filename: "new" } as ImageData]
     })
 
-    it('clears the list', () => {
+    it("clears the list", () => {
       const newState = changesReducer(oldState, setImages(payload))
 
       expect(newState).toHaveLength(0)
     })
   })
 
-  describe('Action: AddImage', () => {
+  describe("Action: AddImage", () => {
     let imageId: string
     let payload: AddImagePayload
 
@@ -54,174 +52,186 @@ describe('ChangesReducer', () => {
         id: imageId,
         file: {} as File,
         position: 0,
-        filename: 'exampleImage',
+        filename: "exampleImage",
       }
     })
 
-    it('inserts an add action record', () => {
+    it("inserts an add action record", () => {
       const newState = changesReducer(oldState, addImage(payload))
 
       expect(newState).toHaveLength(1)
-      expect(newState[0].action).toEqual('add')
+      expect(newState[0].action).toEqual("add")
     })
 
-    describe('when the image was previously added', () => {
+    describe("when the image was previously added", () => {
       beforeEach(async () => {
-        payload.filename = 'updated'
+        payload.filename = "updated"
 
-        oldState = changesReducer(oldState, addImage({
-          id: imageId,
-          filename: 'original',
-          position: 0,
-          file: {} as File,
-        }))
+        oldState = changesReducer(
+          oldState,
+          addImage({
+            id: imageId,
+            filename: "original",
+            position: 0,
+            file: {} as File,
+          }),
+        )
       })
 
-      it('updates the add action', () => {
+      it("updates the add action", () => {
         expect(oldState).toHaveLength(1)
 
         const oldAddAction = oldState[0] as AddImageChangeRecord
-        expect(oldAddAction.action).toEqual('add')
+        expect(oldAddAction.action).toEqual("add")
         expect(oldAddAction.id).toEqual(imageId)
-        expect(oldAddAction.filename).toEqual('original')
+        expect(oldAddAction.filename).toEqual("original")
 
         const newState = changesReducer(oldState, addImage(payload))
         expect(newState).toHaveLength(1)
 
         const newEditAction = newState[0] as AddImageChangeRecord
-        expect(newEditAction.action).toEqual('add')
+        expect(newEditAction.action).toEqual("add")
         expect(newEditAction.id).toEqual(imageId)
-        expect(newEditAction.filename).toEqual('updated')
+        expect(newEditAction.filename).toEqual("updated")
       })
     })
 
-    describe('when the image was previously edited', () => {
+    describe("when the image was previously edited", () => {
       beforeEach(async () => {
-        payload.filename = 'updated'
-        oldState = changesReducer(oldState, editImage({ id: imageId, filename: 'previous' }))
+        payload.filename = "updated"
+        oldState = changesReducer(
+          oldState,
+          editImage({ id: imageId, filename: "previous" }),
+        )
       })
 
-      it('updates the edit action', () => {
+      it("updates the edit action", () => {
         expect(oldState).toHaveLength(1)
 
         const oldEditAction = oldState[0] as EditImageChangeRecord
-        expect(oldEditAction.action).toEqual('edit')
+        expect(oldEditAction.action).toEqual("edit")
         expect(oldEditAction.id).toEqual(imageId)
-        expect(oldEditAction.filename).toEqual('previous')
+        expect(oldEditAction.filename).toEqual("previous")
 
         const newState = changesReducer(oldState, addImage(payload))
         expect(newState).toHaveLength(1)
 
         const newEditAction = newState[0] as EditImageChangeRecord
-        expect(newEditAction.action).toEqual('edit')
+        expect(newEditAction.action).toEqual("edit")
         expect(newEditAction.id).toEqual(imageId)
-        expect(newEditAction.filename).toEqual('updated')
+        expect(newEditAction.filename).toEqual("updated")
       })
     })
 
-    describe('when the image was previously removed', () => {
+    describe("when the image was previously removed", () => {
       beforeEach(async () => {
-        payload.filename = 'updated'
+        payload.filename = "updated"
         oldState = changesReducer(oldState, removeImage({ id: imageId }))
       })
 
-      it('converts the remove action to an edit action record', () => {
+      it("converts the remove action to an edit action record", () => {
         expect(oldState).toHaveLength(1)
 
         const removeAction = oldState[0] as RemoveImageChangeRecord
-        expect(removeAction.action).toEqual('remove')
+        expect(removeAction.action).toEqual("remove")
         expect(removeAction.id).toEqual(imageId)
 
         const newState = changesReducer(oldState, addImage(payload))
         expect(newState).toHaveLength(1)
 
         const editAction = newState[0] as EditImageChangeRecord
-        expect(editAction.action).toEqual('edit')
+        expect(editAction.action).toEqual("edit")
         expect(editAction.id).toEqual(imageId)
-        expect(editAction.filename).toEqual('updated')
+        expect(editAction.filename).toEqual("updated")
       })
     })
   })
 
-  describe('Action: EditImage', () => {
+  describe("Action: EditImage", () => {
     let imageId: string
     let payload: EditImagePayload
 
     beforeEach(async () => {
       imageId = crypto.randomUUID()
-      payload = { id: imageId, filename: 'updated' }
+      payload = { id: imageId, filename: "updated" }
     })
 
-    it('inserts an edit action record', () => {
+    it("inserts an edit action record", () => {
       const newState = changesReducer(oldState, editImage(payload))
       expect(newState).toHaveLength(1)
 
       const editAction = newState[0] as EditImageChangeRecord
-      expect(editAction.action).toEqual('edit')
+      expect(editAction.action).toEqual("edit")
       expect(editAction.id).toEqual(imageId)
-      expect(editAction.filename).toEqual('updated')
+      expect(editAction.filename).toEqual("updated")
       expect(editAction.file).toBeUndefined()
       expect(editAction.position).toBeUndefined()
     })
 
-    describe('when the image was previously added', () => {
+    describe("when the image was previously added", () => {
       beforeEach(async () => {
-        oldState = changesReducer(oldState, addImage({
-          id: imageId,
-          filename: 'original',
-          position: 0,
-          file: {} as File,
-        }))
+        oldState = changesReducer(
+          oldState,
+          addImage({
+            id: imageId,
+            filename: "original",
+            position: 0,
+            file: {} as File,
+          }),
+        )
       })
 
-      it('updates the add action', () => {
+      it("updates the add action", () => {
         expect(oldState).toHaveLength(1)
         const newState = changesReducer(oldState, editImage(payload))
         expect(newState).toHaveLength(1)
 
         const newEditAction = newState[0] as AddImageChangeRecord
-        expect(newEditAction.action).toEqual('add')
+        expect(newEditAction.action).toEqual("add")
         expect(newEditAction.id).toEqual(imageId)
-        expect(newEditAction.filename).toEqual('updated')
+        expect(newEditAction.filename).toEqual("updated")
       })
     })
 
-    describe('when the image was previously edited', () => {
+    describe("when the image was previously edited", () => {
       beforeEach(async () => {
-        oldState = changesReducer(oldState, editImage({ id: imageId, filename: 'previous' }))
+        oldState = changesReducer(
+          oldState,
+          editImage({ id: imageId, filename: "previous" }),
+        )
       })
 
-      it('converts the remove action to an edit action record', () => {
+      it("converts the remove action to an edit action record", () => {
         expect(oldState).toHaveLength(1)
         const newState = changesReducer(oldState, editImage(payload))
         expect(newState).toHaveLength(1)
 
         const newEditAction = newState[0] as EditImageChangeRecord
-        expect(newEditAction.action).toEqual('edit')
+        expect(newEditAction.action).toEqual("edit")
         expect(newEditAction.id).toEqual(imageId)
-        expect(newEditAction.filename).toEqual('updated')
+        expect(newEditAction.filename).toEqual("updated")
       })
     })
 
-    describe('when the image was previously removed', () => {
+    describe("when the image was previously removed", () => {
       beforeEach(async () => {
         oldState = changesReducer(oldState, removeImage({ id: imageId }))
       })
 
-      it('converts the remove action to an edit action record', () => {
+      it("converts the remove action to an edit action record", () => {
         expect(oldState).toHaveLength(1)
         const newState = changesReducer(oldState, editImage(payload))
         expect(newState).toHaveLength(1)
 
         const editAction = newState[0] as EditImageChangeRecord
-        expect(editAction.action).toEqual('edit')
+        expect(editAction.action).toEqual("edit")
         expect(editAction.id).toEqual(imageId)
-        expect(editAction.filename).toEqual('updated')
+        expect(editAction.filename).toEqual("updated")
       })
     })
   })
 
-  describe('Action: RemoveImage', () => {
+  describe("Action: RemoveImage", () => {
     let imageId: string
     let payload: RemoveImagePayload
 
@@ -230,62 +240,68 @@ describe('ChangesReducer', () => {
       payload = { id: imageId }
     })
 
-    it('inserts a remove action record', () => {
+    it("inserts a remove action record", () => {
       const newState = changesReducer(oldState, removeImage(payload))
       expect(newState).toHaveLength(1)
 
       const editAction = newState[0] as RemoveImageChangeRecord
-      expect(editAction.action).toEqual('remove')
+      expect(editAction.action).toEqual("remove")
       expect(editAction.id).toEqual(imageId)
     })
 
-    describe('when the image was previously added', () => {
+    describe("when the image was previously added", () => {
       beforeEach(async () => {
-        oldState = changesReducer(oldState, addImage({
-          id: imageId,
-          filename: 'original',
-          position: 0,
-          file: {} as File,
-        }))
+        oldState = changesReducer(
+          oldState,
+          addImage({
+            id: imageId,
+            filename: "original",
+            position: 0,
+            file: {} as File,
+          }),
+        )
       })
 
-      it('negates the add record', () => {
+      it("negates the add record", () => {
         expect(oldState).toHaveLength(1)
         const newState = changesReducer(oldState, removeImage(payload))
         expect(newState).toHaveLength(0)
       })
     })
 
-    describe('when the image was previously edited', () => {
+    describe("when the image was previously edited", () => {
       beforeEach(async () => {
-        oldState = changesReducer(oldState, editImage({ id: imageId, filename: 'previous' }))
+        oldState = changesReducer(
+          oldState,
+          editImage({ id: imageId, filename: "previous" }),
+        )
       })
 
-      it('replaces the edit record', () => {
+      it("replaces the edit record", () => {
         expect(oldState).toHaveLength(1)
 
         const newState = changesReducer(oldState, removeImage(payload))
         expect(newState).toHaveLength(1)
 
         const newAction = newState[0]
-        expect(newAction.action).toEqual('remove')
+        expect(newAction.action).toEqual("remove")
         expect(newAction.id).toEqual(imageId)
       })
     })
 
-    describe('when the image was previously removed', () => {
+    describe("when the image was previously removed", () => {
       beforeEach(async () => {
         oldState = changesReducer(oldState, removeImage({ id: imageId }))
       })
 
-      it('does not insert a duplicate', () => {
+      it("does not insert a duplicate", () => {
         expect(oldState).toHaveLength(1)
 
         const newState = changesReducer(oldState, removeImage(payload))
         expect(newState).toHaveLength(1)
 
         const newAction = newState[0]
-        expect(newAction.action).toEqual('remove')
+        expect(newAction.action).toEqual("remove")
         expect(newAction.id).toEqual(imageId)
       })
     })

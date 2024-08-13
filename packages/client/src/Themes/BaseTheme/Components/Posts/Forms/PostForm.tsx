@@ -1,27 +1,38 @@
-import { faMarkdown } from '@fortawesome/free-brands-svg-icons'
-import { Box, FormHelperText, Grid, Paper, Stack, Typography } from '@mui/material'
-import TextField from '@mui/material/TextField'
-import { DatePicker } from '@mui/x-date-pickers'
-import * as dateFns from 'date-fns'
-import { FC, ReactNode, useEffect } from 'react'
-import { Controller, UseFormReturn } from 'react-hook-form'
+import { faMarkdown } from "@fortawesome/free-brands-svg-icons"
+import {
+  Box,
+  FormHelperText,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material"
+import TextField from "@mui/material/TextField"
+import { DatePicker } from "@mui/x-date-pickers"
+import * as dateFns from "date-fns"
+import { FC, ReactNode, useEffect } from "react"
+import { Controller, UseFormReturn } from "react-hook-form"
 
-import { EditPostImages } from './EditPostImages'
-import { PublishSettings } from './PublishSettings'
-import { muiField } from '../../../../../Forms'
-import { ImageManager } from '../../../../../Images'
-import { FontAwesomeIcon, formatTitle, parseFilename } from '../../../../../Lib'
-import { formatPostSlug } from '../../../../../Lib/PostUtil'
-import { EditableImage, ImageData, PostData, TagData } from '../../../../../Models'
-import { PostTagsField, SelectedTagList } from '../../Tags'
+import { EditPostImages } from "./EditPostImages"
+import { PublishSettings } from "./PublishSettings"
+import { muiField } from "../../../../../Forms"
+import { ImageManager } from "../../../../../Images"
+import { FontAwesomeIcon, formatTitle, parseFilename } from "../../../../../Lib"
+import { formatPostSlug } from "../../../../../Lib/PostUtil"
+import {
+  EditableImage,
+  ImageData,
+  PostData,
+  TagData,
+} from "../../../../../Models"
+import { PostTagsField, SelectedTagList } from "../../Tags"
 
-import styles from './PostForm.module.scss'
-
+import styles from "./PostForm.module.scss"
 
 interface PostFormProps {
   form: UseFormReturn<PostData>
   imageManager: ImageManager
-  mode?: 'edit' | 'create'
+  mode?: "edit" | "create"
   slots: {
     actions: ReactNode
     rightCol?: ReactNode
@@ -30,7 +41,7 @@ interface PostFormProps {
 
 export const PostForm: FC<PostFormProps> = ({
   form,
-  mode = 'edit',
+  mode = "edit",
   imageManager,
   slots,
 }) => {
@@ -39,26 +50,26 @@ export const PostForm: FC<PostFormProps> = ({
   useEffect(() => {
     const subscription = watch((post, { name }) => {
       switch (name) {
-        case 'title':
-        case 'date':
+        case "title":
+        case "date":
           if (formState.dirtyFields.slug) return
-          if (mode !== 'create') return
-          setValue('slug', formatPostSlug(post))
+          if (mode !== "create") return
+          setValue("slug", formatPostSlug(post))
           break
       }
     })
 
     return () => subscription.unsubscribe()
-  }, [ watch, setValue, formState, mode ])
+  }, [watch, setValue, formState, mode])
 
   const onImageAdd = (added: Required<EditableImage>) => {
     imageManager.addImage({ id: `add-${crypto.randomUUID()}`, ...added })
 
     if (imageManager.images.length === 0) {
       const { date, title } = parseFilename(added.filename)
-      form.resetField('title', { defaultValue: formatTitle(title) })
-      form.resetField('date', { defaultValue: date })
-      form.resetField('slug', { defaultValue: formatPostSlug({ date, title }) })
+      form.resetField("title", { defaultValue: formatTitle(title) })
+      form.resetField("date", { defaultValue: date })
+      form.resetField("slug", { defaultValue: formatPostSlug({ date, title }) })
     }
   }
 
@@ -71,8 +82,11 @@ export const PostForm: FC<PostFormProps> = ({
   }
 
   const onTagRemoved = (removed: TagData) => {
-    const tags = form.getValues('tags')
-    form.setValue('tags', tags.filter(tag => tag.id !== removed.id))
+    const tags = form.getValues("tags")
+    form.setValue(
+      "tags",
+      tags.filter((tag) => tag.id !== removed.id),
+    )
   }
 
   return (
@@ -92,9 +106,9 @@ export const PostForm: FC<PostFormProps> = ({
             <Grid item sm={12}>
               <Controller
                 control={form.control}
-                name={'title'}
+                name={"title"}
                 rules={{
-                  required: 'Title is required',
+                  required: "Title is required",
                 }}
                 render={(fieldProps) => (
                   <TextField
@@ -110,18 +124,20 @@ export const PostForm: FC<PostFormProps> = ({
             <Grid item sm={4}>
               <Controller
                 control={form.control}
-                name={'date'}
+                name={"date"}
                 rules={{
-                  required: 'Date is required',
+                  required: "Date is required",
                 }}
                 render={(fieldProps) => (
                   <DatePicker
                     label="Date"
                     showDaysOutsideCurrentMonth
-                    value={dateFns.parseISO(fieldProps.field.value || '')}
-                    onChange={(date) => fieldProps.field.onChange(date?.toISOString() || '')}
+                    value={dateFns.parseISO(fieldProps.field.value || "")}
+                    onChange={(date) =>
+                      fieldProps.field.onChange(date?.toISOString() || "")
+                    }
                     slotProps={{
-                      textField: { size: 'small' },
+                      textField: { size: "small" },
                     }}
                   />
                 )}
@@ -131,9 +147,9 @@ export const PostForm: FC<PostFormProps> = ({
             <Grid item sm={8}>
               <Controller
                 control={form.control}
-                name={'slug'}
+                name={"slug"}
                 rules={{
-                  required: 'Slug is required',
+                  required: "Slug is required",
                 }}
                 render={(fieldProps) => (
                   <TextField
@@ -142,7 +158,11 @@ export const PostForm: FC<PostFormProps> = ({
                     size="small"
                     required
                     fullWidth
-                    helperText={mode === 'edit' ? 'Warning: Changing the slug will break links and bookmarks' : undefined}
+                    helperText={
+                      mode === "edit"
+                        ? "Warning: Changing the slug will break links and bookmarks"
+                        : undefined
+                    }
                   />
                 )}
               />
@@ -151,7 +171,7 @@ export const PostForm: FC<PostFormProps> = ({
             <Grid item sm={12}>
               <Controller
                 control={form.control}
-                name={'description'}
+                name={"description"}
                 render={(fieldProps) => (
                   <TextField
                     {...muiField(fieldProps)}
@@ -165,7 +185,14 @@ export const PostForm: FC<PostFormProps> = ({
               <FormHelperText>
                 <Stack direction="row" gap={1} alignItems="center">
                   <FontAwesomeIcon icon={faMarkdown} />
-                  <a href="https://commonmark.org/help/" target="_blank" rel="noreferrer">Markdown</a> format supported
+                  <a
+                    href="https://commonmark.org/help/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Markdown
+                  </a>{" "}
+                  format supported
                 </Stack>
               </FormHelperText>
             </Grid>
@@ -174,7 +201,7 @@ export const PostForm: FC<PostFormProps> = ({
       </div>
 
       <Box className={styles.RightColumn}>
-        <Stack gap={2} sx={{ position: 'sticky', top: 0 }}>
+        <Stack gap={2} sx={{ position: "sticky", top: 0 }}>
           <Stack component={Paper} gap={2} sx={{ padding: 2 }}>
             {slots.actions}
 
@@ -185,10 +212,13 @@ export const PostForm: FC<PostFormProps> = ({
             <Typography sx={{ padding: 1 }}>Tags</Typography>
             <Controller
               control={form.control}
-              name={'tags'}
+              name={"tags"}
               render={({ field }) => (
                 <>
-                  <PostTagsField selected={field.value} onChange={field.onChange} />
+                  <PostTagsField
+                    selected={field.value}
+                    onChange={field.onChange}
+                  />
                   <SelectedTagList tags={field.value} onDelete={onTagRemoved} />
                 </>
               )}

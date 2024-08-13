@@ -1,20 +1,20 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { zodResolver } from '@hookform/resolvers/zod'
-import Button from '@mui/material/Button'
-import Stack from '@mui/material/Stack'
-import TextField from '@mui/material/TextField'
-import { FC } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
+import { zodResolver } from "@hookform/resolvers/zod"
+import Button from "@mui/material/Button"
+import Stack from "@mui/material/Stack"
+import TextField from "@mui/material/TextField"
+import { FC } from "react"
+import { Controller, useForm } from "react-hook-form"
 
-import { PasskeyData, PasskeyDataSchema } from '../../../../../Api/Schemas'
-import { muiField } from '../../../../../Forms'
-import { FontAwesomeIcon } from '../../../../../Lib'
-import { ErrorAlert } from '../../Shared'
+import { PasskeyData, PasskeyDataSchema } from "../../../../../Api/Schemas"
+import { muiField } from "../../../../../Forms"
+import { FontAwesomeIcon } from "../../../../../Lib"
+import { ErrorAlert } from "../../Shared"
 
 type PasskeyFormProps = {
   loading?: boolean
   passkey: PasskeyData
-  onSubmit: (passkey: PasskeyData) => (void | Promise<void>)
+  onSubmit: (passkey: PasskeyData) => void | Promise<void>
 }
 
 export const PasskeyForm: FC<PasskeyFormProps> = ({
@@ -22,7 +22,11 @@ export const PasskeyForm: FC<PasskeyFormProps> = ({
   passkey,
   onSubmit,
 }) => {
-  const { control, handleSubmit, formState: { errors } } = useForm<PasskeyData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PasskeyData>({
     resolver: zodResolver(PasskeyDataSchema.omit({ createdAt: true })),
     defaultValues: { ...passkey },
   })
@@ -35,7 +39,7 @@ export const PasskeyForm: FC<PasskeyFormProps> = ({
         {errors.root && <ErrorAlert error={errors.root.message} />}
         <Controller
           control={control}
-          name={'name'}
+          name={"name"}
           rules={{
             required: true,
           }}

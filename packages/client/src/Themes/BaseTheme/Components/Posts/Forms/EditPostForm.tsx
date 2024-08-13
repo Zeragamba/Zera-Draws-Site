@@ -1,14 +1,14 @@
-import { Button, Stack } from '@mui/material'
-import { FC, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Button, Stack } from "@mui/material"
+import { FC, useState } from "react"
+import { useForm } from "react-hook-form"
 
-import { DeletePostButton } from './DeletePostButton'
-import { PostForm } from './PostForm'
-import { useImageManager } from '../../../../../Images'
-import { noop } from '../../../../../Lib'
-import { PostData } from '../../../../../Models'
-import { useUpdatePost$ } from '../../../../../Queries'
-import { ErrorAlert, UploadProgress } from '../../Shared'
+import { DeletePostButton } from "./DeletePostButton"
+import { PostForm } from "./PostForm"
+import { useImageManager } from "../../../../../Images"
+import { noop } from "../../../../../Lib"
+import { PostData } from "../../../../../Models"
+import { useUpdatePost$ } from "../../../../../Queries"
+import { ErrorAlert, UploadProgress } from "../../Shared"
 
 export interface EditPostFormProps {
   post: PostData
@@ -25,7 +25,7 @@ export const EditPostForm: FC<EditPostFormProps> = ({
 }) => {
   const form = useForm({ values: post })
   const imageManager = useImageManager({ images: post?.images || [] })
-  const [ uploadProgress, setUploadProgress ] = useState<number>(0)
+  const [uploadProgress, setUploadProgress] = useState<number>(0)
 
   const editPost$ = useUpdatePost$()
 
@@ -52,18 +52,24 @@ export const EditPostForm: FC<EditPostFormProps> = ({
           actions: (
             <Stack gap={2}>
               <Button
-                variant={'contained'}
+                variant={"contained"}
                 disabled={editPost$.isPending}
                 onClick={onPostSave}
                 fullWidth
-              >Save</Button>
+              >
+                Save
+              </Button>
               <Button
                 variant="outlined"
                 disabled={editPost$.isPending}
                 onClick={onCancel}
                 fullWidth
-              >Cancel</Button>
-              {uploadProgress !== 0 && <UploadProgress value={uploadProgress} />}
+              >
+                Cancel
+              </Button>
+              {uploadProgress !== 0 && (
+                <UploadProgress value={uploadProgress} />
+              )}
             </Stack>
           ),
           rightCol: (

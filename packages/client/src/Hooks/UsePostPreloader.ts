@@ -1,5 +1,5 @@
-import { PostData } from '../Models/PostData'
-import { useImagePreloader } from '../Queries'
+import { PostData } from "../Models/PostData"
+import { useImagePreloader } from "../Queries"
 
 interface PostPreloaderProps {
   post: PostData
@@ -11,7 +11,7 @@ export type UsePostPreloader = (options: PostPreloaderProps) => void
 export function usePostPreloader(): UsePostPreloader {
   const imagePreloader = useImagePreloader()
 
-  return ({ post, imageSize = 'high' }) => {
+  return ({ post, imageSize = "high" }) => {
     post.images.map((image) => imagePreloader({ image, size: imageSize }))
   }
 }

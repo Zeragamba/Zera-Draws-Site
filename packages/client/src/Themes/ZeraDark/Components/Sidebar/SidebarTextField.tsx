@@ -1,13 +1,13 @@
-import { SxProps, TextField } from '@mui/material'
-import { grey } from '@mui/material/colors'
-import { ChangeEventHandler, FC } from 'react'
+import { SxProps, TextField } from "@mui/material"
+import { grey } from "@mui/material/colors"
+import { ChangeEventHandler, FC } from "react"
 
 const styles: SxProps = {
-  '& .MuiOutlinedInput-root': {
+  "& .MuiOutlinedInput-root": {
     borderColor: grey[500],
   },
 
-  '& .MuiInputBase-input': {
+  "& .MuiInputBase-input": {
     color: grey[200],
   },
 }
@@ -26,7 +26,7 @@ export const SidebarTextField: FC<SidebarTextFieldProps> = ({
   return (
     <TextField
       fullWidth
-      size={'small'}
+      size={"small"}
       sx={styles}
       placeholder={placeholder}
       value={value}

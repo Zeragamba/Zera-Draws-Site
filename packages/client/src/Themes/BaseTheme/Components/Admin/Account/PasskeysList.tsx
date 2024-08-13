@@ -1,15 +1,19 @@
-import { Dialog } from '@mui/material'
-import Button from '@mui/material/Button'
-import Paper from '@mui/material/Paper'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
-import formatDate from 'date-fns/format'
-import { FC, useState } from 'react'
+import { Dialog } from "@mui/material"
+import Button from "@mui/material/Button"
+import Paper from "@mui/material/Paper"
+import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
+import formatDate from "date-fns/format"
+import { FC, useState } from "react"
 
-import { PasskeyForm } from './PasskeyForm'
-import { PasskeyData } from '../../../../../Api/Schemas'
-import { useRemovePasskey$, useUpdatePasskey$, useUserPasskeys$ } from '../../../../../Queries'
-import { ErrorAlert, LoadingSpinner } from '../../Shared'
+import { PasskeyForm } from "./PasskeyForm"
+import { PasskeyData } from "../../../../../Api/Schemas"
+import {
+  useRemovePasskey$,
+  useUpdatePasskey$,
+  useUserPasskeys$,
+} from "../../../../../Queries"
+import { ErrorAlert, LoadingSpinner } from "../../Shared"
 
 interface PasskeysListSlots {
   PasskeyListItem: FC<{ passkey: PasskeyData }>
@@ -21,10 +25,7 @@ interface PasskeysListProps {
   slots?: Partial<PasskeysListSlots>
 }
 
-export const PasskeysList: FC<PasskeysListProps> = ({
-  passkeys,
-  slots,
-}) => {
+export const PasskeysList: FC<PasskeysListProps> = ({ passkeys, slots }) => {
   const { PasskeyListItem, NoPasskeys } = {
     ...defaultSlots,
     ...slots,
@@ -33,7 +34,9 @@ export const PasskeysList: FC<PasskeysListProps> = ({
   return (
     <Stack gap={1}>
       {passkeys.length === 0 && <NoPasskeys />}
-      {passkeys.map((passkey) => <PasskeyListItem key={passkey.id} passkey={passkey} />)}
+      {passkeys.map((passkey) => (
+        <PasskeyListItem key={passkey.id} passkey={passkey} />
+      ))}
     </Stack>
   )
 }
@@ -43,66 +46,74 @@ interface PasskeyListItemProps {
   passkey: PasskeyData
 }
 
-export const PasskeyListItem: FC<PasskeyListItemProps> = ({
-  passkey,
-}) => {
+export const PasskeyListItem: FC<PasskeyListItemProps> = ({ passkey }) => {
   const removePasskey$ = useRemovePasskey$()
-  const [ isRemoving, setIsRemoving ] = useState<boolean>(false)
+  const [isRemoving, setIsRemoving] = useState<boolean>(false)
 
   const updatePasskey$ = useUpdatePasskey$()
-  const [ isEditing, setIsEditing ] = useState<boolean>(false)
+  const [isEditing, setIsEditing] = useState<boolean>(false)
 
   const onRemoveClick = () => {
-    removePasskey$.mutateAsync(passkey)
+    removePasskey$
+      .mutateAsync(passkey)
       .then(() => setIsEditing(false))
       .catch((e) => console.error(e))
   }
 
   const onFormSubmit = (updatedPasskey: PasskeyData) => {
-    updatePasskey$.mutateAsync(updatedPasskey)
+    updatePasskey$
+      .mutateAsync(updatedPasskey)
       .then(() => setIsEditing(false))
       .catch((e) => console.error(e))
   }
 
   return (
-    <Paper sx={{ padding: 2 }} variant={'outlined'}>
+    <Paper sx={{ padding: 2 }} variant={"outlined"}>
       <Stack direction="row" gap={2}>
         <Stack flexGrow={1}>
           <Typography>{passkey.name}</Typography>
           {passkey.createdAt && (
-            <Typography variant={'caption'}>Created: {formatDate(passkey.createdAt, 'PPP')}</Typography>
+            <Typography variant={"caption"}>
+              Created: {formatDate(passkey.createdAt, "PPP")}
+            </Typography>
           )}
         </Stack>
 
-        <Button variant={'contained'} onClick={() => setIsRemoving(true)}>Remove</Button>
-        <Button variant={'contained'} onClick={() => setIsEditing(true)}>Edit</Button>
+        <Button variant={"contained"} onClick={() => setIsRemoving(true)}>
+          Remove
+        </Button>
+        <Button variant={"contained"} onClick={() => setIsEditing(true)}>
+          Edit
+        </Button>
       </Stack>
 
       <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
         <Stack gap={2}>
           <PasskeyForm passkey={passkey} onSubmit={onFormSubmit} />
-          {updatePasskey$.isError && <ErrorAlert error={updatePasskey$.error} />}
+          {updatePasskey$.isError && (
+            <ErrorAlert error={updatePasskey$.error} />
+          )}
         </Stack>
       </Dialog>
 
       <Dialog open={isRemoving} onClose={() => setIsRemoving(false)}>
         <Stack gap={2} padding={2}>
-          <Typography>Are you sure you want to remove the passkey {passkey.name}?</Typography>
+          <Typography>
+            Are you sure you want to remove the passkey {passkey.name}?
+          </Typography>
 
-          {removePasskey$.isError && <ErrorAlert error={removePasskey$.error} />}
+          {removePasskey$.isError && (
+            <ErrorAlert error={removePasskey$.error} />
+          )}
 
           <Stack direction="row" gap={2}>
-            <Button
-              fullWidth
-              variant={'contained'}
-              onClick={onRemoveClick}
-            >
+            <Button fullWidth variant={"contained"} onClick={onRemoveClick}>
               Remove
             </Button>
 
             <Button
               fullWidth
-              variant={'contained'}
+              variant={"contained"}
               onClick={() => setIsRemoving(false)}
             >
               Cancel
@@ -124,9 +135,7 @@ export interface UserPasskeysListProps {
   slots?: Partial<UserPasskeysListSlots>
 }
 
-export const UserPasskeysList: FC<UserPasskeysListProps> = ({
-  slots,
-}) => {
+export const UserPasskeysList: FC<UserPasskeysListProps> = ({ slots }) => {
   const { LoadingSpinner, ...listSlots } = {
     ...defaultSlots,
     ...slots,

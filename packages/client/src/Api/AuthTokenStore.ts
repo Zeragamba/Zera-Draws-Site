@@ -2,14 +2,14 @@ class AuthTokenStore {
   private _authToken: string | null = null
 
   get authToken(): string {
-    return this._authToken ||= localStorage.getItem('authToken') as string
+    return (this._authToken ||= localStorage.getItem("authToken") as string)
   }
 
   set authToken(newToken: string | null) {
     if (newToken === null) {
-      localStorage.removeItem('authToken')
+      localStorage.removeItem("authToken")
     } else {
-      localStorage.setItem('authToken', newToken)
+      localStorage.setItem("authToken", newToken)
     }
 
     this._authToken = newToken

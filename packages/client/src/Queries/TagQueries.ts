@@ -1,8 +1,14 @@
-import { QueryClient, useMutation, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "@tanstack/react-query"
 
-import { queryKeys } from './QueryKeys'
-import { tagsApi } from '../Api'
-import { EditableTagData, TagData } from '../Models'
+import { queryKeys } from "./QueryKeys"
+import { tagsApi } from "../Api"
+import { EditableTagData, TagData } from "../Models"
 
 function updateCache(queryClient: QueryClient, tag: TagData) {
   queryClient.removeQueries({
@@ -32,7 +38,7 @@ export const useAllTags$ = () => {
 }
 
 export const useOptionalTag$ = (params: {
-  tagId?: TagData['id']
+  tagId?: TagData["id"]
 }): UseQueryResult<TagData | null> => {
   const { tagId = null } = params
 
@@ -47,10 +53,10 @@ export const useOptionalTag$ = (params: {
 }
 
 export const useTag$ = (params: {
-  tagId: TagData['id']
+  tagId: TagData["id"]
 }): UseQueryResult<TagData> => {
   const tag$ = useOptionalTag$(params)
-  if (tag$.data === null) throw new Error('Tag not found')
+  if (tag$.data === null) throw new Error("Tag not found")
   return tag$ as UseQueryResult<TagData>
 }
 
@@ -58,9 +64,7 @@ export const useCreateTag$ = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (params: {
-      tag: EditableTagData
-    }) => tagsApi.createTag(params),
+    mutationFn: (params: { tag: EditableTagData }) => tagsApi.createTag(params),
     onSuccess: (tag) => {
       queryClient.removeQueries({
         queryKey: queryKeys.tags.all.queryKey,
@@ -75,9 +79,7 @@ export const useDeleteTag$ = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (params: {
-      tagId: TagData['id']
-    }) => tagsApi.deleteTag(params),
+    mutationFn: (params: { tagId: TagData["id"] }) => tagsApi.deleteTag(params),
     onSuccess: (tag) => {
       queryClient.removeQueries({
         queryKey: queryKeys.tags.all.queryKey,
@@ -99,13 +101,12 @@ export const useUpdateTag$ = () => {
 
   return useMutation({
     mutationFn: (params: {
-      tagId: TagData['id']
+      tagId: TagData["id"]
       tag: Partial<EditableTagData>
     }) => tagsApi.updateTag(params),
     onSuccess: (tag) => {
-      queryClient.setQueryData(
-        queryKeys.tags.all.queryKey,
-        (tags: TagData[]) => tags.map((cachedTag) => {
+      queryClient.setQueryData(queryKeys.tags.all.queryKey, (tags: TagData[]) =>
+        tags.map((cachedTag) => {
           if (cachedTag.id === tag.id) return tag
           return cachedTag
         }),
@@ -121,9 +122,10 @@ export const useDeleteEmptyTags$ = () => {
 
   return useMutation({
     mutationFn: () => tagsApi.deleteEmptyTags(),
-    onSuccess: () => queryClient.removeQueries({
-      queryKey: queryKeys.tags.all.queryKey,
-    }),
+    onSuccess: () =>
+      queryClient.removeQueries({
+        queryKey: queryKeys.tags.all.queryKey,
+      }),
   })
 }
 
@@ -132,11 +134,12 @@ export const useMergeTags$ = () => {
 
   return useMutation({
     mutationFn: (params: {
-      srcTagId: TagData['id']
-      destTagId: TagData['id']
+      srcTagId: TagData["id"]
+      destTagId: TagData["id"]
     }) => tagsApi.mergeTags(params),
-    onSuccess: () => queryClient.removeQueries({
-      queryKey: queryKeys.tags.all.queryKey,
-    }),
+    onSuccess: () =>
+      queryClient.removeQueries({
+        queryKey: queryKeys.tags.all.queryKey,
+      }),
   })
 }

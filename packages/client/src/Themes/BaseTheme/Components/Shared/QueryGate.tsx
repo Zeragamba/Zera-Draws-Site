@@ -1,6 +1,6 @@
-import { Alert, LinearProgress } from '@mui/material'
-import { UseQueryResult } from '@tanstack/react-query'
-import { ReactElement, ReactNode } from 'react'
+import { Alert, LinearProgress } from "@mui/material"
+import { UseQueryResult } from "@tanstack/react-query"
+import { ReactElement, ReactNode } from "react"
 
 interface QueryGateProps<Data, Error = unknown> {
   query: UseQueryResult<Data, Error>
@@ -9,20 +9,22 @@ interface QueryGateProps<Data, Error = unknown> {
   renderData?: (data: Data) => ReactNode
 }
 
-export const QueryGate = <Data, Error = unknown>(props: QueryGateProps<Data, Error>): ReactElement | null => {
+export const QueryGate = <Data, Error = unknown>(
+  props: QueryGateProps<Data, Error>,
+): ReactElement | null => {
   const {
     query,
     renderPending = () => <LinearProgress />,
-    renderError = (error) => <Alert color={'error'}>{String(error)}</Alert>,
+    renderError = (error) => <Alert color={"error"}>{String(error)}</Alert>,
     renderData = () => null,
   } = props
 
   switch (query.status) {
-    case 'pending':
+    case "pending":
       return <>{renderPending()}</>
-    case 'error':
+    case "error":
       return <>{renderError(query.error)}</>
-    case 'success':
+    case "success":
       return <>{renderData(query.data)}</>
   }
 }

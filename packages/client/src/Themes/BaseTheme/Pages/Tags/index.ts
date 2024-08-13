@@ -1,1 +1,1 @@
-export * from './ViewTagPage'
+export * from "./ViewTagPage"

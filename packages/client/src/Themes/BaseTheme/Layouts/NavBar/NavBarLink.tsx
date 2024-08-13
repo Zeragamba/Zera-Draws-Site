@@ -1,8 +1,8 @@
-import { Button } from '@mui/material'
-import { FC, MouseEventHandler, Ref } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Button } from "@mui/material"
+import { FC, MouseEventHandler, Ref } from "react"
+import { useNavigate } from "react-router-dom"
 
-import { Colours } from '../../../ZeraDark/MuiTheme'
+import { Colours } from "../../../ZeraDark/MuiTheme"
 
 interface NavBarLinkProps {
   to?: string
@@ -15,7 +15,7 @@ interface NavBarLinkProps {
 }
 
 export const NavBarLink: FC<NavBarLinkProps> = ({
-  to = '/',
+  to = "/",
   label,
   disabled,
   onClick,
@@ -38,9 +38,9 @@ export const NavBarLink: FC<NavBarLinkProps> = ({
       href={to}
       sx={{
         color: Colours.light,
-        textTransform: 'revert',
-        '&:hover': {
-          backgroundColor: 'primary.dark',
+        textTransform: "revert",
+        "&:hover": {
+          backgroundColor: "primary.dark",
         },
       }}
       target={target}

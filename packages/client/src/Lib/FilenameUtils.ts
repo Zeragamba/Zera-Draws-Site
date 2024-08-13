@@ -1,13 +1,12 @@
 export function formatSlug(str: string): string {
   return str
     .toLowerCase()
-    .replace(/[\W_]+/g, ' ')
-    .replace(/\s+/g, '-')
+    .replace(/[\W_]+/g, " ")
+    .replace(/\s+/g, "-")
 }
 
 export function formatTitle(str: string): string {
-  return str
-    .replace(/_+/g, ' ')
+  return str.replace(/_+/g, " ")
 }
 
 type FilenameMeta = {
@@ -16,11 +15,12 @@ type FilenameMeta = {
 }
 
 export const parseFilename = (filename: string): FilenameMeta => {
-  const filenameMatch = filename
-    .match(/^((?<date>\d{4}-\d{2}-\d{2}) - )?(?<title>.+?)(?<ext>\..+)?$/)
+  const filenameMatch = filename.match(
+    /^((?<date>\d{4}-\d{2}-\d{2}) - )?(?<title>.+?)(?<ext>\..+)?$/,
+  )
 
   if (!filenameMatch || !filenameMatch.groups) {
-    throw Error('Unable to parse filename') // This should not happen...
+    throw Error("Unable to parse filename") // This should not happen...
   }
 
   let { title, date } = filenameMatch.groups
@@ -28,7 +28,7 @@ export const parseFilename = (filename: string): FilenameMeta => {
 
   if (title.match(/^\d{4}-\d{2}-\d{2}$/)) {
     date = title
-    title = 'Untitled'
+    title = "Untitled"
   }
 
   return { date, title }

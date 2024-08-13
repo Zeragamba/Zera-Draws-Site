@@ -1,1 +1,1 @@
-export * from './UseImageManager'
+export * from "./UseImageManager"

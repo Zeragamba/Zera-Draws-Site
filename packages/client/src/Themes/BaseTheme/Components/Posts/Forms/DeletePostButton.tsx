@@ -1,9 +1,15 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material'
-import { FC, useState } from 'react'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+} from "@mui/material"
+import { FC, useState } from "react"
 
-import { noop } from '../../../../../Lib'
-import { PostData } from '../../../../../Models'
-import { useDeletePost$ } from '../../../../../Queries'
+import { noop } from "../../../../../Lib"
+import { PostData } from "../../../../../Models"
+import { useDeletePost$ } from "../../../../../Queries"
 
 interface DeletePostButtonProps {
   post: PostData
@@ -19,7 +25,7 @@ export const DeletePostButton: FC<DeletePostButtonProps> = ({
   disabled,
 }) => {
   const deletePostQuery = useDeletePost$()
-  const [ promptOpen, setPromptOpen ] = useState<boolean>(false)
+  const [promptOpen, setPromptOpen] = useState<boolean>(false)
 
   const onDelete = async () => {
     await deletePostQuery.mutateAsync({ postId: post.id })
@@ -40,11 +46,15 @@ export const DeletePostButton: FC<DeletePostButtonProps> = ({
 
       <Dialog open={promptOpen}>
         <DialogContent>
-          <DialogContentText>Are you sure you want to delete this post?</DialogContentText>
+          <DialogContentText>
+            Are you sure you want to delete this post?
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setPromptOpen(false)}>Cancel</Button>
-          <Button onClick={onDelete} color="error" variant="contained">Delete</Button>
+          <Button onClick={onDelete} color="error" variant="contained">
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
     </>

@@ -1,4 +1,4 @@
-import { PagedResMetaData } from '../Api/Schemas/PagedResMetaDataSchema'
+import { PagedResMetaData } from "../Api/Schemas/PagedResMetaDataSchema"
 
 export const pagedQueryOptions = {
   initialPageParam: 0,

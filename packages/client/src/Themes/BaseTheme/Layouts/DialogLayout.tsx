@@ -1,8 +1,8 @@
-import classnames from 'classnames'
+import classnames from "classnames"
 
-import { Layout } from './Layout'
+import { Layout } from "./Layout"
 
-import styles from './DialogLayout.module.scss'
+import styles from "./DialogLayout.module.scss"
 
 export const DialogLayout: Layout = ({ children, className, ...divProps }) => {
   return (

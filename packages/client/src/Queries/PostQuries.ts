@@ -7,20 +7,27 @@ import {
   useQuery,
   useQueryClient,
   UseQueryResult,
-} from '@tanstack/react-query'
+} from "@tanstack/react-query"
 
-import { queryKeys } from './QueryKeys'
-import { pagedQueryOptions } from './QueryUtils'
-import { postsApi } from '../Api'
-import { PagedPostData } from '../Api/Schemas'
-import { ImageChangeRecord } from '../Images'
-import { EditableImage, EditablePost, GalleryData, PostData, TagData } from '../Models'
+import { queryKeys } from "./QueryKeys"
+import { pagedQueryOptions } from "./QueryUtils"
+import { postsApi } from "../Api"
+import { PagedPostData } from "../Api/Schemas"
+import { ImageChangeRecord } from "../Images"
+import {
+  EditableImage,
+  EditablePost,
+  GalleryData,
+  PostData,
+  TagData,
+} from "../Models"
 
 type PostParams = { postId: string; galleryId?: string; tagId?: string }
 
 export const pagedPostDataQueryOptions = {
   ...pagedQueryOptions,
-  select: (data: { pages: PagedPostData[] }) => data.pages.map(page => page.posts).flat(),
+  select: (data: { pages: PagedPostData[] }) =>
+    data.pages.map((page) => page.posts).flat(),
 }
 
 function updateCache(queryClient: QueryClient, post: PostData) {
@@ -43,11 +50,15 @@ function updateCache(queryClient: QueryClient, post: PostData) {
   )
 }
 
-export const useCreatePost$ = (): UseMutationResult<PostData, unknown, {
-  post: EditablePost
-  images: EditableImage[]
-  onUploadProgress: (progress: number) => void
-}> => {
+export const useCreatePost$ = (): UseMutationResult<
+  PostData,
+  unknown,
+  {
+    post: EditablePost
+    images: EditableImage[]
+    onUploadProgress: (progress: number) => void
+  }
+> => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -56,9 +67,13 @@ export const useCreatePost$ = (): UseMutationResult<PostData, unknown, {
   })
 }
 
-export const useDeletePost$ = (): UseMutationResult<PostData, unknown, {
-  postId: PostData['id']
-}> => {
+export const useDeletePost$ = (): UseMutationResult<
+  PostData,
+  unknown,
+  {
+    postId: PostData["id"]
+  }
+> => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -79,12 +94,16 @@ export const useDeletePost$ = (): UseMutationResult<PostData, unknown, {
   })
 }
 
-export const useUpdatePost$ = (): UseMutationResult<PostData, unknown, {
-  postId: PostData['id']
-  post?: Partial<EditablePost>
-  changes?: ImageChangeRecord[]
-  onUploadProgress?: (progress: number) => void
-}> => {
+export const useUpdatePost$ = (): UseMutationResult<
+  PostData,
+  unknown,
+  {
+    postId: PostData["id"]
+    post?: Partial<EditablePost>
+    changes?: ImageChangeRecord[]
+    onUploadProgress?: (progress: number) => void
+  }
+> => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -160,7 +179,7 @@ export const usePrevPost$ = (params: PostParams): UseQueryResult<PostData> => {
 }
 
 export const useGalleryPosts$ = (params: {
-  galleryId: GalleryData['id']
+  galleryId: GalleryData["id"]
 }): UseInfiniteQueryResult<PostData[]> => {
   const queryClient = useQueryClient()
 
@@ -168,16 +187,19 @@ export const useGalleryPosts$ = (params: {
     ...queryKeys.posts.inGallery(params)._ctx.data,
     ...pagedQueryOptions,
     queryFn: async ({ pageParam }) => {
-      const page = await postsApi.fetchGalleryPosts({ ...params, page: pageParam })
+      const page = await postsApi.fetchGalleryPosts({
+        ...params,
+        page: pageParam,
+      })
       page.posts.forEach((post) => updateCache(queryClient, post))
       return page
     },
-    select: (data) => data.pages.map(page => page.posts).flat(),
+    select: (data) => data.pages.map((page) => page.posts).flat(),
   })
 }
 
 export const useTaggedPosts$ = (params: {
-  tagId: TagData['id']
+  tagId: TagData["id"]
 }): UseInfiniteQueryResult<PostData[]> => {
   const queryClient = useQueryClient()
 
@@ -185,10 +207,13 @@ export const useTaggedPosts$ = (params: {
     ...queryKeys.posts.withTag(params)._ctx.data,
     ...pagedQueryOptions,
     queryFn: async ({ pageParam }) => {
-      const page = await postsApi.fetchTaggedPosts({ ...params, page: pageParam })
+      const page = await postsApi.fetchTaggedPosts({
+        ...params,
+        page: pageParam,
+      })
       page.posts.forEach((post) => updateCache(queryClient, post))
       return page
     },
-    select: (data) => data.pages.map(page => page.posts).flat(),
+    select: (data) => data.pages.map((page) => page.posts).flat(),
   })
 }

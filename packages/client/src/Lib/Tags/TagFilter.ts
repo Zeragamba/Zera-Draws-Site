@@ -1,4 +1,4 @@
-import { TagData } from '../../Models/TagData'
+import { TagData } from "../../Models/TagData"
 
 export interface TagFilter {
   name?: string
@@ -22,7 +22,9 @@ export function filterTags(allTags: TagData[], filter: TagFilter): TagData[] {
     const searchTerms = filter.name.split(/\s+/)
     searchTerms.forEach((term) => {
       term = term.trim().toLocaleLowerCase()
-      filtered = filtered.filter((tag) => tag.name.toLocaleLowerCase().includes(term))
+      filtered = filtered.filter((tag) =>
+        tag.name.toLocaleLowerCase().includes(term),
+      )
     })
   }
 

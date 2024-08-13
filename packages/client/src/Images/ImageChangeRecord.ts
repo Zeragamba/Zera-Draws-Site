@@ -4,7 +4,7 @@ export type ImageChangeRecord =
   | RemoveImageChangeRecord
 
 export type AddImageChangeRecord = {
-  action: 'add'
+  action: "add"
   id: string
   filename: string
   position?: number
@@ -12,7 +12,7 @@ export type AddImageChangeRecord = {
 }
 
 export type EditImageChangeRecord = {
-  action: 'edit'
+  action: "edit"
   id: string
   filename?: string
   position?: number
@@ -20,6 +20,6 @@ export type EditImageChangeRecord = {
 }
 
 export type RemoveImageChangeRecord = {
-  action: 'remove'
+  action: "remove"
   id: string
 }

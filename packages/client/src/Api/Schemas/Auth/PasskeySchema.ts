@@ -1,10 +1,12 @@
-import { parseISO } from 'date-fns'
-import z from 'zod'
+import { parseISO } from "date-fns"
+import z from "zod"
 
 export const PasskeyDataSchema = z.object({
   id: z.string(),
   name: z.string().min(1),
-  createdAt: z.string().datetime()
+  createdAt: z
+    .string()
+    .datetime()
     .transform((timestamp) => parseISO(timestamp))
     .optional(),
 })
@@ -26,14 +28,18 @@ export const PasskeyLoginChallengeSchema = z.object({
 
 export const PasskeyCreateChallengeSchema = z.object({
   challenge: z.string(),
-  excludeCredentials: z.object({
-    type: z.literal('public-key'),
-    id: z.string(),
-  }).array(),
-  pubKeyCredParams: z.object({
-    type: z.literal('public-key'),
-    alg: z.number(),
-  }).array(),
+  excludeCredentials: z
+    .object({
+      type: z.literal("public-key"),
+      id: z.string(),
+    })
+    .array(),
+  pubKeyCredParams: z
+    .object({
+      type: z.literal("public-key"),
+      alg: z.number(),
+    })
+    .array(),
   rp: z.object({
     name: z.string(),
   }),

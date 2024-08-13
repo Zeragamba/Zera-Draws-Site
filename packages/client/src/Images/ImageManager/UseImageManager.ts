@@ -1,9 +1,9 @@
-import { useReducer } from 'react'
+import { useReducer } from "react"
 
-import * as Actions from './Actions'
-import { rootReducer } from './rootReducer'
-import { ImageData } from '../../Models/ImageData'
-import { ImageChangeRecord } from '../ImageChangeRecord'
+import * as Actions from "./Actions"
+import { rootReducer } from "./rootReducer"
+import { ImageData } from "../../Models/ImageData"
+import { ImageChangeRecord } from "../ImageChangeRecord"
 
 export type UseImageManagerProps = {
   images?: ImageData[]
@@ -18,8 +18,10 @@ export type ImageManager = {
   setImages: (params: Actions.SetImagesPayload) => void
 }
 
-export function useImageManager({ images = [] }: UseImageManagerProps = {}): ImageManager {
-  const [ state, dispatch ] = useReducer(rootReducer, { images, changes: [] })
+export function useImageManager({
+  images = [],
+}: UseImageManagerProps = {}): ImageManager {
+  const [state, dispatch] = useReducer(rootReducer, { images, changes: [] })
 
   return {
     images: state.images,

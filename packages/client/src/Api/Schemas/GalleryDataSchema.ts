@@ -1,4 +1,4 @@
-import z from 'zod'
+import z from "zod"
 
 export const GalleryDataSchema = z.object({
   id: z.string().uuid(),
@@ -6,6 +6,8 @@ export const GalleryDataSchema = z.object({
   name: z.string(),
 })
 
-export const GalleryResSchema = z.object({
-  gallery: GalleryDataSchema,
-}).transform((res) => res.gallery)
+export const GalleryResSchema = z
+  .object({
+    gallery: GalleryDataSchema,
+  })
+  .transform((res) => res.gallery)

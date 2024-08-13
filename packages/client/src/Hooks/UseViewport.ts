@@ -1,7 +1,9 @@
-import { MutableRefObject, useEffect, useState } from 'react'
+import { MutableRefObject, useEffect, useState } from "react"
 
-export const useContainerDimensions = (elementRef: MutableRefObject<HTMLElement | null>) => {
-  const [ dimensions, setDimensions ] = useState({ width: 0, height: 0 })
+export const useContainerDimensions = (
+  elementRef: MutableRefObject<HTMLElement | null>,
+) => {
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
   useEffect(() => {
     const getDimensions = () => {
@@ -19,12 +21,12 @@ export const useContainerDimensions = (elementRef: MutableRefObject<HTMLElement 
       setDimensions(getDimensions())
     }
 
-    window.addEventListener('resize', handleResize)
+    window.addEventListener("resize", handleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener("resize", handleResize)
     }
-  }, [ elementRef ])
+  }, [elementRef])
 
   return dimensions
 }

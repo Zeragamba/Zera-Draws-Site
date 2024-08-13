@@ -11,13 +11,8 @@ export interface ImageData {
   file?: File
 }
 
-type ImageSizes =
-  & { full: string }
-  & { [size: string]: string | undefined }
+type ImageSizes = { full: string } & { [size: string]: string | undefined }
 
-type EditableFields =
-  | 'filename'
-  | 'position'
-  | 'file'
+type EditableFields = "filename" | "position" | "file"
 
 export type EditableImage = Pick<ImageData, EditableFields>

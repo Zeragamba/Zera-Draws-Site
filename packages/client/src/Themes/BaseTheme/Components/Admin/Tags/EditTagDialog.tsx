@@ -1,17 +1,17 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { Button, Dialog, DialogContent, Stack } from '@mui/material'
-import { FC } from 'react'
-import { useForm } from 'react-hook-form'
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
+import { Button, Dialog, DialogContent, Stack } from "@mui/material"
+import { FC } from "react"
+import { useForm } from "react-hook-form"
 
-import { DeleteTagButton } from './DeleteTagButton'
-import { MergeTagButton } from './MergeTagsButton'
-import { TagForm } from './TagForm'
-import { FontAwesomeIcon } from '../../../../../Lib'
-import { TagData } from '../../../../../Models'
-import { useTag$, useUpdateTag$ } from '../../../../../Queries'
+import { DeleteTagButton } from "./DeleteTagButton"
+import { MergeTagButton } from "./MergeTagsButton"
+import { TagForm } from "./TagForm"
+import { FontAwesomeIcon } from "../../../../../Lib"
+import { TagData } from "../../../../../Models"
+import { useTag$, useUpdateTag$ } from "../../../../../Queries"
 
 interface EditTagDialogProps {
-  tagId: TagData['id']
+  tagId: TagData["id"]
   open: boolean
   onClose: () => void
 }
@@ -21,7 +21,6 @@ export const EditTagDialog: FC<EditTagDialogProps> = ({
   onClose,
   open,
 }) => {
-
   return (
     <Dialog open={open} fullWidth>
       <EditTagDialogContent tagId={tagId} onClose={onClose} />
@@ -30,7 +29,7 @@ export const EditTagDialog: FC<EditTagDialogProps> = ({
 }
 
 interface EditTagDialogContentProps {
-  tagId: TagData['id']
+  tagId: TagData["id"]
   onClose: () => void
 }
 
@@ -41,14 +40,17 @@ const EditTagDialogContent: FC<EditTagDialogContentProps> = ({
   const tag$ = useTag$({ tagId })
   const editTag$ = useUpdateTag$()
 
-  const formData = tag$.data ? {
-    tag: tag$.data,
-  } : undefined
+  const formData = tag$.data
+    ? {
+        tag: tag$.data,
+      }
+    : undefined
 
   const form = useForm<{ tag: TagData }>({ values: formData })
 
   if (tag$.isPending) return <DialogContent>Loading...</DialogContent>
-  if (tag$.isError) return <DialogContent>Error: {String(tag$.error)}</DialogContent>
+  if (tag$.isError)
+    return <DialogContent>Error: {String(tag$.error)}</DialogContent>
   const tag = tag$.data
 
   const onSubmit = form.handleSubmit(async ({ tag }) => {
@@ -80,7 +82,11 @@ const EditTagDialogContent: FC<EditTagDialogContentProps> = ({
               variant="contained"
               onClick={onSubmit}
               disabled={editTag$.isPending}
-              startIcon={editTag$.isPending ? <FontAwesomeIcon icon={faSpinner} spin /> : null}
+              startIcon={
+                editTag$.isPending ? (
+                  <FontAwesomeIcon icon={faSpinner} spin />
+                ) : null
+              }
             >
               Save
             </Button>

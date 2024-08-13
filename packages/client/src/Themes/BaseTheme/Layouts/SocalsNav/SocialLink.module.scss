@@ -16,7 +16,9 @@ $label-width: 100px;
     transition-timing-function: ease-in-out;
     transition-property: width;
 
-    &:hover {width: $logo-size + $label-width}
+    &:hover {
+      width: $logo-size + $label-width;
+    }
   }
 }
 
@@ -32,7 +34,9 @@ $label-width: 100px;
       background: change-color($colour-primary-light, $alpha: 1);
     }
 
-    &:active { background: change-color($colour-primary, $alpha: 1); }
+    &:active {
+      background: change-color($colour-primary, $alpha: 1);
+    }
   }
 }
 

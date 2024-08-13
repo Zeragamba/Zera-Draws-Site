@@ -1,9 +1,7 @@
-import { FC } from 'react'
+import { FC } from "react"
 
-import { LoadingSpinner } from '../Components'
+import { LoadingSpinner } from "../Components"
 
 export const LoadingPage: FC = () => {
-  return (
-    <LoadingSpinner />
-  )
+  return <LoadingSpinner />
 }

@@ -1,2 +1,2 @@
-export * from './AllPostsGalleryPage'
-export * from './ViewGalleryPage'
+export * from "./AllPostsGalleryPage"
+export * from "./ViewGalleryPage"

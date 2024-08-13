@@ -4,6 +4,6 @@ const requireEnv = (name: string, value: string | undefined): string => {
 }
 
 export const Config = {
-  SERVER_URL: requireEnv('VITE_SERVER_URL', import.meta.env.VITE_SERVER_URL),
-  ENVIRONMENT: requireEnv('VITE_ENV', import.meta.env.VITE_ENV || 'production'),
+  SERVER_URL: requireEnv("VITE_SERVER_URL", import.meta.env.VITE_SERVER_URL),
+  ENVIRONMENT: requireEnv("VITE_ENV", import.meta.env.VITE_ENV || "production"),
 }

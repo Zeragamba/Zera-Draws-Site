@@ -1,9 +1,9 @@
-import { FC } from 'react'
-import { Navigate } from 'react-router-dom'
+import { FC } from "react"
+import { Navigate } from "react-router-dom"
 
-import { ArchivePage } from './ArchivePage'
-import { useFirstPost$ } from '../../../../Queries'
-import { LoadingPage } from '../LoadingPage'
+import { ArchivePage } from "./ArchivePage"
+import { useFirstPost$ } from "../../../../Queries"
+import { LoadingPage } from "../LoadingPage"
 
 export const FirstPostPage: FC = () => {
   const firstPost$ = useFirstPost$()

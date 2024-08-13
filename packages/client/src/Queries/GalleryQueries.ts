@@ -1,19 +1,19 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useQuery, UseQueryResult } from "@tanstack/react-query"
 
-import { queryKeys } from './QueryKeys'
-import { galleryApiClient } from '../Api'
-import { GalleryData } from '../Models'
+import { queryKeys } from "./QueryKeys"
+import { galleryApiClient } from "../Api"
+import { GalleryData } from "../Models"
 
 export const useGallery$ = (params: {
-  galleryId: GalleryData['id']
+  galleryId: GalleryData["id"]
 }): UseQueryResult<GalleryData | null> => {
   const tag$ = useOptionalGallery$(params)
-  if (tag$.data === null) throw new Error('Tag not found')
+  if (tag$.data === null) throw new Error("Tag not found")
   return tag$ as UseQueryResult<GalleryData>
 }
 
 export const useOptionalGallery$ = (params: {
-  galleryId?: GalleryData['id']
+  galleryId?: GalleryData["id"]
 }): UseQueryResult<GalleryData | null> => {
   const { galleryId = null } = params
 

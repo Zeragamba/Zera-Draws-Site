@@ -1,16 +1,17 @@
-import { Paper } from '@mui/material'
-import { FC } from 'react'
+import { Paper } from "@mui/material"
+import { FC } from "react"
 
-import { ErrorPage } from './ErrorPage'
-import { LoadingPage } from './LoadingPage'
-import { useCustomContent$ } from '../../../Queries'
-import { Markdown } from '../Components'
+import { ErrorPage } from "./ErrorPage"
+import { LoadingPage } from "./LoadingPage"
+import { useCustomContent$ } from "../../../Queries"
+import { Markdown } from "../Components"
 
 export const AboutPage: FC = () => {
   const customContent$ = useCustomContent$()
 
   if (customContent$.isPending) return <LoadingPage />
-  if (customContent$.isError) return <ErrorPage error={String(customContent$.error)} />
+  if (customContent$.isError)
+    return <ErrorPage error={String(customContent$.error)} />
   const contentMeta = customContent$.data
 
   return (

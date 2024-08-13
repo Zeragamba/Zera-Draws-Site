@@ -1,18 +1,22 @@
-import { Menu, Paper, Stack } from '@mui/material'
-import { FC, useRef, useState } from 'react'
+import { Menu, Paper, Stack } from "@mui/material"
+import { FC, useRef, useState } from "react"
 
-import { NavBarLink } from './NavBarLink'
-import { TagsMenu } from './TagsMenu'
-import { useFeatureFlag, useIsMobile } from '../../../../Hooks'
-import { FeatureFlag, SocialPlatform } from '../../../../Models'
-import { useCurrentUser$, useLogout$, useSocialPlatforms$ } from '../../../../Queries'
-import { SocialsNav } from '../SocalsNav'
+import { NavBarLink } from "./NavBarLink"
+import { TagsMenu } from "./TagsMenu"
+import { useFeatureFlag, useIsMobile } from "../../../../Hooks"
+import { FeatureFlag, SocialPlatform } from "../../../../Models"
+import {
+  useCurrentUser$,
+  useLogout$,
+  useSocialPlatforms$,
+} from "../../../../Queries"
+import { SocialsNav } from "../SocalsNav"
 
 export const AppNavBar: FC = () => {
   const isMobile = useIsMobile()
 
   return (
-    <Paper sx={{ backgroundColor: 'primary.main', width: '100%' }}>
+    <Paper sx={{ backgroundColor: "primary.main", width: "100%" }}>
       {isMobile ? (
         <Stack>
           <MobileNav />
@@ -20,13 +24,26 @@ export const AppNavBar: FC = () => {
       ) : (
         <Stack
           direction="row"
-          sx={{ justifyContent: 'space-between', maxWidth: '1200px', flexGrow: 1, margin: 'auto' }}
+          sx={{
+            justifyContent: "space-between",
+            maxWidth: "1200px",
+            flexGrow: 1,
+            margin: "auto",
+          }}
         >
-          <Stack className="left" direction="row" style={{ alignItems: 'center' }}>
+          <Stack
+            className="left"
+            direction="row"
+            style={{ alignItems: "center" }}
+          >
             <LeftNavLinks />
           </Stack>
 
-          <Stack className="right" direction="row" style={{ alignItems: 'center' }}>
+          <Stack
+            className="right"
+            direction="row"
+            style={{ alignItems: "center" }}
+          >
             <RightNavLinks />
           </Stack>
         </Stack>
@@ -34,7 +51,6 @@ export const AppNavBar: FC = () => {
     </Paper>
   )
 }
-
 
 export const LeftNavLinks: FC = () => {
   return (
@@ -58,9 +74,7 @@ export const RightNavLinks: FC = () => {
 
   return (
     <>
-      {aboutPageEnabled && (
-        <NavBarLink to="/about" label="About" />
-      )}
+      {aboutPageEnabled && <NavBarLink to="/about" label="About" />}
 
       {isAdmin ? (
         <>
@@ -71,7 +85,11 @@ export const RightNavLinks: FC = () => {
       ) : (
         <>
           {socials[SocialPlatform.gumroad] && (
-            <NavBarLink to={socials[SocialPlatform.gumroad]} label="Store" target="_blank" />
+            <NavBarLink
+              to={socials[SocialPlatform.gumroad]}
+              label="Store"
+              target="_blank"
+            />
           )}
           <SocialsNav />
         </>
@@ -81,13 +99,17 @@ export const RightNavLinks: FC = () => {
 }
 
 const MobileNav: FC = () => {
-  const [ menuOpen, setMenuOpen ] = useState<boolean>(false)
+  const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
   const anchorEl = useRef<HTMLAnchorElement | null>(null)
 
   return (
     <>
-      <NavBarLink onClick={() => setMenuOpen(true)} buttonRef={anchorEl} label="Menu" />
+      <NavBarLink
+        onClick={() => setMenuOpen(true)}
+        buttonRef={anchorEl}
+        label="Menu"
+      />
 
       <Menu
         id="basic-menu"
@@ -95,17 +117,17 @@ const MobileNav: FC = () => {
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
+          vertical: "bottom",
+          horizontal: "center",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         }}
         PaperProps={{
           sx: {
-            backgroundColor: 'primary.main',
-            width: '100%',
+            backgroundColor: "primary.main",
+            width: "100%",
           },
         }}
       >

@@ -1,19 +1,19 @@
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { Box, Button, Paper, Stack, Typography } from '@mui/material'
-import { FC } from 'react'
+import { faEdit } from "@fortawesome/free-solid-svg-icons"
+import { Box, Button, Paper, Stack, Typography } from "@mui/material"
+import { FC } from "react"
 
-import { PostNav } from './PostNav'
-import { PostTags } from './PostTags'
-import { useViewPostCtrl } from '../../../../Controllers'
-import { FontAwesomeIcon } from '../../../../Lib'
-import { AsyncImg } from '../Images'
-import { Markdown } from '../Markdown'
+import { PostNav } from "./PostNav"
+import { PostTags } from "./PostTags"
+import { useViewPostCtrl } from "../../../../Controllers"
+import { FontAwesomeIcon } from "../../../../Lib"
+import { AsyncImg } from "../Images"
+import { Markdown } from "../Markdown"
 
-import styles from './ViewPost.module.scss'
+import styles from "./ViewPost.module.scss"
 
 export const ViewPost: FC = () => {
   const { post, ...ctrl } = useViewPostCtrl()
-  const description = post.description || ''
+  const description = post.description || ""
 
   return (
     <Stack gap={2}>
@@ -57,12 +57,12 @@ export const ViewPost: FC = () => {
 
       <Paper sx={{ padding: 2 }}>
         <Stack gap={2}>
-          <Typography variant={'h3'}>Tags</Typography>
+          <Typography variant={"h3"}>Tags</Typography>
           <PostTags post={post} />
         </Stack>
       </Paper>
 
-      {description?.trim() !== '' && (
+      {description?.trim() !== "" && (
         <Paper sx={{ padding: 2 }}>
           <Markdown>{post.description}</Markdown>
         </Paper>

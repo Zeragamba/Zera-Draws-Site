@@ -1,22 +1,19 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { Button, Dialog, DialogContent, Stack } from '@mui/material'
-import { FC } from 'react'
-import { useForm } from 'react-hook-form'
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
+import { Button, Dialog, DialogContent, Stack } from "@mui/material"
+import { FC } from "react"
+import { useForm } from "react-hook-form"
 
-import { TagForm } from './TagForm'
-import { FontAwesomeIcon } from '../../../../../Lib'
-import { buildTagData, TagData } from '../../../../../Models'
-import { useCreateTag$ } from '../../../../../Queries'
+import { TagForm } from "./TagForm"
+import { FontAwesomeIcon } from "../../../../../Lib"
+import { buildTagData, TagData } from "../../../../../Models"
+import { useCreateTag$ } from "../../../../../Queries"
 
 interface AddTagDialogProps {
   open: boolean
   onClose: () => void
 }
 
-export const AddTagDialog: FC<AddTagDialogProps> = ({
-  onClose,
-  open,
-}) => {
+export const AddTagDialog: FC<AddTagDialogProps> = ({ onClose, open }) => {
   return (
     <Dialog open={open} fullWidth>
       <EditTagDialogContent onClose={onClose} />
@@ -30,9 +27,7 @@ interface AddTagDialogContentProps {
 
 const defaultTagData = buildTagData()
 
-const EditTagDialogContent: FC<AddTagDialogContentProps> = ({
-  onClose,
-}) => {
+const EditTagDialogContent: FC<AddTagDialogContentProps> = ({ onClose }) => {
   const createTag$ = useCreateTag$()
   const form = useForm<{ tag: TagData }>({
     values: { tag: defaultTagData },
@@ -61,7 +56,11 @@ const EditTagDialogContent: FC<AddTagDialogContentProps> = ({
             variant="contained"
             onClick={onSubmit}
             disabled={createTag$.isPending}
-            startIcon={createTag$.isPending ? <FontAwesomeIcon icon={faSpinner} spin /> : null}
+            startIcon={
+              createTag$.isPending ? (
+                <FontAwesomeIcon icon={faSpinner} spin />
+              ) : null
+            }
           >
             Save
           </Button>

@@ -1,4 +1,4 @@
-import z from 'zod'
+import z from "zod"
 
 export const UserDataSchema = z.object({
   username: z.string(),
@@ -8,6 +8,8 @@ export const UserDataSchema = z.object({
   admin: z.boolean(),
 })
 
-export const UserResSchema = z.object({
-  user: UserDataSchema,
-}).transform((data) => data.user)
+export const UserResSchema = z
+  .object({
+    user: UserDataSchema,
+  })
+  .transform((data) => data.user)

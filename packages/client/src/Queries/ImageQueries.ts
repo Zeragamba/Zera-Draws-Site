@@ -1,9 +1,9 @@
-import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
+import { useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query"
 
-import { queryKeys } from './QueryKeys'
-import { imageApi } from '../Api/Endpoints/ImageApi'
-import { errorHandler } from '../Errors/ErrorHandler'
-import { ImageData } from '../Models'
+import { queryKeys } from "./QueryKeys"
+import { imageApi } from "../Api/Endpoints/ImageApi"
+import { errorHandler } from "../Errors/ErrorHandler"
+import { ImageData } from "../Models"
 
 export const useImage$ = (src: string): UseQueryResult<HTMLImageElement> => {
   return useQuery({
@@ -20,11 +20,13 @@ export type ImagePreloader = (options: {
 export const useImagePreloader = (): ImagePreloader => {
   const queryClient = useQueryClient()
 
-  return ({ image, size = 'high' }) => {
+  return ({ image, size = "high" }) => {
     const src = image.srcs[size] || image.srcs.full
-    queryClient.prefetchQuery({
-      ...queryKeys.images.get({ src }),
-      queryFn: () => imageApi.fetchImage({ src }),
-    }).catch(errorHandler)
+    queryClient
+      .prefetchQuery({
+        ...queryKeys.images.get({ src }),
+        queryFn: () => imageApi.fetchImage({ src }),
+      })
+      .catch(errorHandler)
   }
 }

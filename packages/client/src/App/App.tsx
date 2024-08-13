@@ -1,11 +1,11 @@
-import { Box } from '@mui/material'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { FC } from 'react'
-import { RouterProvider } from 'react-router-dom'
+import { Box } from "@mui/material"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { FC } from "react"
+import { RouterProvider } from "react-router-dom"
 
-import { AppProviders } from './AppProviders'
-import { AppTheme } from './AppTheme'
-import { Config } from '../Config'
+import { AppProviders } from "./AppProviders"
+import { AppTheme } from "./AppTheme"
+import { Config } from "../Config"
 
 interface AppProps {
   theme: AppTheme
@@ -20,7 +20,9 @@ export const App: FC<AppProps> = ({ theme }) => {
 
       <div id="modal-root" />
 
-      {Config.ENVIRONMENT === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
+      {Config.ENVIRONMENT === "development" && (
+        <ReactQueryDevtools initialIsOpen={false} />
+      )}
     </AppProviders>
   )
 }

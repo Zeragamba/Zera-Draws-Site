@@ -1,4 +1,4 @@
-import z from 'zod'
+import z from "zod"
 
 export const TagDataSchema = z.object({
   id: z.string().uuid(),
@@ -10,10 +10,14 @@ export const TagDataSchema = z.object({
   featured: z.boolean(),
 })
 
-export const TagResSchema = z.object({
-  tag: TagDataSchema,
-}).transform((data) => data.tag)
+export const TagResSchema = z
+  .object({
+    tag: TagDataSchema,
+  })
+  .transform((data) => data.tag)
 
-export const TagListResSchema = z.object({
-  tags: z.array(TagDataSchema),
-}).transform((data) => data.tags)
+export const TagListResSchema = z
+  .object({
+    tags: z.array(TagDataSchema),
+  })
+  .transform((data) => data.tags)

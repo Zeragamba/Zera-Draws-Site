@@ -1,5 +1,4 @@
-import z from 'zod'
-
+import z from "zod"
 
 export const PagedResMetaDataSchema = z.object({
   count: z.number(),

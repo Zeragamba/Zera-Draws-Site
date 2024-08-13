@@ -1,13 +1,13 @@
-import { FC } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { FC } from "react"
+import { Navigate, useNavigate, useParams } from "react-router-dom"
 
-import { isNotFoundError } from '../../../../Api'
-import { ParamsPostProvider } from '../../../../Contexts'
-import { useIsAdmin } from '../../../../Hooks'
-import { useCurrentUser$, usePost$ } from '../../../../Queries'
-import { EditPostForm, ErrorAlert, QueryGate } from '../../Components'
-import { LoadingPage } from '../LoadingPage'
-import { AuthorizingPage, LoginPage } from '../Users'
+import { isNotFoundError } from "../../../../Api"
+import { ParamsPostProvider } from "../../../../Contexts"
+import { useIsAdmin } from "../../../../Hooks"
+import { useCurrentUser$, usePost$ } from "../../../../Queries"
+import { EditPostForm, ErrorAlert, QueryGate } from "../../Components"
+import { LoadingPage } from "../LoadingPage"
+import { AuthorizingPage, LoginPage } from "../Users"
 
 export const EditPostPage: FC = () => {
   const userQuery = useCurrentUser$()
@@ -19,14 +19,14 @@ export const EditPostPage: FC = () => {
 
   if (userQuery.isFetching) return <AuthorizingPage />
   if (!userQuery.data) return <LoginPage />
-  if (!isAdmin) return <Navigate to={'/'} />
+  if (!isAdmin) return <Navigate to={"/"} />
 
   return (
     <QueryGate
       query={post$}
       renderError={(error) => {
         if (isNotFoundError(error)) {
-          return <Navigate to={'/'} replace />
+          return <Navigate to={"/"} replace />
         } else {
           return <ErrorAlert error={error} />
         }
@@ -37,7 +37,7 @@ export const EditPostPage: FC = () => {
             post={post}
             onSaved={(post) => navigate(`/post/${post.slug}`)}
             onCancel={() => navigate(-1)}
-            onDelete={() => navigate('/archive')}
+            onDelete={() => navigate("/archive")}
           />
         </ParamsPostProvider>
       )}

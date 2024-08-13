@@ -1,8 +1,8 @@
-import { addDays, setHours, setMinutes } from 'date-fns'
+import { addDays, setHours, setMinutes } from "date-fns"
 
-import { EditableImage, ImageData } from './ImageData'
-import { TagData } from './TagData'
-import { ImageChangeRecord } from '../Images'
+import { EditableImage, ImageData } from "./ImageData"
+import { TagData } from "./TagData"
+import { ImageChangeRecord } from "../Images"
 
 export interface PostData {
   id: string
@@ -18,14 +18,14 @@ export interface PostData {
 }
 
 export enum EditablePostFields {
-  date = 'date',
-  position = 'position',
-  title = 'title',
-  slug = 'slug',
-  description = 'description',
-  tags = 'tags',
-  released = 'released',
-  scheduled = 'scheduled',
+  date = "date",
+  position = "position",
+  title = "title",
+  slug = "slug",
+  description = "description",
+  tags = "tags",
+  released = "released",
+  scheduled = "scheduled",
 }
 
 export type EditablePost = Pick<PostData, EditablePostFields>
@@ -41,15 +41,15 @@ export function createPostData(): PostData {
   scheduledDate = setMinutes(scheduledDate, 0)
 
   return {
-    id: '',
-    title: '',
+    id: "",
+    title: "",
     date: new Date().toISOString(),
-    slug: '',
+    slug: "",
     position: 0,
     tags: [],
     images: [],
     released: true,
-    description: '',
+    description: "",
     scheduled: scheduledDate.toISOString(),
   }
 }
@@ -60,7 +60,11 @@ type FormDataProps = {
   changes?: ImageChangeRecord[]
 }
 
-export function postToFormData({ post, images, changes }: FormDataProps): FormData {
+export function postToFormData({
+  post,
+  images,
+  changes,
+}: FormDataProps): FormData {
   const formData = new FormData()
 
   if (post) {
@@ -71,10 +75,10 @@ export function postToFormData({ post, images, changes }: FormDataProps): FormDa
     const editableFields: string[] = Object.values(EditablePostFields)
 
     Object.entries(post)
-      .filter(([ prop ]) => editableFields.includes(prop))
-      .forEach(([ prop, value ]) => {
+      .filter(([prop]) => editableFields.includes(prop))
+      .forEach(([prop, value]) => {
         switch (prop) {
-          case 'tags':
+          case "tags":
             addTagsToFormData(formData, value as TagData[])
             break
           default:
@@ -96,10 +100,10 @@ export function postToFormData({ post, images, changes }: FormDataProps): FormDa
 
 function addTagsToFormData(formData: FormData, tags: TagData[]) {
   if (tags.length === 0) {
-    formData.append('tags', '__none__')
+    formData.append("tags", "__none__")
   } else {
     tags.forEach((tag) => {
-      formData.append('tags[]', tag.id)
+      formData.append("tags[]", tag.id)
     })
   }
 }
@@ -108,9 +112,9 @@ function addImagesToFormData(formData: FormData, images: EditableImage[]) {
   Array.from(images)
     .sort((a, b) => a.position - b.position)
     .forEach((image, index) => {
-      Object.entries(image).forEach(([ prop, value ]) => {
+      Object.entries(image).forEach(([prop, value]) => {
         switch (prop) {
-          case 'file':
+          case "file":
             formData.set(`images[${index}][file]`, value as File)
             break
           default:
@@ -122,9 +126,9 @@ function addImagesToFormData(formData: FormData, images: EditableImage[]) {
 
 function addChangesToFormData(formData: FormData, images: ImageChangeRecord[]) {
   images.forEach((image, index) => {
-    Object.entries(image).forEach(([ prop, value ]) => {
+    Object.entries(image).forEach(([prop, value]) => {
       switch (prop) {
-        case 'file':
+        case "file":
           formData.set(`changes[${index}][file]`, value as File)
           break
         default:

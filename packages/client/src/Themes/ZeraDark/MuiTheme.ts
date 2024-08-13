@@ -1,28 +1,22 @@
-import { createTheme } from '@mui/material'
-import { CSSProperties } from 'react'
+import { createTheme } from "@mui/material"
+import { CSSProperties } from "react"
 
 export const Colours = {
-  primary: 'hsl(0, 91%, 25%)',
-  secondary: 'hsl(34, 79%, 61%)',
-  dark: 'hsl(0,0%,22%)',
-  grey: 'hsl(0, 0%, 40%)',
-  light: 'hsl(0,0%,85%)',
+  primary: "hsl(0, 91%, 25%)",
+  secondary: "hsl(34, 79%, 61%)",
+  dark: "hsl(0,0%,22%)",
+  grey: "hsl(0, 0%, 40%)",
+  light: "hsl(0,0%,85%)",
 }
 
-export const DisplayFontFamily = [
-  'Comfortaa',
-  'cursive',
-].join(', ')
+export const DisplayFontFamily = ["Comfortaa", "cursive"].join(", ")
 
-export const BodyFontFamily = [
-  'Roboto',
-  'sans-serif',
-].join(', ')
+export const BodyFontFamily = ["Roboto", "sans-serif"].join(", ")
 
 export const muiTheme = createTheme({
   spacing: 4,
   palette: {
-    mode: 'dark',
+    mode: "dark",
     primary: {
       main: Colours.primary,
     },
@@ -40,15 +34,15 @@ export const muiTheme = createTheme({
     fontFamily: BodyFontFamily,
     h1: {
       fontFamily: DisplayFontFamily,
-      fontSize: '2.5rem',
+      fontSize: "2.5rem",
     },
     h2: {
       fontFamily: DisplayFontFamily,
-      fontSize: '2rem',
+      fontSize: "2rem",
     },
     h3: {
       fontFamily: DisplayFontFamily,
-      fontSize: '1.5rem',
+      fontSize: "1.5rem",
     },
   },
 })

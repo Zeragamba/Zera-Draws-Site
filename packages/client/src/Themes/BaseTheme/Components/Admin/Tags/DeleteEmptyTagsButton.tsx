@@ -1,10 +1,18 @@
-import { faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Stack, Typography } from '@mui/material'
-import { FC, useState } from 'react'
+import { faSpinner, faTrash } from "@fortawesome/free-solid-svg-icons"
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Stack,
+  Typography,
+} from "@mui/material"
+import { FC, useState } from "react"
 
-import { FontAwesomeIcon, noop } from '../../../../../Lib'
-import { TagData } from '../../../../../Models'
-import { useDeleteEmptyTags$ } from '../../../../../Queries'
+import { FontAwesomeIcon, noop } from "../../../../../Lib"
+import { TagData } from "../../../../../Models"
+import { useDeleteEmptyTags$ } from "../../../../../Queries"
 
 interface DeleteTagButtonProps {
   fullWidth?: boolean
@@ -16,7 +24,7 @@ export const DeleteEmptyTagsButton: FC<DeleteTagButtonProps> = ({
   onDeleted = noop,
 }) => {
   const deleteTags$ = useDeleteEmptyTags$()
-  const [ promptOpen, setPromptOpen ] = useState<boolean>(false)
+  const [promptOpen, setPromptOpen] = useState<boolean>(false)
 
   const onDelete = async () => {
     const deletedTags = await deleteTags$.mutateAsync()
@@ -38,7 +46,9 @@ export const DeleteEmptyTagsButton: FC<DeleteTagButtonProps> = ({
 
       <Dialog open={promptOpen}>
         <DialogContent>
-          <DialogContentText>Are you sure you want to delete all empty tags?</DialogContentText>
+          <DialogContentText>
+            Are you sure you want to delete all empty tags?
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           {deleteTags$.isPending ? (
@@ -49,7 +59,9 @@ export const DeleteEmptyTagsButton: FC<DeleteTagButtonProps> = ({
           ) : (
             <>
               <Button onClick={() => setPromptOpen(false)}>Cancel</Button>
-              <Button onClick={onDelete} color="error" variant="contained">Delete</Button>
+              <Button onClick={onDelete} color="error" variant="contained">
+                Delete
+              </Button>
             </>
           )}
         </DialogActions>

@@ -1,11 +1,16 @@
-import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons'
-import { Autocomplete, createFilterOptions, Stack, TextField } from '@mui/material'
-import { FC } from 'react'
+import { faSquare, faSquareCheck } from "@fortawesome/free-regular-svg-icons"
+import {
+  Autocomplete,
+  createFilterOptions,
+  Stack,
+  TextField,
+} from "@mui/material"
+import { FC } from "react"
 
-import { byTagName, FontAwesomeIcon, formatSlug } from '../../../../Lib'
-import { TagData } from '../../../../Models'
-import { useAllTags$, useCreateTag$ } from '../../../../Queries'
-import { sort } from 'fast-sort'
+import { byTagName, FontAwesomeIcon, formatSlug } from "../../../../Lib"
+import { TagData } from "../../../../Models"
+import { useAllTags$, useCreateTag$ } from "../../../../Queries"
+import { sort } from "fast-sort"
 
 type NewTagData = { id: null; name: string }
 type TagOption = TagData | NewTagData
@@ -32,16 +37,22 @@ export const PostTagsField: FC<PostTagsFieldProps> = ({
   }
 
   const onTagsChanged = async (tags: TagOption[]) => {
-    let selectedTags = tags.filter(tag => tag.id !== null) as TagData[]
+    let selectedTags = tags.filter((tag) => tag.id !== null) as TagData[]
 
-    const newTags = tags.filter(tag => tag.id === null) as NewTagData[]
+    const newTags = tags.filter((tag) => tag.id === null) as NewTagData[]
     if (newTags.length >= 0) {
-      const createdTags = await Promise.all(newTags.map(tag => {
-        const tagPayload = { name: tag.name, slug: formatSlug(tag.name), featured: false }
-        return createTag$.mutateAsync({ tag: tagPayload })
-      }))
+      const createdTags = await Promise.all(
+        newTags.map((tag) => {
+          const tagPayload = {
+            name: tag.name,
+            slug: formatSlug(tag.name),
+            featured: false,
+          }
+          return createTag$.mutateAsync({ tag: tagPayload })
+        }),
+      )
 
-      selectedTags = [ ...selectedTags, ...createdTags ]
+      selectedTags = [...selectedTags, ...createdTags]
     }
 
     return onChange(sort(selectedTags).by({ asc: byTagName }))
@@ -63,14 +74,16 @@ export const PostTagsField: FC<PostTagsFieldProps> = ({
       onChange={(_event, tags) => onTagsChanged(tags)}
       renderTags={() => null}
       getOptionLabel={(tag) => tag.name}
-      renderInput={(params) => (<TextField {...params} placeholder="Search" />)}
+      renderInput={(params) => <TextField {...params} placeholder="Search" />}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       filterOptions={(options, params) => {
         const filtered = tagsFilter(options, params)
         const { inputValue } = params
 
-        const isExisting = options.some((option) => inputValue.toLowerCase() === option.name.toLowerCase())
-        if (inputValue !== '' && !isExisting) {
+        const isExisting = options.some(
+          (option) => inputValue.toLowerCase() === option.name.toLowerCase(),
+        )
+        if (inputValue !== "" && !isExisting) {
           filtered.push({ name: inputValue, id: null })
         }
 

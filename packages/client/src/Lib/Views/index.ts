@@ -1,2 +1,2 @@
-export * from './ViewHooks'
-export * from './ViewsQueries'
+export * from "./ViewHooks"
+export * from "./ViewsQueries"

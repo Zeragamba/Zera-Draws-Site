@@ -1,31 +1,47 @@
-import { faAngleRight, faBars, faChevronLeft, faDoorOpen, faGears, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Box, Chip, Divider, Stack, SxProps, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { grey } from '@mui/material/colors'
-import classnames from 'classnames'
-import { FC, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import {
+  faAngleRight,
+  faBars,
+  faChevronLeft,
+  faDoorOpen,
+  faGears,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons"
+import {
+  Box,
+  Chip,
+  Divider,
+  Stack,
+  SxProps,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material"
+import { grey } from "@mui/material/colors"
+import classnames from "classnames"
+import { FC, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-import { NavItem } from './NavItem'
-import { SidebarGroup } from './SidebarGroup'
-import { SidebarTags } from './SidebarTags'
-import { SocialsGroup } from './SocialsGroup'
-import { useFeatureFlag, useIsAdmin } from '../../../../Hooks'
-import { FontAwesomeIcon } from '../../../../Lib'
-import { FeatureFlag } from '../../../../Models'
-import { useLogout$ } from '../../../../Queries'
+import { NavItem } from "./NavItem"
+import { SidebarGroup } from "./SidebarGroup"
+import { SidebarTags } from "./SidebarTags"
+import { SocialsGroup } from "./SocialsGroup"
+import { useFeatureFlag, useIsAdmin } from "../../../../Hooks"
+import { FontAwesomeIcon } from "../../../../Lib"
+import { FeatureFlag } from "../../../../Models"
+import { useLogout$ } from "../../../../Queries"
 
 const styles = {
-  backgroundColor: 'hsla(0deg, 0%, 40%, 25%)',
+  backgroundColor: "hsla(0deg, 0%, 40%, 25%)",
   padding: 2,
-  height: '100dvh',
-  position: 'fixed',
+  height: "100dvh",
+  position: "fixed",
   top: 0,
   left: 0,
-  color: 'text.primary',
+  color: "text.primary",
   maxWidth: 260,
 
-  '&.isSmallScreen.open': {
-    backgroundColor: 'hsla(0deg, 0%, 10%, 95%)',
+  "&.isSmallScreen.open": {
+    backgroundColor: "hsla(0deg, 0%, 10%, 95%)",
     width: 260,
   },
 } satisfies SxProps
@@ -35,14 +51,11 @@ interface SidebarProps {
   setOpen: (value: boolean) => void
 }
 
-export const Sidebar: FC<SidebarProps> = ({
-  open,
-  setOpen,
-}) => {
+export const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
   const navigate = useNavigate()
   const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
-  const [ showTags, setShowTags ] = useState<boolean>(false)
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"))
+  const [showTags, setShowTags] = useState<boolean>(false)
 
   const commissionsEnabled = useFeatureFlag(FeatureFlag.Commissions)
   const requestsEnabled = useFeatureFlag(FeatureFlag.Requests)
@@ -58,11 +71,11 @@ export const Sidebar: FC<SidebarProps> = ({
             sx={{
               padding: 2,
               borderRadius: 2,
-              height: '100%',
-              transition: 'background-color 250ms',
-              backgroundColor: 'hsla(0deg, 0%, 100%, 0%)',
-              '&:hover': {
-                backgroundColor: 'hsla(0deg, 0%, 100%, 15%)',
+              height: "100%",
+              transition: "background-color 250ms",
+              backgroundColor: "hsla(0deg, 0%, 100%, 0%)",
+              "&:hover": {
+                backgroundColor: "hsla(0deg, 0%, 100%, 15%)",
               },
             }}
           >
@@ -84,15 +97,15 @@ export const Sidebar: FC<SidebarProps> = ({
           )}
 
           <SidebarGroup>
-            <Typography variant={'h1'}>
+            <Typography variant={"h1"}>
               <Box
                 component="a"
-                href={'/'}
+                href={"/"}
                 onClick={(event) => {
                   event.preventDefault()
-                  navigate('/')
+                  navigate("/")
                 }}
-                sx={{ color: 'primary.light', textDecoration: 'none' }}
+                sx={{ color: "primary.light", textDecoration: "none" }}
               >
                 Zeragamba
               </Box>
@@ -129,34 +142,45 @@ export const Sidebar: FC<SidebarProps> = ({
           ) : (
             <>
               <SidebarGroup>
+                <NavItem label={"Featured"} to={"/featured"} />
+                <NavItem label={"All"} to={"/all"} />
+                <NavItem label={"Latest"} to={"/latest"} />
                 <NavItem
-                  label={'Featured'}
-                  to={'/featured'}
-                />
-                <NavItem
-                  label={'All'}
-                  to={'/all'}
-                />
-                <NavItem
-                  label={'Latest'}
-                  to={'/latest'}
-                />
-                <NavItem
-                  label={'Tags'}
+                  label={"Tags"}
                   onClick={() => setShowTags(true)}
-                  adornments={{ right: <FontAwesomeIcon icon={faAngleRight} /> }}
+                  adornments={{
+                    right: <FontAwesomeIcon icon={faAngleRight} />,
+                  }}
                 />
 
                 {commissionsEnabled && (
                   <NavItem
                     label="Commissions"
-                    adornments={{ right: <Chip size="small" label="Closed" color="error" variant="outlined" /> }}
+                    adornments={{
+                      right: (
+                        <Chip
+                          size="small"
+                          label="Closed"
+                          color="error"
+                          variant="outlined"
+                        />
+                      ),
+                    }}
                   />
                 )}
                 {requestsEnabled && (
                   <NavItem
                     label="Requests"
-                    adornments={{ right: <Chip size="small" label="Closed" color="error" variant="outlined" /> }}
+                    adornments={{
+                      right: (
+                        <Chip
+                          size="small"
+                          label="Closed"
+                          color="error"
+                          variant="outlined"
+                        />
+                      ),
+                    }}
                   />
                 )}
               </SidebarGroup>
@@ -171,7 +195,5 @@ export const Sidebar: FC<SidebarProps> = ({
         </>
       )}
     </Stack>
-
-
   )
 }

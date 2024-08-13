@@ -1,9 +1,9 @@
-import { FC } from 'react'
+import { FC } from "react"
 
-import { useAllPosts$ } from '../../../../Queries'
-import { InfiniteScroll, PostsList } from '../../Components'
-import { ErrorPage } from '../ErrorPage'
-import { LoadingPage } from '../LoadingPage'
+import { useAllPosts$ } from "../../../../Queries"
+import { InfiniteScroll, PostsList } from "../../Components"
+import { ErrorPage } from "../ErrorPage"
+import { LoadingPage } from "../LoadingPage"
 
 export const ArchivePage: FC = () => {
   const posts$ = useAllPosts$()

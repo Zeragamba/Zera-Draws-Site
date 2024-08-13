@@ -1,11 +1,11 @@
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { Box, Button, Divider, Stack, Typography } from '@mui/material'
-import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { faEdit } from "@fortawesome/free-solid-svg-icons"
+import { Box, Button, Divider, Stack, Typography } from "@mui/material"
+import { FC } from "react"
+import { useNavigate } from "react-router-dom"
 
-import { usePostContext } from '../../../../Contexts'
-import { useIsAdmin, useIsMobile } from '../../../../Hooks'
-import { FontAwesomeIcon } from '../../../../Lib'
+import { usePostContext } from "../../../../Contexts"
+import { useIsAdmin, useIsMobile } from "../../../../Hooks"
+import { FontAwesomeIcon } from "../../../../Lib"
 
 export const PostTitle: FC = () => {
   const navigate = useNavigate()
@@ -14,9 +14,15 @@ export const PostTitle: FC = () => {
   const { post } = usePostContext()
 
   return (
-    <Stack gap={1} paddingTop={1} width={'100%'}>
-      <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
-        <Typography variant={isMobile ? 'h3' : 'h1'} color={'text.primary'}>{post.title}</Typography>
+    <Stack gap={1} paddingTop={1} width={"100%"}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="flex-end"
+      >
+        <Typography variant={isMobile ? "h3" : "h1"} color={"text.primary"}>
+          {post.title}
+        </Typography>
         {isAdmin && (
           <Box>
             <Button
@@ -36,7 +42,7 @@ export const PostTitle: FC = () => {
         )}
       </Stack>
 
-      <Divider sx={{ opacity: 0.35, borderColor: 'text.primary' }} />
+      <Divider sx={{ opacity: 0.35, borderColor: "text.primary" }} />
     </Stack>
   )
 }

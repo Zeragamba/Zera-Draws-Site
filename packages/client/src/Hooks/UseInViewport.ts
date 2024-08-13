@@ -1,13 +1,12 @@
-import { RefCallback, useCallback, useEffect, useState } from 'react'
+import { RefCallback, useCallback, useEffect, useState } from "react"
 
-
-type InViewportHook = [ ref: RefCallback<Element>, inViewport: boolean ]
+type InViewportHook = [ref: RefCallback<Element>, inViewport: boolean]
 
 export function useInViewport(): InViewportHook {
-  const [ inViewport, setInViewport ] = useState<boolean>(false)
-  const [ element, setElement ] = useState<Element | null>(null)
+  const [inViewport, setInViewport] = useState<boolean>(false)
+  const [element, setElement] = useState<Element | null>(null)
 
-  const elementRef = useCallback(setElement, [ setElement ])
+  const elementRef = useCallback(setElement, [setElement])
 
   useEffect(() => {
     if (!element) return
@@ -19,9 +18,9 @@ export function useInViewport(): InViewportHook {
     return () => {
       viewportObserver.remove(element)
     }
-  }, [ element ])
+  }, [element])
 
-  return [ elementRef, inViewport ]
+  return [elementRef, inViewport]
 }
 
 type ObserverCallback = (entity: IntersectionObserverEntry) => void
@@ -36,7 +35,7 @@ class ViewportObserver {
   }
 
   onChange(entries: IntersectionObserverEntry[]) {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       const callback = this.callbacks.get(entry.target)
       if (callback) callback(entry)
     })

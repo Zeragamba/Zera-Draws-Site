@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from 'react'
+import { RefObject, useEffect } from "react"
 
 interface DropEvent extends DragEvent {
   dataTransfer: DataTransfer
@@ -12,7 +12,10 @@ function isDropEvent(event: Event): event is DropEvent {
   return isDragEvent(event) && !!event.dataTransfer
 }
 
-export function useFilesDropped(scopeRef: RefObject<Element> | undefined, callback: (files: File[]) => void): void {
+export function useFilesDropped(
+  scopeRef: RefObject<Element> | undefined,
+  callback: (files: File[]) => void,
+): void {
   useEffect(() => {
     if (!scopeRef) return
 
@@ -35,14 +38,14 @@ export function useFilesDropped(scopeRef: RefObject<Element> | undefined, callba
       callback(processDroppedFiles(event))
     }
 
-    dropScope.addEventListener('drop', onDrop)
-    dropScope.addEventListener('dragover', onDragOver)
+    dropScope.addEventListener("drop", onDrop)
+    dropScope.addEventListener("dragover", onDragOver)
 
     return () => {
-      dropScope.removeEventListener('drop', onDrop)
-      dropScope.removeEventListener('dragover', onDragOver)
+      dropScope.removeEventListener("drop", onDrop)
+      dropScope.removeEventListener("dragover", onDragOver)
     }
-  }, [ scopeRef, callback ])
+  }, [scopeRef, callback])
 }
 
 function processDroppedFiles(event: DropEvent): File[] {

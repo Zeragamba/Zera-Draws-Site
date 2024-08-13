@@ -1,8 +1,7 @@
-import { FormGroup, TextField } from '@mui/material'
-import { FC } from 'react'
+import { FormGroup, TextField } from "@mui/material"
+import { FC } from "react"
 
-import { ImageFormState, TextFields } from '../../../../Images'
-
+import { ImageFormState, TextFields } from "../../../../Images"
 
 type ImageFormProps = {
   state: ImageFormState
@@ -22,7 +21,7 @@ export const ImageForm: FC<ImageFormProps> = ({
           label="Title"
           variant="standard"
           value={state.title.value}
-          onChange={(event) => onFieldChange('title', event.target.value)}
+          onChange={(event) => onFieldChange("title", event.target.value)}
           disabled={disabled}
         />
       </FormGroup>
@@ -33,7 +32,7 @@ export const ImageForm: FC<ImageFormProps> = ({
           type="string"
           variant="standard"
           value={state.date.value}
-          onChange={(event) => onFieldChange('date', event.target.value)}
+          onChange={(event) => onFieldChange("date", event.target.value)}
           disabled={disabled}
         />
       </FormGroup>
@@ -43,7 +42,7 @@ export const ImageForm: FC<ImageFormProps> = ({
           label="URL Slug"
           variant="standard"
           value={state.slug.value}
-          onChange={(event) => onFieldChange('slug', event.target.value)}
+          onChange={(event) => onFieldChange("slug", event.target.value)}
           disabled={disabled}
         />
       </FormGroup>
@@ -54,7 +53,7 @@ export const ImageForm: FC<ImageFormProps> = ({
           variant="standard"
           multiline
           value={state.description.value}
-          onChange={(event) => onFieldChange('description', event.target.value)}
+          onChange={(event) => onFieldChange("description", event.target.value)}
           disabled={disabled}
         />
       </FormGroup>

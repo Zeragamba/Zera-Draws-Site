@@ -1,8 +1,8 @@
-import { FC } from 'react'
+import { FC } from "react"
 
-import { ParamsPostProvider } from '../../../../Contexts'
-import { ViewPost } from '../../Components'
-import { LoadingPage } from '../LoadingPage'
+import { ParamsPostProvider } from "../../../../Contexts"
+import { ViewPost } from "../../Components"
+import { LoadingPage } from "../LoadingPage"
 
 export interface ViewPostPageSlots {
   ViewPost: FC

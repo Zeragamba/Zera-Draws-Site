@@ -1,11 +1,11 @@
-import { Box, Menu, MenuItem, TextField } from '@mui/material'
-import { FC, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Box, Menu, MenuItem, TextField } from "@mui/material"
+import { FC, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-import { NavBarLink } from './NavBarLink'
-import { useTagMenuCtrl } from '../../../../Controllers'
-import { useIsMobile } from '../../../../Hooks'
-import { TagData } from '../../../../Models'
+import { NavBarLink } from "./NavBarLink"
+import { useTagMenuCtrl } from "../../../../Controllers"
+import { useIsMobile } from "../../../../Hooks"
+import { TagData } from "../../../../Models"
 
 const MIN_TAGS_FOR_SEARCH = 15
 
@@ -14,7 +14,7 @@ export const TagsMenu: FC = () => {
   const tagMenu = useTagMenuCtrl()
 
   const isMobile = useIsMobile()
-  const [ menuOpen, setMenuOpen ] = useState<boolean>(false)
+  const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
   const anchorEl = useRef<HTMLAnchorElement | null>(null)
 
@@ -25,7 +25,11 @@ export const TagsMenu: FC = () => {
 
   return (
     <>
-      <NavBarLink onClick={() => setMenuOpen(true)} buttonRef={anchorEl} label="Tags" />
+      <NavBarLink
+        onClick={() => setMenuOpen(true)}
+        buttonRef={anchorEl}
+        label="Tags"
+      />
 
       <Menu
         id="basic-menu"
@@ -33,29 +37,29 @@ export const TagsMenu: FC = () => {
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
         TransitionProps={{
-          onExited: () => tagMenu.setFilterText(''),
+          onExited: () => tagMenu.setFilterText(""),
         }}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
+          vertical: "bottom",
+          horizontal: "center",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         }}
         PaperProps={{
           style: {
-            maxHeight: '500px',
-            width: isMobile ? '100%' : undefined,
+            maxHeight: "500px",
+            width: isMobile ? "100%" : undefined,
           },
         }}
       >
-        {(tagMenu.activeTags.length >= MIN_TAGS_FOR_SEARCH) && (
+        {tagMenu.activeTags.length >= MIN_TAGS_FOR_SEARCH && (
           <MenuItem onKeyDown={(e) => e.stopPropagation()}>
             <TextField
               fullWidth
-              size={'small'}
-              placeholder={'Search...'}
+              size={"small"}
+              placeholder={"Search..."}
               value={tagMenu.filterText}
               onChange={(event) => tagMenu.setFilterText(event.target.value)}
             />
@@ -64,11 +68,11 @@ export const TagsMenu: FC = () => {
 
         {tagMenu.isPending && <MenuItem disabled>Loading...</MenuItem>}
 
-        {tagMenu.filteredTags.map(tag => (
+        {tagMenu.filteredTags.map((tag) => (
           <MenuItem
             key={tag.id}
             onClick={() => onTagClick(tag)}
-            sx={{ justifyContent: 'space-between', gap: 2 }}
+            sx={{ justifyContent: "space-between", gap: 2 }}
           >
             <Box>{tag.name}</Box>
             <Box>{tag.num_posts}</Box>

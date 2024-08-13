@@ -1,9 +1,16 @@
-import { Button, Divider, Paper, Stack, TextField, Typography } from '@mui/material'
-import { ChangeEvent, FC, FormEvent, useState } from 'react'
+import {
+  Button,
+  Divider,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material"
+import { ChangeEvent, FC, FormEvent, useState } from "react"
 
-import { isServerApiError } from '../../../../Api'
-import { usePasskeyLogin$, usePasswordLogin$ } from '../../../../Queries'
-import { ErrorAlert } from '../Shared'
+import { isServerApiError } from "../../../../Api"
+import { usePasskeyLogin$, usePasswordLogin$ } from "../../../../Queries"
+import { ErrorAlert } from "../Shared"
 
 type LoginFormState = {
   username: string
@@ -14,7 +21,11 @@ type LoginFormState = {
 export const LoginForm: FC = () => {
   const passkeyLogin$ = usePasskeyLogin$()
   const passwordLogin$ = usePasswordLogin$()
-  const [ form, setForm ] = useState<LoginFormState>({ username: '', password: '', error: null })
+  const [form, setForm] = useState<LoginFormState>({
+    username: "",
+    password: "",
+    error: null,
+  })
 
   const handleChange = (field: keyof LoginFormState) => {
     return (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +55,7 @@ export const LoginForm: FC = () => {
         gap={2}
         sx={{
           maxWidth: 250,
-          margin: 'auto',
+          margin: "auto",
           padding: 2,
         }}
       >
@@ -53,7 +64,7 @@ export const LoginForm: FC = () => {
           label="Username"
           variant="filled"
           value={form.username}
-          onChange={handleChange('username')}
+          onChange={handleChange("username")}
           autoComplete="username"
           fullWidth
         />
@@ -64,14 +75,12 @@ export const LoginForm: FC = () => {
           variant="filled"
           type="password"
           value={form.password}
-          onChange={handleChange('password')}
+          onChange={handleChange("password")}
           autoComplete="current-password"
           fullWidth
         />
 
-        {error && (
-          <Typography>{error}</Typography>
-        )}
+        {error && <Typography>{error}</Typography>}
 
         <Button variant="contained" type="submit" fullWidth>
           Login
@@ -79,7 +88,11 @@ export const LoginForm: FC = () => {
 
         <Divider />
 
-        <Button variant="contained" fullWidth onClick={() => passkeyLogin$.mutate({})}>
+        <Button
+          variant="contained"
+          fullWidth
+          onClick={() => passkeyLogin$.mutate({})}
+        >
           Login with Passkey
         </Button>
 

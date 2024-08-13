@@ -1,13 +1,13 @@
-import { Button, Stack } from '@mui/material'
-import { FC, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Button, Stack } from "@mui/material"
+import { FC, useMemo, useState } from "react"
+import { useForm } from "react-hook-form"
 
-import { PostForm } from './PostForm'
-import { useImageManager } from '../../../../../Images'
-import { noop } from '../../../../../Lib'
-import { createPostData, EditableImage, PostData } from '../../../../../Models'
-import { useCreatePost$ } from '../../../../../Queries'
-import { ErrorAlert, UploadProgress } from '../../Shared'
+import { PostForm } from "./PostForm"
+import { useImageManager } from "../../../../../Images"
+import { noop } from "../../../../../Lib"
+import { createPostData, EditableImage, PostData } from "../../../../../Models"
+import { useCreatePost$ } from "../../../../../Queries"
+import { ErrorAlert, UploadProgress } from "../../Shared"
 
 interface CreatePostFormProps {
   onCreated?: (post: PostData) => void
@@ -20,13 +20,13 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
 
   const form = useForm({ values: post })
   const imageManager = useImageManager({ images: post?.images || [] })
-  const [ uploadProgress, setUploadProgress ] = useState<number>(0)
+  const [uploadProgress, setUploadProgress] = useState<number>(0)
 
   const createPost$ = useCreatePost$()
 
   const onPostSave = form.handleSubmit(async (post) => {
     const createdImages: Required<EditableImage>[] = imageManager.images
-      .filter(image => image.file)
+      .filter((image) => image.file)
       .sort((a, b) => b.position - a.position)
       .map((image) => {
         return {
@@ -57,12 +57,16 @@ export const CreatePostForm: FC<CreatePostFormProps> = ({
           actions: (
             <Stack gap={1}>
               <Button
-                variant={'contained'}
+                variant={"contained"}
                 disabled={createPost$.isPending}
                 onClick={onPostSave}
                 fullWidth
-              >Save</Button>
-              {uploadProgress !== 0 && <UploadProgress value={uploadProgress} />}
+              >
+                Save
+              </Button>
+              {uploadProgress !== 0 && (
+                <UploadProgress value={uploadProgress} />
+              )}
             </Stack>
           ),
         }}

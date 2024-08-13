@@ -8,21 +8,18 @@ export interface TagData {
   featured: boolean
 }
 
-type EditableFields =
-  | 'name'
-  | 'slug'
-  | 'featured'
+type EditableFields = "name" | "slug" | "featured"
 
 export type EditableTagData = Pick<TagData, EditableFields>
 
 export function buildTagData(): TagData {
   return {
-    id: '',
-    created_at: '',
-    name: '',
+    id: "",
+    created_at: "",
+    name: "",
     num_posts: 0,
-    slug: '',
-    updated_at: '',
+    slug: "",
+    updated_at: "",
     featured: false,
   }
 }

@@ -1,8 +1,7 @@
-import { Chip } from '@mui/material'
-import { FC } from 'react'
+import { Chip } from "@mui/material"
+import { FC } from "react"
 
-import { TagData } from '../../../../Models'
-
+import { TagData } from "../../../../Models"
 
 interface SelectedTagListProps {
   tags: TagData[]
@@ -15,13 +14,13 @@ export const SelectedTagList: FC<SelectedTagListProps> = ({
 }) => {
   return (
     <>
-      {tags.map(tag => (
+      {tags.map((tag) => (
         <Chip
           key={tag.id}
           label={tag.name}
           onDelete={() => onDelete(tag)}
           sx={{
-            '.MuiChip-label': {
+            ".MuiChip-label": {
               flexGrow: 1,
             },
           }}

@@ -1,1 +1,1 @@
-export { SocialsNav } from './SocialsNav'
+export { SocialsNav } from "./SocialsNav"

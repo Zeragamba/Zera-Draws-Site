@@ -1,11 +1,11 @@
-import { PostData } from '../../Models/PostData'
-import { ViewsData } from '../../Models/ViewsData'
-import { PostViewsResSchema } from '../Schemas/PostViewsDataSchema'
-import { ServerApi } from '../ServerApi'
+import { PostData } from "../../Models/PostData"
+import { ViewsData } from "../../Models/ViewsData"
+import { PostViewsResSchema } from "../Schemas/PostViewsDataSchema"
+import { ServerApi } from "../ServerApi"
 
 class PostViewsApi extends ServerApi {
   public async fetchViews(params: {
-    postId: PostData['id']
+    postId: PostData["id"]
   }): Promise<ViewsData> {
     return this.get(`/post/${params.postId}/views`, {
       parseResData: (data) => PostViewsResSchema.parse(data),
@@ -14,7 +14,7 @@ class PostViewsApi extends ServerApi {
 
   async addView(params: {
     viewerId: string
-    postId: PostData['id']
+    postId: PostData["id"]
   }): Promise<ViewsData> {
     return this.post(`/post/${params.postId}/views`, {
       data: { viewer_id: params.viewerId },

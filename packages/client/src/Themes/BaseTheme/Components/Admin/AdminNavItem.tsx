@@ -1,16 +1,13 @@
-import { MenuItem } from '@mui/material'
-import { FC, MouseEventHandler } from 'react'
-import { useHref, useLocation, useNavigate } from 'react-router-dom'
+import { MenuItem } from "@mui/material"
+import { FC, MouseEventHandler } from "react"
+import { useHref, useLocation, useNavigate } from "react-router-dom"
 
 interface AdminNavItemProps {
   to: string
   label: string
 }
 
-export const AdminNavItem: FC<AdminNavItemProps> = ({
-  to,
-  label,
-}) => {
+export const AdminNavItem: FC<AdminNavItemProps> = ({ to, label }) => {
   const navigate = useNavigate()
   const href = useHref(to)
   const location = useLocation()

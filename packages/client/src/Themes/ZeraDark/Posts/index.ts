@@ -1,2 +1,2 @@
-export * from './LatestPostPage'
-export * from './ViewPostPage'
+export * from "./LatestPostPage"
+export * from "./ViewPostPage"

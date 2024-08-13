@@ -1,6 +1,4 @@
-export type ImageFormState =
-  { image: File | undefined }
-  & TextFields
+export type ImageFormState = { image: File | undefined } & TextFields
 
 export type TextFields = {
   title: FormField

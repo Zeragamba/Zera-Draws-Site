@@ -1,36 +1,34 @@
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import { Button, Paper, SxProps, Typography } from '@mui/material'
-import { FC } from 'react'
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
+import { Button, Paper, SxProps, Typography } from "@mui/material"
+import { FC } from "react"
 
-import { usePostImageCtrl } from '../../../../Controllers'
-import { useHotkey, useIsMobile } from '../../../../Hooks'
-import { FontAwesomeIcon } from '../../../../Lib'
+import { usePostImageCtrl } from "../../../../Controllers"
+import { useHotkey, useIsMobile } from "../../../../Hooks"
+import { FontAwesomeIcon } from "../../../../Lib"
 
 const styles: SxProps = {
-  display: 'grid',
-  gridTemplateRows: 'auto',
-  gridTemplateColumns: 'auto auto auto',
-  gridTemplateAreas: [
-    '"prev counter next"',
-  ].join(' '),
+  display: "grid",
+  gridTemplateRows: "auto",
+  gridTemplateColumns: "auto auto auto",
+  gridTemplateAreas: ['"prev counter next"'].join(" "),
 
-  '.prev': {
-    gridArea: 'prev',
+  ".prev": {
+    gridArea: "prev",
   },
 
-  '.counter': {
-    gridArea: 'counter',
-    textTransform: 'uppercase',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+  ".counter": {
+    gridArea: "counter",
+    textTransform: "uppercase",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     paddingLeft: 2,
     paddingRight: 2,
-    whiteSpace: 'nowrap',
+    whiteSpace: "nowrap",
   },
 
-  '.next': {
-    gridArea: 'next',
+  ".next": {
+    gridArea: "next",
   },
 }
 
@@ -38,8 +36,8 @@ export const ImagesNav: FC = () => {
   const isMobile = useIsMobile()
   const postImageCtrl = usePostImageCtrl()
 
-  useHotkey('ArrowDown', () => postImageCtrl.onNextImage())
-  useHotkey('ArrowUp', () => postImageCtrl.onPrevImage())
+  useHotkey("ArrowDown", () => postImageCtrl.onNextImage())
+  useHotkey("ArrowUp", () => postImageCtrl.onPrevImage())
 
   if (postImageCtrl.totalImages === 1) return null
 
@@ -58,7 +56,8 @@ export const ImagesNav: FC = () => {
       </Button>
 
       <Typography className="counter">
-        {!isMobile && 'Image'} {postImageCtrl.currentImageNum} / {postImageCtrl.totalImages}
+        {!isMobile && "Image"} {postImageCtrl.currentImageNum} /{" "}
+        {postImageCtrl.totalImages}
       </Typography>
 
       <Button

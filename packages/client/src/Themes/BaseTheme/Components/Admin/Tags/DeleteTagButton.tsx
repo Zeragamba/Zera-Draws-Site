@@ -1,10 +1,18 @@
-import { faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Stack, Typography } from '@mui/material'
-import { FC, useState } from 'react'
+import { faSpinner, faTrash } from "@fortawesome/free-solid-svg-icons"
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Stack,
+  Typography,
+} from "@mui/material"
+import { FC, useState } from "react"
 
-import { FontAwesomeIcon, noop } from '../../../../../Lib'
-import { TagData } from '../../../../../Models'
-import { useDeleteTag$ } from '../../../../../Queries'
+import { FontAwesomeIcon, noop } from "../../../../../Lib"
+import { TagData } from "../../../../../Models"
+import { useDeleteTag$ } from "../../../../../Queries"
 
 interface DeleteTagButtonProps {
   tag: TagData
@@ -18,7 +26,7 @@ export const DeleteTagButton: FC<DeleteTagButtonProps> = ({
   onDeleted = noop,
 }) => {
   const deleteTag$ = useDeleteTag$()
-  const [ promptOpen, setPromptOpen ] = useState<boolean>(false)
+  const [promptOpen, setPromptOpen] = useState<boolean>(false)
 
   const onDelete = async () => {
     const deletedTag = await deleteTag$.mutateAsync({ tagId: tag.id })
@@ -40,8 +48,14 @@ export const DeleteTagButton: FC<DeleteTagButtonProps> = ({
 
       <Dialog open={promptOpen}>
         <DialogContent>
-          <DialogContentText>Are you sure you want to delete the tag {tag.name}?</DialogContentText>
-          {tag.num_posts >= 5 && <DialogContentText>It is attached to {tag.num_posts} posts</DialogContentText>}
+          <DialogContentText>
+            Are you sure you want to delete the tag {tag.name}?
+          </DialogContentText>
+          {tag.num_posts >= 5 && (
+            <DialogContentText>
+              It is attached to {tag.num_posts} posts
+            </DialogContentText>
+          )}
         </DialogContent>
         <DialogActions>
           {deleteTag$.isPending ? (
@@ -52,7 +66,9 @@ export const DeleteTagButton: FC<DeleteTagButtonProps> = ({
           ) : (
             <>
               <Button onClick={() => setPromptOpen(false)}>Cancel</Button>
-              <Button onClick={onDelete} color="error" variant="contained">Delete</Button>
+              <Button onClick={onDelete} color="error" variant="contained">
+                Delete
+              </Button>
             </>
           )}
         </DialogActions>

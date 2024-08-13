@@ -1,7 +1,19 @@
-import { faCalendar, faCheck, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { Button, ButtonGroup, MenuItem, Select, SelectChangeEvent, SelectProps, Stack } from '@mui/material'
-import { DatePicker } from '@mui/x-date-pickers'
-import classnames from 'classnames'
+import {
+  faCalendar,
+  faCheck,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons"
+import {
+  Button,
+  ButtonGroup,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  SelectProps,
+  Stack,
+} from "@mui/material"
+import { DatePicker } from "@mui/x-date-pickers"
+import classnames from "classnames"
 import {
   addDays,
   addHours,
@@ -15,32 +27,36 @@ import {
   setMinutes,
   startOfDay,
   startOfHour,
-} from 'date-fns'
-import { FC } from 'react'
-import { Control, useController } from 'react-hook-form'
+} from "date-fns"
+import { FC } from "react"
+import { Control, useController } from "react-hook-form"
 
-import { FontAwesomeIcon } from '../../../../../Lib'
-import { PostData } from '../../../../../Models'
+import { FontAwesomeIcon } from "../../../../../Lib"
+import { PostData } from "../../../../../Models"
 
-import styles from './PublishToggle.module.scss'
+import styles from "./PublishToggle.module.scss"
 
 interface PublishToggleProps {
   formControl: Control<PostData>
 }
 
-export const PublishSettings: FC<PublishToggleProps> = ({
-  formControl,
-}) => {
-  const releasedController = useController({ control: formControl, name: 'released' })
-  const scheduledController = useController({ control: formControl, name: 'scheduled' })
+export const PublishSettings: FC<PublishToggleProps> = ({ formControl }) => {
+  const releasedController = useController({
+    control: formControl,
+    name: "released",
+  })
+  const scheduledController = useController({
+    control: formControl,
+    name: "scheduled",
+  })
 
-  let state: 'public' | 'private' | 'scheduled'
+  let state: "public" | "private" | "scheduled"
   if (releasedController.field.value === true) {
-    state = 'public'
+    state = "public"
   } else if (scheduledController.field.value !== null) {
-    state = 'scheduled'
+    state = "scheduled"
   } else {
-    state = 'private'
+    state = "private"
   }
 
   const onSetPublic = () => {
@@ -83,7 +99,7 @@ export const PublishSettings: FC<PublishToggleProps> = ({
       <ButtonGroup>
         <Button
           fullWidth
-          variant={state === 'public' ? 'contained' : 'outlined'}
+          variant={state === "public" ? "contained" : "outlined"}
           onClick={onSetPublic}
           className={classnames(styles.PublishToggle)}
           startIcon={<FontAwesomeIcon icon={faCheck} fixedWidth />}
@@ -93,7 +109,7 @@ export const PublishSettings: FC<PublishToggleProps> = ({
 
         <Button
           fullWidth
-          variant={state === 'scheduled' ? 'contained' : 'outlined'}
+          variant={state === "scheduled" ? "contained" : "outlined"}
           onClick={onSetScheduled}
           className={classnames(styles.PublishToggle)}
           startIcon={<FontAwesomeIcon icon={faCalendar} fixedWidth />}
@@ -103,7 +119,7 @@ export const PublishSettings: FC<PublishToggleProps> = ({
 
         <Button
           fullWidth
-          variant={state === 'private' ? 'contained' : 'outlined'}
+          variant={state === "private" ? "contained" : "outlined"}
           onClick={onSetPrivate}
           className={classnames(styles.PublishToggle)}
           startIcon={<FontAwesomeIcon icon={faEyeSlash} fixedWidth />}
@@ -112,27 +128,27 @@ export const PublishSettings: FC<PublishToggleProps> = ({
         </Button>
       </ButtonGroup>
 
-      {state === 'scheduled' && (
+      {state === "scheduled" && (
         <Stack direction="row" gap={1}>
           <DatePicker
             disablePast
             showDaysOutsideCurrentMonth
-            value={parseISO(scheduledController.field.value || '')}
+            value={parseISO(scheduledController.field.value || "")}
             onChange={onScheduledDateChange}
             slotProps={{
               textField: {
                 fullWidth: true,
-                size: 'small',
+                size: "small",
               },
             }}
           />
 
           <TimeSelect
-            variant={'outlined'}
+            variant={"outlined"}
             size="small"
             fullWidth
             onChange={onScheduledDateChange}
-            value={parseISO(scheduledController.field.value || '')}
+            value={parseISO(scheduledController.field.value || "")}
           />
         </Stack>
       )}
@@ -140,7 +156,7 @@ export const PublishSettings: FC<PublishToggleProps> = ({
   )
 }
 
-interface TimeSelectProps extends Omit<SelectProps, 'onChange' | 'value'> {
+interface TimeSelectProps extends Omit<SelectProps, "onChange" | "value"> {
   onChange: (date: Date) => void
   value: Date
 }
@@ -151,25 +167,32 @@ export const TimeSelect: FC<TimeSelectProps> = ({
   ...selectProps
 }) => {
   const formatTime = (date: Date) => {
-    return formatDate(date, 'h:mm aaa')
+    return formatDate(date, "h:mm aaa")
   }
 
   const options = eachHourOfInterval({
     start: startOfDay(value),
     end: endOfDay(value),
-  }).map(date => formatTime(date))
+  }).map((date) => formatTime(date))
 
-  const selected = options.find(option => option === formatTime(value)) || options[0]
+  const selected =
+    options.find((option) => option === formatTime(value)) || options[0]
 
   const onSelectChange = (event: SelectChangeEvent<unknown>) => {
-    const date = parseDate(event.target.value as string, 'h:mm aaa', value || new Date())
+    const date = parseDate(
+      event.target.value as string,
+      "h:mm aaa",
+      value || new Date(),
+    )
     onChange(date)
   }
 
   return (
     <Select {...selectProps} value={selected} onChange={onSelectChange}>
-      {options.map(time => (
-        <MenuItem key={time} value={time}>{time}</MenuItem>
+      {options.map((time) => (
+        <MenuItem key={time} value={time}>
+          {time}
+        </MenuItem>
       ))}
     </Select>
   )

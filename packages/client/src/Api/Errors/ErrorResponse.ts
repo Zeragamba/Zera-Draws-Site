@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios'
+import { AxiosResponse } from "axios"
 
 export interface ErrorResponse extends AxiosResponse {
   data: {
@@ -12,8 +12,8 @@ export function isErrorResponse(obj: unknown): obj is ErrorResponse {
   const errorRes = obj as ErrorResponse
 
   return (
-    typeof errorRes === 'object'
-    && typeof errorRes.data === 'object'
-    && typeof errorRes.data.error === 'string'
+    typeof errorRes === "object" &&
+    typeof errorRes.data === "object" &&
+    typeof errorRes.data.error === "string"
   )
 }

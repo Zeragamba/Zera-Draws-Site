@@ -1,6 +1,6 @@
-import { createQueryKeyStore } from '@lukemorales/query-key-factory'
+import { createQueryKeyStore } from "@lukemorales/query-key-factory"
 
-import { GalleryData, TagData } from '../Models'
+import { GalleryData, TagData } from "../Models"
 
 export const queryKeys = createQueryKeyStore({
   auth: {
@@ -9,16 +9,16 @@ export const queryKeys = createQueryKeyStore({
   },
   tags: {
     all: null,
-    forTag: (params: { tagId: TagData['id'] | null }) => ({
-      queryKey: [ params ],
+    forTag: (params: { tagId: TagData["id"] | null }) => ({
+      queryKey: [params],
       contextQueries: {
         data: null,
       },
     }),
   },
   galleries: {
-    forGallery: (params: { galleryId: GalleryData['id'] | null }) => ({
-      queryKey: [ params ],
+    forGallery: (params: { galleryId: GalleryData["id"] | null }) => ({
+      queryKey: [params],
       contextQueries: {
         data: null,
       },
@@ -29,20 +29,24 @@ export const queryKeys = createQueryKeyStore({
     first: null,
     latest: null,
     recent: null,
-    inGallery: (params: { galleryId: GalleryData['id'] }) => ({
-      queryKey: [ params ],
+    inGallery: (params: { galleryId: GalleryData["id"] }) => ({
+      queryKey: [params],
       contextQueries: {
         data: null,
       },
     }),
-    withTag: (params: { tagId: TagData['id'] }) => ({
-      queryKey: [ params ],
+    withTag: (params: { tagId: TagData["id"] }) => ({
+      queryKey: [params],
       contextQueries: {
         data: null,
       },
     }),
-    forPost: (params: { postId: string | null; galleryId?: string | null; tagId?: string | null }) => ({
-      queryKey: [ params ],
+    forPost: (params: {
+      postId: string | null
+      galleryId?: string | null
+      tagId?: string | null
+    }) => ({
+      queryKey: [params],
       contextQueries: {
         data: null,
         next: null,
@@ -53,7 +57,7 @@ export const queryKeys = createQueryKeyStore({
   },
   images: {
     get: (params: { src: string }) => ({
-      queryKey: [ params ],
+      queryKey: [params],
     }),
   },
   metrics: {

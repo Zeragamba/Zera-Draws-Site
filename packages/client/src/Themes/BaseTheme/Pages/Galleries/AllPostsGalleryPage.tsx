@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { FC } from "react"
 
-import { AllPostsGallery } from '../../Components'
+import { AllPostsGallery } from "../../Components"
 
 export const AllPostsGalleryPage: FC = () => {
   return <AllPostsGallery />

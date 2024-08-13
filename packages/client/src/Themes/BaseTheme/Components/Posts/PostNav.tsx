@@ -1,17 +1,16 @@
-import { faAnglesRight } from '@fortawesome/free-solid-svg-icons'
-import { Box, Button, Stack } from '@mui/material'
-import classnames from 'classnames'
-import { FC } from 'react'
+import { faAnglesRight } from "@fortawesome/free-solid-svg-icons"
+import { Box, Button, Stack } from "@mui/material"
+import classnames from "classnames"
+import { FC } from "react"
 
+import { AltImagesView } from "./AltImagesView"
+import { ImagesNav } from "./PostImagesNav"
+import { usePostNavCtrl } from "../../../../Controllers"
+import { useHotkey, useIsMobile } from "../../../../Hooks"
+import { FontAwesomeIcon } from "../../../../Lib"
+import { ImageData, PostData } from "../../../../Models"
 
-import { AltImagesView } from './AltImagesView'
-import { ImagesNav } from './PostImagesNav'
-import { usePostNavCtrl } from '../../../../Controllers'
-import { useHotkey, useIsMobile } from '../../../../Hooks'
-import { FontAwesomeIcon } from '../../../../Lib'
-import { ImageData, PostData } from '../../../../Models'
-
-import styles from './ViewPost.module.scss'
+import styles from "./ViewPost.module.scss"
 
 interface PostNavProps {
   post: PostData
@@ -25,8 +24,8 @@ export const PostNav: FC<PostNavProps> = () => {
   const ctrl = usePostNavCtrl()
   const isMobile = useIsMobile()
 
-  useHotkey('ArrowLeft', () => ctrl.onNextPost())
-  useHotkey('ArrowRight', () => ctrl.onPrevPost())
+  useHotkey("ArrowLeft", () => ctrl.onNextPost())
+  useHotkey("ArrowRight", () => ctrl.onPrevPost())
 
   return (
     <Stack gap={2}>

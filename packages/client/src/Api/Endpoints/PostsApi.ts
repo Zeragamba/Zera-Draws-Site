@@ -1,14 +1,23 @@
-import { AxiosProgressEvent } from 'axios'
+import { AxiosProgressEvent } from "axios"
 
-import { ImageChangeRecord } from '../../Images'
-import { getPostUrl } from '../../Lib/PostUtil'
-import { EditableImage, EditablePost, PostData, postToFormData } from '../../Models'
-import { PagedPostData, PagedPostDataResSchema, PostDataResSchema } from '../Schemas'
-import { ServerApi } from '../ServerApi'
+import { ImageChangeRecord } from "../../Images"
+import { getPostUrl } from "../../Lib/PostUtil"
+import {
+  EditableImage,
+  EditablePost,
+  PostData,
+  postToFormData,
+} from "../../Models"
+import {
+  PagedPostData,
+  PagedPostDataResSchema,
+  PostDataResSchema,
+} from "../Schemas"
+import { ServerApi } from "../ServerApi"
 
 class PostsApi extends ServerApi {
   public async deletePost(params: {
-    postId: PostData['id']
+    postId: PostData["id"]
   }): Promise<PostData> {
     return this.delete(`/post/${params.postId}`, {
       parseResData: (data) => PostDataResSchema.parse(data),
@@ -20,9 +29,10 @@ class PostsApi extends ServerApi {
     images: EditableImage[]
     onUploadProgress: (progress: number) => void
   }): Promise<PostData> {
-    return this.post('/posts', {
+    return this.post("/posts", {
       data: postToFormData({
-        post: params.post, images: params.images,
+        post: params.post,
+        images: params.images,
       }),
       onUploadProgress: (event: AxiosProgressEvent) => {
         if (!params.onUploadProgress) return
@@ -34,14 +44,15 @@ class PostsApi extends ServerApi {
   }
 
   public async updatePost(params: {
-    postId: PostData['id']
+    postId: PostData["id"]
     post?: Partial<EditablePost>
     changes?: ImageChangeRecord[]
     onUploadProgress?: (progress: number) => void
   }): Promise<PostData> {
     return this.patch(`/post/${params.postId}`, {
       data: postToFormData({
-        post: params.post, changes: params.changes,
+        post: params.post,
+        changes: params.changes,
       }),
       onUploadProgress: (event: AxiosProgressEvent) => {
         if (!params.onUploadProgress) return
@@ -52,10 +63,8 @@ class PostsApi extends ServerApi {
     })
   }
 
-  public async fetchPosts(params?: {
-    page?: number
-  }): Promise<PagedPostData> {
-    return this.get('/posts', {
+  public async fetchPosts(params?: { page?: number }): Promise<PagedPostData> {
+    return this.get("/posts", {
       params: { page: params?.page || 0 },
       parseResData: (data) => PagedPostDataResSchema.parse(data),
     })
@@ -84,7 +93,7 @@ class PostsApi extends ServerApi {
   public async fetchRecentPosts(params?: {
     page?: number
   }): Promise<PagedPostData> {
-    return this.get('/posts/recent', {
+    return this.get("/posts/recent", {
       params: { page: params?.page || 0 },
       parseResData: (data) => PagedPostDataResSchema.parse(data),
     })
@@ -101,13 +110,13 @@ class PostsApi extends ServerApi {
   }
 
   public async fetchFirstPost(): Promise<PostData> {
-    return this.get('/post/first', {
+    return this.get("/post/first", {
       parseResData: (data) => PostDataResSchema.parse(data),
     })
   }
 
   public async fetchLatestPost(): Promise<PostData> {
-    return this.get('/post/latest', {
+    return this.get("/post/latest", {
       parseResData: (data) => PostDataResSchema.parse(data),
     })
   }
@@ -118,7 +127,9 @@ class PostsApi extends ServerApi {
     tagId?: string
   }): Promise<PostData> {
     const url = getPostUrl({
-      postId: params.postId, galleryId: params.galleryId, tagId: params.tagId,
+      postId: params.postId,
+      galleryId: params.galleryId,
+      tagId: params.tagId,
     })
 
     return this.get(`${url}/next`, {
@@ -132,7 +143,9 @@ class PostsApi extends ServerApi {
     tagId?: string
   }): Promise<PostData> {
     const url = getPostUrl({
-      postId: params.postId, galleryId: params.galleryId, tagId: params.tagId,
+      postId: params.postId,
+      galleryId: params.galleryId,
+      tagId: params.tagId,
     })
 
     return this.get(`${url}/prev`, {

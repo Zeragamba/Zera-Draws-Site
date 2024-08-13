@@ -1,11 +1,11 @@
-import { MouseEventHandler } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { MouseEventHandler } from "react"
+import { useNavigate } from "react-router-dom"
 
-import { usePostContext } from '../../Contexts'
-import { useIsAdmin, useIsMobile, usePostPreloader } from '../../Hooks'
-import { getPostUrl } from '../../Lib/PostUtil'
-import { PostData } from '../../Models'
-import { useNextPost$, usePrevPost$ } from '../../Queries'
+import { usePostContext } from "../../Contexts"
+import { useIsAdmin, useIsMobile, usePostPreloader } from "../../Hooks"
+import { getPostUrl } from "../../Lib/PostUtil"
+import { PostData } from "../../Models"
+import { useNextPost$, usePrevPost$ } from "../../Queries"
 
 export interface PostNavCtrl {
   onPostImageClick: MouseEventHandler<HTMLElement>
@@ -33,7 +33,11 @@ export const usePostNavCtrl = (): PostNavCtrl => {
   const { post, tag, gallery } = usePostContext()
   const preloadPost = usePostPreloader()
 
-  const urlContext = { postId: post.slug, tagId: tag?.slug, galleryId: gallery?.slug }
+  const urlContext = {
+    postId: post.slug,
+    tagId: tag?.slug,
+    galleryId: gallery?.slug,
+  }
   const { data: nextPost } = useNextPost$(urlContext)
   const { data: prevPost } = usePrevPost$(urlContext)
 
@@ -62,11 +66,13 @@ export const usePostNavCtrl = (): PostNavCtrl => {
   }
 
   const onChangePost = (nextPost: PostData) => {
-    return navigate(getPostUrl({
-      postId: nextPost.slug,
-      tagId: tag?.slug,
-      galleryId: gallery?.slug,
-    }))
+    return navigate(
+      getPostUrl({
+        postId: nextPost.slug,
+        tagId: tag?.slug,
+        galleryId: gallery?.slug,
+      }),
+    )
   }
 
   if (nextPost) preloadPost({ post: nextPost })

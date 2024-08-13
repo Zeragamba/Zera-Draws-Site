@@ -1,6 +1,6 @@
-import { FC, ReactNode, useEffect } from 'react'
+import { FC, ReactNode, useEffect } from "react"
 
-import { useInViewport } from '../../../../Hooks/UseInViewport'
+import { useInViewport } from "../../../../Hooks/UseInViewport"
 
 export interface InfiniteGalleryProps {
   hasNextPage: boolean
@@ -15,18 +15,22 @@ export const InfiniteScroll: FC<InfiniteGalleryProps> = ({
   fetchingNextPage,
   children,
 }) => {
-  const [ markerRef, endInView ] = useInViewport()
+  const [markerRef, endInView] = useInViewport()
 
   useEffect(() => {
     if (!hasNextPage || !endInView) return
     fetchNextPage()
-  }, [ hasNextPage, endInView, fetchNextPage ])
+  }, [hasNextPage, endInView, fetchNextPage])
 
   return (
     <div>
       {children}
       {hasNextPage && <div ref={markerRef} />}
-      {fetchingNextPage && <div style={{ textAlign: 'center', padding: '1rem' }}>Loading more!</div>}
+      {fetchingNextPage && (
+        <div style={{ textAlign: "center", padding: "1rem" }}>
+          Loading more!
+        </div>
+      )}
     </div>
   )
 }
