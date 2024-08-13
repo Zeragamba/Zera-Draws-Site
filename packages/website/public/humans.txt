@@ -1,0 +1,5 @@
+/* DEVELOPER */
+Twitter: @ZeragambaDraws
+Developed with WebStorm, Node, Express, React, and Rails
+
+/* SITE */
