@@ -1,16 +1,16 @@
-import { mock } from 'jest-mock-extended'
 import crypto from 'node:crypto'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { addImage, AddImagePayload, editImage, EditImagePayload, setImages, SetImagesPayload } from './Actions'
 import { imagesReducer } from './ImagesReducer'
-import { freeze } from '../../Lib/TestHelpers'
-import { ImageData } from '../../Models/ImageData'
+import { freeze } from '../../Lib'
+import { ImageData } from '../../Models'
 
 describe('ImageReducer', () => {
   let oldState: ImageData[]
 
   beforeEach(async () => {
-    global.URL.createObjectURL = jest.fn()
+    global.URL.createObjectURL = vi.fn()
 
     oldState = freeze([
       {
@@ -58,7 +58,7 @@ describe('ImageReducer', () => {
       payload = {
         id: crypto.randomUUID(),
         position: 0,
-        file: mock<File>(),
+        file: {} as File,
         filename: 'exampleImage',
       }
     })
@@ -113,7 +113,7 @@ describe('ImageReducer', () => {
       const newState = imagesReducer(oldState, addImage({
         id: imageId,
         position: 0,
-        file: mock<File>(),
+        file: {} as File,
         filename: 'exampleImage',
       }))
 

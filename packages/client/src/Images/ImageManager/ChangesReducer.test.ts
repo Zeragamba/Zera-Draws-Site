@@ -1,5 +1,5 @@
-import { mock } from 'jest-mock-extended'
 import crypto from 'node:crypto'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 import {
   addImage,
@@ -12,8 +12,8 @@ import {
   SetImagesPayload,
 } from './Actions'
 import { changesReducer } from './ChangesReducer'
-import { freeze } from '../../Lib/TestHelpers'
-import { ImageData } from '../../Models/ImageData'
+import { freeze } from '../../Lib'
+import { ImageData } from '../../Models'
 import {
   AddImageChangeRecord,
   EditImageChangeRecord,
@@ -52,7 +52,7 @@ describe('ChangesReducer', () => {
       imageId = crypto.randomUUID()
       payload = {
         id: imageId,
-        file: mock<File>(),
+        file: {} as File,
         position: 0,
         filename: 'exampleImage',
       }
@@ -73,7 +73,7 @@ describe('ChangesReducer', () => {
           id: imageId,
           filename: 'original',
           position: 0,
-          file: mock<File>(),
+          file: {} as File,
         }))
       })
 
@@ -170,7 +170,7 @@ describe('ChangesReducer', () => {
           id: imageId,
           filename: 'original',
           position: 0,
-          file: mock<File>(),
+          file: {} as File,
         }))
       })
 
@@ -245,7 +245,7 @@ describe('ChangesReducer', () => {
           id: imageId,
           filename: 'original',
           position: 0,
-          file: mock<File>(),
+          file: {} as File,
         }))
       })
 

@@ -23,6 +23,7 @@ if (process.env.HTTPS === 'true') {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  envDir: '../..',
   plugins: [
     react(),
     checker({
