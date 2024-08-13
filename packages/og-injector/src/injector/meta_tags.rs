@@ -46,17 +46,13 @@ impl MetaTags {
         meta_tags
     }
 
-    pub fn to_string(&self) -> String {
-        self.tags.join("")
-    }
-
     pub fn inject(&self, html: String) -> String {
         if !html.contains("</head>") {
             return html;
         };
 
-        let tags = self.to_string();
-        let replacement = format!("{}</head>", tags);
+        let tags = self.tags.join("\n  ");
+        let replacement = format!("  {tags}\n</head>");
         html.replace("</head>", &replacement)
     }
 
