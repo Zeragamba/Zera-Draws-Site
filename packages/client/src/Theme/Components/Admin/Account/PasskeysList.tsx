@@ -7,13 +7,13 @@ import formatDate from "date-fns/format"
 import { FC, useState } from "react"
 
 import { PasskeyForm } from "./PasskeyForm"
-import { PasskeyData } from "../../../../Api/Schemas"
+import { ErrorAlert, LoadingSpinner } from "../../Shared"
 import {
+  PasskeyData,
   useRemovePasskey$,
   useUpdatePasskey$,
   useUserPasskeys$,
-} from "../../../../Queries"
-import { ErrorAlert, LoadingSpinner } from "../../Shared"
+} from "../../../../Lib/Auth"
 
 interface PasskeysListSlots {
   PasskeyListItem: FC<{ passkey: PasskeyData }>

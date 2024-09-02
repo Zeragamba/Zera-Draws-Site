@@ -1,4 +1,3 @@
-export * from "./AuthQueries"
 export * from "./GalleryQueries"
 export * from "./ImageQueries"
 export * from "./MetricsQueries"

@@ -9,8 +9,8 @@ import {
 import { ChangeEvent, FC, FormEvent, useState } from "react"
 
 import { isServerApiError } from "../../../Api"
-import { usePasskeyLogin$, usePasswordLogin$ } from "../../../Queries"
 import { ErrorAlert } from "../Shared"
+import { usePasskeyLogin$, usePasswordLogin$ } from "../../../Lib/Auth"
 
 type LoginFormState = {
   username: string

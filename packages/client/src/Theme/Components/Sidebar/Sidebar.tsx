@@ -27,8 +27,8 @@ import { SidebarTags } from "./SidebarTags"
 import { SocialsGroup } from "./SocialsGroup"
 import { useFeatureFlag, useIsAdmin } from "../../../Hooks"
 import { FeatureFlag } from "../../../Models"
-import { useLogout$ } from "../../../Queries"
 import { FontAwesomeIcon } from "../Icons"
+import { useLogout$ } from "../../../Lib/Auth"
 
 const styles = {
   backgroundColor: "hsla(0deg, 0%, 40%, 25%)",

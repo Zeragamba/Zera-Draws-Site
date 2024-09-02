@@ -3,18 +3,16 @@ import { RegistrationPublicKeyCredential } from "@github/webauthn-json/browser-p
 import z from "zod"
 
 import { UserData } from "../../Models"
-import { authTokenStore } from "../AuthTokenStore"
-import { isServerApiError } from "../Errors"
+import { authTokenStore } from "../../Api/AuthTokenStore.ts"
+import { isServerApiError, ServerApi } from "../../Api"
+import { UserDataSchema, UserResSchema } from "../../Api/Schemas"
 import {
   PasskeyCreateChallengeSchema,
   PasskeyData,
   PasskeyListResSchema,
   PasskeyLoginChallengeSchema,
   PasskeyResSchema,
-  UserDataSchema,
-  UserResSchema,
-} from "../Schemas"
-import { ServerApi } from "../ServerApi"
+} from "./Passkeys"
 
 export interface RegisterPassKeyParams {
   passkey: PasskeyData

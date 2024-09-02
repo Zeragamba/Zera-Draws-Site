@@ -6,11 +6,12 @@ import {
   UseQueryResult,
 } from "@tanstack/react-query"
 
-import { queryKeys } from "./QueryKeys"
-import { authApiClient, RegisterPassKeyParams, ServerApiError } from "../Api"
-import { PasskeyData } from "../Api/Schemas"
-import { queryClient } from "../Lib/QueryClient.ts"
-import { UserData } from "../Models"
+import { queryKeys } from "../../Queries/QueryKeys.ts"
+import { ServerApiError } from "../../Api"
+import { PasskeyData } from "./Passkeys"
+import { queryClient } from "../QueryClient.ts"
+import { UserData } from "../../Models"
+import { authApiClient, RegisterPassKeyParams } from "./AuthApi.ts"
 
 export const usePasswordLogin$ = () => {
   const queryClient = useQueryClient()

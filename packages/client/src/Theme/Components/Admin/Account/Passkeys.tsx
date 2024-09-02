@@ -9,10 +9,13 @@ import { FC } from "react"
 
 import { PasskeyForm } from "./PasskeyForm"
 import { UserPasskeysList } from "./PasskeysList"
-import { PasskeyData } from "../../../../Api/Schemas"
-import { useCreatePasskey$, useRegisterPasskey$ } from "../../../../Queries"
 import { ErrorAlert } from "../../Shared"
 import { FontAwesomeIcon } from "../../Icons"
+import {
+  PasskeyData,
+  useCreatePasskey$,
+  useRegisterPasskey$,
+} from "../../../../Lib/Auth"
 
 export const Passkeys: FC = () => {
   const createPasskey$ = useCreatePasskey$()

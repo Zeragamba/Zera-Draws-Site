@@ -1,8 +1,7 @@
 import { FC } from "react"
 import { Navigate } from "react-router-dom"
-
-import { useCurrentUser$ } from "../../../Queries"
 import { LoadingSpinner, LoginForm } from "../../Components"
+import { useCurrentUser$ } from "../../../Lib/Auth"
 
 type LoginPageProps = {
   slots?: Partial<LoginPageSlots>

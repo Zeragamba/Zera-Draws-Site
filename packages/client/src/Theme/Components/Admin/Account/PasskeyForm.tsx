@@ -6,10 +6,10 @@ import TextField from "@mui/material/TextField"
 import { FC } from "react"
 import { Controller, useForm } from "react-hook-form"
 
-import { PasskeyData, PasskeyDataSchema } from "../../../../Api/Schemas"
 import { muiField } from "../../../../Forms"
 import { ErrorAlert } from "../../Shared"
 import { FontAwesomeIcon } from "../../Icons"
+import { PasskeyData, PasskeyDataSchema } from "../../../../Lib/Auth"
 
 type PasskeyFormProps = {
   loading?: boolean

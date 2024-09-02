@@ -3,9 +3,9 @@ import { FC } from "react"
 import { Navigate, Outlet } from "react-router-dom"
 
 import { useIsAdmin } from "../../Hooks"
-import { useCurrentUser$ } from "../../Queries"
 import { AuthorizingPage, LoginPage } from "../Pages"
 import { AdminNavItem } from "../Components"
+import { useCurrentUser$ } from "../../Lib/Auth"
 
 export const AdminLayout: FC = () => {
   const userQuery = useCurrentUser$()
