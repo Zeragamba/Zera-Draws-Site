@@ -1,8 +1,8 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query"
 
-import { queryKeys } from "./QueryKeys"
-import { galleryApiClient } from "../Api"
-import { GalleryData } from "../Models"
+import { queryKeys } from "../../Queries/QueryKeys.ts"
+import { GalleryData } from "../../Models"
+import { galleryApiClient } from "./GalleryApi.ts"
 
 export const useGallery$ = (params: {
   galleryId: GalleryData["id"]

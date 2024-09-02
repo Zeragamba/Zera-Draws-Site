@@ -13,7 +13,7 @@ import { queryKeys } from "./QueryKeys"
 import { pagedQueryOptions } from "./QueryUtils"
 import { postsApi } from "../Api"
 import { PagedPostData } from "../Api/Schemas"
-import { ImageChangeRecord } from "../Lib/Images"
+import { ImageChangeRecord } from "../Lib"
 import {
   EditableImage,
   EditablePost,

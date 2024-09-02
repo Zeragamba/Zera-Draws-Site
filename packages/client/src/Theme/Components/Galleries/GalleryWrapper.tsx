@@ -2,9 +2,9 @@ import { FC, Fragment, ReactNode, useRef } from "react"
 
 import { useContainerDimensions } from "../../../Hooks"
 import { StyleProp } from "../../MuiTheme"
+import { GalleryProvider } from "../../../Lib"
 
 import styles from "./GalleryWrapper.module.scss"
-import { GalleryProvider } from "../../../Contexts"
 
 export interface GalleryWrapperProps {
   children: ReactNode[]

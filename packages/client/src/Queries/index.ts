@@ -1,4 +1,3 @@
-export * from "./GalleryQueries"
 export * from "./MetricsQueries"
 export * from "./PostQuries"
 export * from "./PostViewsQueries"

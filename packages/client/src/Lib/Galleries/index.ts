@@ -1,3 +1,6 @@
+export * from "./GalleryApi"
 export * from "./GalleryContext"
+export * from "./GalleryDataSchema"
 export * from "./GalleryHooks"
 export * from "./GalleryProvider"
+export * from "./GalleryQueries"

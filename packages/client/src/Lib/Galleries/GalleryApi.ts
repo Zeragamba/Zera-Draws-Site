@@ -1,7 +1,7 @@
 import { GalleryData } from "../../Models"
-import { PagedPostData, PagedPostDataResSchema } from "../Schemas"
-import { GalleryResSchema } from "../Schemas/GalleryDataSchema"
-import { ServerApi } from "../ServerApi"
+import { PagedPostData, PagedPostDataResSchema } from "../../Api/Schemas"
+import { GalleryResSchema } from "./GalleryDataSchema.ts"
+import { ServerApi } from "../../Api"
 
 class GalleryApi extends ServerApi {
   public async fetchGallery(params: {

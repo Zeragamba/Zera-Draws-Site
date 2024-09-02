@@ -1,4 +1,3 @@
-export * from "./GalleryApi"
 export * from "./MetricsApi"
 export * from "./PostViewsApi"
 export * from "./PostsApi"
