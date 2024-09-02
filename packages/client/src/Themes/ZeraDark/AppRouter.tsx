@@ -5,6 +5,7 @@ import { HomePage } from "./Pages/HomePage"
 import { LatestPostPage, ViewPostPage } from "./Posts"
 import {
   AboutPage,
+  AccountPage,
   AdminLayout,
   AllPostsGalleryPage,
   ArchivePage,
@@ -18,8 +19,7 @@ import {
   MetricsPage,
   NewPostPage,
   ViewTagPage,
-} from "../BaseTheme"
-import { AccountPage } from "../BaseTheme/Pages/Admin/AccountPage"
+} from "../../Theme"
 
 export const appRouter = createBrowserRouter([
   {

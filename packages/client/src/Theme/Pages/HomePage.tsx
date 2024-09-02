@@ -1,10 +1,10 @@
 import { FC } from "react"
 
-import { LatestPostProvider } from "../../../Contexts"
-import { LoadingPage } from "../../../Theme"
+import { LoadingPage } from "./LoadingPage"
+import { LatestPostProvider } from "../../Contexts"
 import { ViewPost } from "../Components"
 
-export const LatestPostPage: FC = () => {
+export const HomePage: FC = () => {
   return (
     <LatestPostProvider renderPending={<LoadingPage />}>
       <ViewPost />

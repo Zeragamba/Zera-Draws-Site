@@ -1,8 +1,8 @@
 import { FC } from "react"
 
 import { LatestPostProvider } from "../../../Contexts"
-import { LoadingPage } from "../../../Theme"
-import { ViewPost } from "../Components"
+import { ViewPost } from "../../Components"
+import { LoadingPage } from "../LoadingPage"
 
 export const LatestPostPage: FC = () => {
   return (

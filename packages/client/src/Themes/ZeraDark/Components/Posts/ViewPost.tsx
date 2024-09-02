@@ -7,7 +7,7 @@ import { PostNav } from "./PostNav"
 import { PostTitle } from "./PostTitle"
 import { useViewPostCtrl } from "../../../../Controllers"
 import { useIsMobile } from "../../../../Hooks"
-import { AsyncImg, Markdown, PostTags } from "../../../BaseTheme"
+import { AsyncImg, Markdown, PostTags } from "../../../../Theme"
 
 import styles from "./ViewPost.module.scss"
 
