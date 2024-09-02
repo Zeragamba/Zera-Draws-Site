@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, ReactNode } from "react"
-import { useLatestPost$ } from "../../Queries"
-import { PostProvider } from "./PostProvider.tsx"
+import { PostProvider } from "./PostProvider"
+import { useLatestPost$ } from "./PostQuries"
 
 export type LatestPostProviderProps = PropsWithChildren<{
   renderPending: ReactNode

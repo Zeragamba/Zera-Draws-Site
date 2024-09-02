@@ -1,8 +1,8 @@
 import { addDays, setHours, setMinutes } from "date-fns"
 
-import { EditableImage, ImageData } from "../Lib/Images/ImageData.ts"
-import { TagData } from "./TagData"
-import { ImageChangeRecord } from "../Lib/Images"
+import { EditableImage, ImageData } from "../Images/ImageData.ts"
+import { TagData } from "../../Models/TagData.ts"
+import { ImageChangeRecord } from "../Images"
 
 export interface PostData {
   id: string

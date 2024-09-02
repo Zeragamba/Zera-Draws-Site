@@ -9,12 +9,14 @@ import {
   UseQueryResult,
 } from "@tanstack/react-query"
 
-import { queryKeys } from "./QueryKeys"
-import { pagedQueryOptions } from "./QueryUtils"
-import { postsApi } from "../Api"
-import { PagedPostData } from "../Api/Schemas"
-import { EditableImage, GalleryData, ImageChangeRecord } from "../Lib"
-import { EditablePost, PostData, TagData } from "../Models"
+import { queryKeys } from "../../Queries/QueryKeys.ts"
+import { pagedQueryOptions } from "../../Queries/QueryUtils.ts"
+import { PagedPostData } from "../../Api/Schemas"
+import { EditablePost, PostData } from "./PostData"
+import { EditableImage, ImageChangeRecord } from "../Images"
+import { postsApi } from "./PostsApi"
+import { GalleryData } from "../Galleries"
+import { TagData } from "../../Models"
 
 type PostParams = { postId: string; galleryId?: string; tagId?: string }
 

@@ -2,13 +2,11 @@ import { FC } from "react"
 import { Navigate, useNavigate, useParams } from "react-router-dom"
 
 import { isNotFoundError } from "../../../Api"
-import { ParamsPostProvider } from "../../../Contexts"
+import { ParamsPostProvider, useCurrentUser$, usePost$ } from "../../../Lib"
 import { useIsAdmin } from "../../../Hooks"
-import { usePost$ } from "../../../Queries"
 import { EditPostForm, ErrorAlert, QueryGate } from "../../Components"
 import { LoadingPage } from "../LoadingPage"
 import { AuthorizingPage, LoginPage } from "../Users"
-import { useCurrentUser$ } from "../../../Lib/Auth"
 
 export const EditPostPage: FC = () => {
   const userQuery = useCurrentUser$()

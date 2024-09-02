@@ -7,9 +7,7 @@ import {
 } from "@mui/material"
 import { FC, useState } from "react"
 
-import { noop } from "../../../../Lib"
-import { PostData } from "../../../../Models"
-import { useDeletePost$ } from "../../../../Queries"
+import { noop, PostData, useDeletePost$ } from "../../../../Lib"
 
 interface DeletePostButtonProps {
   post: PostData

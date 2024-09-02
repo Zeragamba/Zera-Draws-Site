@@ -4,10 +4,12 @@ import { useForm } from "react-hook-form"
 
 import { DeletePostButton } from "./DeletePostButton"
 import { PostForm } from "./PostForm"
-import { useImageManager } from "../../../../Lib/Images"
-import { noop } from "../../../../Lib"
-import { PostData } from "../../../../Models"
-import { useUpdatePost$ } from "../../../../Queries"
+import {
+  noop,
+  PostData,
+  useImageManager,
+  useUpdatePost$,
+} from "../../../../Lib"
 import { ErrorAlert, UploadProgress } from "../../Shared"
 
 export interface EditPostFormProps {

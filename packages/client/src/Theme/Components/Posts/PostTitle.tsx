@@ -3,7 +3,7 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material"
 import { FC } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { usePostContext } from "../../../Contexts"
+import { usePostContext } from "../../../Lib"
 import { useIsAdmin, useIsMobile } from "../../../Hooks"
 import { FontAwesomeIcon } from "../Icons"
 

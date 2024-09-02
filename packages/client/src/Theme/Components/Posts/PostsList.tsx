@@ -3,9 +3,9 @@ import { FC, MouseEventHandler } from "react"
 import { useHref, useNavigate } from "react-router-dom"
 
 import { PostTags } from "./PostTags"
-import { PostData } from "../../../Models"
 import { AsyncImg } from "../Images"
-import { PostStyles } from "./PostStyles.tsx"
+import { PostStyles } from "./PostStyles.ts"
+import { PostData } from "../../../Lib"
 
 interface PostsListProps {
   posts: PostData[]

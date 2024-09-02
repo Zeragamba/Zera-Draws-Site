@@ -3,10 +3,10 @@ import { Box, Button, Stack } from "@mui/material"
 import classnames from "classnames"
 import { FC } from "react"
 import { useHotkey, useIsMobile } from "../../../Hooks"
+import { FontAwesomeIcon } from "../Icons"
+import { usePostNavCtrl } from "../../../Lib"
 
 import styles from "./ViewPost.module.scss"
-import { FontAwesomeIcon } from "../Icons"
-import { usePostNavCtrl } from "../../../Controllers"
 
 export const PostNav: FC = () => {
   const ctrl = usePostNavCtrl()

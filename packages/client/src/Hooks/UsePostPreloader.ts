@@ -1,5 +1,4 @@
-import { PostData } from "../Models"
-import { useImagePreloader } from "../Lib"
+import { PostData, useImagePreloader } from "../Lib"
 
 interface PostPreloaderProps {
   post: PostData

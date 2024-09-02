@@ -1,6 +1,6 @@
 import { FC } from "react"
 
-import { ParamsPostProvider } from "../../../Contexts"
+import { ParamsPostProvider } from "../../../Lib"
 import { ViewPost } from "../../Components"
 import { LoadingPage } from "../LoadingPage"
 

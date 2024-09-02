@@ -5,9 +5,8 @@ import { useNavigate } from "react-router-dom"
 
 import { GalleryItem } from "./GalleryItem"
 import { GalleryWrapper } from "./GalleryWrapper"
-import { PostData } from "../../../Models"
 import { InfiniteScroll } from "../Shared"
-import { GalleryConfig } from "../../../Lib"
+import { GalleryConfig, PostData } from "../../../Lib"
 
 export interface PostGalleryProps extends Omit<GalleryConfig, "rowHeight"> {
   rowHeight?: number

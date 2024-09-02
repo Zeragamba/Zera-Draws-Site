@@ -5,13 +5,13 @@ import { FC } from "react"
 import { ImagesNav } from "./PostImagesNav"
 import { PostNav } from "./PostNav"
 import { PostTitle } from "./PostTitle"
-import { useViewPostCtrl } from "../../../Controllers"
 import { useIsMobile } from "../../../Hooks"
-
-import styles from "./ViewPost.module.scss"
 import { AsyncImg } from "../Images"
 import { PostTags } from "./PostTags"
 import { Markdown } from "../Markdown"
+import { useViewPostCtrl } from "../../../Lib"
+
+import styles from "./ViewPost.module.scss"
 
 export const ViewPost: FC = () => {
   const isMobile = useIsMobile()

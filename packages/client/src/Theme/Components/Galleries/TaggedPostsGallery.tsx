@@ -2,7 +2,8 @@ import { FC } from "react"
 
 import { GalleryTitle } from "./GalleryTitle"
 import { PostGallery } from "./PostGallery"
-import { useTag$, useTaggedPosts$ } from "../../../Queries"
+import { useTaggedPosts$ } from "../../../Lib"
+import { useTag$ } from "../../../Queries"
 
 interface TagGalleryDisplayProps {
   tagId: string

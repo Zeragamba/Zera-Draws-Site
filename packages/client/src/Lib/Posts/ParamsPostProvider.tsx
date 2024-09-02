@@ -1,8 +1,9 @@
 import { FC, PropsWithChildren, ReactNode } from "react"
 import { useParams } from "react-router-dom"
-import { useOptionalTag$, usePost$ } from "../../Queries"
+import { useOptionalTag$ } from "../../Queries"
 import { PostProvider } from "./PostProvider.tsx"
-import { useOptionalGallery$ } from "../../Lib/Galleries/GalleryQueries.ts"
+import { useOptionalGallery$ } from "../Galleries"
+import { usePost$ } from "./PostQuries.ts"
 
 export type ParamsPostProviderProps = PropsWithChildren<{
   renderPending: ReactNode

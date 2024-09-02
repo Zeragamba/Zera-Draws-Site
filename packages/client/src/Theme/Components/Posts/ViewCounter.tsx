@@ -1,8 +1,7 @@
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import { FC } from "react"
 
-import { usePostViews$ } from "../../../Lib"
-import { PostData } from "../../../Models"
+import { PostData, usePostViews$ } from "../../../Lib"
 import { TagChip } from "../Tags"
 import { FontAwesomeIcon } from "../Icons"
 

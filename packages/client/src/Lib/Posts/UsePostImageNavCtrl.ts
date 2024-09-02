@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 
-import { usePostContext } from "../../Contexts"
-import { ImageData, MathUtils } from "../../Lib"
+import { ImageData, MathUtils, usePostContext } from "../index.ts"
 
 export interface PostImageCtrl {
   images: ImageData[]

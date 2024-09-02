@@ -1,5 +1,4 @@
 export * from "./MetricsQueries"
-export * from "./PostQuries"
 export * from "./PostViewsQueries"
 export * from "./TagQueries"
 export * from "./SiteMetaQueries"

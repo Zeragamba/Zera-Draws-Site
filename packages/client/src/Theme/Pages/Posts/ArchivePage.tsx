@@ -1,6 +1,6 @@
 import { FC } from "react"
 
-import { useAllPosts$ } from "../../../Queries"
+import { useAllPosts$ } from "../../../Lib"
 import { InfiniteScroll, PostsList } from "../../Components"
 import { ErrorPage } from "../ErrorPage"
 import { LoadingPage } from "../LoadingPage"

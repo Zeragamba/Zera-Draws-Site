@@ -1,4 +1,3 @@
-export * from "./PostData"
 export * from "./SiteMetaData"
 export * from "./TagData"
 export * from "./UserData"

@@ -3,9 +3,14 @@ import { FC, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { PostForm } from "./PostForm"
-import { EditableImage, noop, useImageManager } from "../../../../Lib"
-import { createPostData, PostData } from "../../../../Models"
-import { useCreatePost$ } from "../../../../Queries"
+import {
+  createPostData,
+  EditableImage,
+  noop,
+  PostData,
+  useCreatePost$,
+  useImageManager,
+} from "../../../../Lib"
 import { ErrorAlert, UploadProgress } from "../../Shared"
 
 interface CreatePostFormProps {

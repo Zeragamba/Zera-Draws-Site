@@ -6,9 +6,9 @@ import {
 } from "@tanstack/react-query"
 
 import { queryKeys } from "./QueryKeys"
+import { PostData } from "../Lib"
+import { ViewsData } from "../Models"
 import { postViewsApi } from "../Api"
-import { PostData } from "../Models/PostData"
-import { ViewsData } from "../Models/ViewsData"
 
 export const usePostViews$ = (params: {
   postId: PostData["id"]

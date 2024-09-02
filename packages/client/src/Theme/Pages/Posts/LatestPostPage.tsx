@@ -1,6 +1,6 @@
 import { FC } from "react"
 
-import { LatestPostProvider } from "../../../Contexts"
+import { LatestPostProvider } from "../../../Lib"
 import { ViewPost } from "../../Components"
 import { LoadingPage } from "../LoadingPage"
 

@@ -30,11 +30,10 @@ import {
 } from "date-fns"
 import { FC } from "react"
 import { Control, useController } from "react-hook-form"
-
-import { PostData } from "../../../../Models"
+import { FontAwesomeIcon } from "../../Icons"
+import { PostData } from "../../../../Lib"
 
 import styles from "./PublishToggle.module.scss"
-import { FontAwesomeIcon } from "../../Icons"
 
 interface PublishToggleProps {
   formControl: Control<PostData>

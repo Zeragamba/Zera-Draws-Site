@@ -1,6 +1,6 @@
 import { FC } from "react"
 
-import { useAllPosts$ } from "../../../Queries"
+import { useAllPosts$ } from "../../../Lib"
 import { AdminPostsList, InfiniteScroll } from "../../Components"
 
 export const EditPostsPage: FC = () => {

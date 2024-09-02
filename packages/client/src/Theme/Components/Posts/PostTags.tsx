@@ -6,9 +6,9 @@ import { FC } from "react"
 import { ScheduledChip } from "./ScheduledChip"
 import { ViewCounter } from "./ViewCounter"
 import { useIsAdmin } from "../../../Hooks"
-import { PostData } from "../../../Models"
 import { TagChip, TagList } from "../Tags"
 import { FontAwesomeIcon } from "../Icons"
+import { PostData } from "../../../Lib"
 
 interface PostTagsProps {
   post: PostData
