@@ -23,10 +23,10 @@ import {
   ImageManager,
   parseFilename,
   PostData,
+  TagData,
 } from "../../../../Lib"
 import { formatPostSlug } from "../../../../Lib/PostUtil"
 import { PostTagsField, SelectedTagList } from "../../Tags"
-import { TagData } from "../../../../Models"
 import { FontAwesomeIcon } from "../../Icons"
 
 import styles from "./PostForm.module.scss"

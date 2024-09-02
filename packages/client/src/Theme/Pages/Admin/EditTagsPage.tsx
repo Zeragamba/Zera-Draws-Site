@@ -7,9 +7,7 @@ import { Button, IconButton, Paper, Stack, Typography } from "@mui/material"
 import { FC, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { byTagName } from "../../../Lib"
-import { TagData } from "../../../Models"
-import { useAllTags$, useUpdateTag$ } from "../../../Queries"
+import { byTagName, TagData, useAllTags$, useUpdateTag$ } from "../../../Lib"
 import {
   AddTagButton,
   DeleteEmptyTagsButton,

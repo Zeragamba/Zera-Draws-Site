@@ -1,9 +1,9 @@
 import { useState } from "react"
-
-import { byIsFeatured, byTagName, filterTags, TagFilter } from "../Lib"
-import { TagData } from "../Models"
-import { useAllTags$ } from "../Queries"
 import { sort } from "fast-sort"
+import { TagData } from "./TagData"
+import { useAllTags$ } from "./TagQueries"
+import { filterTags, TagFilter } from "./TagFilter"
+import { byIsFeatured, byTagName } from "./TagSorters"
 
 export type UseTagMenuReturn = {
   isPending: boolean

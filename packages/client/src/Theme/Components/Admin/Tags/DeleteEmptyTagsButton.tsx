@@ -10,9 +10,7 @@ import {
 } from "@mui/material"
 import { FC, useState } from "react"
 
-import { noop } from "../../../../Lib"
-import { TagData } from "../../../../Models"
-import { useDeleteEmptyTags$ } from "../../../../Queries"
+import { noop, TagData, useDeleteEmptyTags$ } from "../../../../Lib"
 import { FontAwesomeIcon } from "../../Icons"
 
 interface DeleteTagButtonProps {

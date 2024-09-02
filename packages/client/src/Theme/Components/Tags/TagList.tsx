@@ -3,8 +3,7 @@ import { FC } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { TagChip } from "./TagChip"
-import { byTagName } from "../../../Lib"
-import { TagData } from "../../../Models"
+import { byTagName, TagData } from "../../../Lib"
 import { sort } from "fast-sort"
 import { FontAwesomeIcon } from "../Icons"
 

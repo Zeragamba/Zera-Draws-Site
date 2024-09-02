@@ -5,7 +5,7 @@ import { FC } from "react"
 import { NavItem } from "./NavItem"
 import { SidebarGroup } from "./SidebarGroup"
 import { SidebarTextField } from "./SidebarTextField"
-import { useTagMenuCtrl } from "../../../Controllers"
+import { useTagMenuCtrl } from "../../../Lib"
 import { FontAwesomeIcon } from "../Icons"
 
 interface SidebarTagsProps {

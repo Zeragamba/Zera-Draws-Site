@@ -8,8 +8,7 @@ import {
 import { ChangeEventHandler, FC } from "react"
 import { Control, useController } from "react-hook-form"
 
-import { formatSlug } from "../../../../Lib"
-import { TagData } from "../../../../Models"
+import { formatSlug, TagData } from "../../../../Lib"
 
 interface TagFormProps {
   control: Control<{ tag: TagData }>

@@ -1,6 +1,6 @@
-import { EditableTagData, TagData } from "../../Models"
-import { TagListResSchema, TagResSchema } from "../Schemas"
-import { ServerApi } from "../ServerApi"
+import { ServerApi } from "../../Api"
+import { EditableTagData, TagData } from "./TagData"
+import { TagListResSchema, TagResSchema } from "./TagDataSchema"
 
 export class TagsApi extends ServerApi {
   async createTag(params: { tag: EditableTagData }): Promise<TagData> {

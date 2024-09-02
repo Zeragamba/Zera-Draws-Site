@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useEffect, useState } from "react"
-import { TagData } from "../../Models"
+import { TagData } from "../Tags"
 import { PostContext } from "./PostContext"
 import { PostData } from "./PostData"
 import { GalleryData } from "../Galleries"

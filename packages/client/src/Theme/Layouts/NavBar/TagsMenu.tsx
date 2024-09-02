@@ -3,9 +3,8 @@ import { FC, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { NavBarLink } from "./NavBarLink"
-import { useTagMenuCtrl } from "../../../Controllers"
+import { TagData, useTagMenuCtrl } from "../../../Lib"
 import { useIsMobile } from "../../../Hooks"
-import { TagData } from "../../../Models"
 
 const MIN_TAGS_FOR_SEARCH = 15
 

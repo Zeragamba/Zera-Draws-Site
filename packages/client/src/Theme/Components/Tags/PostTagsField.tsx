@@ -7,9 +7,13 @@ import {
 } from "@mui/material"
 import { FC } from "react"
 
-import { byTagName, formatSlug } from "../../../Lib"
-import { TagData } from "../../../Models"
-import { useAllTags$, useCreateTag$ } from "../../../Queries"
+import {
+  byTagName,
+  formatSlug,
+  TagData,
+  useAllTags$,
+  useCreateTag$,
+} from "../../../Lib"
 import { sort } from "fast-sort"
 import { FontAwesomeIcon } from "../Icons"
 

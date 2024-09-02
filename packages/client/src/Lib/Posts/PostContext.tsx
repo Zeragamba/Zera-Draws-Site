@@ -1,8 +1,8 @@
 import { createContext } from "react"
 
-import { TagData } from "../../Models"
 import { PostData } from "./PostData"
 import { GalleryData } from "../Galleries"
+import { TagData } from "../Tags"
 
 export type PostContextState = {
   post: PostData

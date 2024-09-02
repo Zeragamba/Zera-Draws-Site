@@ -1,7 +1,7 @@
 import { Chip } from "@mui/material"
 import { FC } from "react"
 
-import { TagData } from "../../../Models"
+import { TagData } from "../../../Lib"
 
 interface SelectedTagListProps {
   tags: TagData[]

@@ -1,14 +1,14 @@
 import { AxiosProgressEvent } from "axios"
 
 import { getPostUrl } from "../PostUtil.ts"
+import { ServerApi } from "../../Api"
+import { EditablePost, PostData, postToFormData } from "./PostData"
+import { EditableImage, ImageChangeRecord } from "../Images"
 import {
   PagedPostData,
   PagedPostDataResSchema,
   PostDataResSchema,
-} from "../../Api/Schemas"
-import { ServerApi } from "../../Api"
-import { EditablePost, PostData, postToFormData } from "./PostData"
-import { EditableImage, ImageChangeRecord } from "../Images"
+} from "./PostDataSchema"
 
 class PostsApi extends ServerApi {
   public async deletePost(params: {
