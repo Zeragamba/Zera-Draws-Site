@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react"
-
-import { noop } from "../Lib"
+import { noop } from "../Noop"
 
 export const useHotkey = (hotkey: string, action: () => void): void => {
   const actionRef = useRef<() => void>(noop)

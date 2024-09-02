@@ -1,8 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios"
+import { Config } from "../../Config"
 
 import { authTokenStore } from "./AuthTokenStore"
-import { isServerApiError } from "./Errors"
-import { Config } from "../Config"
+import { isServerApiError } from "./ServerError"
 
 export interface RequestConfig<Data> extends AxiosRequestConfig {
   parseResData: (data: object) => Data

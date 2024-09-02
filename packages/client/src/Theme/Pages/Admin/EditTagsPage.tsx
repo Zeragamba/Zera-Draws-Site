@@ -4,9 +4,9 @@ import {
   faStar as faFilledStar,
 } from "@fortawesome/free-solid-svg-icons"
 import { Button, IconButton, Paper, Stack, Typography } from "@mui/material"
+import { sort } from "fast-sort"
 import { FC, useState } from "react"
 import { useNavigate } from "react-router-dom"
-
 import { byTagName, TagData, useAllTags$, useUpdateTag$ } from "../../../Lib"
 import {
   AddTagButton,
@@ -14,7 +14,6 @@ import {
   EditTagDialog,
   FontAwesomeIcon,
 } from "../../Components"
-import { sort } from "fast-sort"
 
 export const EditTagsPage: FC = () => {
   const navigate = useNavigate()

@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query"
+import { errorHandler } from "../Errors/ErrorHandler"
 
-import { queryKeys } from "../../Queries/QueryKeys"
+import { queryKeys } from "../Queries/QueryKeys"
 import { imageApi } from "./ImageApi"
-import { errorHandler } from "../../Errors/ErrorHandler"
 import { ImageData } from "./ImageData"
 
 export const useImage$ = (src: string): UseQueryResult<HTMLImageElement> => {

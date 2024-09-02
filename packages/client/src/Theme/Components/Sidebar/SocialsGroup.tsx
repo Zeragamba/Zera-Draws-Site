@@ -1,10 +1,8 @@
 import { FC, ReactNode } from "react"
-
+import { SocialPlatform, useSocialPlatforms$ } from "../../../Lib"
+import { SocialLogo } from "../Icons"
 import { NavItem } from "./NavItem"
 import { SidebarGroup } from "./SidebarGroup"
-import { SocialPlatform } from "../../../Models"
-import { useSocialPlatforms$ } from "../../../Queries"
-import { SocialLogo } from "../Icons"
 
 interface SocialsGroupProps {
   iconsOnly?: ReactNode

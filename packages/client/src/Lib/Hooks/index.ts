@@ -1,5 +1,5 @@
 export * from "./UseDragActive"
-export * from "./UseFeatureFlag"
+export * from "../SiteMeta/UseFeatureFlag"
 export * from "./UseFilesDropped"
 export * from "./UseHotkey"
 export * from "./UseInViewport"

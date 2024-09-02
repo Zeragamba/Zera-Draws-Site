@@ -5,10 +5,9 @@ import { QueryClientProvider } from "@tanstack/react-query"
 import { FC, PropsWithChildren, ReactNode } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
-import { PreloadProvider } from "./PreloadProvider.tsx"
-import { queryClient } from "../../Lib/QueryClient.ts"
-import { muiTheme } from "../MuiTheme.ts"
-import { AgeGateProvider } from "../../Lib"
+import { PreloadProvider } from "./PreloadProvider"
+import { AgeGateProvider, queryClient } from "../../Lib"
+import { muiTheme } from "../MuiTheme"
 
 export const AppProviders: FC<PropsWithChildren> = ({ children }) => {
   // prettier-ignore

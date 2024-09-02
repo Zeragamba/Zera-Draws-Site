@@ -1,5 +1,7 @@
 import crypto from "node:crypto"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import { freeze } from "../../index"
+import { ImageData } from "../ImageData"
 
 import {
   addImage,
@@ -8,10 +10,8 @@ import {
   EditImagePayload,
   setImages,
   SetImagesPayload,
-} from "./Actions.ts"
+} from "./Actions"
 import { imagesReducer } from "./ImagesReducer"
-import { freeze } from "../../index"
-import { ImageData } from "../ImageData"
 
 describe("ImageReducer", () => {
   let oldState: ImageData[]

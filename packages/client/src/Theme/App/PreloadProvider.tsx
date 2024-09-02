@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { FC, PropsWithChildren, useEffect, useState } from "react"
 
-import { queryKeys } from "../../Queries/QueryKeys.ts"
+import { queryKeys } from "../../Lib"
 
 export const PreloadProvider: FC<PropsWithChildren> = ({ children }) => {
   const [preloaded, setPreloaded] = useState<boolean>(false)

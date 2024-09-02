@@ -1,5 +1,13 @@
 import crypto from "node:crypto"
 import { beforeEach, describe, expect, it } from "vitest"
+import { freeze } from "../../index"
+import {
+  AddImageChangeRecord,
+  EditImageChangeRecord,
+  ImageChangeRecord,
+  RemoveImageChangeRecord,
+} from "../ImageChangeRecord"
+import { ImageData } from "../ImageData"
 
 import {
   addImage,
@@ -10,16 +18,8 @@ import {
   RemoveImagePayload,
   setImages,
   SetImagesPayload,
-} from "./Actions.ts"
-import { changesReducer } from "./ChangesReducer.ts"
-import { freeze } from "../../index.ts"
-import { ImageData } from "../ImageData"
-import {
-  AddImageChangeRecord,
-  EditImageChangeRecord,
-  ImageChangeRecord,
-  RemoveImageChangeRecord,
-} from "../ImageChangeRecord.ts"
+} from "./Actions"
+import { changesReducer } from "./ChangesReducer"
 
 describe("ChangesReducer", () => {
   let oldState: ImageChangeRecord[]

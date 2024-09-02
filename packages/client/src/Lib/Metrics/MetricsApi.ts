@@ -1,6 +1,6 @@
-import { ViewMetricsData } from "../../Models"
-import { ViewMetricsResSchema } from "../Schemas/ViewMetricsDataSchema"
 import { ServerApi } from "../ServerApi"
+import { ViewMetricsData } from "./ViewMetricsData"
+import { ViewMetricsResSchema } from "./ViewMetricsDataSchema"
 
 export class MetricsApi extends ServerApi {
   fetchViews(

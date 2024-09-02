@@ -6,7 +6,6 @@ import {
   DialogContentText,
 } from "@mui/material"
 import { FC, useState } from "react"
-
 import { noop, PostData, useDeletePost$ } from "../../../../Lib"
 
 interface DeletePostButtonProps {

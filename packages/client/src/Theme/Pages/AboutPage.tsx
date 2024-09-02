@@ -1,10 +1,9 @@
 import { Paper } from "@mui/material"
 import { FC } from "react"
-
+import { useCustomContent$ } from "../../Lib"
+import { Markdown } from "../Components"
 import { ErrorPage } from "./ErrorPage"
 import { LoadingPage } from "./LoadingPage"
-import { useCustomContent$ } from "../../Queries"
-import { Markdown } from "../Components"
 
 export const AboutPage: FC = () => {
   const customContent$ = useCustomContent$()

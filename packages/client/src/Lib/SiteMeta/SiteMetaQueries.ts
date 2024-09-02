@@ -1,8 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-
-import { queryKeys } from "./QueryKeys"
-import { siteMetaApi } from "../Api"
-import { ContentMeta, FeatureFlags, SocialsMeta } from "../Models"
+import { queryKeys } from "../Queries"
+import { siteMetaApi } from "./SiteMetaApi"
+import { ContentMeta, FeatureFlags, SocialsMeta } from "./SiteMetaData"
 
 export const useFeatureFlags$ = () => {
   return useQuery({

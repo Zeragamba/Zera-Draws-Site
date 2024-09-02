@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, ReactNode, useRef } from "react"
-
-import { useFilesDropped } from "../../../Hooks"
+import { useFilesDropped } from "../../../Lib"
 
 type ImagePickerProps = {
   onFilesPicked: (files: File[]) => void

@@ -8,15 +8,13 @@ import {
   useQueryClient,
   UseQueryResult,
 } from "@tanstack/react-query"
-
-import { queryKeys } from "../../Queries/QueryKeys.ts"
-import { pagedQueryOptions } from "../../Queries/QueryUtils.ts"
-import { EditablePost, PostData } from "./PostData"
-import { EditableImage, ImageChangeRecord } from "../Images"
-import { postsApi } from "./PostsApi"
 import { GalleryData } from "../Galleries"
+import { EditableImage, ImageChangeRecord } from "../Images"
+import { pagedQueryOptions, queryKeys } from "../Queries"
 import { TagData } from "../Tags"
+import { EditablePost, PostData } from "./PostData"
 import { PagedPostData } from "./PostDataSchema"
+import { postsApi } from "./PostsApi"
 
 type PostParams = { postId: string; galleryId?: string; tagId?: string }
 

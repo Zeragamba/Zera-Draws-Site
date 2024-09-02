@@ -3,9 +3,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { DatePicker } from "@mui/x-date-pickers"
 import * as DateFns from "date-fns"
 import { FC, useState } from "react"
-
-import { ViewMetricsData } from "../../../Models"
-import { useViewMetrics$ } from "../../../Queries"
+import { useViewMetrics$, ViewMetricsData } from "../../../Lib"
 import { MetricsExportBtn, Spinner } from "../../Components"
 
 type TimeWindow = { label: string; start: Date | null; end: Date | null }

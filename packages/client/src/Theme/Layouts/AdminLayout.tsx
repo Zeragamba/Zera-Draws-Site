@@ -2,7 +2,7 @@ import { Box, Paper, Stack } from "@mui/material"
 import { FC } from "react"
 import { Navigate, Outlet } from "react-router-dom"
 
-import { useIsAdmin } from "../../Hooks"
+import { useIsAdmin } from "../../Lib/Hooks"
 import { AuthorizingPage, LoginPage } from "../Pages"
 import { AdminNavItem } from "../Components"
 import { useCurrentUser$ } from "../../Lib/Auth"

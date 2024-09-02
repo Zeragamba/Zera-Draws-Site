@@ -9,11 +9,11 @@ import {
 } from "@fortawesome/free-brands-svg-icons"
 import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons"
 import { FC, ReactElement } from "react"
+import { SocialPlatform } from "../../../Lib"
 
+import { FontAwesomeIcon } from "./FontAwesomeIcon"
 import { IconBluesky } from "./IconBluesky"
 import { IconGumroad } from "./IconGumroad"
-import { SocialPlatform } from "../../../Models"
-import { FontAwesomeIcon } from "./FontAwesomeIcon"
 
 const socialLogoMap: Record<SocialPlatform, ReactElement> = {
   [SocialPlatform.bluesky]: <IconBluesky />,

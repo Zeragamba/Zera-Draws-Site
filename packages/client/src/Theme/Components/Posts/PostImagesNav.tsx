@@ -2,10 +2,9 @@ import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons"
 import { Button, Stack, SxProps } from "@mui/material"
 import { FC } from "react"
 
-import { useHotkey, useIsMobile } from "../../../Hooks"
-import { AltImagesView } from "./AltImagesView.tsx"
+import { useHotkey, useIsMobile, usePostImageCtrl } from "../../../Lib"
 import { FontAwesomeIcon } from "../Icons"
-import { usePostImageCtrl } from "../../../Lib"
+import { AltImagesView } from "./AltImagesView"
 
 const styles: SxProps = {
   maxWidth: "100%",

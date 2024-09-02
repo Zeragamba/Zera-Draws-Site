@@ -1,8 +1,7 @@
 import { Stack } from "@mui/material"
 import { FC } from "react"
-
+import { SocialPlatform } from "../../../Lib"
 import { SocialLink } from "./SocialLink"
-import { SocialPlatform } from "../../../Models"
 
 export const SocialsNav: FC = () => {
   return (

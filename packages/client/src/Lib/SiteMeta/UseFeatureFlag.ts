@@ -1,5 +1,5 @@
-import { FeatureFlag } from "../Models"
-import { useFeatureFlags$ } from "../Queries"
+import { FeatureFlag } from "./SiteMetaData"
+import { useFeatureFlags$ } from "./SiteMetaQueries"
 
 export function useFeatureFlag(flag: FeatureFlag): boolean {
   const featureFlags$ = useFeatureFlags$()

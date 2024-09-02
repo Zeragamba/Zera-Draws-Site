@@ -13,15 +13,15 @@ import {
 import TextField from "@mui/material/TextField"
 import { FC, useEffect, useState } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-
-import { muiField } from "../../../Forms"
-import { ContentMeta, FeatureFlag } from "../../../Models"
 import {
+  ContentMeta,
+  FeatureFlag,
+  muiField,
   useCustomContent$,
   useFeatureFlags$,
   useUpdateCustomContent$,
   useUpdateFeatureFlags$,
-} from "../../../Queries"
+} from "../../../Lib"
 import { FontAwesomeIcon, Markdown } from "../../Components"
 
 export const EditAboutPage: FC = () => {

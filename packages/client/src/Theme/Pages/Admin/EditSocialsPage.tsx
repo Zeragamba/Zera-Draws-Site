@@ -10,13 +10,13 @@ import {
 import TextField from "@mui/material/TextField"
 import { FC, useEffect } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-
-import { muiField } from "../../../Forms"
-import { SocialPlatform, SocialsMeta } from "../../../Models"
 import {
+  muiField,
+  SocialPlatform,
+  SocialsMeta,
   useSocialPlatforms$,
   useUpdateSocialPlatforms$,
-} from "../../../Queries"
+} from "../../../Lib"
 import { SocialLogo } from "../../Components"
 
 export const EditSocialsPage: FC = () => {

@@ -1,1 +1,1 @@
-export * from "./PasskeySchema.ts"
+export * from "./PasskeySchema"

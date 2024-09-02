@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 
 import { NavBarLink } from "./NavBarLink"
 import { TagData, useTagMenuCtrl } from "../../../Lib"
-import { useIsMobile } from "../../../Hooks"
+import { useIsMobile } from "../../../Lib/Hooks"
 
 const MIN_TAGS_FOR_SEARCH = 15
 

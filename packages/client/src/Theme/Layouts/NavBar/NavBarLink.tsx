@@ -1,7 +1,7 @@
 import { Button } from "@mui/material"
 import { FC, MouseEventHandler, Ref } from "react"
 import { useNavigate } from "react-router-dom"
-import { Colours } from "../../MuiTheme.ts"
+import { Colours } from "../../MuiTheme"
 
 interface NavBarLinkProps {
   to?: string

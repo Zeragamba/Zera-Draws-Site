@@ -1,8 +1,6 @@
 import { Button, Stack } from "@mui/material"
 import { FC, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
-
-import { PostForm } from "./PostForm"
 import {
   createPostData,
   EditableImage,
@@ -12,6 +10,8 @@ import {
   useImageManager,
 } from "../../../../Lib"
 import { ErrorAlert, UploadProgress } from "../../Shared"
+
+import { PostForm } from "./PostForm"
 
 interface CreatePostFormProps {
   onCreated?: (post: PostData) => void

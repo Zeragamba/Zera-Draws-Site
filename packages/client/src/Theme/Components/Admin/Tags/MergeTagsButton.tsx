@@ -14,8 +14,8 @@ import {
 import { FC, useState } from "react"
 
 import { noop, TagData, useAllTags$, useMergeTags$ } from "../../../../Lib"
-import { Spinner } from "../../Shared"
 import { FontAwesomeIcon } from "../../Icons"
+import { Spinner } from "../../Shared"
 
 interface MergeTagButtonProps {
   srcTag: TagData

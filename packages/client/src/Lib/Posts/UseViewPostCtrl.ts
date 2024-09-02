@@ -1,6 +1,8 @@
-import { PostImageCtrl, usePostImageCtrl } from "./UsePostImageNavCtrl.ts"
-import { PostNavCtrl, usePostNavCtrl } from "./UsePostNavCtrl.ts"
-import { PostContextState, usePostContext, useRecordView } from "../index.ts"
+import { useRecordView } from "../Metrics"
+import { PostContextState } from "./PostContext"
+import { usePostContext } from "./PostHooks"
+import { PostImageCtrl, usePostImageCtrl } from "./UsePostImageNavCtrl"
+import { PostNavCtrl, usePostNavCtrl } from "./UsePostNavCtrl"
 
 export type UseViewPostCtrl = PostContextState & PostNavCtrl & PostImageCtrl
 

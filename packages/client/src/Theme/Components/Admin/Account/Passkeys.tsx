@@ -15,7 +15,7 @@ import {
   PasskeyData,
   useCreatePasskey$,
   useRegisterPasskey$,
-} from "../../../../Lib/Auth"
+} from "../../../../Lib"
 
 export const Passkeys: FC = () => {
   const createPasskey$ = useCreatePasskey$()

@@ -13,7 +13,7 @@ import {
   useRemovePasskey$,
   useUpdatePasskey$,
   useUserPasskeys$,
-} from "../../../../Lib/Auth"
+} from "../../../../Lib"
 
 interface PasskeysListSlots {
   PasskeyListItem: FC<{ passkey: PasskeyData }>

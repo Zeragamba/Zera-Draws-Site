@@ -1,9 +1,9 @@
 import { useReducer } from "react"
+import { ImageChangeRecord } from "../ImageChangeRecord"
+import { ImageData } from "../ImageData"
 
-import * as Actions from "./Actions.ts"
-import { rootReducer } from "./rootReducer.ts"
-import { ImageData } from "../ImageData.ts"
-import { ImageChangeRecord } from "../ImageChangeRecord.ts"
+import * as Actions from "./Actions"
+import { rootReducer } from "./rootReducer"
 
 export type UseImageManagerProps = {
   images?: ImageData[]

@@ -1,11 +1,11 @@
 import { Box, Paper, Stack, SxProps, Typography } from "@mui/material"
 import { FC, MouseEventHandler } from "react"
 import { useHref, useNavigate } from "react-router-dom"
+import { PostData } from "../../../Lib"
+import { AsyncImg } from "../Images"
+import { PostStyles } from "./PostStyles"
 
 import { PostTags } from "./PostTags"
-import { AsyncImg } from "../Images"
-import { PostStyles } from "./PostStyles.ts"
-import { PostData } from "../../../Lib"
 
 interface PostsListProps {
   posts: PostData[]

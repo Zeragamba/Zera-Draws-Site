@@ -1,11 +1,10 @@
 import * as webauthn from "@github/webauthn-json/browser-ponyfill"
 import { RegistrationPublicKeyCredential } from "@github/webauthn-json/browser-ponyfill"
 import z from "zod"
+import { isServerApiError, ServerApi } from "../ServerApi"
 
-import { UserData } from "../../Models"
-import { authTokenStore } from "../../Api/AuthTokenStore.ts"
-import { isServerApiError, ServerApi } from "../../Api"
-import { UserDataSchema, UserResSchema } from "../../Api/Schemas"
+import { authTokenStore } from "../ServerApi/AuthTokenStore"
+import { UserData, UserDataSchema, UserResSchema } from "../Users"
 import {
   PasskeyCreateChallengeSchema,
   PasskeyData,

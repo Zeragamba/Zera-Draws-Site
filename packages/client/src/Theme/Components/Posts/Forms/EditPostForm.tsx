@@ -1,9 +1,6 @@
 import { Button, Stack } from "@mui/material"
 import { FC, useState } from "react"
 import { useForm } from "react-hook-form"
-
-import { DeletePostButton } from "./DeletePostButton"
-import { PostForm } from "./PostForm"
 import {
   noop,
   PostData,
@@ -11,6 +8,8 @@ import {
   useUpdatePost$,
 } from "../../../../Lib"
 import { ErrorAlert, UploadProgress } from "../../Shared"
+import { DeletePostButton } from "./DeletePostButton"
+import { PostForm } from "./PostForm"
 
 export interface EditPostFormProps {
   post: PostData

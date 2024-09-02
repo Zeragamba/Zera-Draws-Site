@@ -1,7 +1,7 @@
 import { FC } from "react"
+import { useAllPosts$ } from "../../../Lib"
 
 import { PostGallery, PostGalleryProps } from "./PostGallery"
-import { useAllPosts$ } from "../../../Lib"
 
 export const AllPostsGallery: FC<Omit<PostGalleryProps, "postsQuery">> = (
   galleryProps,

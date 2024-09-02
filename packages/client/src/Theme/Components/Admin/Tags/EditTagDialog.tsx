@@ -2,12 +2,12 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 import { Button, Dialog, DialogContent, Stack } from "@mui/material"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
+import { TagData, useTag$, useUpdateTag$ } from "../../../../Lib"
+import { FontAwesomeIcon } from "../../Icons"
 
 import { DeleteTagButton } from "./DeleteTagButton"
 import { MergeTagButton } from "./MergeTagsButton"
 import { TagForm } from "./TagForm"
-import { TagData, useTag$, useUpdateTag$ } from "../../../../Lib"
-import { FontAwesomeIcon } from "../../Icons"
 
 interface EditTagDialogProps {
   tagId: TagData["id"]

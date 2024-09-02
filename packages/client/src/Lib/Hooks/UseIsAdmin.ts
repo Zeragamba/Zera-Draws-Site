@@ -1,4 +1,4 @@
-import { useCurrentUser$ } from "../Lib/Auth"
+import { useCurrentUser$ } from "../Auth"
 
 export const useIsAdmin = (): boolean => {
   const { data: currentUser } = useCurrentUser$()

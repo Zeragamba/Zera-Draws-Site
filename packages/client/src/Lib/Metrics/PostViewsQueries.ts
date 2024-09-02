@@ -4,11 +4,10 @@ import {
   useQuery,
   UseQueryResult,
 } from "@tanstack/react-query"
-
-import { queryKeys } from "./QueryKeys"
-import { PostData } from "../Lib"
-import { ViewsData } from "../Models"
-import { postViewsApi } from "../Api"
+import { PostData } from "../Posts"
+import { queryKeys } from "../Queries"
+import { postViewsApi } from "./PostViewsApi"
+import { ViewsData } from "./ViewsData"
 
 export const usePostViews$ = (params: {
   postId: PostData["id"]

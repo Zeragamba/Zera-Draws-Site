@@ -1,3 +1,3 @@
 export * from "./Passkeys"
-export * from "./AuthApi.ts"
-export * from "./AuthQueries.ts"
+export * from "./AuthApi"
+export * from "./AuthQueries"

@@ -1,11 +1,9 @@
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { Box, SxProps, Typography } from "@mui/material"
 import { FC, MouseEvent, MouseEventHandler, ReactNode, useMemo } from "react"
-
-import { useInViewport } from "../../../Hooks"
-import { ImageData } from "../../../Lib"
-import { AsyncImg } from "../Images"
+import { ImageData, useInViewport } from "../../../Lib"
 import { FontAwesomeIcon } from "../Icons"
+import { AsyncImg } from "../Images"
 
 interface GalleryItemProps {
   image: ImageData

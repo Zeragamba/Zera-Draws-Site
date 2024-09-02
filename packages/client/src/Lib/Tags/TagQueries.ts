@@ -6,9 +6,9 @@ import {
   UseQueryResult,
 } from "@tanstack/react-query"
 
-import { queryKeys } from "../../Queries/QueryKeys"
+import { queryKeys } from "../Queries/QueryKeys"
 import { EditableTagData, TagData } from "./TagData"
-import { tagsApi } from "./TagsApi.ts"
+import { tagsApi } from "./TagsApi"
 
 function updateCache(queryClient: QueryClient, tag: TagData) {
   queryClient.removeQueries({

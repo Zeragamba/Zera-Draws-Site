@@ -9,8 +9,12 @@ import { useMutation } from "@tanstack/react-query"
 import { format as formatDate } from "date-fns"
 import { FC } from "react"
 
-import { createFile, downloadFile, toCsv } from "../../../../Lib"
-import { ViewMetricsData } from "../../../../Models"
+import {
+  createFile,
+  downloadFile,
+  toCsv,
+  ViewMetricsData,
+} from "../../../../Lib"
 import { FontAwesomeIcon } from "../../Icons"
 
 interface MetricsExportBtnProps {

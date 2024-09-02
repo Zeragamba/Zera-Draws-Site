@@ -2,11 +2,11 @@ import { Alert, LinearProgress, Paper } from "@mui/material"
 import { UseInfiniteQueryResult } from "@tanstack/react-query"
 import { FC, MouseEvent } from "react"
 import { useNavigate } from "react-router-dom"
+import { GalleryConfig, PostData } from "../../../Lib"
+import { InfiniteScroll } from "../Shared"
 
 import { GalleryItem } from "./GalleryItem"
 import { GalleryWrapper } from "./GalleryWrapper"
-import { InfiniteScroll } from "../Shared"
-import { GalleryConfig, PostData } from "../../../Lib"
 
 export interface PostGalleryProps extends Omit<GalleryConfig, "rowHeight"> {
   rowHeight?: number

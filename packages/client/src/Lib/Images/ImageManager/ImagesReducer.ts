@@ -1,8 +1,8 @@
 import { createReducer } from "@reduxjs/toolkit"
+import { reorderItems } from "../../Hooks"
+import { ImageData } from "../ImageData"
 
-import * as Actions from "./Actions.ts"
-import { reorderItems } from "../../../Hooks"
-import { ImageData } from "../ImageData.ts"
+import * as Actions from "./Actions"
 
 export const imagesReducer = createReducer<ImageData[]>([], ({ addCase }) => {
   addCase(Actions.setImages, (_images, { payload }) => {

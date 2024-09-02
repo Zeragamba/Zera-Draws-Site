@@ -1,8 +1,8 @@
 import * as uuid from "uuid"
 
-import { postViewsApi } from "../../Api"
 import { noop } from "../Noop"
 import { PostData } from "../Posts"
+import { postViewsApi } from "./PostViewsApi"
 
 const VIEWER_ID_KEY = "viewerId"
 const SESSION_VIEWS_KEY = (postId: string) => `viewed.${postId}`

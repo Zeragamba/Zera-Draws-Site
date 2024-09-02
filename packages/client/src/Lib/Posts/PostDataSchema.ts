@@ -1,8 +1,8 @@
 import z from "zod"
 
-import { ImageDataSchema } from "../Images/ImageDataSchema.ts"
-import { PagedResMetaDataSchema } from "../../Api/Schemas/PagedResMetaDataSchema.ts"
-import { TagDataSchema } from "../Tags/TagDataSchema.ts"
+import { ImageDataSchema } from "../Images"
+import { PagedResMetaDataSchema } from "../ServerApi"
+import { TagDataSchema } from "../Tags"
 
 export const PostDataSchema = z.object({
   id: z.string().uuid(),

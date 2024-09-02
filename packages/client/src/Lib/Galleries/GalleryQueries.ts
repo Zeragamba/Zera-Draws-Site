@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query"
 
-import { queryKeys } from "../../Queries/QueryKeys"
+import { queryKeys } from "../Queries/QueryKeys"
 import { galleryApiClient } from "./GalleryApi"
 import { GalleryData } from "./GalleryData"
 

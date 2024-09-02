@@ -1,7 +1,7 @@
-import { PostData } from "../../Lib/Posts/PostData.ts"
-import { ViewsData } from "../../Models/ViewsData"
-import { PostViewsResSchema } from "../Schemas/PostViewsDataSchema"
+import { PostData } from "../Posts"
 import { ServerApi } from "../ServerApi"
+import { PostViewsResSchema } from "./PostViewsDataSchema"
+import { ViewsData } from "./ViewsData"
 
 class PostViewsApi extends ServerApi {
   public async fetchViews(params: {

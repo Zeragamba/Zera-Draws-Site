@@ -2,7 +2,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
 import { Box, Button, Stack } from "@mui/material"
 import classnames from "classnames"
 import { FC } from "react"
-import { useHotkey, useIsMobile } from "../../../Hooks"
+import { useHotkey, useIsMobile } from "../../../Lib/Hooks"
 import { FontAwesomeIcon } from "../Icons"
 import { usePostNavCtrl } from "../../../Lib"
 

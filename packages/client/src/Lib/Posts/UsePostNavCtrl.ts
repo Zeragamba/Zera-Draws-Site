@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { useIsAdmin, useIsMobile, usePostPreloader } from "../../Hooks"
+import { useIsAdmin, useIsMobile, usePostPreloader } from "../Hooks"
 import { getPostUrl } from "../PostUtil"
 import { PostData } from "./PostData"
 import { usePostContext } from "./PostHooks"

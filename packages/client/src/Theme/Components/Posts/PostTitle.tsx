@@ -4,7 +4,7 @@ import { FC } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { usePostContext } from "../../../Lib"
-import { useIsAdmin, useIsMobile } from "../../../Hooks"
+import { useIsAdmin, useIsMobile } from "../../../Lib/Hooks"
 import { FontAwesomeIcon } from "../Icons"
 
 export const PostTitle: FC = () => {

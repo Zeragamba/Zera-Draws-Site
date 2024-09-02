@@ -20,15 +20,17 @@ import { grey } from "@mui/material/colors"
 import classnames from "classnames"
 import { FC, useState } from "react"
 import { useNavigate } from "react-router-dom"
-
+import {
+  FeatureFlag,
+  useFeatureFlag,
+  useIsAdmin,
+  useLogout$,
+} from "../../../Lib"
+import { FontAwesomeIcon } from "../Icons"
 import { NavItem } from "./NavItem"
 import { SidebarGroup } from "./SidebarGroup"
 import { SidebarTags } from "./SidebarTags"
 import { SocialsGroup } from "./SocialsGroup"
-import { useFeatureFlag, useIsAdmin } from "../../../Hooks"
-import { FeatureFlag } from "../../../Models"
-import { FontAwesomeIcon } from "../Icons"
-import { useLogout$ } from "../../../Lib/Auth"
 
 const styles = {
   backgroundColor: "hsla(0deg, 0%, 40%, 25%)",

@@ -8,7 +8,7 @@ import {
 } from "@mui/material"
 import { ChangeEvent, FC, FormEvent, useState } from "react"
 
-import { isServerApiError } from "../../../Api"
+import { isServerApiError } from "../../../Lib/ServerApi"
 import { ErrorAlert } from "../Shared"
 import { usePasskeyLogin$, usePasswordLogin$ } from "../../../Lib/Auth"
 

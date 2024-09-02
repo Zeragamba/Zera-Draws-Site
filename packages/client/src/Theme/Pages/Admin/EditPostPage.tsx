@@ -1,9 +1,13 @@
 import { FC } from "react"
 import { Navigate, useNavigate, useParams } from "react-router-dom"
 
-import { isNotFoundError } from "../../../Api"
-import { ParamsPostProvider, useCurrentUser$, usePost$ } from "../../../Lib"
-import { useIsAdmin } from "../../../Hooks"
+import {
+  isNotFoundError,
+  ParamsPostProvider,
+  useCurrentUser$,
+  useIsAdmin,
+  usePost$,
+} from "../../../Lib"
 import { EditPostForm, ErrorAlert, QueryGate } from "../../Components"
 import { LoadingPage } from "../LoadingPage"
 import { AuthorizingPage, LoginPage } from "../Users"

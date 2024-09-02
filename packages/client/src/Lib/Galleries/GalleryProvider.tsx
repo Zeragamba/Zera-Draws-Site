@@ -3,7 +3,7 @@ import {
   defaultGalleryConfig,
   GalleryConfig,
   GalleryContext,
-} from "./GalleryContext.ts"
+} from "./GalleryContext"
 
 export interface GalleryContextProviderProps {
   config: Partial<GalleryConfig>

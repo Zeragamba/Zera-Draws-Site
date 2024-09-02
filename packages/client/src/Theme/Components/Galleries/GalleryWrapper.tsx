@@ -1,8 +1,6 @@
 import { FC, Fragment, ReactNode, useRef } from "react"
-
-import { useContainerDimensions } from "../../../Hooks"
+import { GalleryProvider, useContainerDimensions } from "../../../Lib"
 import { StyleProp } from "../../MuiTheme"
-import { GalleryProvider } from "../../../Lib"
 
 import styles from "./GalleryWrapper.module.scss"
 

@@ -1,8 +1,8 @@
 import { FC } from "react"
+import { useGallery$, useGalleryPosts$ } from "../../../Lib"
 
 import { GalleryTitle } from "./GalleryTitle"
 import { PostGallery } from "./PostGallery"
-import { useGallery$, useGalleryPosts$ } from "../../../Lib"
 
 interface GalleryDisplayProps {
   galleryId: string

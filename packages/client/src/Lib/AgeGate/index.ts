@@ -1,3 +1,3 @@
-export * from "./AgeGateContext.ts"
-export * from "./AgeGateHooks.ts"
-export * from "./AgeGateProvider.tsx"
+export * from "./AgeGateContext"
+export * from "./AgeGateHooks"
+export * from "./AgeGateProvider"

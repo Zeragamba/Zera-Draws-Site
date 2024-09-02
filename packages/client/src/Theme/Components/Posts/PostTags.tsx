@@ -5,7 +5,7 @@ import { FC } from "react"
 
 import { ScheduledChip } from "./ScheduledChip"
 import { ViewCounter } from "./ViewCounter"
-import { useIsAdmin } from "../../../Hooks"
+import { useIsAdmin } from "../../../Lib/Hooks"
 import { TagChip, TagList } from "../Tags"
 import { FontAwesomeIcon } from "../Icons"
 import { PostData } from "../../../Lib"

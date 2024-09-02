@@ -1,15 +1,15 @@
 import {
+  ContentSchema,
+  FeatureFlagsSchema,
+  SocialsSchema,
+} from "./SiteMetaSchema"
+import { ServerApi } from "../ServerApi"
+import {
   ContentMeta,
   FeatureFlags,
   MetaDataGroup,
   SocialsMeta,
-} from "../../Models"
-import {
-  ContentSchema,
-  FeatureFlagsSchema,
-  SocialsSchema,
-} from "../Schemas/SiteMetaSchema"
-import { ServerApi } from "../ServerApi"
+} from "./SiteMetaData"
 
 export class SiteMetaApi extends ServerApi {
   public fetchFeatureFlags() {

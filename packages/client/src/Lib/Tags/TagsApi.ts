@@ -1,4 +1,4 @@
-import { ServerApi } from "../../Api"
+import { ServerApi } from "../ServerApi"
 import { EditableTagData, TagData } from "./TagData"
 import { TagListResSchema, TagResSchema } from "./TagDataSchema"
 

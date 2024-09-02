@@ -1,5 +1,5 @@
 import { GalleryResSchema } from "./GalleryDataSchema"
-import { ServerApi } from "../../Api"
+import { ServerApi } from "../ServerApi"
 import { GalleryData } from "./GalleryData"
 import { PagedPostData, PagedPostDataResSchema } from "../Posts"
 

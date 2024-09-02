@@ -1,1 +1,1 @@
-export * from "./UseImageManager.ts"
+export * from "./UseImageManager"
