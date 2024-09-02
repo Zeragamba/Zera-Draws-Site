@@ -35,7 +35,7 @@ export const ImagesNav: FC = () => {
         <FontAwesomeIcon icon={faAngleUp} />
       </Button>
 
-      <AltImagesView />
+      <AltImagesView direction={"column"} />
 
       <Button
         className="next"

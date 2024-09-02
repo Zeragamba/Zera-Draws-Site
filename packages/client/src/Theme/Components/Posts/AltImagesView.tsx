@@ -36,7 +36,13 @@ const styles: Record<string, SxProps> = {
   },
 }
 
-export const AltImagesView: FC = () => {
+interface AltImagesViewProps {
+  direction?: "row" | "column"
+}
+
+export const AltImagesView: FC<AltImagesViewProps> = ({
+  direction = "row",
+}) => {
   const ctrl = usePostImageCtrl()
   const activeImgRef = useRef<HTMLElement>()
 
@@ -53,7 +59,7 @@ export const AltImagesView: FC = () => {
   if (ctrl.totalImages === 1) return null
 
   return (
-    <Stack direction={"row"} gap={1} sx={styles.row}>
+    <Stack direction={direction} gap={1} sx={styles.row}>
       {ctrl.images.map((image, index) => (
         <Box
           key={image.id}
