@@ -1,9 +1,9 @@
 import { Reducer } from "@reduxjs/toolkit"
 
-import { changesReducer } from "./ChangesReducer"
-import { imagesReducer } from "./ImagesReducer"
-import { ImageData } from "../../Models/ImageData"
-import { ImageChangeRecord } from "../ImageChangeRecord"
+import { changesReducer } from "./ChangesReducer.ts"
+import { imagesReducer } from "./ImagesReducer.ts"
+import { ImageData } from "../../../Models/ImageData.ts"
+import { ImageChangeRecord } from "../ImageChangeRecord.ts"
 
 export type State = {
   images: ImageData[]

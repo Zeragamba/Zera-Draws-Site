@@ -1,7 +1,7 @@
 import { CSSProperties, FC, ImgHTMLAttributes } from "react"
 
-import { useImage$ } from "../../../Queries"
 import { Spinner } from "../Shared"
+import { useImage$ } from "../../../Lib"
 
 type AsyncImageProps = { src: string } & ImgHTMLAttributes<HTMLImageElement>
 

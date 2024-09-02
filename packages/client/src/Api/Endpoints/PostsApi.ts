@@ -1,6 +1,6 @@
 import { AxiosProgressEvent } from "axios"
 
-import { ImageChangeRecord } from "../../Images"
+import { ImageChangeRecord } from "../../Lib/Images"
 import { getPostUrl } from "../../Lib/PostUtil"
 import {
   EditableImage,

@@ -10,16 +10,16 @@ import {
   RemoveImagePayload,
   setImages,
   SetImagesPayload,
-} from "./Actions"
-import { changesReducer } from "./ChangesReducer"
-import { freeze } from "../../Lib"
-import { ImageData } from "../../Models"
+} from "./Actions.ts"
+import { changesReducer } from "./ChangesReducer.ts"
+import { freeze } from "../../index.ts"
+import { ImageData } from "../../../Models"
 import {
   AddImageChangeRecord,
   EditImageChangeRecord,
   ImageChangeRecord,
   RemoveImageChangeRecord,
-} from "../ImageChangeRecord"
+} from "../ImageChangeRecord.ts"
 
 describe("ChangesReducer", () => {
   let oldState: ImageChangeRecord[]

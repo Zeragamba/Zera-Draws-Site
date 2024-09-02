@@ -1,7 +1,7 @@
 import { FormGroup, TextField } from "@mui/material"
 import { FC } from "react"
 
-import { ImageFormState, TextFields } from "../../../Images"
+import { ImageFormState, TextFields } from "../../../Lib/Images"
 
 type ImageFormProps = {
   state: ImageFormState

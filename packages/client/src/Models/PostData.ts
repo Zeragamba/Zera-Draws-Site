@@ -2,7 +2,7 @@ import { addDays, setHours, setMinutes } from "date-fns"
 
 import { EditableImage, ImageData } from "./ImageData"
 import { TagData } from "./TagData"
-import { ImageChangeRecord } from "../Images"
+import { ImageChangeRecord } from "../Lib/Images"
 
 export interface PostData {
   id: string

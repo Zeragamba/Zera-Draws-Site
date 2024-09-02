@@ -1,6 +1,6 @@
 import z from "zod"
 
-import { ImageDataSchema } from "./ImageDataSchema"
+import { ImageDataSchema } from "../../Lib/Images/ImageDataSchema.ts"
 import { PagedResMetaDataSchema } from "./PagedResMetaDataSchema"
 import { TagDataSchema } from "./TagDataSchema"
 

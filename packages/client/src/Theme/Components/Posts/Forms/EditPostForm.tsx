@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 
 import { DeletePostButton } from "./DeletePostButton"
 import { PostForm } from "./PostForm"
-import { useImageManager } from "../../../../Images"
+import { useImageManager } from "../../../../Lib/Images"
 import { noop } from "../../../../Lib"
 import { PostData } from "../../../../Models"
 import { useUpdatePost$ } from "../../../../Queries"
