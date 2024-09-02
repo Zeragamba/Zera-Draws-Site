@@ -30,5 +30,3 @@ export const ViewPostPage: FC<ViewPostPageProps> = ({ slots }) => {
     </ParamsPostProvider>
   )
 }
-
-export const DefaultViewPostPage = ViewPostPage

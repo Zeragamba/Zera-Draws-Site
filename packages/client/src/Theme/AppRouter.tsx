@@ -1,12 +1,9 @@
 import { createBrowserRouter, Navigate } from "react-router-dom"
 
-import { MainLayout } from "./Layouts"
-import { HomePage } from "./Pages/HomePage"
-import { LatestPostPage, ViewPostPage } from "./Posts"
+import { AdminLayout, MainLayout } from "./Layouts"
 import {
   AboutPage,
   AccountPage,
-  AdminLayout,
   AllPostsGalleryPage,
   ArchivePage,
   EditAboutPage,
@@ -14,12 +11,15 @@ import {
   EditPostsPage,
   EditSocialsPage,
   EditTagsPage,
-  FeaturedPostsGallery,
+  HomePage,
+  LatestPostPage,
   LoginPage,
   MetricsPage,
   NewPostPage,
+  ViewPostPage,
   ViewTagPage,
-} from "../../Theme"
+} from "./Pages"
+import { FeaturedPostsGallery } from "./Components"
 
 export const appRouter = createBrowserRouter([
   {

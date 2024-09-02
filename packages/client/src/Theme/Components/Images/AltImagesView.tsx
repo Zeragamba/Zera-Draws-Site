@@ -2,9 +2,9 @@ import { Box, Stack, SxProps } from "@mui/material"
 import classnames from "classnames"
 import { FC, useEffect, useRef } from "react"
 
-import { usePostImageCtrl } from "../../../../Controllers"
-import { useIsMobile } from "../../../../Hooks"
-import { AsyncImg } from "../../../../Theme"
+import { usePostImageCtrl } from "../../../Controllers"
+import { useIsMobile } from "../../../Hooks"
+import { AsyncImg } from "./AsyncImg"
 
 const styles: Record<string, SxProps> = {
   row: {

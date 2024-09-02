@@ -25,10 +25,10 @@ import { NavItem } from "./NavItem"
 import { SidebarGroup } from "./SidebarGroup"
 import { SidebarTags } from "./SidebarTags"
 import { SocialsGroup } from "./SocialsGroup"
-import { useFeatureFlag, useIsAdmin } from "../../../../Hooks"
-import { FontAwesomeIcon } from "../../../../Lib"
-import { FeatureFlag } from "../../../../Models"
-import { useLogout$ } from "../../../../Queries"
+import { useFeatureFlag, useIsAdmin } from "../../../Hooks"
+import { FontAwesomeIcon } from "../../../Lib"
+import { FeatureFlag } from "../../../Models"
+import { useLogout$ } from "../../../Queries"
 
 const styles = {
   backgroundColor: "hsla(0deg, 0%, 40%, 25%)",

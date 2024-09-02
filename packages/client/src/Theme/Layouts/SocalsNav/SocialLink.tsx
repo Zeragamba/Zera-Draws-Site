@@ -4,8 +4,8 @@ import { FC } from "react"
 import { useIsMobile } from "../../../Hooks"
 import { SocialPlatform } from "../../../Models"
 import { useSocialPlatforms$ } from "../../../Queries"
-import { SocialLogo } from "../../Components"
 import { Colours } from "../../MuiTheme.ts"
+import { SocialLogo } from "../../Components"
 
 interface SocialLinkProps {
   platform: SocialPlatform

@@ -1,35 +1,15 @@
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
-import { Button, Paper, SxProps, Typography } from "@mui/material"
+import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons"
+import { Button, Stack, SxProps } from "@mui/material"
 import { FC } from "react"
 
 import { usePostImageCtrl } from "../../../Controllers"
 import { useHotkey, useIsMobile } from "../../../Hooks"
 import { FontAwesomeIcon } from "../../../Lib"
+import { AltImagesView } from "./AltImagesView.tsx"
 
 const styles: SxProps = {
-  display: "grid",
-  gridTemplateRows: "auto",
-  gridTemplateColumns: "auto auto auto",
-  gridTemplateAreas: ['"prev counter next"'].join(" "),
-
-  ".prev": {
-    gridArea: "prev",
-  },
-
-  ".counter": {
-    gridArea: "counter",
-    textTransform: "uppercase",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingLeft: 2,
-    paddingRight: 2,
-    whiteSpace: "nowrap",
-  },
-
-  ".next": {
-    gridArea: "next",
-  },
+  maxWidth: "100%",
+  maxHeight: "min(100vh, 800px)",
 }
 
 export const ImagesNav: FC = () => {
@@ -42,7 +22,7 @@ export const ImagesNav: FC = () => {
   if (postImageCtrl.totalImages === 1) return null
 
   return (
-    <Paper sx={styles}>
+    <Stack direction={isMobile ? "row" : "column"} sx={styles}>
       <Button
         className="prev"
         variant="text"
@@ -52,13 +32,10 @@ export const ImagesNav: FC = () => {
           postImageCtrl.onPrevImage()
         }}
       >
-        <FontAwesomeIcon icon={faAngleLeft} />
+        <FontAwesomeIcon icon={faAngleUp} />
       </Button>
 
-      <Typography className="counter">
-        {!isMobile && "Image"} {postImageCtrl.currentImageNum} /{" "}
-        {postImageCtrl.totalImages}
-      </Typography>
+      <AltImagesView />
 
       <Button
         className="next"
@@ -69,8 +46,8 @@ export const ImagesNav: FC = () => {
           postImageCtrl.onNextImage()
         }}
       >
-        <FontAwesomeIcon icon={faAngleRight} />
+        <FontAwesomeIcon icon={faAngleDown} />
       </Button>
-    </Paper>
+    </Stack>
   )
 }

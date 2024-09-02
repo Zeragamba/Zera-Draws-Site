@@ -1,50 +1,40 @@
-import { faEdit } from "@fortawesome/free-solid-svg-icons"
-import { Box, Button, Paper, Stack, Typography } from "@mui/material"
+import { Box, Paper, Stack, Typography } from "@mui/material"
+import classnames from "classnames"
 import { FC } from "react"
 
+import { ImagesNav } from "./PostImagesNav"
 import { PostNav } from "./PostNav"
-import { PostTags } from "./PostTags"
+import { PostTitle } from "./PostTitle"
 import { useViewPostCtrl } from "../../../Controllers"
-import { FontAwesomeIcon } from "../../../Lib"
-import { AsyncImg } from "../Images"
-import { Markdown } from "../Markdown"
+import { useIsMobile } from "../../../Hooks"
 
 import styles from "./ViewPost.module.scss"
+import { AsyncImg } from "../Images"
+import { PostTags } from "./PostTags"
+import { Markdown } from "../Markdown"
 
 export const ViewPost: FC = () => {
+  const isMobile = useIsMobile()
   const { post, ...ctrl } = useViewPostCtrl()
   const description = post.description || ""
 
   return (
     <Stack gap={2}>
-      <Paper sx={{ padding: 2 }}>
-        <Stack gap={2}>
-          <Stack direction="row" justifyContent="space-between">
-            <Typography variant="h2">{post.title}</Typography>
+      <PostTitle />
 
-            {ctrl.canEdit && (
-              <Box>
-                <Button
-                  component="a"
-                  variant="contained"
-                  href={`/post/${post.id}/edit`}
-                  onClick={(event) => {
-                    event.preventDefault()
-                    ctrl.onEditPost()
-                  }}
-                  endIcon={<FontAwesomeIcon icon={faEdit} />}
-                  size="small"
-                >
-                  Edit
-                </Button>
-              </Box>
-            )}
-          </Stack>
-        </Stack>
-      </Paper>
-
-      <Box className={styles.imgWrapper} onClick={ctrl.onPostImageClick}>
-        <AsyncImg key={ctrl.currentImage.id} src={ctrl.currentImageSrc} />
+      <Box
+        className={classnames(styles.postImage, {
+          [styles.isMobile]: isMobile,
+        })}
+      >
+        <ImagesNav />
+        <Box className={styles.imgWrapper}>
+          <AsyncImg
+            key={ctrl.currentImage.id}
+            src={ctrl.currentImageSrc}
+            onClick={ctrl.onPostImageClick}
+          />
+        </Box>
       </Box>
 
       <PostNav

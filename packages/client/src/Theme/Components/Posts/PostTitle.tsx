@@ -3,9 +3,9 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material"
 import { FC } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { usePostContext } from "../../../../Contexts"
-import { useIsAdmin, useIsMobile } from "../../../../Hooks"
-import { FontAwesomeIcon } from "../../../../Lib"
+import { usePostContext } from "../../../Contexts"
+import { useIsAdmin, useIsMobile } from "../../../Hooks"
+import { FontAwesomeIcon } from "../../../Lib"
 
 export const PostTitle: FC = () => {
   const navigate = useNavigate()

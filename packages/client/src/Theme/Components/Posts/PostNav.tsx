@@ -1,10 +1,8 @@
-import { faAnglesRight } from "@fortawesome/free-solid-svg-icons"
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
 import { Box, Button, Stack } from "@mui/material"
 import classnames from "classnames"
 import { FC } from "react"
 
-import { AltImagesView } from "./AltImagesView"
-import { ImagesNav } from "./PostImagesNav"
 import { usePostNavCtrl } from "../../../Controllers"
 import { useHotkey, useIsMobile } from "../../../Hooks"
 import { FontAwesomeIcon } from "../../../Lib"
@@ -34,6 +32,7 @@ export const PostNav: FC<PostNavProps> = () => {
           <Button
             component="a"
             variant="contained"
+            endIcon={<FontAwesomeIcon icon={faAngleLeft} />}
             href={ctrl.nextPostUrl}
             disabled={!ctrl.hasNextPost}
             onClick={(event) => {
@@ -45,17 +44,11 @@ export const PostNav: FC<PostNavProps> = () => {
           </Button>
         </Box>
 
-        {ctrl.hasAltImages && (
-          <Box className={styles.imageNav}>
-            <ImagesNav />
-          </Box>
-        )}
-
         <Box className={styles.prevPost}>
           <Button
             component="a"
             variant="contained"
-            endIcon={<FontAwesomeIcon icon={faAnglesRight} />}
+            endIcon={<FontAwesomeIcon icon={faAngleRight} />}
             href={ctrl.prevPostUrl}
             disabled={!ctrl.hasPrevPost}
             onClick={(event) => {
@@ -67,8 +60,6 @@ export const PostNav: FC<PostNavProps> = () => {
           </Button>
         </Box>
       </Box>
-
-      <AltImagesView />
     </Stack>
   )
 }
