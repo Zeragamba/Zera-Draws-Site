@@ -1,1 +1,0 @@
-export { ViewPost } from "./ViewPost"
