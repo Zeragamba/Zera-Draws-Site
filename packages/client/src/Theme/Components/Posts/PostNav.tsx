@@ -2,23 +2,13 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
 import { Box, Button, Stack } from "@mui/material"
 import classnames from "classnames"
 import { FC } from "react"
-
-import { usePostNavCtrl } from "../../../Controllers"
 import { useHotkey, useIsMobile } from "../../../Hooks"
-import { ImageData, PostData } from "../../../Models"
 
 import styles from "./ViewPost.module.scss"
 import { FontAwesomeIcon } from "../Icons"
+import { usePostNavCtrl } from "../../../Controllers"
 
-interface PostNavProps {
-  post: PostData
-  nextPost?: PostData
-  prevPost?: PostData
-  onPostChange: (post: PostData) => void
-  onImageChange: (image: ImageData) => void
-}
-
-export const PostNav: FC<PostNavProps> = () => {
+export const PostNav: FC = () => {
   const ctrl = usePostNavCtrl()
   const isMobile = useIsMobile()
 

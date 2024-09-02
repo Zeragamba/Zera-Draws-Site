@@ -1,4 +1,4 @@
-import { PostData } from "../Models/PostData"
+import { PostData } from "../Models"
 import { useImagePreloader } from "../Queries"
 
 interface PostPreloaderProps {

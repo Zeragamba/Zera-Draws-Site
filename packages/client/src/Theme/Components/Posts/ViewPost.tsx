@@ -37,13 +37,7 @@ export const ViewPost: FC = () => {
         </Box>
       </Box>
 
-      <PostNav
-        post={post}
-        nextPost={ctrl.nextPost}
-        prevPost={ctrl.prevPost}
-        onPostChange={ctrl.onChangePost}
-        onImageChange={ctrl.onChangeImage}
-      />
+      <PostNav />
 
       <Paper sx={{ padding: 2 }}>
         <Stack gap={2}>
