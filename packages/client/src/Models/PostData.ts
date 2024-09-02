@@ -1,6 +1,6 @@
 import { addDays, setHours, setMinutes } from "date-fns"
 
-import { EditableImage, ImageData } from "./ImageData"
+import { EditableImage, ImageData } from "../Lib/Images/ImageData.ts"
 import { TagData } from "./TagData"
 import { ImageChangeRecord } from "../Lib/Images"
 

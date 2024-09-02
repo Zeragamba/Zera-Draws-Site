@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren, useEffect, useState } from "react"
-import { GalleryData, PostData, TagData } from "../../Models"
+import { PostData, TagData } from "../../Models"
 import { PostContext } from "./PostContext"
+import { GalleryData } from "../../Lib"
 
 export type PostProviderProps = PropsWithChildren<{
   post: PostData

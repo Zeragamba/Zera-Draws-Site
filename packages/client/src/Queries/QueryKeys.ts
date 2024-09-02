@@ -1,6 +1,7 @@
 import { createQueryKeyStore } from "@lukemorales/query-key-factory"
 
-import { GalleryData, TagData } from "../Models"
+import { TagData } from "../Models"
+import { GalleryData } from "../Lib"
 
 export const queryKeys = createQueryKeyStore({
   auth: {

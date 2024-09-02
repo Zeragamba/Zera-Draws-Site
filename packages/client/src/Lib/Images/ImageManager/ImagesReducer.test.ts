@@ -9,9 +9,9 @@ import {
   setImages,
   SetImagesPayload,
 } from "./Actions.ts"
-import { imagesReducer } from "./ImagesReducer.ts"
-import { freeze } from "../../index.ts"
-import { ImageData } from "../../../Models"
+import { imagesReducer } from "./ImagesReducer"
+import { freeze } from "../../index"
+import { ImageData } from "../ImageData"
 
 describe("ImageReducer", () => {
   let oldState: ImageData[]

@@ -13,7 +13,7 @@ import {
 } from "./Actions.ts"
 import { changesReducer } from "./ChangesReducer.ts"
 import { freeze } from "../../index.ts"
-import { ImageData } from "../../../Models"
+import { ImageData } from "../ImageData"
 import {
   AddImageChangeRecord,
   EditImageChangeRecord,

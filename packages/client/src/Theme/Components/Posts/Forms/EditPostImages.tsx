@@ -4,7 +4,7 @@ import { useDrag, useDrop } from "react-dnd"
 
 import { PostImagePicker, PostImagePickerProps } from "./PostImagePicker"
 import { useSortable } from "../../../../Hooks"
-import { EditableImage, ImageData } from "../../../../Models"
+import { EditableImage, ImageData } from "../../../../Lib"
 import { ImagePicker } from "../../Images"
 
 interface EditPostImagesProps {

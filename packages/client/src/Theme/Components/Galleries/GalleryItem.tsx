@@ -3,7 +3,7 @@ import { Box, SxProps, Typography } from "@mui/material"
 import { FC, MouseEvent, MouseEventHandler, ReactNode, useMemo } from "react"
 
 import { useInViewport } from "../../../Hooks"
-import { ImageData } from "../../../Models"
+import { ImageData } from "../../../Lib"
 import { AsyncImg } from "../Images"
 import { FontAwesomeIcon } from "../Icons"
 

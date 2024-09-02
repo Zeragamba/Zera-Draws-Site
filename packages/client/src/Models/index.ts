@@ -1,5 +1,3 @@
-export * from "./GalleryData"
-export * from "./ImageData"
 export * from "./PostData"
 export * from "./SiteMetaData"
 export * from "./TagData"

@@ -16,14 +16,19 @@ import { Controller, UseFormReturn } from "react-hook-form"
 import { EditPostImages } from "./EditPostImages"
 import { PublishSettings } from "./PublishSettings"
 import { muiField } from "../../../../Forms"
-import { ImageManager } from "../../../../Lib/Images"
-import { formatTitle, parseFilename } from "../../../../Lib"
+import {
+  EditableImage,
+  formatTitle,
+  ImageData,
+  ImageManager,
+  parseFilename,
+} from "../../../../Lib"
 import { formatPostSlug } from "../../../../Lib/PostUtil"
-import { EditableImage, ImageData, PostData, TagData } from "../../../../Models"
 import { PostTagsField, SelectedTagList } from "../../Tags"
+import { PostData, TagData } from "../../../../Models"
+import { FontAwesomeIcon } from "../../Icons"
 
 import styles from "./PostForm.module.scss"
-import { FontAwesomeIcon } from "../../Icons"
 
 interface PostFormProps {
   form: UseFormReturn<PostData>

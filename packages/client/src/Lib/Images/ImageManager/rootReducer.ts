@@ -2,7 +2,7 @@ import { Reducer } from "@reduxjs/toolkit"
 
 import { changesReducer } from "./ChangesReducer.ts"
 import { imagesReducer } from "./ImagesReducer.ts"
-import { ImageData } from "../../../Models/ImageData.ts"
+import { ImageData } from "../ImageData.ts"
 import { ImageChangeRecord } from "../ImageChangeRecord.ts"
 
 export type State = {
