@@ -1,3 +1,4 @@
+export * from "./AgeGate"
 export * from "./Auth"
 export * from "./CsvExporter"
 export * from "./FileUtils"

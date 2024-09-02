@@ -7,8 +7,8 @@ import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 import { PreloadProvider } from "./PreloadProvider.tsx"
 import { queryClient } from "../../Lib/QueryClient.ts"
-import { AgeGateProvider } from "../../Contexts"
 import { muiTheme } from "../MuiTheme.ts"
+import { AgeGateProvider } from "../../Lib"
 
 export const AppProviders: FC<PropsWithChildren> = ({ children }) => {
   // prettier-ignore

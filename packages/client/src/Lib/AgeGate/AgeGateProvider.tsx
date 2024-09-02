@@ -1,5 +1,5 @@
 import { FC, ReactNode, useState } from "react"
-import { AgeGateContext } from "./AgeGateContext"
+import { AgeGateContext } from "./AgeGateContext.ts"
 
 export interface AgeGateProviderProps {
   children: ReactNode
