@@ -1,10 +1,6 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import { App } from "./App/App"
-import { zeraDarkTheme } from "./Theme/ZeraDarkTheme"
+import { App } from "./Theme"
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App theme={zeraDarkTheme} />
-  </StrictMode>,
-)
+const rootElement = document.getElementById("root")!
+createRoot(rootElement).render(<StrictMode children={<App />} />)

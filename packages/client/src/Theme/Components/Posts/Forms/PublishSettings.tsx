@@ -31,10 +31,10 @@ import {
 import { FC } from "react"
 import { Control, useController } from "react-hook-form"
 
-import { FontAwesomeIcon } from "../../../../Lib"
 import { PostData } from "../../../../Models"
 
 import styles from "./PublishToggle.module.scss"
+import { FontAwesomeIcon } from "../../Icons"
 
 interface PublishToggleProps {
   formControl: Control<PostData>

@@ -26,9 +26,9 @@ import { SidebarGroup } from "./SidebarGroup"
 import { SidebarTags } from "./SidebarTags"
 import { SocialsGroup } from "./SocialsGroup"
 import { useFeatureFlag, useIsAdmin } from "../../../Hooks"
-import { FontAwesomeIcon } from "../../../Lib"
 import { FeatureFlag } from "../../../Models"
 import { useLogout$ } from "../../../Queries"
+import { FontAwesomeIcon } from "../Icons"
 
 const styles = {
   backgroundColor: "hsla(0deg, 0%, 40%, 25%)",

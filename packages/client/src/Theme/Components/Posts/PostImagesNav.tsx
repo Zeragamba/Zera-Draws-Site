@@ -4,8 +4,8 @@ import { FC } from "react"
 
 import { usePostImageCtrl } from "../../../Controllers"
 import { useHotkey, useIsMobile } from "../../../Hooks"
-import { FontAwesomeIcon } from "../../../Lib"
 import { AltImagesView } from "./AltImagesView.tsx"
+import { FontAwesomeIcon } from "../Icons"
 
 const styles: SxProps = {
   maxWidth: "100%",

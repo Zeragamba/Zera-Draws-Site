@@ -8,8 +8,8 @@ import { Controller, useForm } from "react-hook-form"
 
 import { PasskeyData, PasskeyDataSchema } from "../../../../Api/Schemas"
 import { muiField } from "../../../../Forms"
-import { FontAwesomeIcon } from "../../../../Lib"
 import { ErrorAlert } from "../../Shared"
+import { FontAwesomeIcon } from "../../Icons"
 
 type PasskeyFormProps = {
   loading?: boolean

@@ -1,7 +1,6 @@
 export * from "./CsvExporter"
 export * from "./FileUtils"
 export * from "./FilenameUtils"
-export * from "./FontAwesomeIcon"
 export * from "./Noop"
 export * from "./Tags"
 export * from "./TestHelpers"

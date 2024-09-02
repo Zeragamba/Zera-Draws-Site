@@ -6,7 +6,7 @@ import { NavItem } from "./NavItem"
 import { SidebarGroup } from "./SidebarGroup"
 import { SidebarTextField } from "./SidebarTextField"
 import { useTagMenuCtrl } from "../../../Controllers"
-import { FontAwesomeIcon } from "../../../Lib"
+import { FontAwesomeIcon } from "../Icons"
 
 interface SidebarTagsProps {
   onBack: () => void

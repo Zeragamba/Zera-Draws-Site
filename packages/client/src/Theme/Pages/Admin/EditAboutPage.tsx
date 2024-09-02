@@ -15,7 +15,6 @@ import { FC, useEffect, useState } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
 import { muiField } from "../../../Forms"
-import { FontAwesomeIcon } from "../../../Lib"
 import { ContentMeta, FeatureFlag } from "../../../Models"
 import {
   useCustomContent$,
@@ -23,7 +22,7 @@ import {
   useUpdateCustomContent$,
   useUpdateFeatureFlags$,
 } from "../../../Queries"
-import { Markdown } from "../../Components"
+import { FontAwesomeIcon, Markdown } from "../../Components"
 
 export const EditAboutPage: FC = () => {
   const featureFlags$ = useFeatureFlags$()

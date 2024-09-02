@@ -1,9 +1,10 @@
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import { FC } from "react"
 
-import { FontAwesomeIcon, usePostViews$ } from "../../../Lib"
+import { usePostViews$ } from "../../../Lib"
 import { PostData } from "../../../Models"
 import { TagChip } from "../Tags"
+import { FontAwesomeIcon } from "../Icons"
 
 interface ViewCounterProps {
   postId: PostData["id"]

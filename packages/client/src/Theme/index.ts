@@ -1,3 +1,1 @@
-export * from "./Components"
-export * from "./Layouts"
-export * from "./Pages"
+export { App } from "./App/App"

@@ -5,20 +5,15 @@ import { QueryClientProvider } from "@tanstack/react-query"
 import { FC, PropsWithChildren, ReactNode } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
+import { PreloadProvider } from "./PreloadProvider.tsx"
+import { queryClient } from "../../Lib/QueryClient.ts"
+import { AgeGateProvider } from "../../Contexts"
+import { muiTheme } from "../MuiTheme.ts"
 
-import { AppTheme } from "./AppTheme"
-import { PreloadProvider } from "./PreloadProvider"
-import { queryClient } from "./QueryClient"
-import { AgeGateProvider } from "../Contexts"
-
-type AppProvidersProps = PropsWithChildren<{
-  theme: AppTheme
-}>
-
-export const AppProviders: FC<AppProvidersProps> = ({ theme, children }) => {
+export const AppProviders: FC<PropsWithChildren> = ({ children }) => {
   // prettier-ignore
   const providers: ((children: ReactNode) => ReactNode)[] = [
-    (children) => <ThemeProvider theme={theme.muiTheme} children={children} />,
+    (children) => <ThemeProvider theme={muiTheme} children={children} />,
     (children) => <LocalizationProvider dateAdapter={AdapterDateFns} children={children} />,
     (children) => <QueryClientProvider client={queryClient} children={children} />,
     (children) => <AgeGateProvider children={children} />,

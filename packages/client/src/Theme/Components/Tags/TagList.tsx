@@ -3,9 +3,10 @@ import { FC } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { TagChip } from "./TagChip"
-import { byTagName, FontAwesomeIcon } from "../../../Lib"
+import { byTagName } from "../../../Lib"
 import { TagData } from "../../../Models"
 import { sort } from "fast-sort"
+import { FontAwesomeIcon } from "../Icons"
 
 interface TagListProps {
   tags: TagData[]

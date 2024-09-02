@@ -5,10 +5,10 @@ import { FC } from "react"
 
 import { usePostNavCtrl } from "../../../Controllers"
 import { useHotkey, useIsMobile } from "../../../Hooks"
-import { FontAwesomeIcon } from "../../../Lib"
 import { ImageData, PostData } from "../../../Models"
 
 import styles from "./ViewPost.module.scss"
+import { FontAwesomeIcon } from "../Icons"
 
 interface PostNavProps {
   post: PostData

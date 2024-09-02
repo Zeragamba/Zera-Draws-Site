@@ -1,4 +1,4 @@
-import { TagData } from "../../Models/TagData"
+import { TagData } from "../../Models"
 
 export interface TagFilter {
   name?: string

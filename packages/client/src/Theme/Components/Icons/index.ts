@@ -1,4 +1,4 @@
-export * from "../../../Lib/FontAwesomeIcon"
-export * from "./SocialLogoMap.tsx"
+export * from "./FontAwesomeIcon"
+export * from "./SocialLogoMap"
 export * from "./IconBluesky"
 export * from "./IconGumroad"

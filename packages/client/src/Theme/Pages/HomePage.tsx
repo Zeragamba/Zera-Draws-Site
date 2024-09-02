@@ -3,10 +3,10 @@ import { Button, Paper, Typography } from "@mui/material"
 import Stack from "@mui/material/Stack"
 import { FC, MouseEventHandler } from "react"
 import { useNavigate } from "react-router-dom"
-import { FontAwesomeIcon } from "../../Lib"
 import {
   AllPostsGallery,
   FeaturedPostsGallery,
+  FontAwesomeIcon,
   GalleryTitle,
 } from "../Components"
 

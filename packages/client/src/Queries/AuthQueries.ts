@@ -9,7 +9,7 @@ import {
 import { queryKeys } from "./QueryKeys"
 import { authApiClient, RegisterPassKeyParams, ServerApiError } from "../Api"
 import { PasskeyData } from "../Api/Schemas"
-import { queryClient } from "../App/QueryClient"
+import { queryClient } from "../Lib/QueryClient.ts"
 import { UserData } from "../Models"
 
 export const usePasswordLogin$ = () => {

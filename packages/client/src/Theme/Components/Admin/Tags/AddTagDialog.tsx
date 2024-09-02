@@ -4,9 +4,9 @@ import { FC } from "react"
 import { useForm } from "react-hook-form"
 
 import { TagForm } from "./TagForm"
-import { FontAwesomeIcon } from "../../../../Lib"
 import { buildTagData, TagData } from "../../../../Models"
 import { useCreateTag$ } from "../../../../Queries"
+import { FontAwesomeIcon } from "../../Icons"
 
 interface AddTagDialogProps {
   open: boolean

@@ -1,8 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query"
 
 import { postViewsApi } from "../../Api"
-import { PostData } from "../../Models/PostData"
-import { ViewsData } from "../../Models/ViewsData"
+import { PostData, ViewsData } from "../../Models"
 import { queryKeys } from "../../Queries/QueryKeys"
 
 export function usePostViews$(

@@ -3,9 +3,9 @@ import { Box, SxProps, Typography } from "@mui/material"
 import { FC, MouseEvent, MouseEventHandler, ReactNode, useMemo } from "react"
 
 import { useInViewport } from "../../../Hooks"
-import { FontAwesomeIcon } from "../../../Lib"
 import { ImageData } from "../../../Models"
 import { AsyncImg } from "../Images"
+import { FontAwesomeIcon } from "../Icons"
 
 interface GalleryItemProps {
   image: ImageData

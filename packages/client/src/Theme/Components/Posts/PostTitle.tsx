@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 import { usePostContext } from "../../../Contexts"
 import { useIsAdmin, useIsMobile } from "../../../Hooks"
-import { FontAwesomeIcon } from "../../../Lib"
+import { FontAwesomeIcon } from "../Icons"
 
 export const PostTitle: FC = () => {
   const navigate = useNavigate()

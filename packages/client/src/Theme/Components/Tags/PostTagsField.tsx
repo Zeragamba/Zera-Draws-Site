@@ -7,10 +7,11 @@ import {
 } from "@mui/material"
 import { FC } from "react"
 
-import { byTagName, FontAwesomeIcon, formatSlug } from "../../../Lib"
+import { byTagName, formatSlug } from "../../../Lib"
 import { TagData } from "../../../Models"
 import { useAllTags$, useCreateTag$ } from "../../../Queries"
 import { sort } from "fast-sort"
+import { FontAwesomeIcon } from "../Icons"
 
 type NewTagData = { id: null; name: string }
 type TagOption = TagData | NewTagData

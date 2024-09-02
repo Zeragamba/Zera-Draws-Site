@@ -3,7 +3,7 @@ import { Button } from "@mui/material"
 import { FC, useState } from "react"
 
 import { AddTagDialog } from "./AddTagDialog"
-import { FontAwesomeIcon } from "../../../../Lib"
+import { FontAwesomeIcon } from "../../Icons"
 
 export const AddTagButton: FC = () => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false)

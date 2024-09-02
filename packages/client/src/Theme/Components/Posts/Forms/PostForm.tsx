@@ -17,12 +17,13 @@ import { EditPostImages } from "./EditPostImages"
 import { PublishSettings } from "./PublishSettings"
 import { muiField } from "../../../../Forms"
 import { ImageManager } from "../../../../Images"
-import { FontAwesomeIcon, formatTitle, parseFilename } from "../../../../Lib"
+import { formatTitle, parseFilename } from "../../../../Lib"
 import { formatPostSlug } from "../../../../Lib/PostUtil"
 import { EditableImage, ImageData, PostData, TagData } from "../../../../Models"
 import { PostTagsField, SelectedTagList } from "../../Tags"
 
 import styles from "./PostForm.module.scss"
+import { FontAwesomeIcon } from "../../Icons"
 
 interface PostFormProps {
   form: UseFormReturn<PostData>
