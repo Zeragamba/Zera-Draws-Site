@@ -1,32 +1,29 @@
-import { faMarkdown } from "@fortawesome/free-brands-svg-icons"
 import {
+  Box,
   Button,
-  ButtonGroup,
   FormControlLabel,
   FormGroup,
-  FormHelperText,
   Paper,
   Stack,
   Switch,
   Typography,
 } from "@mui/material"
-import TextField from "@mui/material/TextField"
-import { FC, useEffect, useState } from "react"
+import { FC } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import {
   ContentMeta,
   FeatureFlag,
-  muiField,
   useCustomContent$,
   useFeatureFlags$,
   useUpdateCustomContent$,
   useUpdateFeatureFlags$,
 } from "../../../Lib"
-import { FontAwesomeIcon, Markdown } from "../../Components"
+import { MarkdownEditor } from "../../Components"
 
 export const EditAboutPage: FC = () => {
   const featureFlags$ = useFeatureFlags$()
   const featureFlags = featureFlags$.data || {}
+  console.log(featureFlags)
 
   const customContent$ = useCustomContent$()
   const customContent = customContent$.data
@@ -36,14 +33,9 @@ export const EditAboutPage: FC = () => {
   const updateFlags$ = useUpdateFeatureFlags$()
   const updateCustomContent$ = useUpdateCustomContent$()
 
-  const { handleSubmit, control, watch, formState } = useForm<ContentMeta>({
+  const { handleSubmit, control } = useForm<ContentMeta>({
     values: customContent,
   })
-  const [mode, setMode] = useState<"source" | "split" | "preview">("split")
-
-  useEffect(() => {
-    if (formState.isDirty) updateCustomContent$.reset()
-  }, [formState.isDirty, updateCustomContent$])
 
   const onFormSave: SubmitHandler<ContentMeta> = (data) => {
     updateCustomContent$.mutate(data)
@@ -64,52 +56,11 @@ export const EditAboutPage: FC = () => {
         direction="row"
         alignItems="center"
       >
-        <Stack
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="center"
-          sx={{ width: "33.333%" }}
-        >
+        <Box flexGrow={1}>
           <Typography variant="h2">About Page</Typography>
-        </Stack>
+        </Box>
 
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          sx={{ width: "33.333%" }}
-        >
-          <ButtonGroup>
-            <Button
-              size="small"
-              variant={mode === "source" ? "contained" : "outlined"}
-              onClick={() => setMode("source")}
-            >
-              Source
-            </Button>
-            <Button
-              size="small"
-              variant={mode === "split" ? "contained" : "outlined"}
-              onClick={() => setMode("split")}
-            >
-              Split
-            </Button>
-            <Button
-              size="small"
-              variant={mode === "preview" ? "contained" : "outlined"}
-              onClick={() => setMode("preview")}
-            >
-              Preview
-            </Button>
-          </ButtonGroup>
-        </Stack>
-
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          sx={{ width: "33.333%" }}
-        >
+        <Box>
           <FormGroup>
             <FormControlLabel
               control={
@@ -118,7 +69,9 @@ export const EditAboutPage: FC = () => {
               label="Enabled"
             />
           </FormGroup>
+        </Box>
 
+        <Box>
           {updateCustomContent$.isIdle && (
             <Button
               size="small"
@@ -144,52 +97,23 @@ export const EditAboutPage: FC = () => {
               Saved
             </Button>
           )}
-        </Stack>
+        </Box>
       </Stack>
 
       <Stack gap={2} direction="row">
-        {["split", "source"].includes(mode) && (
-          <Paper sx={{ flexGrow: 1, padding: 2 }}>
-            <Controller
-              control={control}
-              name="about"
-              render={(fieldProps) => (
-                <TextField
-                  {...muiField(fieldProps)}
-                  multiline
-                  minRows={5}
-                  fullWidth
-                  inputProps={{
-                    sx: {
-                      fontFamily: "monospace",
-                      lineHeight: "1em",
-                    },
-                  }}
-                />
-              )}
-            />
-
-            <FormHelperText>
-              <Stack direction="row" gap={1} alignItems="center">
-                <FontAwesomeIcon icon={faMarkdown} />
-                <a
-                  href="https://commonmark.org/help/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Markdown
-                </a>{" "}
-                format supported
-              </Stack>
-            </FormHelperText>
-          </Paper>
-        )}
-
-        {["split", "preview"].includes(mode) && (
-          <Paper sx={{ padding: 2, flexGrow: 1 }}>
-            <Markdown>{watch("about") || ""}</Markdown>
-          </Paper>
-        )}
+        <Paper sx={{ flexGrow: 1, padding: 2 }}>
+          <Controller
+            control={control}
+            name="about"
+            render={({ field }) => (
+              <MarkdownEditor
+                placeholder={"Description"}
+                value={field.value || ""}
+                onChange={field.onChange}
+              />
+            )}
+          />
+        </Paper>
       </Stack>
     </Stack>
   )

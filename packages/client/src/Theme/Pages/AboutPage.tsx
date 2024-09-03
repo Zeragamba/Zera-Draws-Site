@@ -1,7 +1,7 @@
 import { Paper } from "@mui/material"
 import { FC } from "react"
 import { useCustomContent$ } from "../../Lib"
-import { Markdown } from "../Components"
+import { MarkdownViewer } from "../Components"
 import { ErrorPage } from "./ErrorPage"
 import { LoadingPage } from "./LoadingPage"
 
@@ -15,7 +15,7 @@ export const AboutPage: FC = () => {
 
   return (
     <Paper sx={{ padding: 2 }}>
-      <Markdown>{contentMeta.about}</Markdown>
+      <MarkdownViewer>{contentMeta.about}</MarkdownViewer>
     </Paper>
   )
 }

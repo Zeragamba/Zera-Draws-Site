@@ -1,12 +1,4 @@
-import { faMarkdown } from "@fortawesome/free-brands-svg-icons"
-import {
-  Box,
-  FormHelperText,
-  Grid,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material"
+import { Box, Grid, Paper, Stack, Typography } from "@mui/material"
 import TextField from "@mui/material/TextField"
 import { DatePicker } from "@mui/x-date-pickers"
 import * as dateFns from "date-fns"
@@ -23,7 +15,7 @@ import {
   TagData,
 } from "../../../../Lib"
 import { formatPostSlug } from "../../../../Lib/PostUtil"
-import { FontAwesomeIcon } from "../../Icons"
+import { MarkdownEditor } from "../../Markdown"
 import { PostTagsField, SelectedTagList } from "../../Tags"
 import { EditPostImages } from "./EditPostImages"
 import styles from "./PostForm.module.scss"
@@ -172,29 +164,14 @@ export const PostForm: FC<PostFormProps> = ({
               <Controller
                 control={form.control}
                 name={"description"}
-                render={(fieldProps) => (
-                  <TextField
-                    {...muiField(fieldProps)}
-                    label="Description"
-                    multiline
-                    minRows={5}
-                    fullWidth
+                render={({ field }) => (
+                  <MarkdownEditor
+                    placeholder={"Description"}
+                    value={field.value || ""}
+                    onChange={field.onChange}
                   />
                 )}
               />
-              <FormHelperText>
-                <Stack direction="row" gap={1} alignItems="center">
-                  <FontAwesomeIcon icon={faMarkdown} />
-                  <a
-                    href="https://commonmark.org/help/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Markdown
-                  </a>{" "}
-                  format supported
-                </Stack>
-              </FormHelperText>
             </Grid>
           </Grid>
         </Paper>

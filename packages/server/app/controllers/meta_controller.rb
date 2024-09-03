@@ -19,7 +19,7 @@ class MetaController < ApplicationController
         .order(:key)
         .where(group: group, key: key)
         .first_or_initialize(group: group, key: key)
-      meta.value = value
+      meta.value = value.to_s
       meta.save!
     end
 
