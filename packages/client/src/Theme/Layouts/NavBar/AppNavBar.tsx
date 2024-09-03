@@ -79,7 +79,7 @@ export const RightNavLinks: FC = () => {
 
       {isAdmin ? (
         <>
-          <NavBarLink to="/post/new" label="Create Post" />
+          <NavBarLink to="/admin/post/new" label="Create Post" />
           <NavBarLink to="/admin" label="Admin" />
           <NavBarLink onClick={() => logoutQuery.mutate({})} label="Logout" />
         </>
@@ -125,10 +125,12 @@ const MobileNav: FC = () => {
           vertical: "top",
           horizontal: "center",
         }}
-        PaperProps={{
-          sx: {
-            backgroundColor: "primary.main",
-            width: "100%",
+        slotProps={{
+          paper: {
+            sx: {
+              backgroundColor: "primary.main",
+              width: "100%",
+            },
           },
         }}
       >

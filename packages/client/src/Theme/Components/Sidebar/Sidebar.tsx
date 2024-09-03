@@ -25,6 +25,8 @@ import {
   useFeatureFlag,
   useIsAdmin,
   useLogout$,
+  useSiteCopyright,
+  useSiteName,
 } from "../../../Lib"
 import { FontAwesomeIcon } from "../Icons"
 import { NavItem } from "./NavItem"
@@ -54,6 +56,9 @@ interface SidebarProps {
 }
 
 export const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
+  const siteName = useSiteName()
+  const siteCopyright = useSiteCopyright()
+
   const navigate = useNavigate()
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"))
@@ -109,18 +114,19 @@ export const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
                 }}
                 sx={{ color: "primary.light", textDecoration: "none" }}
               >
-                Zeragamba
+                {siteName}
               </Box>
             </Typography>
           </SidebarGroup>
 
+          <Divider sx={{ borderColor: grey[500] }} />
+
           {isAdmin && (
             <>
-              <Divider sx={{ borderColor: grey[500] }} />
               <SidebarGroup>
                 <NavItem
                   label="Create Post"
-                  to="/post/new"
+                  to="/admin/post/new"
                   adornments={{ right: <FontAwesomeIcon icon={faPlus} /> }}
                 />
                 <NavItem
@@ -134,10 +140,9 @@ export const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
                   adornments={{ right: <FontAwesomeIcon icon={faDoorOpen} /> }}
                 />
               </SidebarGroup>
+              <Divider sx={{ borderColor: grey[500] }} />
             </>
           )}
-
-          <Divider sx={{ borderColor: grey[500] }} />
 
           {showTags ? (
             <SidebarTags onBack={() => setShowTags(false)} />
@@ -189,9 +194,11 @@ export const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
 
               <Box sx={{ flexGrow: 1 }} />
 
-              <Divider sx={{ borderColor: grey[500] }} />
-
               <SocialsGroup />
+
+              <Typography sx={{ textAlign: "center" }}>
+                &copy; {siteCopyright}
+              </Typography>
             </>
           )}
         </>

@@ -1,4 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom"
+import { FeaturedPostsGallery } from "./Components"
 
 import { AdminLayout, MainLayout } from "./Layouts"
 import {
@@ -19,7 +20,6 @@ import {
   ViewPostPage,
   ViewTagPage,
 } from "./Pages"
-import { FeaturedPostsGallery } from "./Components"
 
 export const appRouter = createBrowserRouter([
   {
@@ -35,7 +35,6 @@ export const appRouter = createBrowserRouter([
 
       { path: "post/:postId", element: <ViewPostPage /> },
       { path: "post/:postId/edit", element: <EditPostPage /> },
-      { path: "post/new", element: <NewPostPage /> },
 
       { path: "tag/:tagId", element: <ViewTagPage /> },
       { path: "tag/:tagId/:postId", element: <ViewPostPage /> },
@@ -43,23 +42,25 @@ export const appRouter = createBrowserRouter([
       { path: "about", element: <AboutPage /> },
 
       { path: "login", element: <LoginPage /> },
-
-      {
-        path: "admin",
-        element: <AdminLayout />,
-        children: [
-          { index: true, element: <Navigate to={"account"} /> },
-          { path: "account", element: <AccountPage /> },
-          { path: "about", element: <EditAboutPage /> },
-          { path: "socials", element: <EditSocialsPage /> },
-          { path: "tags", element: <EditTagsPage /> },
-          { path: "posts", element: <EditPostsPage /> },
-          { path: "metrics", element: <MetricsPage /> },
-          { path: "*", element: <Navigate to={"account"} /> },
-        ],
-      },
-
-      { path: "*", element: <Navigate to={"/"} replace /> },
     ],
   },
+
+  {
+    path: "admin",
+    element: <AdminLayout />,
+    children: [
+      { index: true, element: <Navigate to={"post/new"} /> },
+      { path: "post/new", element: <NewPostPage /> },
+      { path: "post/:postId/edit", element: <EditPostPage /> },
+      { path: "account", element: <AccountPage /> },
+      { path: "about", element: <EditAboutPage /> },
+      { path: "socials", element: <EditSocialsPage /> },
+      { path: "tags", element: <EditTagsPage /> },
+      { path: "posts", element: <EditPostsPage /> },
+      { path: "metrics", element: <MetricsPage /> },
+      { path: "*", element: <Navigate to={"post/new"} /> },
+    ],
+  },
+
+  { path: "*", element: <Navigate to={"/"} replace /> },
 ])

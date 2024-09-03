@@ -2,10 +2,9 @@ import { Box, Stack, Typography } from "@mui/material"
 import { FC, MouseEventHandler } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSiteName } from "../../../Lib"
+import { AdminNavBar } from "./AdminNavBar"
 
-import { AppNavBar } from "../NavBar"
-
-export const Header: FC = () => {
+export const AdminHeader: FC = () => {
   const siteName = useSiteName()
   const navigate = useNavigate()
 
@@ -41,7 +40,7 @@ export const Header: FC = () => {
         </Typography>
       </Box>
 
-      <AppNavBar />
+      <AdminNavBar />
     </Stack>
   )
 }

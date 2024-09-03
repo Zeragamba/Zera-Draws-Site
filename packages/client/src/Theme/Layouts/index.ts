@@ -1,2 +1,2 @@
 export { MainLayout } from "./MainLayout"
-export { AdminLayout } from "./AdminLayout"
+export { AdminLayout } from "./Admin"

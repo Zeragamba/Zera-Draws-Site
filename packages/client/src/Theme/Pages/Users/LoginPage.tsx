@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box"
 import { FC } from "react"
 import { Navigate } from "react-router-dom"
 import { useCurrentUser$ } from "../../../Lib"
@@ -24,5 +25,14 @@ export const LoginPage: FC<LoginPageProps> = ({ slots = {} }) => {
   if (user$.isFetching) return <LoadingSpinner />
   if (user$.data) return <Navigate to={"/"} />
 
-  return <LoginForm />
+  return (
+    <Box
+      height="100%"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <LoginForm />
+    </Box>
+  )
 }
