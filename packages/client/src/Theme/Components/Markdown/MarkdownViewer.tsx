@@ -1,17 +1,49 @@
-import { Box, useTheme } from "@mui/material"
-import { MuiMarkdown } from "mui-markdown"
-import { FC } from "react"
+import Box from "@mui/material/Box"
+import Link from "@mui/material/Link"
+import { getOverrides, MuiMarkdown } from "mui-markdown"
+import { FC, HTMLProps, MouseEventHandler } from "react"
+import { useNavigate } from "react-router-dom"
+import { useMarkdownStyles } from "./MarkdownStyles"
 
 interface MarkdownViewerProps {
   children: string | null | undefined
 }
 
 export const MarkdownViewer: FC<MarkdownViewerProps> = ({ children }) => {
-  const theme = useTheme()
+  const markdownStyles = useMarkdownStyles()
 
   return (
-    <Box sx={theme.typography.body1}>
-      <MuiMarkdown>{children}</MuiMarkdown>
+    <Box sx={markdownStyles} className={"markdown"}>
+      <MuiMarkdown
+        overrides={{
+          ...getOverrides({}),
+          a: { component: MarkdownLink },
+        }}
+        children={children}
+      />
     </Box>
+  )
+}
+
+export const MarkdownLink: FC<HTMLProps<HTMLAnchorElement>> = ({
+  href = "/",
+  children,
+}) => {
+  const navigate = useNavigate()
+  const isExternal = !href.startsWith("/")
+
+  const onClick: MouseEventHandler = (event) => {
+    if (isExternal) return
+    event.preventDefault()
+    navigate(href)
+  }
+
+  return (
+    <Link
+      href={href}
+      target={isExternal ? "_blank" : undefined}
+      onClick={onClick}
+      children={children}
+    />
   )
 }

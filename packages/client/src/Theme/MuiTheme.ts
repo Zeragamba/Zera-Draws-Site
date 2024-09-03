@@ -32,6 +32,7 @@ export const muiTheme = createTheme({
   },
   typography: {
     fontFamily: BodyFontFamily,
+    fontSize: 16,
     h1: {
       fontFamily: DisplayFontFamily,
       fontSize: "2.5rem",

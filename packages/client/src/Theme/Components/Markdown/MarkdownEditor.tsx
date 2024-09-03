@@ -14,11 +14,12 @@ import {
   toolbarPlugin,
   UndoRedo,
 } from "@mdxeditor/editor"
-import { Box, SxProps, useTheme } from "@mui/material"
+import { Box, SxProps } from "@mui/material"
 import { grey } from "@mui/material/colors"
-import { FC, useMemo } from "react"
+import { FC } from "react"
 
 import "@mdxeditor/editor/style.css"
+import { useMarkdownStyles } from "./MarkdownStyles"
 
 export interface MarkdownEditorProps
   extends Omit<MDXEditorProps, "markdown" | "plugins"> {
@@ -29,67 +30,27 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
   value,
   ...props
 }) => {
-  const theme = useTheme()
+  const markdownStyles = useMarkdownStyles()
 
-  const styles: SxProps = useMemo(
-    () => ({
-      "& .mdxeditor": {
-        padding: 2,
-        border: 1,
-        borderRadius: 1,
-        borderColor: grey[600],
-      },
-      "& .content-editable": {
-        fontFamily: theme.typography.fontFamily,
-        padding: 1,
-        margin: 0,
-        paddingTop: 3,
+  const editorStyles: SxProps = {
+    "& .mdxeditor": {
+      padding: 2,
+      border: 1,
+      borderRadius: 1,
+      borderColor: grey[600],
+    },
+  }
 
-        "& p": {
-          margin: 0,
-          padding: 0,
-          ...theme.typography.body1,
-        },
-        "& h1": {
-          margin: 0,
-          padding: 0,
-          ...theme.typography.h1,
-        },
-        "& h2": {
-          margin: 0,
-          padding: 0,
-          ...theme.typography.h2,
-        },
-        "& h3": {
-          margin: 0,
-          padding: 0,
-          ...theme.typography.h3,
-        },
-        "& h4": {
-          margin: 0,
-          padding: 0,
-          ...theme.typography.h4,
-        },
-        "& h5": {
-          margin: 0,
-          padding: 0,
-          ...theme.typography.h5,
-        },
-        "& h6": {
-          margin: 0,
-          padding: 0,
-          ...theme.typography.h6,
-        },
-      },
-    }),
-    [theme],
-  )
+  const mergedStyles = [
+    editorStyles,
+    ...(Array.isArray(markdownStyles) ? markdownStyles : [markdownStyles]),
+  ]
 
   return (
-    <Box sx={styles}>
+    <Box sx={mergedStyles}>
       <MDXEditor
         className={"dark-theme"}
-        contentEditableClassName={"content-editable"}
+        contentEditableClassName={"markdown"}
         markdown={value}
         plugins={[
           toolbarPlugin({
